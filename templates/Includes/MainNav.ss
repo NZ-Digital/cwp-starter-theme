@@ -33,8 +33,8 @@
 
                 </ul>
                 <ul class="user-nav">
-                    <li><a href="#" class="nav-link"><span class="text-uppercase moderna-sans">Sign up</span><img src="$resourceURL('themes/starter/images/signUp.svg')"  class="link-icon" alt="$SiteConfig.Title - Signup Icon"></a></li>
-                    <li><a href="#" class="nav-link"><span class="text-uppercase moderna-sans">Login</span><img src="$resourceURL('themes/starter/images/login.svg')"  class="link-icon" alt="$SiteConfig.Title - Login Icon"></a></li>
+                    <li><a href="#" class="nav-link"><span class="text-uppercase moderna-sans">Sign up</span><img src="$resourceURL('themes/starter/images/SignUp.svg')"  class="link-icon" alt="$SiteConfig.Title - Signup Icon"></a></li>
+                    <li><a href="#" class="nav-link"><span class="text-uppercase moderna-sans">Login</span><img src="$resourceURL('themes/starter/images/Login.svg')"  class="link-icon" alt="$SiteConfig.Title - Login Icon"></a></li>
                 </ul>
             </div>
         </div>
