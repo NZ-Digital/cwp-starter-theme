@@ -1,0 +1,52 @@
+/** ----------------------------------------------------------
+ *
+ * Contains the custom style of the page.
+ * Acts as the main stylesheet for theme.
+ *
+ *		Include your notes or table of contents below....
+ *		Include color hex's or values of your grid
+ *
+ *		1. Header
+ *      - Site Header
+ *        - Pre Header
+ *      - Navigation
+ *      - Search Bar
+ *		2. Sections
+ *      - Card Settings
+ *      - Slider Settings
+ *      - Section Settings
+ *    3. Global Settings
+ *		4. Footer
+ *      - Pre-footer
+ *      - Post-footer
+ *
+ * @author NZ Digital
+ * ------------------------------------------------------- */
+
+
+//	1. Header
+
+
+//	2. Sections
+.page-section {
+
+  // -- Image Banner -- //
+  &.sectionImageBanner {
+    position: relative;
+    .banner-img {
+      &.bh-small {
+        height: 450px;
+      }
+      &.bh-medium {
+        height: 550px;
+      }
+      &.bh-large {
+        height: 700px;
+      }
+    }
+    .banner-content {
+      position: absolute;
+      top: 50%;
+    }
+  }
+}

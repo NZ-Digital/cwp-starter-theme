@@ -8,10 +8,15 @@
   }
 
   .nav-link {
+    font-weight: 500;
+    letter-spacing: 0.48px;
     padding: $navbar-padding-y $navbar-padding-x;
   }
 
   .navbar-nav {
+    padding-right: 40px;
+    border-right: 1px solid #707070;
+    margin-bottom: -20px;
     // Remove background color from open dropdown
     > .open > a {
       &,
@@ -135,12 +140,30 @@
     }
 
     .navbar {
-      border-bottom: 1px solid $navbar-light-toggler-border-color;
+      //border-bottom: 1px solid $navbar-light-toggler-border-color;
     }
   }
 
   .navbar-touch-caret {
     padding: $navbar-padding-x;
     border-radius: 0;
+  }
+}
+
+//user nav
+.user-nav {
+  display: flex;
+  list-style: none;
+  margin-bottom: -20px;
+  padding-left: 35px;
+  li {
+    .nav-link {
+      color: $cod-gray;
+      padding: 1rem 1.5rem;
+      .link-icon {
+        padding-left: 12px;
+        margin-top: -5px;
+      }
+    }
   }
 }

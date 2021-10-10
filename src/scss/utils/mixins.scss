@@ -1,4 +1,6 @@
 // WebKit-style focus
+@use "sass:math";
+
 @mixin outline-focus() {
   // Default
   outline: thin dotted;
@@ -21,7 +23,7 @@
   .h3 + &,
   h4 + &,
   .h4 + & {
-    margin-top: -$line-height-computed / 3;
+    margin-top: math.div(-$line-height-computed, 3);
   }
 
   p {

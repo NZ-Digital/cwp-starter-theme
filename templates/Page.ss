@@ -14,9 +14,8 @@
     <body class="$ClassName">
         <header role="banner">
             <% include Header %>
-            <% include MainNav %>
         </header>
-        <main id="main" class="main" role="main">
+        <main id="main" class="main row" role="main">
             $Layout
         </main>
         <% include PageShowcase %>

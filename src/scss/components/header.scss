@@ -1,16 +1,23 @@
 body > header .open > a:focus {
   @include outline-focus();
 }
-
+.pre-header {
+  padding: 15px 100px;
+  border-radius: 0;
+  border: 0;
+  &.alert-dismissible {
+    .close {
+      padding-right: 100px;
+    }
+  }
+}
 .site-header {
-  padding-top: 30px;
-  padding-bottom: 30px;
-
+  padding: 49px 100px 31px;
   .language-selector {
     margin-right: 5px;
 
     .fa-language {
-      margin-right: $font-size-base / 2;
+      margin-right: $font-size-base * 0.5;
     }
   }
 }

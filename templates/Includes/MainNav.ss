@@ -1,4 +1,4 @@
-<div class="main-nav">
+<div class="main-nav ml-auto">
     <nav class="navbar navbar-expand-md navbar-light bg-white" aria-label="<%t CWP_Theme.MAIN 'Main' %>" role="navigation">
         <div class="container">
             <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -30,6 +30,11 @@
                             <% end_if %>
                         </li>
                     <% end_loop %>
+
+                </ul>
+                <ul class="user-nav">
+                    <li><a href="#" class="nav-link"><span class="text-uppercase moderna-sans">Sign up</span><img src="$resourceURL('themes/starter/images/signUp.svg')"  class="link-icon" alt="$SiteConfig.Title - Signup Icon"></a></li>
+                    <li><a href="#" class="nav-link"><span class="text-uppercase moderna-sans">Login</span><img src="$resourceURL('themes/starter/images/login.svg')"  class="link-icon" alt="$SiteConfig.Title - Login Icon"></a></li>
                 </ul>
             </div>
         </div>
