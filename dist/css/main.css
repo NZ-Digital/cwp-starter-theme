@@ -12015,7 +12015,7 @@ footer {
 }
 
 p {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -12293,6 +12293,22 @@ pre {
   font-weight: 500;
 }
 
+.opacity-100 {
+  opacity: 100%;
+}
+
+.opacity-75 {
+  opacity: 75%;
+}
+
+.opacity-50 {
+  opacity: 50%;
+}
+
+.opacity-25 {
+  opacity: 25%;
+}
+
 .lineheight-50px {
   line-height: 50px;
 }
@@ -12309,10 +12325,51 @@ pre {
   font-family: "Moderna Sans";
 }
 
-.large-button {
-  background-color: #f0efed;
+.theme-button,
+.theme-button-hover-dark,
+.theme-button-dark,
+.theme-button-gray {
+  border: 2px solid;
   border-radius: 50px;
-  padding: 15px 40px;
+  padding: 15px 58px;
+  transition: all 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.theme-button {
+  border-color: #141414;
+  background-color: transparent;
+}
+.theme-button:hover {
+  border-color: #f0efed;
+  background-color: #f0efed;
+}
+
+.theme-button-hover-dark {
+  border-color: #141414;
+  background-color: transparent;
+}
+.theme-button-hover-dark:hover {
+  color: #fff;
+  background-color: #141414;
+}
+
+.theme-button-dark {
+  background-color: #141414;
+  border-color: #141414;
+  color: #fff;
+}
+.theme-button-dark:hover {
+  background-color: transparent;
+  color: #141414;
+}
+
+.theme-button-gray {
+  background-color: #f0efed;
+  border-color: #f0efed;
+}
+.theme-button-gray:hover {
+  border-color: #141414;
+  background-color: transparent;
 }
 
 @font-face {
@@ -13032,6 +13089,13 @@ body > header .open > a:focus {
 .page-section.sectionImageBanner {
   position: relative;
 }
+.page-section.sectionImageBanner .imageBanner-container {
+  position: relative;
+}
+.page-section.sectionImageBanner .banner-img {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .page-section.sectionImageBanner .banner-img.bh-small {
   height: 450px;
 }
@@ -13044,4 +13108,21 @@ body > header .open > a:focus {
 .page-section.sectionImageBanner .banner-content {
   position: absolute;
   top: 50%;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+.page-section.sectionImageBanner .banner-content.cp-left {
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
+  left: 0;
+}
+.page-section.sectionImageBanner .banner-content.cp-center {
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+}
+.page-section.sectionImageBanner .banner-content.cp-right {
+  right: 0;
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
 }

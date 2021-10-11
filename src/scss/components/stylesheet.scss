@@ -33,7 +33,12 @@
   // -- Image Banner -- //
   &.sectionImageBanner {
     position: relative;
+    .imageBanner-container {
+      position: relative;
+    }
     .banner-img {
+      background-repeat: no-repeat;
+      background-size: cover;
       &.bh-small {
         height: 450px;
       }
@@ -47,6 +52,20 @@
     .banner-content {
       position: absolute;
       top: 50%;
+      padding-left: 100px;
+      padding-right: 100px;
+      &.cp-left {
+        transform: translate3d(0, -50%, 0);
+        left: 0;
+      }
+      &.cp-center {
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+      }
+      &.cp-right {
+        right: 0;
+        transform: translate3d(0, -50%, 0);
+      }
     }
   }
 }
