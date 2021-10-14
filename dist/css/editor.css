@@ -10711,23 +10711,23 @@ pre {
 }
 
 .lineheight-30px {
-  line-height: 30px;
+  line-height: 30px !important;
 }
 
 .lineheight-40px {
-  line-height: 40px;
+  line-height: 40px !important;
 }
 
 .lineheight-50px {
-  line-height: 50px;
+  line-height: 50px !important;
 }
 
 .lineheight-75px {
-  line-height: 75px;
+  line-height: 75px !important;
 }
 
 .line-height-140 {
-  line-height: 140%;
+  line-height: 140% !important;
 }
 
 .letterspacing-7px {
