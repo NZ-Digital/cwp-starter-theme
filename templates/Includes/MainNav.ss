@@ -1,6 +1,6 @@
 <div class="main-nav ml-auto">
     <nav class="navbar navbar-expand-md navbar-light bg-white" aria-label="<%t CWP_Theme.MAIN 'Main' %>" role="navigation">
-        <div class="container">
+        <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <div class="d-block d-md-none border-bottom border-top">
                     <form class="form-inline" action="/search/SearchForm">
