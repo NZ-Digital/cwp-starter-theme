@@ -15,7 +15,7 @@
         <header role="banner">
             <% include Header %>
         </header>
-        <main id="main" class="main row" role="main">
+        <main id="main" class="main row no-gutters" role="main">
             $Layout
         </main>
         <% include PageShowcase %>
