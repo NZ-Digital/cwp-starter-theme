@@ -12,6 +12,7 @@
  *      - Navigation
  *      - Search Bar
  *		2. Sections
+ *      - Card
  *      - Image Banner
  *      - Search Tab Element
  *      - Slider Settings
@@ -30,6 +31,12 @@
 
 //	2. Sections
 .page-section {
+  // -- Card -- //
+  &.sectionCard {
+    .card-container {
+
+    }
+  }
 
   // -- Image Banner -- //
   &.sectionImageBanner {
@@ -69,7 +76,7 @@
       }
     }
   }
-
+  // -- Search Tab Element -- //
   &.sectionSearchTabElement  {
      .searchTabElement-container {
        .nav-tabs {
