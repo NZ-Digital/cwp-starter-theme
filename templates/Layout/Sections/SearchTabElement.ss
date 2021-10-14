@@ -5,6 +5,7 @@
             <li class="nav-item col-md-4">
                 <a class="nav-link <% if $Pos == '1' %>active<% end_if %>" id="{$DisplayNameTrim}-tab" data-toggle="tab" href="# {$ID}" role="tab" aria-controls="{$DisplayNameTrim}" aria-selected="true" style="background-color: #{$TabBgColor};">
                     <span class="fontsize35 font-weight-normal text-white">$Name</span>
+                    <p><span class="fontsize19 font-weight-light">$Description</span></p>
                 </a>
             </li>
         <% end_loop %>
