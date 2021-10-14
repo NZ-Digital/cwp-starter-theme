@@ -45,6 +45,7 @@ $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 //custom colours
+$site-gray: #848484 !default;
 $burnt-sienna: #eb6543 !default;
 $saffron-mango: #f8cc46 !default;
 $marigold-yellow: #f9d777 !default;
@@ -98,6 +99,7 @@ $theme-colors: map-merge(
     "danger":     $danger,
     "light":      $light,
     "dark":       $dark,
+    'site-gray':  $site-gray,
     "burnt-sienna": $burnt-sienna,
     "saffron-mango": $saffron-mango,
     "marigold-yellow": $marigold-yellow,
@@ -158,7 +160,13 @@ $spacers: map-merge(
     2: ($spacer * .5),
     3: $spacer,
     4: ($spacer * 1.5),
-    5: ($spacer * 3)
+    5: ($spacer * 3),
+    6: ($spacer * 4),
+    7: ($spacer * 6),
+    8: ($spacer * 8),
+    9: ($spacer * 10),
+    10: ($spacer * 12),
+    11: ($spacer * 13)
   ),
     $spacers
 );
@@ -183,7 +191,7 @@ $sizes: map-merge(
 // Settings for the `<body>` element.
 
 $body-bg:                   $white !default;
-$body-color:                $cod-gray !default;//$gray-900 !default;
+$body-color:                #030303 !default;//$cod-gray !default;//$gray-900 !default;
 
 
 // Links
@@ -229,7 +237,7 @@ $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
-  xl: 1140px
+  xl: 1040px
 ) !default;
 
 @include _assert-ascending($container-max-widths, "$container-max-widths");
@@ -303,8 +311,8 @@ $font-size-base:              1rem !default; // Assumes the browser default, typ
 $font-size-lg:                $font-size-base * 1.25 !default;
 $font-size-sm:                $font-size-base * .875 !default;
 
-$font-weight-lighter:         lighter !default;
-$font-weight-light:           300 !default;
+$font-weight-lighter:         100 !default;
+$font-weight-light:           200 !default;
 $font-weight-normal:          400 !default;
 $font-weight-bold:            700 !default;
 $font-weight-bolder:          bolder !default;

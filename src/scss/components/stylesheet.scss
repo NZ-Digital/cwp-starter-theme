@@ -12,7 +12,8 @@
  *      - Navigation
  *      - Search Bar
  *		2. Sections
- *      - Card Settings
+ *      - Image Banner
+ *      - Search Tab Element
  *      - Slider Settings
  *      - Section Settings
  *    3. Global Settings
@@ -67,5 +68,26 @@
         transform: translate3d(0, -50%, 0);
       }
     }
+  }
+
+  &.sectionSearchTabElement  {
+     .searchTabElement-container {
+       .nav-tabs {
+         border-bottom: 0;
+         .nav-link {
+           color: #fff;
+           padding: 15px 100px 14px;
+           border: 0;
+           &.active {
+              background-color: transparent;
+           }
+         }
+       }
+       .tab-content > {
+         .active {
+           padding: 100px 240px;
+         }
+       }
+     }
   }
 }

@@ -314,7 +314,20 @@ pre {
 }
 
 /** Custom CSS Typography **/
-
+.yellow-line {
+  position: relative;
+  padding-left: 100px;
+  &:after {
+    position: absolute;
+    content: "";
+    border-top: 15px solid $marigold-yellow;
+    width: 635px;
+    transform: translate3d(0, -50%, 0);
+    top: 55%;
+    left: 0;
+    z-index: -1;
+  }
+}
 //Font Sizes
 .fontsize16 {
   font-size: 16px;
@@ -341,8 +354,14 @@ pre {
   font-size: 80px;
 }
 //Font weight
+.font-weight-book {
+  font-weight: 300;
+}
 .font-weight-medium {
   font-weight: 500;
+}
+.font-weight-semibold {
+  font-weight: 600;
 }
 
 .opacity-100 {
@@ -359,11 +378,31 @@ pre {
 }
 
 //Line Height
+.lineheight-30px {
+  line-height: 30px;
+}
+.lineheight-40px {
+  line-height: 40px;
+}
 .lineheight-50px {
   line-height: 50px;
 }
 .lineheight-75px {
   line-height: 75px;
+}
+.line-height-140 {
+  line-height: 140%;
+}
+
+//Letter Spacing
+.letterspacing-7px {
+  letter-spacing: 7.25px;
+}
+.letterspacing-5px {
+  letter-spacing: 5px;
+}
+.letterspacing-3px {
+  letter-spacing: 3px;
 }
 
 //Font family
@@ -379,6 +418,7 @@ pre {
 .theme-button-hover-dark,
 .theme-button-dark,
 .theme-button-gray {
+  display: inline-block;
   border: 2px solid;
   border-radius: 50px;
   padding: 15px 58px;

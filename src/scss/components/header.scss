@@ -7,6 +7,8 @@ body > header .open > a:focus {
   border: 0;
   &.alert-dismissible {
     .close {
+      top: 50%;
+      transform: translate3d(0, -50%, 0);
       padding-right: 100px;
     }
   }
