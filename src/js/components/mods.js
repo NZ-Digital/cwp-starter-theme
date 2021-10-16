@@ -1,5 +1,6 @@
 /* eslint-disable */
 import $ from 'jquery';
+import 'owl.carousel';
 
 export default function () {
   $(document).ready(function ()
@@ -10,6 +11,9 @@ export default function () {
   function initializeDocument()
   {
     HeaderSettings();
+
+    //Sections
+
   }
 
   function HeaderSettings()
@@ -17,6 +21,12 @@ export default function () {
    $('.close').click(function (){
      $('.alert').fadeOut();
    });
+  }
+
+  function featuredListings()
+  {
+    let sectionFeaturedEvents = $('.sectionFeaturedEvents');
+    
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback)
