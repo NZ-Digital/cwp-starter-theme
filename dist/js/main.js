@@ -10373,10 +10373,12 @@ __webpack_require__.r(__webpack_exports__);
   });
 
   function initializeDocument() {
-    HeaderSettings(); //Sections
+    headerSettings(); //Sections
+
+    featuredListings();
   }
 
-  function HeaderSettings() {
+  function headerSettings() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('.close').click(function () {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('.alert').fadeOut();
     });
@@ -10384,6 +10386,20 @@ __webpack_require__.r(__webpack_exports__);
 
   function featuredListings() {
     var sectionFeaturedEvents = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sectionFeaturedEvents');
+
+    if (sectionFeaturedEvents.length > 0) {
+      var featuredEventsItem = sectionFeaturedEvents.find('.owl-carousel');
+      featuredEventsItem.owlCarousel({
+        items: 1,
+        loop: true,
+        center: true,
+        stagePadding: 330,
+        margin: 100,
+        nav: true,
+        dots: true,
+        navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/arrow-left.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/arrow-right.svg"></span>']
+      });
+    }
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback) {

@@ -13,6 +13,7 @@
  *      - Search Bar
  *		2. Sections
  *      - Card
+ *      - Featured Events
  *      - Image Banner
  *      - Search Tab Element
  *      - Slider Settings
@@ -37,6 +38,34 @@
 
     }
   }
+  // -- Featured Events -- //
+  &.sectionFeaturedEvents  {
+    .featuredEvents-container {
+      .owl-carousel {
+        .owl-item {
+          transition: opacity 200ms cubic-bezier(0.76, 0, 0.24, 1);
+          &:not(.active) {
+            opacity: 20%;
+          }
+          .event-item {
+            img {
+              height: 30vw;
+              object-fit: cover;
+            }
+            .event-content {
+              max-width: 800px;
+            }
+          }
+        }
+        .owl-nav {
+
+        }
+        .owl-dots {
+
+        }
+      }
+    }
+  }
 
   // -- Image Banner -- //
   &.sectionImageBanner {
@@ -48,16 +77,16 @@
       background-repeat: no-repeat;
       background-size: cover;
       &.bh-small {
-        height: 450px;
+        height: 30vw;
       }
       &.bh-medium {
-        height: 550px;
+        height: 35vw;
       }
       &.bh-large {
-        height: 700px;
+        height: 40vw;
       }
       &.bh-xlarge {
-        height: 897px;
+        height: 50vw;
       }
     }
     .banner-content {

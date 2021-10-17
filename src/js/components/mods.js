@@ -10,13 +10,13 @@ export default function () {
 
   function initializeDocument()
   {
-    HeaderSettings();
+    headerSettings();
 
     //Sections
-
+    featuredListings()
   }
 
-  function HeaderSettings()
+  function headerSettings()
   {
    $('.close').click(function (){
      $('.alert').fadeOut();
@@ -26,7 +26,20 @@ export default function () {
   function featuredListings()
   {
     let sectionFeaturedEvents = $('.sectionFeaturedEvents');
-    
+    if (sectionFeaturedEvents.length > 0)
+    {
+      let featuredEventsItem = sectionFeaturedEvents.find('.owl-carousel');
+      featuredEventsItem.owlCarousel({
+        items:1,
+        loop:true,
+        center: true,
+        stagePadding: 330,
+        margin:100,
+        nav: true,
+        dots:true,
+        navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/arrow-left.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/arrow-right.svg"></span>']
+      });
+    }
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback)
