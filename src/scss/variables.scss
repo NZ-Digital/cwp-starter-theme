@@ -46,6 +46,7 @@ $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 //custom colours
 $site-gray: #848484 !default;
+$footer-gray: #a2a2a2 !default;
 $burnt-sienna: #eb6543 !default;
 $saffron-mango: #f8cc46 !default;
 $marigold-yellow: #f9d777 !default;
@@ -99,7 +100,8 @@ $theme-colors: map-merge(
     "danger":     $danger,
     "light":      $light,
     "dark":       $dark,
-    'site-gray':  $site-gray,
+    "site-gray":  $site-gray,
+    "footer-gray": $footer-gray,
     "burnt-sienna": $burnt-sienna,
     "saffron-mango": $saffron-mango,
     "marigold-yellow": $marigold-yellow,
@@ -198,7 +200,7 @@ $body-color:                #030303 !default;//$cod-gray !default;//$gray-900 !d
 //
 // Style anchor elements.
 
-$link-color:                              #0070b7 !default; // Original: theme-color("primary") !default;
+$link-color:                              $cod-gray !default; //#0070b7 !default; // Original: theme-color("primary") !default;
 $link-decoration:                         none !default;
 $link-hover-color:                        darken($link-color, 5%) !default; // Original: darken($link-color, 15%) !default;
 $link-hover-decoration:                   underline !default;

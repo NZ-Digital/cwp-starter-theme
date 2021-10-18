@@ -2,12 +2,13 @@
     "/dist/js/main.js": "/dist/js/main.js",
     "/dist/css/main.css": "/dist/css/main.css",
     "/dist/css/editor.css": "/dist/css/editor.css",
+    "/images/arrow-left.svg": "/images/arrow-left.svg",
+    "/images/arrow-right.svg": "/images/arrow-right.svg",
+    "/images/btn-arrow.svg": "/images/btn-arrow.svg",
     "/images/favicon.ico": "/images/favicon.ico",
     "/images/Login.svg": "/images/Login.svg",
     "/images/newzealand-government-footer.png": "/images/newzealand-government-footer.png",
     "/images/SignUp.svg": "/images/SignUp.svg",
     "/dist/js/jquery.min.js": "/dist/js/jquery.min.js",
-    "/images/btn-arrow.svg": "/images/btn-arrow.svg",
-    "/images/arrow-left.svg": "/images/arrow-left.svg",
-    "/images/arrow-right.svg": "/images/arrow-right.svg"
+    "/images/Icon feather-heart.png": "/images/Icon feather-heart.png"
 }
