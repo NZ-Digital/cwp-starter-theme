@@ -15941,8 +15941,7 @@ body > header .open > a:focus {
  *      - Featured Events
  *      - Image Banner
  *      - Search Tab Element
- *      - Slider Settings
- *      - Section Settings
+ *      - Upcoming Events
  *    3. Global Settings
  *		4. Footer
  *      - Pre-footer
@@ -15950,6 +15949,9 @@ body > header .open > a:focus {
  *
  * @author NZ Digital
  * ------------------------------------------------------- */
+.page-section .inner-padding {
+  padding: 0 240px;
+}
 .page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-item {
   transition: opacity 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -15966,26 +15968,8 @@ body > header .open > a:focus {
   -o-object-fit: cover;
      object-fit: cover;
 }
-.page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-item .event-item .event-tags {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  margin-top: 32px;
-  margin-bottom: 26px;
-}
-.page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-item .event-item .event-tags .btn-addFavourites {
-  border: 0;
-  padding: 0;
-  background: transparent;
-  margin-right: 20px;
-}
-.page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-item .event-item .event-tags .event-tag-item {
-  text-decoration: underline;
-  margin-right: 13px;
-}
 .page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-item .event-item .event-content {
-  max-width: 800px;
+  max-width: 875px;
 }
 .page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-nav,
 .page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-dots {
@@ -16073,7 +16057,52 @@ body > header .open > a:focus {
 .page-section.sectionSearchTabElement .searchTabElement-container .tab-content > .active {
   padding: 100px 240px;
 }
+.page-section.sectionUpcomingEvents .upcomingEvents-container .upcoming-event-item {
+  margin-bottom: 134px;
+}
+.page-section.sectionUpcomingEvents .upcomingEvents-container .upcoming-event-item .featured-img {
+  width: 100%;
+  height: 17vw;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.page-section.sectionUpcomingEvents .upcomingEvents-container .upcoming-event-item .event-date-location {
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 25px;
+}
+.page-section.sectionUpcomingEvents .upcomingEvents-container .upcoming-event-item .event-date-location .event-date {
+  display: inline-block;
+  padding: 6px 36px;
+  background-color: #a2a2a2;
+}
+.page-section.sectionUpcomingEvents .upcomingEvents-container .upcoming-event-item .event-content {
+  min-height: 135px;
+}
 
 img.right, figure.right {
   margin: 0;
+}
+
+hr {
+  border-color: #707070;
+}
+
+.event-tags {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  margin-top: 32px;
+  margin-bottom: 26px;
+}
+.event-tags .btn-addFavourites {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  margin-right: 20px;
+}
+.event-tags .event-tag-item {
+  text-decoration: underline;
+  margin-right: 13px;
 }

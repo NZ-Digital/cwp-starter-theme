@@ -30,7 +30,7 @@
                     <% end_if %>
                 </div>
                 <div class="event-content">
-                    <p class="mb-2"><span class="halyard-display fontsize35 font-weight-normal">{$Name}</span></p>
+                    <p class="mb-3"><span class="halyard-display fontsize35 font-weight-normal">{$Name}</span></p>
                     <p class="mb-5"><span class="halyard-display fontsize19 font-weight-book">{$Content.LimitWordCount(30)}</span></p>
                     <p><span class="theme-button-gray-small halyard-display font-weight-medium fontsize16">More info</span></p>
                 </div>
