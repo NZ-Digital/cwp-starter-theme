@@ -13,6 +13,7 @@ export default function () {
     headerSettings();
 
     //Sections
+    searchItemTabs()
     featuredListings()
   }
 
@@ -21,6 +22,35 @@ export default function () {
    $('.close').click(function (){
      $('.alert').fadeOut();
    });
+
+    //Scroll
+    window.addEventListener("scroll", function () {
+      let topPos = $(window).scrollTop();
+      let siteHeader = $('.site-header');
+      if (topPos > 550) {
+        siteHeader.addClass('scroll');
+      } else {
+        siteHeader.removeClass('scroll');
+      }
+    });
+  }
+
+  function searchItemTabs()
+  {
+    $('.dropdown').each(function() {
+      $(this).on('show.bs.dropdown', function () {
+        let btnToggle = $(this).find('.dropdown-toggle span');
+        let dropdownItem = $(this).find('.dropdown-menu .dropdown-item');
+        dropdownItem.click(function() {
+          let selectedDropdownItem = $(this).text();
+          dropdownItem.each(function(){
+            $(this).removeClass('active');
+          });
+          $(this).addClass('active');
+          btnToggle.text(selectedDropdownItem);
+         });
+      });
+    });
   }
 
   function featuredListings()

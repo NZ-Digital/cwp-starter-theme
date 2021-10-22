@@ -159,6 +159,78 @@
            padding: 100px 240px;
          }
        }
+       .filters {
+         .filter-item {
+           padding: 0 8px;
+           .filter-field {
+             position: relative;
+             .filter-date,
+             .filter-location,
+             .filter-categories {
+               .dropdown-toggle {
+                 width: 100%;
+                 text-align: left;
+                 border: 0;
+                 border-radius: 5px;
+                 padding: 15px 26px;
+                 background-color: white;
+               }
+               .dropdown-menu {
+                 width: 100%;
+                 margin-top: -4px;
+                 padding: 25px 26px;
+                 border: 0;
+                 border-top-right-radius: 0;
+                 border-top-left-radius: 0;
+                 background-color: $carra;
+                 box-shadow: 0 1px 5px rgb(0 0 0 / 16%);
+                 .dropdown-item {
+                   color: $scorpion;
+                   padding: 0;
+                   transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1) ;
+                   &.active,
+                   &:hover {
+                     color: $cod-gray;
+                     background-color: transparent;
+                   }
+                   &:not(:last-child) {
+                     border-bottom: 1px solid $footer-gray;
+                     padding: 7px 0;
+                   }
+                 }
+               }
+               &.show {
+                 i {
+                   transform: rotate(180deg);
+                 }
+               }
+             }
+             .filter-location {
+
+             }
+             .filter-categories {
+
+             }
+             .filter-keywords {
+               width: 100%;
+               //width: 380px;
+             }
+             input {
+               border: 0;
+               border-radius: 5px;
+               padding: 15px 26px;
+             }
+             i {
+               position: absolute;
+               color: $saffron-mango;
+               top: 50%;
+               right: 15px;
+               transform: translate3d(0, -50%, 0);
+               line-height: 0;
+             }
+           }
+         }
+       }
      }
   }
 
@@ -195,12 +267,31 @@
 
 
 //Custom CSS
+.container-small {
+  max-width: 1040px;
+  margin: auto;
+}
+
 img.right, figure.right {
   margin: 0;
 }
 
 hr {
   border-color: #707070;
+}
+
+//Textbox Placeholder Color
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $footer-gray;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: $footer-gray;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: $footer-gray;
 }
 
 // Events

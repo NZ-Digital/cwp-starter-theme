@@ -167,3 +167,15 @@
     }
   }
 }
+.util-nav {
+  display: flex;
+  list-style: none;
+  margin-bottom: -10px;
+  padding-left: 10px;
+  li {
+    .nav-link {
+      color: $cod-gray;
+      padding: 1.3rem 0 1rem 1.5rem
+    }
+  }
+}
