@@ -3,16 +3,17 @@
     <ul class="nav nav-tabs row no-gutters" id="{$ID}-tab" role="tablist">
         <% loop $SearchTab.SearchTabItems %>
             <li class="nav-item col-md-4">
-                <a class="nav-link <% if $Pos == '1' %>active<% end_if %>" id="{$DisplayNameTrim}-tab" data-toggle="tab" href="# {$ID}" role="tab" aria-controls="{$DisplayNameTrim}" aria-selected="true" style="background-color: #{$TabBgColor};">
+                <a class="nav-link <% if $Pos == '1' %>active<% end_if %>" data-toggle="tab" href="#{$DisplayNameTrim}{$ID}" data-id="{$DisplayNameTrim}{$ID}" role="tab" aria-controls="{$DisplayNameTrim}" aria-selected="true" style="background-color: #{$TabBgColor};">
                     <span class="fontsize35 font-weight-normal text-white">$Name</span>
-                    <p><span class="fontsize19 font-weight-light">$Description</span></p>
+                    <p><span class="fontsize16 font-weight-light">$Description</span></p>
+                    <% if $Pos == '1' %><i class="fal fa-minus"></i><% else %><i class="fal fa-plus"></i><% end_if %>
                 </a>
             </li>
         <% end_loop %>
     </ul>
     <div class="tab-content" id="{$ID}-tabContent">
         <% loop $SearchTab.SearchTabItems %>
-            <div class="tab-pane fade show <% if $Pos == '1' %>active<% end_if %>" id="{$ID}" role="tabpanel" aria-labelledby="{$DisplayNameTrim}-tab" style="background-color: #{$TabBgColor};">
+            <div class="tab-pane fade <% if $Pos == '1' %>show active<% end_if %>" id="{$DisplayNameTrim}{$ID}" role="tabpanel" aria-labelledby="{$DisplayNameTrim}-tab" style="background-color: #{$TabBgColor};">
                 <div class="row justify-content-center filters">
                     <% loop $VisibleFilters %>
                         <div class="col filter-item">
@@ -21,7 +22,7 @@
                                     <div class="dropdown filter-date">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownLocation{$ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span class="text-footer-gray font-weight-normal halyard-display">Any date</span>
-                                            <img src="$resourceURL('themes/starter/images/Icon-date.png')" class="calendar-icon" alt="Calendar icon">
+                                            <img src="$resourceURL('themes/starter/images/Icon-date.png')" class="img-icon" alt="$Name icon">
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownLocation{$ID}">
                                             <button class="dropdown-item" type="button">This month</button>

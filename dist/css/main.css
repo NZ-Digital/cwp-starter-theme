@@ -14972,12 +14972,13 @@ pre {
 .yellow-line {
   position: relative;
   padding-left: 100px;
+  z-index: 1;
 }
 .yellow-line:after {
   position: absolute;
   content: "";
   border-top: 15px solid #f9d777;
-  width: 635px;
+  width: 624px;
   -webkit-transform: translate3d(0, -50%, 0);
           transform: translate3d(0, -50%, 0);
   top: 55%;
@@ -15103,6 +15104,10 @@ pre {
 
 .moderna-sans {
   font-family: "Moderna Sans";
+}
+
+.text-underline {
+  text-decoration: underline;
 }
 
 .theme-button,
@@ -15603,6 +15608,24 @@ body > header .open > a:focus {
 .site-header {
   padding: 49px 100px 31px;
 }
+.site-header.scrolled {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding-top: 15px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  background: rgba(255, 255, 255, 0.92);
+  transition: -webkit-transform 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 200ms cubic-bezier(0.76, 0, 0.24, 1), -webkit-transform 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  -webkit-transform: translate3d(0, -101%, 0);
+          transform: translate3d(0, -101%, 0);
+  z-index: 2;
+}
+.site-header.scrolled.open {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
 .site-header .language-selector {
   margin-right: 5px;
 }
@@ -15668,6 +15691,21 @@ body > header .open > a:focus {
   letter-spacing: 0.48px;
   padding: 0.5rem 1rem;
 }
+.main-nav .nav-link span {
+  position: relative;
+}
+.main-nav .nav-link span:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  left: 0;
+  bottom: -8px;
+  border-bottom: 2px solid #F7CB53;
+  transition: width 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.main-nav .nav-link:hover span:after {
+  width: 100%;
+}
 .main-nav .navbar-nav {
   padding-right: 40px;
   border-right: 1px solid #707070;
@@ -15677,7 +15715,10 @@ body > header .open > a:focus {
   background-color: transparent;
 }
 .main-nav .navbar-nav > .current > a, .main-nav .navbar-nav > .current > a:hover, .main-nav .navbar-nav > .current > a:focus {
-  background-color: #f8f9fa;
+  background-color: transparent;
+}
+.main-nav .navbar-nav > .current > a span:after, .main-nav .navbar-nav > .current > a:hover span:after, .main-nav .navbar-nav > .current > a:focus span:after {
+  width: 100%;
 }
 .main-nav .dropdown:hover .navbar-touch-caret, .main-nav .dropdown:focus .navbar-touch-caret {
   background-color: transparent;
@@ -15953,6 +15994,8 @@ body > header .open > a:focus {
  *      - Card
  *      - Featured Events
  *      - Image Banner
+ *      - Listing Grid
+ *      - Latest News
  *      - Search Tab Element
  *      - Upcoming Events
  *    3. Global Settings
@@ -15962,27 +16005,24 @@ body > header .open > a:focus {
  *
  * @author NZ Digital
  * ------------------------------------------------------- */
-.page-section .inner-padding {
-  padding: 0 240px;
+.page-section.sectionFeaturedEvents .featuredEvents-container .listing-content--img img {
+  height: 30vw;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.page-section.sectionFeaturedEvents .featuredEvents-container .listing-content--date {
+  display: inline-block;
+  padding: 6px 36px;
+  background-color: #f8cc46;
+}
+.page-section.sectionFeaturedEvents .featuredEvents-container .listing-content--details {
+  max-width: 875px;
 }
 .page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-item {
   transition: opacity 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 .page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-item:not(.active) {
   opacity: 20%;
-}
-.page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-item .event-item .event-date {
-  display: inline-block;
-  padding: 6px 36px;
-  background-color: #f8cc46;
-}
-.page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-item .event-item .carousel-img {
-  height: 30vw;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-.page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-item .event-item .event-content {
-  max-width: 875px;
 }
 .page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-nav,
 .page-section.sectionFeaturedEvents .featuredEvents-container .owl-carousel .owl-dots {
@@ -16056,16 +16096,40 @@ body > header .open > a:focus {
   -webkit-transform: translate3d(0, -50%, 0);
           transform: translate3d(0, -50%, 0);
 }
+.page-section.sectionListingGrid .listingGrid-container .listing-content--img img {
+  width: 100%;
+  height: 464px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.page-section.sectionListingGrid .listingGrid-container .listing-content--details {
+  min-height: 135px;
+}
+.page-section.sectionLatestNews .latestNews-container .newslist-content--link {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
+}
 .page-section.sectionSearchTabElement .searchTabElement-container .nav-tabs {
   border-bottom: 0;
 }
 .page-section.sectionSearchTabElement .searchTabElement-container .nav-tabs .nav-link {
+  position: relative;
   color: #fff;
   padding: 15px 100px 14px;
   border: 0;
 }
 .page-section.sectionSearchTabElement .searchTabElement-container .nav-tabs .nav-link.active {
   background-color: transparent;
+}
+.page-section.sectionSearchTabElement .searchTabElement-container .nav-tabs .nav-link i {
+  position: absolute;
+  top: 50%;
+  right: 56px;
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
 }
 .page-section.sectionSearchTabElement .searchTabElement-container .tab-content > .active {
   padding: 100px 240px;
@@ -16133,7 +16197,8 @@ body > header .open > a:focus {
   border-radius: 5px;
   padding: 15px 26px;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field i {
+.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field i,
+.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .img-icon {
   position: absolute;
   color: #f8cc46;
   top: 50%;
@@ -16142,26 +16207,25 @@ body > header .open > a:focus {
           transform: translate3d(0, -50%, 0);
   line-height: 0;
 }
-.page-section.sectionUpcomingEvents .upcomingEvents-container .upcoming-event-item {
+.page-section.sectionUpcomingEvents .upcomingEvents-container .listing-content {
   margin-bottom: 134px;
 }
-.page-section.sectionUpcomingEvents .upcomingEvents-container .upcoming-event-item .featured-img {
+.page-section.sectionUpcomingEvents .upcomingEvents-container .listing-content--img img {
   width: 100%;
   height: 17vw;
   -o-object-fit: cover;
      object-fit: cover;
 }
-.page-section.sectionUpcomingEvents .upcomingEvents-container .upcoming-event-item .event-date-location {
+.page-section.sectionUpcomingEvents .upcomingEvents-container .listing-content--location-date {
   display: -ms-flexbox;
   display: flex;
-  margin-bottom: 25px;
 }
-.page-section.sectionUpcomingEvents .upcomingEvents-container .upcoming-event-item .event-date-location .event-date {
+.page-section.sectionUpcomingEvents .upcomingEvents-container .listing-content--location-date .listing-date {
   display: inline-block;
   padding: 6px 36px;
   background-color: #a2a2a2;
 }
-.page-section.sectionUpcomingEvents .upcomingEvents-container .upcoming-event-item .event-content {
+.page-section.sectionUpcomingEvents .upcomingEvents-container .listing-content--details {
   min-height: 135px;
 }
 
@@ -16176,6 +16240,23 @@ img.right, figure.right {
 
 hr {
   border-color: #707070;
+}
+
+.sidebar-content {
+  width: 100%;
+  max-width: 530px;
+}
+
+.inner-padding {
+  padding: 0 240px;
+}
+
+.inner-padding--left {
+  padding-left: 240px;
+}
+
+.inner-padding--right {
+  padding-right: 240px;
 }
 
 ::-webkit-input-placeholder {
@@ -16223,7 +16304,7 @@ hr {
   color: #a2a2a2;
 }
 
-.event-tags {
+.listing-content--tags {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
@@ -16231,13 +16312,13 @@ hr {
   margin-top: 32px;
   margin-bottom: 26px;
 }
-.event-tags .btn-addFavourites {
+.listing-content--tags .tag-name {
+  text-decoration: underline;
+  margin-right: 13px;
+}
+.listing-content .addtofavourites {
   border: 0;
   padding: 0;
   background: transparent;
   margin-right: 20px;
-}
-.event-tags .event-tag-item {
-  text-decoration: underline;
-  margin-right: 13px;
 }

@@ -26,31 +26,49 @@ export default function () {
     //Scroll
     window.addEventListener("scroll", function () {
       let topPos = $(window).scrollTop();
-      let siteHeader = $('.site-header');
+      let siteHeader = $('.site-header.scrolled');
       if (topPos > 550) {
-        siteHeader.addClass('scroll');
+        siteHeader.addClass('open');
       } else {
-        siteHeader.removeClass('scroll');
+        siteHeader.removeClass('open');
       }
     });
   }
 
   function searchItemTabs()
   {
-    $('.dropdown').each(function() {
-      $(this).on('show.bs.dropdown', function () {
-        let btnToggle = $(this).find('.dropdown-toggle span');
-        let dropdownItem = $(this).find('.dropdown-menu .dropdown-item');
-        dropdownItem.click(function() {
-          let selectedDropdownItem = $(this).text();
-          dropdownItem.each(function(){
-            $(this).removeClass('active');
+    let sectionSearchTabElement = $('.sectionSearchTabElement');
+    if (sectionSearchTabElement.length > 0) {
+      sectionSearchTabElement.each(function () {
+        $(this).find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          let tabContent = $(this).closest('.nav-tabs').next('.tab-content');
+          e.target.querySelectorAll('i')[0].className = " fal fa-minus";
+          e.relatedTarget.querySelectorAll('i')[0].className = " fal fa-plus";
+          e.preventDefault();
+          let dataID = $(this).attr('data-id');
+          tabContent.find('.tab-pane').each(function(){
+            $(this).removeClass('show active');
           });
-          $(this).addClass('active');
-          btnToggle.text(selectedDropdownItem);
-         });
+          tabContent.find('#'+dataID).addClass('show active');
+        })
       });
-    });
+
+      //dropdown
+      sectionSearchTabElement.find('.dropdown').each(function() {
+        $(this).on('show.bs.dropdown', function () {
+          let btnToggle = $(this).find('.dropdown-toggle span');
+          let dropdownItem = $(this).find('.dropdown-menu .dropdown-item');
+          dropdownItem.click(function() {
+            let selectedDropdownItem = $(this).text();
+            dropdownItem.each(function(){
+              $(this).removeClass('active');
+            });
+            $(this).addClass('active');
+            btnToggle.text(selectedDropdownItem);
+          });
+        });
+      });
+    }
   }
 
   function featuredListings()

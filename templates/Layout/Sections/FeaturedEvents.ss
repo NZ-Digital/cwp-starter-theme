@@ -12,24 +12,28 @@
         </div>
         <div class="owl-carousel">
             <% loop $FeaturedItems %>
-            <div class="event-item">
-                <img src="{$FeaturedImage.URL}" alt="{$SiteConfig.Title} - {$Name}" class="carousel-img">
-                <div class="event-date">
+            <div class="listing-content">
+                <% if $FeaturedImage %>
+                    <div class="listing-content--img">
+                        <img src="{$FeaturedImage.URL}" alt="{$SiteConfig.Title} - {$Name}">
+                    </div>
+                <% end_if %>
+                <div class="listing-content--date">
                     <% if $VisibleListingDateAndTime %>
                         <% loop $VisibleListingDateAndTime %>
                             <span class="halyard-display font-weight-medium fontsize16 text-uppercase letterspacing-1px">$Date.Format(E dd LLL)</span>
                         <% end_loop %>
                     <% end_if %>
                 </div>
-                <div class="event-tags">
-                    <button class="btn-addFavourites"><img src="$resourceURL('themes/starter/images/Icon feather-heart.png')" width="34.26" alt="$SiteConfig.Title - add to your favourites"> </button>
+                <div class="listing-content--tags">
+                    <button class="addtofavourites"><img src="$resourceURL('themes/starter/images/Icon feather-heart.png')" width="34.26" alt="$SiteConfig.Title - add to your favourites"> </button>
                     <% if $Tags %>
                         <% loop $Tags %>
-                            <a href="#" class="event-tag-item"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
+                            <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
                         <% end_loop %>
                     <% end_if %>
                 </div>
-                <div class="event-content">
+                <div class="listing-content--details">
                     <p class="mb-3"><span class="halyard-display fontsize35 font-weight-normal">{$Name}</span></p>
                     <p class="mb-5"><span class="halyard-display fontsize19 font-weight-book">{$Content.LimitWordCount(30)}</span></p>
                     <p><span class="theme-button-gray-small halyard-display font-weight-medium fontsize16">More info</span></p>

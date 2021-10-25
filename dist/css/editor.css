@@ -10691,12 +10691,13 @@ pre {
 .yellow-line {
   position: relative;
   padding-left: 100px;
+  z-index: 1;
 }
 .yellow-line:after {
   position: absolute;
   content: "";
   border-top: 15px solid #f9d777;
-  width: 635px;
+  width: 624px;
   -webkit-transform: translate3d(0, -50%, 0);
           transform: translate3d(0, -50%, 0);
   top: 55%;
@@ -10822,6 +10823,10 @@ pre {
 
 .moderna-sans {
   font-family: "Moderna Sans";
+}
+
+.text-underline {
+  text-decoration: underline;
 }
 
 .theme-button,

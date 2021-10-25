@@ -317,11 +317,12 @@ pre {
 .yellow-line {
   position: relative;
   padding-left: 100px;
+  z-index: 1;
   &:after {
     position: absolute;
     content: "";
     border-top: 15px solid $marigold-yellow;
-    width: 635px;
+    width: 624px;
     transform: translate3d(0, -50%, 0);
     top: 55%;
     left: 0;
@@ -367,6 +368,7 @@ pre {
   font-weight: 600;
 }
 
+//Opacity
 .opacity-100 {
   opacity: 100%;
 }
@@ -425,6 +427,10 @@ pre {
 }
 .moderna-sans {
   font-family: $font-family-moderna-sans;
+}
+
+.text-underline {
+  text-decoration: underline;
 }
 
 //Buttons
