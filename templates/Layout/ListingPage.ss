@@ -1,3 +1,1 @@
 <% include VisibleSection %>
-<% include Listings %>
-

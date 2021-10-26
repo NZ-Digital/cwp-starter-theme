@@ -10451,6 +10451,13 @@ __webpack_require__.r(__webpack_exports__);
           });
         });
       });
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).scroll(function () {
+        //detect when user scroll to top and set position to relative else sets position to fixed
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()("#sectionSearchTabElement-22").css({
+          "top": "0",
+          "position": jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).scrollTop() > 140 ? "fixed" : "relative"
+        });
+      });
     }
   }
 

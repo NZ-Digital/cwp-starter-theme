@@ -13,7 +13,8 @@
     <% if $SearchTab.SearchTabItems %>
         <% loop $SearchTab.SearchTabItems %>
         <div id="{$DisplayNameTrim}" class="tabcontent<% if $Pos == '1' %> active<% end_if %>" style="background-color: #{$TabBgColor};">
-            <div class="row justify-content-center filters">
+            <div class="row no-gutters justify-content-center filters">
+                <% if $VisibleFilters %>
                 <% loop $VisibleFilters %>
                     <div class="col filter-item">
                         <div class="filter-field">
@@ -70,6 +71,7 @@
                 <div class="filter-action pl-lg-2">
                     <button class="theme-button-yellow-small"><span class="font-weight-medium letterspacing-1px">Search</span></button>
                 </div>
+                <% end_if %>
             </div>
         </div>
         <% end_loop %>
