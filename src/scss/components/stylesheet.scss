@@ -17,10 +17,13 @@
  *      - Image Banner
  *      - Listing Grid
  *      - Latest News
+ *      - Listing Holding Page
  *      - Search Tab Element
  *      - Upcoming Events
- *    3. Global Settings
- *		4. Footer
+ *    3. Pages
+ *      - Listing Page
+ *    4. Global Settings
+ *		5. Footer
  *      - Pre-footer
  *      - Post-footer
  *
@@ -74,10 +77,20 @@
         }
         .owl-nav {
           .owl-prev {
+            position: relative;
             margin-right: 80px;
+            transition: left 200ms cubic-bezier(0.76, 0, 0.24, 1);
+            &:active {
+              left: -5px;
+            }
           }
           .owl-next {
+            position: relative;
             margin-left: 80px;
+            transition: left 200ms cubic-bezier(0.76, 0, 0.24, 1);
+            &:active {
+              right: -5px;
+            }
           }
         }
         .owl-dots {
@@ -173,19 +186,78 @@
     }
   }
 
+  // -- Listing Holding Page -- //
+  &.sectionListings {
+    .listing-page {
+      &--sorter {
+        .dropdown {
+          &.show {
+            .dropdown-toggle {
+              .fa-angle-down {
+                transform: rotate(180deg);
+              }
+            }
+          }
+        }
+        .dropdown-toggle {
+          position: relative;
+          width: 100%;
+          max-width: 462px;
+          background-color: $carra;
+          padding: 15px;
+          border-radius: 5px;
+          .fa-sort-amount-down-alt {
+            color: #6F6F6F;
+          }
+          &:after {
+            display: none;
+          }
+          .fa-angle-down {
+            position: absolute;
+            top: 50%;
+            right: 36px;
+            transform: translate3d(0, -50%, 0);
+            line-height: 0;
+          }
+        }
+        .dropdown-menu {
+          width: 100%;
+          max-width: 462px;
+          padding: 30px 40px;
+          margin: 0;
+          border-radius: 0 0 5px 5px;
+          box-shadow: 0 1px 3px rgb(0 0 0 / 16%);
+          .dropdown-item {
+            padding: 0;
+            transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+            &.active,
+            &:hover {
+              color: $cod-gray;
+              background-color: transparent;
+            }
+            &:not(:last-child) {
+              border-bottom: 1px solid $footer-gray;
+              padding: 7px 0;
+            }
+            &:last-child {
+              padding-top: 7px;
+            }
+          }
+        }
+      }
+    }
+  }
+
   // -- Search Tab Element -- //
   &.sectionSearchTabElement  {
      .searchTabElement-container {
-       .nav-tabs {
-         border-bottom: 0;
-         .nav-link {
+       .tab {
+         .tablinks {
            position: relative;
-           color: #fff;
+           color: $white;
+           text-align: left;
            padding: 15px 100px 14px;
            border: 0;
-           &.active {
-              background-color: transparent;
-           }
            i {
              position: absolute;
              top: 50%;
@@ -194,12 +266,18 @@
            }
          }
        }
-       .tab-content > {
-         .active {
-           padding: 100px 240px;
+       .tabcontent {
+         display: none;
+         //max-height: 0;
+         //overflow: hidden;
+         transition: display 200ms cubic-bezier(0.76, 0, 0.24, 1);
+         &.active {
+           display: block;
+           //max-height: 600px;
          }
        }
        .filters {
+         padding: 100px 240px;
          .filter-item {
            padding: 0 8px;
            .filter-field {
@@ -236,6 +314,9 @@
                    &:not(:last-child) {
                      border-bottom: 1px solid $footer-gray;
                      padding: 7px 0;
+                   }
+                   &:last-child {
+                     padding-top: 7px;
                    }
                  }
                }
@@ -298,8 +379,12 @@
 
 }
 
+//	3. Pages
+/** Listing Page **/
 
-//Custom CSS
+
+
+//	4. Global Settings
 .container-small {
   max-width: 1040px;
   margin: auto;
@@ -319,13 +404,14 @@ hr {
 }
 
 .inner-padding {
-  padding: 0 240px;
+  padding-left: 240px !important;
+  padding-right: 240px !important;
 }
 .inner-padding--left {
-  padding-left: 240px;
+  padding-left: 240px !important;
 }
 .inner-padding--right {
-  padding-right: 240px;
+  padding-right: 240px !important;
 }
 //Textbox Placeholder Color
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -358,5 +444,23 @@ hr {
     padding: 0;
     background: transparent;
     margin-right: 20px;
+    transition: transform 200ms cubic-bezier(0.76, 0, 0.24, 1);
+    &:active,
+    &:target {
+      transform: scale(0.8);
+    }
+  }
+}
+
+//Responsiveness
+.mobile-responsive {
+  display: none;
+  @media only screen and (max-width: 1589px) {
+    display: block;
+  }
+}
+.desktop-responsive {
+  @media only screen and (max-width: 1589px) {
+    display: none;
   }
 }

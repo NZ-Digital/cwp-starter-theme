@@ -493,6 +493,12 @@ pre {
     right: 20px;
     top: 50%;
     transform: translate3d(0, -50%, 0);
+    transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  &:hover {
+    &:after {
+      right: 15px;
+    }
   }
 }
 .theme-button-yellow-small {
@@ -502,9 +508,6 @@ pre {
   padding: 13px 62px 13px 30px;
   background-color: $saffron-mango;
   transition: all 200ms cubic-bezier(0.76, 0, 0.24, 1);
-  &:hover {
-    background-color: $marigold-yellow;
-  }
   &:after {
     position: absolute;
     content: url("../images/btn-arrow.svg");
@@ -512,6 +515,13 @@ pre {
     right: 20px;
     top: 50%;
     transform: translate3d(0, -50%, 0);
+    transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  &:hover {
+    background-color: $marigold-yellow;
+    &:after {
+      right: 15px;
+    }
   }
 }
 .button-signup ,

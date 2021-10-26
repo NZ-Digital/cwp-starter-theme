@@ -19,9 +19,19 @@ export default function () {
 
   function headerSettings()
   {
-   $('.close').click(function (){
+    //for pre header
+    $('.close').click(function (){
      $('.alert').fadeOut();
-   });
+    });
+
+    //hamburger menu
+    $('.hamburger').click(function () {
+        if ($(this).hasClass('is-active')) {
+          $(this).removeClass('is-active')
+        } else {
+          $(this).addClass('is-active');
+        }
+    });
 
     //Scroll
     window.addEventListener("scroll", function () {
@@ -40,17 +50,30 @@ export default function () {
     let sectionSearchTabElement = $('.sectionSearchTabElement');
     if (sectionSearchTabElement.length > 0) {
       sectionSearchTabElement.each(function () {
-        $(this).find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-          let tabContent = $(this).closest('.nav-tabs').next('.tab-content');
-          e.target.querySelectorAll('i')[0].className = " fal fa-minus";
-          e.relatedTarget.querySelectorAll('i')[0].className = " fal fa-plus";
-          e.preventDefault();
+        let tab = $(this).find('.tab .tablinks');
+        tab.click(function(){
           let dataID = $(this).attr('data-id');
-          tabContent.find('.tab-pane').each(function(){
-            $(this).removeClass('show active');
-          });
-          tabContent.find('#'+dataID).addClass('show active');
-        })
+          let icon = $(this).find('i');
+          if ($(this).hasClass('active')) {
+            $(this).removeClass('active');
+            icon.attr('class', 'fal fa-plus');
+            //hide tab content
+            $('#'+dataID).removeClass('active');
+          } else {
+            //reset tab siblings
+            tab.each(function (){
+              let tabID = $(this).attr('data-id');
+              $(this).removeClass('active');
+              $(this).find('i').attr('class', 'fal fa-plus');
+              // hide siblings tab content
+              $('#'+tabID).removeClass('active');
+            });
+            $(this).addClass('active');
+            icon.attr('class', 'fal fa-minus');
+            //show tab content
+            $('#'+dataID).addClass('active');
+          }
+        });
       });
 
       //dropdown

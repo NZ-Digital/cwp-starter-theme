@@ -15,6 +15,9 @@ body > header .open > a:focus {
 }
 .site-header {
   padding: 49px 100px 31px;
+  @media only screen and (max-width: 1589) {
+
+  }
   &.scrolled {
     position: fixed;
     top: 0;

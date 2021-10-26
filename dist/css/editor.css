@@ -10896,6 +10896,10 @@ pre {
   top: 50%;
   -webkit-transform: translate3d(0, -50%, 0);
           transform: translate3d(0, -50%, 0);
+  transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.theme-button-gray-small:hover:after {
+  right: 15px;
 }
 
 .theme-button-yellow-small {
@@ -10906,9 +10910,6 @@ pre {
   background-color: #f8cc46;
   transition: all 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
-.theme-button-yellow-small:hover {
-  background-color: #f9d777;
-}
 .theme-button-yellow-small:after {
   position: absolute;
   content: url("../images/btn-arrow.svg");
@@ -10917,6 +10918,13 @@ pre {
   top: 50%;
   -webkit-transform: translate3d(0, -50%, 0);
           transform: translate3d(0, -50%, 0);
+  transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.theme-button-yellow-small:hover {
+  background-color: #f9d777;
+}
+.theme-button-yellow-small:hover:after {
+  right: 15px;
 }
 
 .button-signup,

@@ -10380,8 +10380,17 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   function headerSettings() {
+    //for pre header
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('.close').click(function () {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('.alert').fadeOut();
+    }); //hamburger menu
+
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.hamburger').click(function () {
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('is-active')) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('is-active');
+      } else {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('is-active');
+      }
     }); //Scroll
 
     window.addEventListener("scroll", function () {
@@ -10401,16 +10410,30 @@ __webpack_require__.r(__webpack_exports__);
 
     if (sectionSearchTabElement.length > 0) {
       sectionSearchTabElement.each(function () {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-          var tabContent = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).closest('.nav-tabs').next('.tab-content');
-          e.target.querySelectorAll('i')[0].className = " fal fa-minus";
-          e.relatedTarget.querySelectorAll('i')[0].className = " fal fa-plus";
-          e.preventDefault();
+        var tab = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.tab .tablinks');
+        tab.click(function () {
           var dataID = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id');
-          tabContent.find('.tab-pane').each(function () {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('show active');
-          });
-          tabContent.find('#' + dataID).addClass('show active');
+          var icon = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i');
+
+          if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
+            icon.attr('class', 'fal fa-plus'); //hide tab content
+
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#' + dataID).removeClass('active');
+          } else {
+            //reset tab siblings
+            tab.each(function () {
+              var tabID = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id');
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i').attr('class', 'fal fa-plus'); // hide siblings tab content
+
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#' + tabID).removeClass('active');
+            });
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
+            icon.attr('class', 'fal fa-minus'); //show tab content
+
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#' + dataID).addClass('active');
+          }
         });
       }); //dropdown
 

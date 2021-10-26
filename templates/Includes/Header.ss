@@ -1,6 +1,6 @@
 <% if $SiteConfig.PreHeader %>
     <div class="alert alert-dismissible fade show pre-header mb-0" role="alert" style="background-color: #{$SiteConfig.PreHeaderBg};">
-        $SiteConfig.PreHeader
+        <div class="">$SiteConfig.PreHeader</div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -11,7 +11,19 @@
     <div class="site-header-brand">
         <a title="<%t CWP_Header.Title "Go to Home Page" %>" class="site-header-brand-link-default" href="$BaseHref">
             <% if $SiteConfig.Logo %>
-                <img src="$SiteConfig.Logo.URL" alt="$SiteConfig.Title" style="width:{$SiteConfig.LogoWidth}px;">
+                <style>
+                    @media only screen and (min-width: 1590px) {
+                        .logo-img {
+                            width: {$SiteConfig.LogoWidth}px;
+                        }
+                    }
+                    @media only screen and (max-width: 1589px) {
+                        .logo-img {
+                            width: {$SiteConfig.LogoWidthIpad}px;
+                        }
+                    }
+                </style>
+                <img src="$SiteConfig.Logo.URL" class="logo-img" alt="$SiteConfig.Title - Logo">
             <% else %>
                 <span>$SiteConfig.Title</span>
             <% end_if %>
