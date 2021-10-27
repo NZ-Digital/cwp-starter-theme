@@ -25,11 +25,16 @@
     "font-awesome": "^4.7.0",
     "hamburgers": "^1.1.3",
     "imagemin": "^8.0.1",
-    "jquery": "^3.5.1",
+    "jquery": "^3.6.0",
     "jquery-highlight": "^3.3.0",
+    "jquery-ui": "^1.13.0",
+    "jquery-ui-bundle": "^1.12.1-migrate",
+    "moment": "^2.29.1",
     "owl.carousel": "^2.3.4",
     "path": "^0.12.7",
-    "popper.js": "^1.14.5"
+    "pikaday": "^1.8.2",
+    "popper.js": "^1.14.5",
+    "tempusdominus-bootstrap-4": "^5.39.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",

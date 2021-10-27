@@ -40,6 +40,14 @@
                     <li><a href="#" class="nav-link"><img src="$resourceURL('themes/starter/images/header-heart.svg')"  class="link-icon" alt="$SiteConfig.Title - Favourites Icon"></a></li>
                     <li><a href="#" class="nav-link"><img src="$resourceURL('themes/starter/images/header-search.svg')"  class="link-icon" alt="$SiteConfig.Title - Search Icon"></a></li>
                 </ul>
+                <% if $VisibleSocials %>
+                    <ul class="socials">
+                        <% loop $VisibleSocials %>
+                            <li><a href="{$URL}" class="nav-link">{$Icon.RAW}</a></li>
+                        <% end_loop %>
+                    </ul>
+                <% end_if %>
+
                 <div class="hamburger-menu--mobile">
                     <div class="hamburger hamburger--slider hamburger--accessible" tabindex="0" aria-label="Menu" role="button" aria-controls="navigation">
                         <div class="hamburger-box">

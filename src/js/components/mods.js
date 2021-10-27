@@ -1,6 +1,7 @@
 /* eslint-disable */
 import $ from 'jquery';
 import 'owl.carousel';
+import 'jquery-ui-bundle';
 
 export default function () {
   $(document).ready(function ()
@@ -79,26 +80,41 @@ export default function () {
       //dropdown
       sectionSearchTabElement.find('.dropdown').each(function() {
         $(this).on('show.bs.dropdown', function () {
-          let btnToggle = $(this).find('.dropdown-toggle span');
+          let btnToggle = $(this).find('.dropdown-toggle');
+          let dataType  = btnToggle.attr('data-type');
           let dropdownItem = $(this).find('.dropdown-menu .dropdown-item');
-          dropdownItem.click(function() {
+          dropdownItem.click(function(e) {
             let selectedDropdownItem = $(this).text();
             dropdownItem.each(function(){
               $(this).removeClass('active');
             });
             $(this).addClass('active');
-            btnToggle.text(selectedDropdownItem);
+            btnToggle.find('span').text(selectedDropdownItem);
           });
+          if (dataType === 'Date') {
+            let dataID = btnToggle.attr('data-id');
+            $('#datepicker'+dataID).datepicker({
+              showOtherMonths: true,
+              dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+            });
+            $('.ui-corner-all').click(function (e){
+              e.preventDefault();
+              e.stopPropagation();
+            });
+          }
         });
       });
 
-      $(document).scroll(function() {
-        //detect when user scroll to top and set position to relative else sets position to fixed
-        $("#sectionSearchTabElement-22").css({
-          "top": "0",
-          "position": $(this).scrollTop() > 140 ? "fixed" : "relative"
-        });
-      });
+      //datepicker
+
+      // $(document).scroll(function() {
+      //   //detect when user scroll to top and set position to relative else sets position to fixed
+      //   $("#sectionSearchTabElement-22").css({
+      //     "top": "0",
+      //     "position": $(this).scrollTop() > 140 ? "fixed" : "relative"
+      //   });
+      // });
+
     }
   }
 

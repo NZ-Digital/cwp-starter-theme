@@ -213,3 +213,29 @@
     }
   }
 }
+.socials {
+  position: absolute;
+  right: 0;
+  top: -90px;
+  display: flex;
+  list-style: none;
+  li {
+    .nav-link {
+      font-size: 18px;
+      text-align: center;
+      color: #fff;
+      i {
+        height: 30px;
+        width: 30px;
+        border-radius: 50px;
+        background-color: $footer-gray;
+        line-height: 29px;
+      }
+    }
+    &:last-child {
+      .nav-link {
+        padding-right: 0;
+      }
+    }
+  }
+}

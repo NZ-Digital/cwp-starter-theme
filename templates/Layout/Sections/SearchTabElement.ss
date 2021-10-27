@@ -10,6 +10,7 @@
         <% end_loop %>
     </div>
     <% end_if %>
+
     <% if $SearchTab.SearchTabItems %>
         <% loop $SearchTab.SearchTabItems %>
         <div id="{$DisplayNameTrim}" class="tabcontent<% if $Pos == '1' %> active<% end_if %>" style="background-color: #{$TabBgColor};">
@@ -20,22 +21,25 @@
                         <div class="filter-field">
                             <% if $Type == "Date" %>
                                 <div class="dropdown filter-date">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownLocation{$ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownDate{$ID}" data-type="{$Type}" data-id="{$ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="text-footer-gray font-weight-normal halyard-display">Any date</span>
                                         <img src="$resourceURL('themes/starter/images/Icon-date.png')" class="img-icon" alt="$Name icon">
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownLocation{$ID}">
+                                    <div class="dropdown-menu" aria-labelledby="dropdownDate{$ID}">
+                                        <div class="calendar-options">
                                         <button class="dropdown-item" type="button">This month</button>
                                         <button class="dropdown-item" type="button">Today</button>
                                         <button class="dropdown-item" type="button">Tomorrow</button>
                                         <button class="dropdown-item" type="button">This weekend</button>
                                         <button class="dropdown-item" type="button">Any date</button>
+                                        </div>
+                                        <div class="calendar" id="datepicker{$ID}"></div>
                                     </div>
                                 </div>
                             <% end_if %>
                             <% if $Type == 'Location' %>
                                 <div class="dropdown filter-location">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownLocation{$ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownLocation{$ID}" data-type="{$Type}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="text-footer-gray font-weight-normal halyard-display">Anywhere</span>
                                         <i class="fal fa-angle-down fontsize25"></i>
                                     </button>
@@ -49,7 +53,7 @@
                             <% end_if %>
                             <% if $Type == 'Category' %>
                                 <div class="dropdown filter-categories">
-                                    <button class="btn btn-secondary dropdown-toggle fontsize16" type="button" id="dropdownCategory{$ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn btn-secondary dropdown-toggle fontsize16" type="button" id="dropdownCategory{$ID}" data-type="{$Type}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="text-footer-gray font-weight-normal halyard-display">Anything</span>
                                         <i class="fal fa-angle-down fontsize25"></i>
                                     </button>

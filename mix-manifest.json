@@ -14,5 +14,7 @@
     "/images/Login.svg": "/images/Login.svg",
     "/images/newzealand-government-footer.png": "/images/newzealand-government-footer.png",
     "/images/SignUp.svg": "/images/SignUp.svg",
-    "/dist/js/jquery.min.js": "/dist/js/jquery.min.js"
+    "/dist/js/jquery.min.js": "/dist/js/jquery.min.js",
+    "/images/next-icon.svg": "/images/next-icon.svg",
+    "/images/prev-icon.svg": "/images/prev-icon.svg"
 }

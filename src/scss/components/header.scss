@@ -15,9 +15,6 @@ body > header .open > a:focus {
 }
 .site-header {
   padding: 49px 100px 31px;
-  @media only screen and (max-width: 1589) {
-
-  }
   &.scrolled {
     position: fixed;
     top: 0;
@@ -27,7 +24,7 @@ body > header .open > a:focus {
     background: rgb(255 255 255 / 92%);
     transition: transform 200ms cubic-bezier(0.76, 0, 0.24, 1);
     transform: translate3d(0, -101%, 0);
-    z-index: 2;
+    z-index: 9999;
     &.open {
       transform: translate3d(0, 0, 0);
     }

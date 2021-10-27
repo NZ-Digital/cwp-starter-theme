@@ -353,6 +353,69 @@
                  }
                }
              }
+             .filter-date {
+               .calendar-options {
+                 padding: 0 26px;
+               }
+               .dropdown-menu {
+                 padding-right: 0;
+                 padding-left: 0;
+                 padding-bottom: 0;
+               }
+               .calendar {
+                 .ui-datepicker {
+                   width: 100%;
+                   border: 0;
+                   padding: 0;
+                   margin-top: 20px;
+                   .ui-corner-all {
+                     .ui-icon {
+                        background-position: center;
+                     }
+                   }
+                   .ui-datepicker-next,
+                   .ui-datepicker-prev {
+                     top: auto;
+                   }
+                   .ui-datepicker-next {
+                     .ui-icon {
+                       background-image: url("../images/next-icon.svg");
+                     }
+                   }
+                   .ui-datepicker-prev {
+                     .ui-icon {
+                       background-image: url("../images/prev-icon.svg");
+                     }
+                   }
+                   &-header {
+                     font-weight: 200;
+                     padding: 10px;
+                     border: 0;
+                     border-radius: 0;
+                     background-color: #E6E6E6;
+                   }
+                   &-calendar {
+                     margin-bottom: 0;
+                     thead {
+                       background-color: #EBEBEB;
+                       th {
+                         font-weight: 200;
+                       }
+                     }
+                     tbody {
+                       td {
+                         padding: 0;
+                         .ui-state-default {
+                           text-align: center;
+                           padding: 12px;
+                           border: 0;
+                         }
+                       }
+                     }
+                   }
+                 }
+               }
+             }
              .filter-keywords {
                width: 100%;
              }
@@ -408,12 +471,12 @@
 
 //	3. Pages
 /** Listing Page **/
-#sectionSearchTabElement-22 {
-  position: fixed;
-  width: 100%;
-  z-index: 2;
-  top: 98.04px;
-}
+//#sectionSearchTabElement-22 {
+//  position: fixed;
+//  width: 100%;
+//  z-index: 2;
+//  top: 98.04px;
+//}
 
 
 //	4. Global Settings
