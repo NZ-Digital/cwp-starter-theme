@@ -288,7 +288,7 @@
            i {
              position: absolute;
              top: 50%;
-             right: 56px;
+             right: 100px;
              transform: translate3d(0, -50%, 0);
            }
          }
@@ -471,12 +471,81 @@
 
 //	3. Pages
 /** Listing Page **/
-//#sectionSearchTabElement-22 {
-//  position: fixed;
-//  width: 100%;
-//  z-index: 2;
-//  top: 98.04px;
-//}
+.sectionListingPageContent  {
+  .listing-content {
+    &--img {
+      img {
+        width: 100%;
+      }
+    }
+    &--gallery {
+      position: relative;
+      .gallery-image {
+        img {
+          height: 463px;
+          width: 463px;
+          object-fit: cover;
+          @media only screen and (min-width: 1921px) {
+            height: 20vw;
+            width: 100%;
+          }
+        }
+      }
+      .owl-carousel {
+        .owl-item {
+          transition: opacity 200ms cubic-bezier(0.76, 0, 0.24, 1);
+          &:not(.active) {
+            opacity: 20%;
+          }
+        }
+        .owl-nav {
+          position: absolute;
+          top: -50px;
+          width: 100%;
+        }
+        .owl-dots {
+          position: absolute;
+          top: -50px;
+          transform: translate3d(-50%, 0, 0);
+          left: 50%;
+        }
+        .owl-nav {
+          .owl-prev {
+            position: absolute;
+            left: 0;
+            transition: left 200ms cubic-bezier(0.76, 0, 0.24, 1);
+            &:active {
+              left: -5px;
+            }
+          }
+          .owl-next {
+            position: absolute;
+            right: 0;
+            transition: left 200ms cubic-bezier(0.76, 0, 0.24, 1);
+            &:active {
+              right: -5px;
+            }
+          }
+        }
+        .owl-dots {
+          top: -54px;
+          .owl-dot {
+            height: 10px;
+            width: 10px;
+            border: 1px solid #707070;
+            border-radius: 50px;
+            margin: 0 5px;
+            transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1), border-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+            &.active {
+              background-color: $cod-gray;
+              border-color: $cod-gray;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 
 //	4. Global Settings
@@ -534,7 +603,7 @@ hr {
       margin-right: 13px;
     }
   }
-  .addtofavourites {
+  .btn-utils {
     border: 0;
     padding: 0;
     background: transparent;

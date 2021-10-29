@@ -10721,6 +10721,10 @@ pre {
   font-size: 19px;
 }
 
+.fontsize20 {
+  font-size: 20px;
+}
+
 .fontsize25 {
   font-size: 25px;
 }
@@ -10735,6 +10739,10 @@ pre {
 
 .fontsize45 {
   font-size: 45px;
+}
+
+.fontsize50 {
+  font-size: 50px;
 }
 
 .fontsize80 {

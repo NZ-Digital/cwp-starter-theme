@@ -26,7 +26,7 @@
                     <% end_if %>
                 </div>
                 <div class="listing-content--tags">
-                    <button class="addtofavourites"><img src="$resourceURL('themes/starter/images/Icon feather-heart.png')" width="34.26" alt="$SiteConfig.Title - add to your favourites"> </button>
+                    <button class="btn-utils addtofavourites"><img src="$resourceURL('themes/starter/images/Icon feather-heart.png')" width="34.26" alt="$SiteConfig.Title - add to your favourites"> </button>
                     <% if $Tags %>
                         <% loop $Tags %>
                             <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
@@ -36,7 +36,7 @@
                 <div class="listing-content--details">
                     <p class="mb-3"><span class="halyard-display fontsize35 font-weight-normal">{$Name}</span></p>
                     <p class="mb-5"><span class="halyard-display fontsize19 font-weight-book">{$Content.LimitWordCount(30)}</span></p>
-                    <p><span class="theme-button-gray-small halyard-display font-weight-medium fontsize16">More info</span></p>
+                    <p><a href="<% if $ListingPage %>$ListingPage.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small halyard-display font-weight-medium fontsize16">More info</span></a></p>
                 </div>
             </div>
             <% end_loop %>

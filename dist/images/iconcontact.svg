@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <g id="Group_3842" data-name="Group 3842" transform="translate(-1319 -2522.441)">
+    <path id="Path_1272" data-name="Path 1272" d="M18,0A18,18,0,1,1,0,18,18,18,0,0,1,18,0Z" transform="translate(1319 2522.441)" fill="#f8cc46"/>
+    <path id="Icon_material-contacts" data-name="Icon material-contacts" d="M16.583,0H4.509V1.509H16.583ZM4.509,18.111H16.583V16.6H4.509ZM16.583,3.019H4.509A1.514,1.514,0,0,0,3,4.528v9.056a1.514,1.514,0,0,0,1.509,1.509H16.583a1.514,1.514,0,0,0,1.509-1.509V4.528A1.514,1.514,0,0,0,16.583,3.019ZM10.546,5.094a1.7,1.7,0,1,1-1.7,1.7A1.7,1.7,0,0,1,10.546,5.094Zm3.773,7.735H6.773V11.7c0-1.26,2.513-1.887,3.773-1.887s3.773.626,3.773,1.887Z" transform="translate(1326.454 2531.386)" fill="#141414"/>
+  </g>
+</svg>

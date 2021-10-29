@@ -14,8 +14,11 @@ export default function () {
     headerSettings();
 
     //Sections
-    searchItemTabs()
-    featuredListings()
+    searchItemTabs();
+    featuredListings();
+
+    //Page
+    listingPage();
   }
 
   function headerSettings()
@@ -133,6 +136,38 @@ export default function () {
         nav: true,
         dots:true,
         navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/arrow-left.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/arrow-right.svg"></span>']
+      });
+    }
+  }
+
+  function listingPage()
+  {
+    let listingPage = $('.ListingPage');
+    if (listingPage.length > 0)
+    {
+      let listingPageGallery = listingPage.find('.owl-carousel');
+      listingPageGallery.owlCarousel({
+        items:2,
+        loop:true,
+        margin:26,
+        nav: true,
+        dots:true,
+        navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/next-arrow.svg"></span>'],
+        responsiveClass:true,
+        responsive:{
+          0:{
+            items:1,
+            nav:true
+          },
+          900:{
+            items:2,
+            nav:true,
+          },
+          1921:{
+            items:3,
+            nav:true,
+          }
+        }
       });
     }
   }

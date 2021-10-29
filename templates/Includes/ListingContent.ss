@@ -8,7 +8,7 @@
         <div class="listing-content--location-date">
             <div class="listing-date">
                 <% if $VisibleListingDateAndTime %>
-                    <% loop $VisibleListingDateAndTime %>
+                    <% loop $VisibleListingDateAndTime.Limit(1) %>
                         <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$Date.Format(E dd LLL)</span>
                     <% end_loop %>
                 <% end_if %>
@@ -22,13 +22,14 @@
             <p><span class="halyard-display fontsize19 font-weight-book line-height-100">{$Content.LimitWordCount(15)}</span></p>
         </div>
         <div class="listing-content--tags">
-            <button class="addtofavourites"><img src="$resourceURL('themes/starter/images/Icon feather-heart.png')" width="34.26" alt="$SiteConfig.Title - add to your favourites"> </button>
+            <button class="btn-utils addtofavourites"><img src="$resourceURL('themes/starter/images/Icon feather-heart.png')" width="34.26" alt="$SiteConfig.Title - add to your favourites"> </button>
             <% if $Tags %>
                 <% loop $Tags %>
                     <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
                 <% end_loop %>
             <% end_if %>
-            <p class="ml-auto"><span class="theme-button-gray-small halyard-display font-weight-medium fontsize16">More info</span></p>
+            <p class="ml-auto"><a href="<% if $ListingPage %>$ListingPage.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small halyard-display font-weight-medium fontsize16">More info</span></a></p>
         </div>
     </div>
 </div>
+
