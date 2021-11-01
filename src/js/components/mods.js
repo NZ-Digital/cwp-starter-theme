@@ -14,8 +14,8 @@ export default function () {
     headerSettings();
 
     //Sections
-    searchItemTabs();
-    featuredListings();
+    sectionFilterBar();
+    sectionFeaturedListings();
 
     //Page
     listingPage();
@@ -49,11 +49,11 @@ export default function () {
     });
   }
 
-  function searchItemTabs()
+  function sectionFilterBar()
   {
-    let sectionSearchTabElement = $('.sectionSearchTabElement');
-    if (sectionSearchTabElement.length > 0) {
-      sectionSearchTabElement.each(function () {
+    let sectionFilterBar = $('.sectionFilterBar');
+    if (sectionFilterBar.length > 0) {
+      sectionFilterBar.each(function () {
         let tab = $(this).find('.tab .tablinks');
         tab.click(function(){
           let dataID = $(this).attr('data-id');
@@ -81,7 +81,7 @@ export default function () {
       });
 
       //dropdown
-      sectionSearchTabElement.find('.dropdown').each(function() {
+      sectionFilterBar.find('.dropdown').each(function() {
         $(this).on('show.bs.dropdown', function () {
           let btnToggle = $(this).find('.dropdown-toggle');
           let dataType  = btnToggle.attr('data-type');
@@ -107,27 +107,16 @@ export default function () {
           }
         });
       });
-
-      //datepicker
-
-      // $(document).scroll(function() {
-      //   //detect when user scroll to top and set position to relative else sets position to fixed
-      //   $("#sectionSearchTabElement-22").css({
-      //     "top": "0",
-      //     "position": $(this).scrollTop() > 140 ? "fixed" : "relative"
-      //   });
-      // });
-
     }
   }
 
-  function featuredListings()
+  function sectionFeaturedListings()
   {
-    let sectionFeaturedEvents = $('.sectionFeaturedEvents');
-    if (sectionFeaturedEvents.length > 0)
+    let sectionFeaturedListing = $('.sectionFeaturedListing');
+    if (sectionFeaturedListing.length > 0)
     {
-      let featuredEventsItem = sectionFeaturedEvents.find('.owl-carousel');
-      featuredEventsItem.owlCarousel({
+      let featuredListingItem = sectionFeaturedListing.find('.owl-carousel');
+      featuredListingItem.owlCarousel({
         items:1,
         loop:true,
         center: true,

@@ -12467,8 +12467,8 @@ __webpack_require__.r(__webpack_exports__);
   function initializeDocument() {
     headerSettings(); //Sections
 
-    searchItemTabs();
-    featuredListings(); //Page
+    sectionFilterBar();
+    sectionFeaturedListings(); //Page
 
     listingPage();
   }
@@ -12499,11 +12499,11 @@ __webpack_require__.r(__webpack_exports__);
     });
   }
 
-  function searchItemTabs() {
-    var sectionSearchTabElement = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sectionSearchTabElement');
+  function sectionFilterBar() {
+    var sectionFilterBar = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sectionFilterBar');
 
-    if (sectionSearchTabElement.length > 0) {
-      sectionSearchTabElement.each(function () {
+    if (sectionFilterBar.length > 0) {
+      sectionFilterBar.each(function () {
         var tab = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.tab .tablinks');
         tab.click(function () {
           var dataID = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id');
@@ -12531,7 +12531,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       }); //dropdown
 
-      sectionSearchTabElement.find('.dropdown').each(function () {
+      sectionFilterBar.find('.dropdown').each(function () {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).on('show.bs.dropdown', function () {
           var btnToggle = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown-toggle');
           var dataType = btnToggle.attr('data-type');
@@ -12557,23 +12557,16 @@ __webpack_require__.r(__webpack_exports__);
             });
           }
         });
-      }); //datepicker
-      // $(document).scroll(function() {
-      //   //detect when user scroll to top and set position to relative else sets position to fixed
-      //   $("#sectionSearchTabElement-22").css({
-      //     "top": "0",
-      //     "position": $(this).scrollTop() > 140 ? "fixed" : "relative"
-      //   });
-      // });
+      });
     }
   }
 
-  function featuredListings() {
-    var sectionFeaturedEvents = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sectionFeaturedEvents');
+  function sectionFeaturedListings() {
+    var sectionFeaturedListing = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sectionFeaturedListing');
 
-    if (sectionFeaturedEvents.length > 0) {
-      var featuredEventsItem = sectionFeaturedEvents.find('.owl-carousel');
-      featuredEventsItem.owlCarousel({
+    if (sectionFeaturedListing.length > 0) {
+      var featuredListingItem = sectionFeaturedListing.find('.owl-carousel');
+      featuredListingItem.owlCarousel({
         items: 1,
         loop: true,
         center: true,

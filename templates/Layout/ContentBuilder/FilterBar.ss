@@ -52,7 +52,7 @@
                                         </div>
                                     <% else %>
                                         <div class="filter{$FieldType}">
-                                            <input type="text" name="keywords" placeholder="Keywords" class="filter-keywords halyard-display fontsize16 font-weight-normal">
+                                            <input type="text" name="keywords" placeholder="Keywords" class="halyard-display fontsize16 font-weight-normal">
                                             <i class="fas fa-search"></i>
                                         </div>
                                     <% end_if %>

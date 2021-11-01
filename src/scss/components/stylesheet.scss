@@ -13,13 +13,14 @@
  *      - Search Bar
  *		2. Sections
  *      - Card
- *      - Featured Events
+ *      - Featured Listing
  *      - Filter Bar
  *      - Image Banner
- *      - Listing Grid
  *      - Latest News
+ *      - Listing Grid
+ *      - Line Separator
  *      - Sortable Listing
- *      - Upcoming Events
+ *      - Upcoming Listing
  *    3. Pages
  *      - Listing Page
  *    4. Global Settings
@@ -42,9 +43,9 @@
 
     }
   }
-  // -- Featured Events -- //
-  &.sectionFeaturedEvents  {
-    .featuredEvents-container {
+  // -- Featured Listings -- //
+  &.sectionFeaturedListing {
+    .featuredListing-container {
       .listing-content {
         &--img {
           img {
@@ -112,6 +113,170 @@
     }
   }
 
+  // -- Filter bar -- //
+  &.sectionFilterBar  {
+    .filterBar-container {
+      .tab {
+        .tablinks {
+          position: relative;
+          color: $white;
+          text-align: left;
+          padding: 15px 100px 14px;
+          border: 0;
+          i {
+            position: absolute;
+            top: 50%;
+            right: 100px;
+            transform: translate3d(0, -50%, 0);
+          }
+        }
+      }
+      .tabcontent {
+        display: none;
+        //max-height: 0;
+        //overflow: hidden;
+        transition: display 200ms cubic-bezier(0.76, 0, 0.24, 1);
+        &.active {
+          display: block;
+          //max-height: 600px;
+        }
+      }
+      .filters {
+        padding: 100px 240px;
+        .filter-item {
+          padding: 0 8px;
+          .filter-field {
+            position: relative;
+            .filterDate,
+            .filterLocation,
+            .filterCategory {
+              .dropdown-toggle {
+                width: 100%;
+                text-align: left;
+                border: 0;
+                border-radius: 5px;
+                padding: 15px 26px;
+                background-color: white;
+              }
+              .dropdown-menu {
+                width: 100%;
+                margin-top: -4px;
+                padding: 25px 26px;
+                border: 0;
+                border-top-right-radius: 0;
+                border-top-left-radius: 0;
+                background-color: $carra;
+                box-shadow: 0 1px 5px rgb(0 0 0 / 16%);
+                .dropdown-item {
+                  color: $scorpion;
+                  padding: 0;
+                  transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1) ;
+                  &.active,
+                  &:hover {
+                    color: $cod-gray;
+                    background-color: transparent;
+                  }
+                  &:not(:last-child) {
+                    border-bottom: 1px solid $footer-gray;
+                    padding: 7px 0;
+                  }
+                  &:last-child {
+                    padding-top: 7px;
+                  }
+                }
+              }
+              &.show {
+                i {
+                  transform: rotate(180deg);
+                }
+              }
+            }
+            .filterDate {
+              .calendar-options {
+                padding: 0 26px;
+              }
+              .dropdown-menu {
+                padding-right: 0;
+                padding-left: 0;
+                padding-bottom: 0;
+              }
+              .calendar {
+                .ui-datepicker {
+                  width: 100%;
+                  border: 0;
+                  padding: 0;
+                  margin-top: 20px;
+                  .ui-corner-all {
+                    .ui-icon {
+                      background-position: center;
+                    }
+                  }
+                  .ui-datepicker-next,
+                  .ui-datepicker-prev {
+                    top: auto;
+                  }
+                  .ui-datepicker-next {
+                    .ui-icon {
+                      background-image: url("../images/next-icon.svg");
+                    }
+                  }
+                  .ui-datepicker-prev {
+                    .ui-icon {
+                      background-image: url("../images/prev-icon.svg");
+                    }
+                  }
+                  &-header {
+                    font-weight: 200;
+                    padding: 10px;
+                    border: 0;
+                    border-radius: 0;
+                    background-color: #E6E6E6;
+                  }
+                  &-calendar {
+                    margin-bottom: 0;
+                    thead {
+                      background-color: #EBEBEB;
+                      th {
+                        font-weight: 200;
+                      }
+                    }
+                    tbody {
+                      td {
+                        padding: 0;
+                        .ui-state-default {
+                          text-align: center;
+                          padding: 12px;
+                          border: 0;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            .filterKeywords {
+              input {
+                border: 0;
+                border-radius: 5px;
+                padding: 15px 26px;
+                width: 100%;
+              }
+            }
+            i,
+            .img-icon {
+              position: absolute;
+              color: $saffron-mango;
+              top: 50%;
+              right: 15px;
+              transform: translate3d(0, -50%, 0);
+              line-height: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
   // -- Image Banner -- //
   &.sectionImageBanner {
     position: relative;
@@ -154,6 +319,20 @@
     }
   }
 
+  // -- Latest News -- //
+  &.sectionLatestNews {
+    .latestNews-container {
+      .newslist-content {
+        &--link {
+          position: absolute;
+          top: 50%;
+          right: 20px;
+          transform: translate3d(0, -50%, 0);
+        }
+      }
+    }
+  }
+
   // -- Listing Grid -- //
   &.sectionListingGrid {
     .listingGrid-container {
@@ -172,16 +351,11 @@
     }
   }
 
-  // -- Latest News -- //
-  &.sectionLatestNews {
-    .latestNews-container {
-      .newslist-content {
-        &--link {
-          position: absolute;
-          top: 50%;
-          right: 20px;
-          transform: translate3d(0, -50%, 0);
-        }
+  // -- Line Separator -- //
+  &.sectionLineSeparator {
+    .lineSeparator-container {
+      hr {
+        border-color: #707070;
       }
     }
   }
@@ -275,173 +449,9 @@
     }
   }
 
-  // -- Search Tab Element -- //
-  &.sectionFilterBar  {
-     .filterBar-container {
-       .tab {
-         .tablinks {
-           position: relative;
-           color: $white;
-           text-align: left;
-           padding: 15px 100px 14px;
-           border: 0;
-           i {
-             position: absolute;
-             top: 50%;
-             right: 100px;
-             transform: translate3d(0, -50%, 0);
-           }
-         }
-       }
-       .tabcontent {
-         display: none;
-         //max-height: 0;
-         //overflow: hidden;
-         transition: display 200ms cubic-bezier(0.76, 0, 0.24, 1);
-         &.active {
-           display: block;
-           //max-height: 600px;
-         }
-       }
-       .filters {
-         padding: 100px 240px;
-         .filter-item {
-           padding: 0 8px;
-           .filter-field {
-             position: relative;
-             .filterDate,
-             .filterLocation,
-             .filterCategory {
-               .dropdown-toggle {
-                 width: 100%;
-                 text-align: left;
-                 border: 0;
-                 border-radius: 5px;
-                 padding: 15px 26px;
-                 background-color: white;
-               }
-               .dropdown-menu {
-                 width: 100%;
-                 margin-top: -4px;
-                 padding: 25px 26px;
-                 border: 0;
-                 border-top-right-radius: 0;
-                 border-top-left-radius: 0;
-                 background-color: $carra;
-                 box-shadow: 0 1px 5px rgb(0 0 0 / 16%);
-                 .dropdown-item {
-                   color: $scorpion;
-                   padding: 0;
-                   transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1) ;
-                   &.active,
-                   &:hover {
-                     color: $cod-gray;
-                     background-color: transparent;
-                   }
-                   &:not(:last-child) {
-                     border-bottom: 1px solid $footer-gray;
-                     padding: 7px 0;
-                   }
-                   &:last-child {
-                     padding-top: 7px;
-                   }
-                 }
-               }
-               &.show {
-                 i {
-                   transform: rotate(180deg);
-                 }
-               }
-             }
-             .filterDate {
-               .calendar-options {
-                 padding: 0 26px;
-               }
-               .dropdown-menu {
-                 padding-right: 0;
-                 padding-left: 0;
-                 padding-bottom: 0;
-               }
-               .calendar {
-                 .ui-datepicker {
-                   width: 100%;
-                   border: 0;
-                   padding: 0;
-                   margin-top: 20px;
-                   .ui-corner-all {
-                     .ui-icon {
-                        background-position: center;
-                     }
-                   }
-                   .ui-datepicker-next,
-                   .ui-datepicker-prev {
-                     top: auto;
-                   }
-                   .ui-datepicker-next {
-                     .ui-icon {
-                       background-image: url("../images/next-icon.svg");
-                     }
-                   }
-                   .ui-datepicker-prev {
-                     .ui-icon {
-                       background-image: url("../images/prev-icon.svg");
-                     }
-                   }
-                   &-header {
-                     font-weight: 200;
-                     padding: 10px;
-                     border: 0;
-                     border-radius: 0;
-                     background-color: #E6E6E6;
-                   }
-                   &-calendar {
-                     margin-bottom: 0;
-                     thead {
-                       background-color: #EBEBEB;
-                       th {
-                         font-weight: 200;
-                       }
-                     }
-                     tbody {
-                       td {
-                         padding: 0;
-                         .ui-state-default {
-                           text-align: center;
-                           padding: 12px;
-                           border: 0;
-                         }
-                       }
-                     }
-                   }
-                 }
-               }
-             }
-             .filterKeywords {
-               width: 100%;
-             }
-             input {
-               border: 0;
-               border-radius: 5px;
-               padding: 15px 26px;
-             }
-             i,
-             .img-icon {
-               position: absolute;
-               color: $saffron-mango;
-               top: 50%;
-               right: 15px;
-               transform: translate3d(0, -50%, 0);
-               line-height: 0;
-             }
-           }
-         }
-       }
-     }
-  }
-
-  // -- Upcoming Events -- //
-  &.sectionUpcomingEvents {
-    .upcomingEvents-container {
+  // -- Upcoming Listing -- //
+  &.sectionUpcomingListing {
+    .upcomingListing-container {
       .listing-content {
         margin-bottom: 134px;
         &--img {

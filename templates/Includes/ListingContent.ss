@@ -7,14 +7,10 @@
         <% end_if %>
         <div class="listing-content--location-date">
             <div class="listing-date">
-                <% if $VisibleListingDateAndTime %>
-                    <% loop $VisibleListingDateAndTime.Limit(1) %>
-                        <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$Date.Format(E dd LLL)</span>
-                    <% end_loop %>
-                <% end_if %>
+                <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$ListingClosestToCurrentDate</span>
             </div>
             <div class="listing-location ml-auto">
-                <span class="text-footer-gray text-underline">$Location</span>
+                <span class="text-footer-gray text-underline">$City</span>
             </div>
         </div>
         <div class="listing-content--details">
