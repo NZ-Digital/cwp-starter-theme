@@ -14,11 +14,11 @@
  *		2. Sections
  *      - Card
  *      - Featured Events
+ *      - Filter Bar
  *      - Image Banner
  *      - Listing Grid
  *      - Latest News
  *      - Sortable Listing
- *      - Search Tab Element
  *      - Upcoming Events
  *    3. Pages
  *      - Listing Page
@@ -276,8 +276,8 @@
   }
 
   // -- Search Tab Element -- //
-  &.sectionSearchTabElement  {
-     .searchTabElement-container {
+  &.sectionFilterBar  {
+     .filterBar-container {
        .tab {
          .tablinks {
            position: relative;
@@ -309,9 +309,9 @@
            padding: 0 8px;
            .filter-field {
              position: relative;
-             .filter-date,
-             .filter-location,
-             .filter-categories {
+             .filterDate,
+             .filterLocation,
+             .filterCategory {
                .dropdown-toggle {
                  width: 100%;
                  text-align: left;
@@ -353,7 +353,7 @@
                  }
                }
              }
-             .filter-date {
+             .filterDate {
                .calendar-options {
                  padding: 0 26px;
                }
@@ -416,7 +416,7 @@
                  }
                }
              }
-             .filter-keywords {
+             .filterKeywords {
                width: 100%;
              }
              input {

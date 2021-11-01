@@ -16100,11 +16100,11 @@ body > header .open > a:focus {
  *		2. Sections
  *      - Card
  *      - Featured Events
+ *      - Filter Bar
  *      - Image Banner
  *      - Listing Grid
  *      - Latest News
  *      - Sortable Listing
- *      - Search Tab Element
  *      - Upcoming Events
  *    3. Pages
  *      - Listing Page
@@ -16305,39 +16305,39 @@ body > header .open > a:focus {
 .page-section.sectionSortableListing .sortableListings-container .sortable-listing--items .listing-content--details {
   min-height: 135px;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .tab .tablinks {
+.page-section.sectionFilterBar .filterBar-container .tab .tablinks {
   position: relative;
   color: #fff;
   text-align: left;
   padding: 15px 100px 14px;
   border: 0;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .tab .tablinks i {
+.page-section.sectionFilterBar .filterBar-container .tab .tablinks i {
   position: absolute;
   top: 50%;
   right: 100px;
   -webkit-transform: translate3d(0, -50%, 0);
           transform: translate3d(0, -50%, 0);
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .tabcontent {
+.page-section.sectionFilterBar .filterBar-container .tabcontent {
   display: none;
   transition: display 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .tabcontent.active {
+.page-section.sectionFilterBar .filterBar-container .tabcontent.active {
   display: block;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters {
+.page-section.sectionFilterBar .filterBar-container .filters {
   padding: 100px 240px;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item {
   padding: 0 8px;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field {
   position: relative;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .dropdown-toggle,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-location .dropdown-toggle,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-categories .dropdown-toggle {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-toggle,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-toggle,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-toggle {
   width: 100%;
   text-align: left;
   border: 0;
@@ -16345,9 +16345,9 @@ body > header .open > a:focus {
   padding: 15px 26px;
   background-color: white;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .dropdown-menu,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-location .dropdown-menu,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-categories .dropdown-menu {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu {
   width: 100%;
   margin-top: -4px;
   padding: 25px 26px;
@@ -16357,99 +16357,99 @@ body > header .open > a:focus {
   background-color: #f0efed;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.16);
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .dropdown-menu .dropdown-item,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-location .dropdown-menu .dropdown-item,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-categories .dropdown-menu .dropdown-item {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu .dropdown-item,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu .dropdown-item,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu .dropdown-item {
   color: #696163;
   padding: 0;
   transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .dropdown-menu .dropdown-item.active, .page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .dropdown-menu .dropdown-item:hover,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-location .dropdown-menu .dropdown-item.active,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-location .dropdown-menu .dropdown-item:hover,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-categories .dropdown-menu .dropdown-item.active,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-categories .dropdown-menu .dropdown-item:hover {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu .dropdown-item.active, .page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu .dropdown-item:hover,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu .dropdown-item.active,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu .dropdown-item:hover,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu .dropdown-item.active,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu .dropdown-item:hover {
   color: #141414;
   background-color: transparent;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .dropdown-menu .dropdown-item:not(:last-child),
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-location .dropdown-menu .dropdown-item:not(:last-child),
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-categories .dropdown-menu .dropdown-item:not(:last-child) {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu .dropdown-item:not(:last-child),
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu .dropdown-item:not(:last-child),
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu .dropdown-item:not(:last-child) {
   border-bottom: 1px solid #a2a2a2;
   padding: 7px 0;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .dropdown-menu .dropdown-item:last-child,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-location .dropdown-menu .dropdown-item:last-child,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-categories .dropdown-menu .dropdown-item:last-child {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu .dropdown-item:last-child,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu .dropdown-item:last-child,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu .dropdown-item:last-child {
   padding-top: 7px;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date.show i,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-location.show i,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-categories.show i {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate.show i,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation.show i,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory.show i {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar-options {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar-options {
   padding: 0 26px;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .dropdown-menu {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu {
   padding-right: 0;
   padding-left: 0;
   padding-bottom: 0;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker {
   width: 100%;
   border: 0;
   padding: 0;
   margin-top: 20px;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker .ui-corner-all .ui-icon {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker .ui-corner-all .ui-icon {
   background-position: center;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker .ui-datepicker-next,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker .ui-datepicker-prev {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker .ui-datepicker-next,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker .ui-datepicker-prev {
   top: auto;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker .ui-datepicker-next .ui-icon {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker .ui-datepicker-next .ui-icon {
   background-image: url("../images/next-icon.svg");
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker .ui-datepicker-prev .ui-icon {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker .ui-datepicker-prev .ui-icon {
   background-image: url("../images/prev-icon.svg");
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker-header {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker-header {
   font-weight: 200;
   padding: 10px;
   border: 0;
   border-radius: 0;
   background-color: #E6E6E6;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker-calendar {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker-calendar {
   margin-bottom: 0;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker-calendar thead {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker-calendar thead {
   background-color: #EBEBEB;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker-calendar thead th {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker-calendar thead th {
   font-weight: 200;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker-calendar tbody td {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker-calendar tbody td {
   padding: 0;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-date .calendar .ui-datepicker-calendar tbody td .ui-state-default {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .calendar .ui-datepicker-calendar tbody td .ui-state-default {
   text-align: center;
   padding: 12px;
   border: 0;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .filter-keywords {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterKeywords {
   width: 100%;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field input {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field input {
   border: 0;
   border-radius: 5px;
   padding: 15px 26px;
 }
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field i,
-.page-section.sectionSearchTabElement .searchTabElement-container .filters .filter-item .filter-field .img-icon {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field i,
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .img-icon {
   position: absolute;
   color: #f8cc46;
   top: 50%;

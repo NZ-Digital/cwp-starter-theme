@@ -1,5 +1,7 @@
 <% if $VisibleSections %>
     <% loop $VisibleSections %>
-        <section id="section{$DisplayTypeTrim}-{$ID}" class="page-section section{$DisplayTypeTrim} $SectionWidth<% if $ReadablePaddings %><% loop $ReadablePaddings %> $Name<% end_loop %><% end_if %>" <% if $SectionBgColor %>style="background-color: #{$SectionBgColor};"<% end_if %>><div class="{$SectionContainer} p-0">$Show</div></section>
+        <% if $VisibleContentBuilder %>
+            <section id="section{$VisibleContentBuilder.DisplayTypeTrim}-{$ID}" class="page-section section{$VisibleContentBuilder.DisplayTypeTrim} $Width<% if $ReadablePaddings %><% loop $ReadablePaddings %> $Name<% end_loop %><% end_if %>" <% if $BgColor %>style="background-color: #{$BgColor};"<% end_if %>><div class="{$ContainerType} p-0">$VisibleContentBuilder.Show</div></section>
+        <% end_if %>
     <% end_loop %>
 <% end_if %>
