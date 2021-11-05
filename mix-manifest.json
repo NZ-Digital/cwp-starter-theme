@@ -25,11 +25,14 @@
     "/images/Iconmaterial-web.svg": "/images/Iconmaterial-web.svg",
     "/images/Iconzocial-email.svg": "/images/Iconzocial-email.svg",
     "/images/Login.svg": "/images/Login.svg",
+    "/images/LoginFormImage.jpg": "/images/LoginFormImage.jpg",
+    "/images/LoginFormImage.png": "/images/LoginFormImage.png",
     "/images/newzealand-government-footer.png": "/images/newzealand-government-footer.png",
     "/images/next-arrow.svg": "/images/next-arrow.svg",
     "/images/next-icon.svg": "/images/next-icon.svg",
     "/images/prev-arrow.svg": "/images/prev-arrow.svg",
     "/images/prev-icon.svg": "/images/prev-icon.svg",
     "/images/SignUp.svg": "/images/SignUp.svg",
-    "/dist/js/jquery.min.js": "/dist/js/jquery.min.js"
+    "/dist/js/jquery.min.js": "/dist/js/jquery.min.js",
+    "/images/AddListing.jpg": "/images/AddListing.jpg"
 }

@@ -12,7 +12,7 @@
                         <span class="halyard-display font-weight-medium fontsize16 text-uppercase letterspacing-1px">$ListingClosestToCurrentDate</span>
                     </div>
                     <div class="listing-content--tags">
-                        <button class="btn-utils addtofavourites"><img src="$resourceURL('themes/starter/images/Icon feather-heart.png')" width="34.26" alt="$SiteConfig.Title - add to your favourites"> </button>
+                        <button class="btn-utils addtofavourites fontsize35<% if $Up.wasAddedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.wasAddedToFavourites($ID)" data-status=""><i class="<% if $Up.wasAddedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                         <% if $Tags %>
                             <% loop $Tags %>
                                 <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>

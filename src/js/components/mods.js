@@ -19,6 +19,9 @@ export default function () {
 
     //Page
     listingPage();
+
+    //Actions
+    addToFavourites();
   }
 
   function headerSettings()
@@ -158,6 +161,46 @@ export default function () {
           }
         }
       });
+    }
+  }
+
+  function addToFavourites()
+  {
+    let btn = $('.addtofavourites');
+    btn.click(function () {
+      let id = $(this).attr('data-id');
+      let member = $(this).attr('data-member');
+      //redirect if not member
+      let favCounter = $('.fav-counter');
+      let newCount = '';
+      if ($(this).hasClass('active')) {
+        $(this).removeClass('active');
+        $(this).find('i').removeClass('fas').addClass('far');
+        newCount = (parseInt(favCounter.attr('data-count')) - 1);
+        callAPIEndpoint('ajax/removeListingFromFavourites', 'POST', 'id=' + id, function (result) {
+          favCounter.text(newCount);
+          favCounter.attr('data-count', newCount)
+          resetFavCounter(favCounter);
+        });
+      } else {
+        $(this).addClass('active');
+        $(this).find('i').removeClass('far').addClass('fas');
+        newCount = (parseInt(favCounter.attr('data-count')) + 1);
+        callAPIEndpoint('ajax/addListingFromFavourites', 'POST', 'id=' + id, function (result) {
+          favCounter.html(newCount);
+          favCounter.attr('data-count', newCount)
+          resetFavCounter(favCounter);
+        });
+      }
+    });
+  }
+
+  function resetFavCounter(favCounter)
+  {
+    if (parseInt(favCounter.attr('data-count')) > 0) {
+      favCounter.addClass('filled');
+    } else {
+      favCounter.removeClass('filled');
     }
   }
 

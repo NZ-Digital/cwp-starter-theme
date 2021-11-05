@@ -186,7 +186,14 @@
   li {
     .nav-link {
       color: $cod-gray;
-      padding: 1rem 1.5rem;
+      padding: 1rem 1.12rem;
+      &.active {
+        span {
+          &:after {
+            width: 100% !important;
+          }
+        }
+      }
       .link-icon {
         padding-left: 12px;
         margin-top: -5px;
@@ -208,6 +215,29 @@
       .nav-link {
         @media only screen and (max-width: 1589px) {
           padding-left: .5rem;
+        }
+      }
+    }
+    .nav-favourites {
+      position: relative;
+      .fav-counter {
+        display: none;
+        position: absolute;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        height: 23px;
+        width: 23px;
+        bottom: 11px;
+        right: -10px;
+        border-radius: 50px;
+        background-color: #EB6543;
+        line-height: 23px;
+        &.filled {
+          display: block;
+        }
+        &:after {
+          display: none !important;
         }
       }
     }

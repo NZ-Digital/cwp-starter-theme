@@ -10729,6 +10729,10 @@ pre {
   font-size: 25px;
 }
 
+.fontsize27 {
+  font-size: 25px;
+}
+
 .fontsize30 {
   font-size: 30px;
 }
@@ -10743,6 +10747,10 @@ pre {
 
 .fontsize50 {
   font-size: 50px;
+}
+
+.fontsize60 {
+  font-size: 60px;
 }
 
 .fontsize80 {
@@ -10845,6 +10853,7 @@ pre {
 .theme-button-hover-dark,
 .theme-button-dark,
 .theme-button-gray,
+.theme-button-alt,
 .button-signup,
 .button-myportal {
   display: inline-block;
@@ -10861,6 +10870,15 @@ pre {
 .theme-button:hover {
   border-color: #f0efed;
   background-color: #f0efed;
+}
+
+.theme-button-alt {
+  min-width: 226px;
+  padding: 15px;
+}
+.theme-button-alt:hover {
+  color: #fff;
+  background-color: #141414;
 }
 
 .theme-button-hover-dark {

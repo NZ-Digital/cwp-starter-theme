@@ -17,10 +17,11 @@
  *      - Filter Bar
  *      - Image Banner
  *      - Latest News
- *      - Listing Grid
+ *      - Grid Listings
  *      - Line Separator
  *      - Sortable Listing
  *      - Upcoming Listing
+ *      - User Navigation
  *    3. Pages
  *      - Listing Page
  *    4. Global Settings
@@ -47,10 +48,10 @@
   &.sectionFeaturedListing {
     .featuredListing-container {
       .listing-content {
+        margin-bottom: 0;
         &--img {
           img {
             height: 30vw;
-            object-fit: cover;
           }
         }
         &--date {
@@ -72,7 +73,7 @@
         .owl-nav,
         .owl-dots {
           position: absolute;
-          top: -150px;
+          top: -135px;
           transform: translate3d(-50%, 0, 0);
           left: 50%;
         }
@@ -95,7 +96,7 @@
           }
         }
         .owl-dots {
-          top: -127px;
+          top: -110px;
           .owl-dot {
             height: 10px;
             width: 10px;
@@ -285,7 +286,12 @@
     }
     .banner-img {
       background-repeat: no-repeat;
-      background-size: cover;
+      &.bg-cover {
+        background-size: cover;
+      }
+      &.bg-contain {
+        background-size: contain;
+      }
       &.bh-small {
         height: 30vw;
       }
@@ -333,9 +339,9 @@
     }
   }
 
-  // -- Listing Grid -- //
-  &.sectionListingGrid {
-    .listingGrid-container {
+  // -- Grid Listings -- //
+  &.sectionGridListing {
+    .gridListing-container {
       .listing-content {
         &--img {
           img {
@@ -423,26 +429,7 @@
         &--items {
           margin-top: 43px;
           .listing-content {
-            margin-bottom: 134px;
-            &--img {
-              img {
-                width: 100%;
-                height: 17vw;
-                object-fit: cover;
-              }
-            }
-            &--location-date {
-              display: flex;
-              .listing-date {
-                display: inline-block;
-                padding: 6px 36px;
-                background-color: $footer-gray;
-              }
-              .listing-location {}
-            }
-            &--details {
-              min-height: 135px;
-            }
+
           }
         }
       }
@@ -452,34 +439,128 @@
   // -- Upcoming Listing -- //
   &.sectionUpcomingListing {
     .upcomingListing-container {
-      .listing-content {
-        margin-bottom: 134px;
-        &--img {
-          img {
-            width: 100%;
-            height: 17vw;
-            object-fit: cover;
-          }
-        }
-        &--location-date {
+
+    }
+  }
+
+  // -- User Navigation -- //
+  &.sectionUserNavigationBar {
+    background-color: $cod-gray;
+    .userNavigation-container {
+      padding: 42px 100px 42px 240px;
+      .user-navigation {
+        display: flex;
+        &--links {
+          list-style: none;
           display: flex;
-          .listing-date {
-            display: inline-block;
-            padding: 6px 36px;
-            background-color: $footer-gray;
+          flex-direction: row;
+          margin-bottom: 0;
+          padding: 0;
+          li {
+            margin-right: 18px;
+            &.active {
+              a {
+                background-color: $saffron-mango;
+              }
+            }
+            a {
+              position: relative;
+              display: block;
+              text-align: center;
+              text-decoration: none;
+              width: 252px;
+              background-color: #fff;
+              padding: 12px 40px;
+              border-radius: 50px;
+              transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1), bottom 200ms cubic-bezier(0.76, 0, 0.24, 1);
+              &:hover {
+                background-color: $saffron-mango;
+              }
+              &:active {
+                bottom: -2px;
+              }
+              &.with-icon {
+                padding-right: 60px;
+              }
+              .nav-icon {
+                position: absolute;
+                top: 50%;
+                right: 27px;
+                transform: translate3d(0, -50%, 0);
+              }
+            }
           }
-          .listing-location {}
         }
-        &--details {
-          min-height: 135px;
+        &--profile {
+          margin-left: auto;
+          img {
+            border-radius: 50px;
+            margin-left: 34px;
+            margin-right: 22px;
+          }
+        }
+        .dropdown {
+          &.show {
+            i {
+              transform: rotate(180deg);
+            }
+          }
+          .dropdown-menu {
+            padding: 30px;
+            width: 400px;
+            margin-top: 20px;
+            border: 0;
+            box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+          }
+        }
+        &--dropdown {
+          background-color: transparent;
+          border: 0;
+          padding-right: 0;
+          &:active,
+          &:focus {
+            box-shadow: none;
+          }
+          &:after {
+            display: none;
+          }
         }
       }
     }
   }
 
+  &.sectionMyFavouriteListings {
+    .favouriteListings-content {
+
+    }
+  }
+
+  &.sectionMyListings {
+    .myListings-content {
+      .my-listings {
+        &--header {
+
+        }
+        &--listings {
+          .addListing {
+            width: 100%;
+            border: 0;
+            img {
+              height: 17vw;
+              object-fit: contain;
+            }
+            &:active {
+              transform: scale(0.99);
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 //	3. Pages
+
 /** Listing Page **/
 .sectionListingPageContent  {
   .listing-content {
@@ -557,11 +638,57 @@
   }
 }
 
+/** LoginPage **/
+.LoginPage {
+  .site-header {
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+  }
+
+  #LoginForm_LoginForm {
+    .fields {
+      display: flex;
+      .field {
+        width: 100%;
+        max-width: 450px;
+        margin-right: 30px;
+      }
+    }
+    .actions {
+      width: 100%;
+      max-width: 450px;
+      margin-left: 480px;
+      margin-top: 20px;
+    }
+    #LoginForm_LoginForm_error {
+      display: inline-block;
+      color: #842029;
+      background-color: #f8d7da;
+      border-color: #f5c2c7;
+    }
+  }
+
+
+  .form-container {
+  }
+  .col-form-label,
+  .form-text {
+    display: none !important;
+  }
+}
+
 
 //	4. Global Settings
+
+/** Container **/
 .container-small {
   max-width: 1040px;
   margin: auto;
+}
+
+.addtofavourites {
+  &.active {
+    color: #EB6543;
+  }
 }
 
 img.right, figure.right {
@@ -601,8 +728,37 @@ hr {
   color: $footer-gray;
 }
 
-// Events
+// Listing Content
 .listing-content {
+  margin-bottom: 134px;
+  &--img {
+    img {
+      width: 100%;
+      height: 17vw;
+      object-fit: cover;
+    }
+  }
+  &--location-date {
+    display: flex;
+    .listing-date {
+      display: inline-block;
+      padding: 6px 36px;
+      background-color: $footer-gray;
+    }
+    .listing-location {}
+    .listing-flag {
+      padding: 6px 36px;
+      &.active-flag {
+        background-color: #6AAE8F;
+      }
+      &.pending-flag {
+        background-color: #EB6543;
+      }
+    }
+  }
+  &--details {
+    min-height: 135px;
+  }
   &--tags {
     display: flex;
     align-items: center;

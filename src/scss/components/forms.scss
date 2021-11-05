@@ -120,3 +120,50 @@
   }
 }
 
+
+//Custom form control
+.text {
+  font-size: 16px;
+  &.form-control {
+    height: 100%;
+    padding: 13.2px 26.2px;
+    border-radius: 50px;
+  }
+}
+.actions {
+  position: relative;
+  .theme-form--btn {
+    text-align: left;
+    color: $cod-gray;
+    width: 100%;
+    background-color: $saffron-mango;
+    padding: 13px 27px;
+    border: 0;
+    border-radius: 50px !important;
+  }
+  .forgot-password {
+    display: block;
+    padding-top: 8px;
+    margin-left: 20px;
+  }
+  i {
+    position: absolute;
+    right: 20px;
+    top: 23%;
+    transform: translate3d(0, -23%, 0);
+    transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  &:focus,
+  &:active,
+  &:hover {
+    i {
+      right: 15px;
+    }
+  }
+}
+
+.form-column {
+  width: 1320px;
+  margin-left: auto;
+  padding: 100px;
+}

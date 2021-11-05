@@ -1,0 +1,17 @@
+<section class="page-section loginSection col-lg-12">
+    <div class="container-fluid p-0">
+        <div class="row align-items-center no-gutters">
+            <div class="col-lg-5">
+                <img src="$resourceURL('themes/starter/images/LoginFormImage.jpg')" class="bg-image w-100" alt="$SiteConfig.Title - ">
+            </div>
+            <div class="col-lg-7">
+                <div class="form-container pl-lg-8">
+                    <p><span class="fontsize60 font-weight-light line-height-100">Kia ora, welcome to<br> Te Wāhi Toi</span></p>
+                    <p class="pt-lg-5 pb-lg-4"><span class="fontsize35 font-weight-light">You are just one step away to your portal.</span></p>
+                    $LoginForm
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<% include VisibleSection %>

@@ -12470,7 +12470,9 @@ __webpack_require__.r(__webpack_exports__);
     sectionFilterBar();
     sectionFeaturedListings(); //Page
 
-    listingPage();
+    listingPage(); //Actions
+
+    addToFavourites();
   }
 
   function headerSettings() {
@@ -12607,6 +12609,45 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       });
+    }
+  }
+
+  function addToFavourites() {
+    var btn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.addtofavourites');
+    btn.click(function () {
+      var id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id');
+      var member = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-member'); //redirect if not member
+
+      var favCounter = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.fav-counter');
+      var newCount = '';
+
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i').removeClass('fas').addClass('far');
+        newCount = parseInt(favCounter.attr('data-count')) - 1;
+        callAPIEndpoint('ajax/removeListingFromFavourites', 'POST', 'id=' + id, function (result) {
+          favCounter.text(newCount);
+          favCounter.attr('data-count', newCount);
+          resetFavCounter(favCounter);
+        });
+      } else {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i').removeClass('far').addClass('fas');
+        newCount = parseInt(favCounter.attr('data-count')) + 1;
+        callAPIEndpoint('ajax/addListingFromFavourites', 'POST', 'id=' + id, function (result) {
+          favCounter.html(newCount);
+          favCounter.attr('data-count', newCount);
+          resetFavCounter(favCounter);
+        });
+      }
+    });
+  }
+
+  function resetFavCounter(favCounter) {
+    if (parseInt(favCounter.attr('data-count')) > 0) {
+      favCounter.addClass('filled');
+    } else {
+      favCounter.removeClass('filled');
     }
   }
 

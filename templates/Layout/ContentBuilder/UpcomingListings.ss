@@ -3,7 +3,7 @@
         <div class="inner-padding container-fluid">
             <div class="row">
             <% loop $VisibleUpcomingListings %>
-                <% include ListingContent %>
+                <% include ListingContent inFavourites=$Up.wasAddedToFavourites($ID) %>
             <% end_loop %>
             </div>
         </div>
