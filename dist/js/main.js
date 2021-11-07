@@ -12473,6 +12473,7 @@ __webpack_require__.r(__webpack_exports__);
     listingPage(); //Actions
 
     addToFavourites();
+    testAjax();
   }
 
   function headerSettings() {
@@ -12592,7 +12593,7 @@ __webpack_require__.r(__webpack_exports__);
         margin: 26,
         nav: true,
         dots: true,
-        navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/next-arrow.svg"></span>'],
+        navText: ['<span class="nav-left"><img src="_resources/themes/starter/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/images/next-arrow.svg"></span>'],
         responsiveClass: true,
         responsive: {
           0: {
@@ -12629,6 +12630,7 @@ __webpack_require__.r(__webpack_exports__);
           favCounter.text(newCount);
           favCounter.attr('data-count', newCount);
           resetFavCounter(favCounter);
+          console.log(result);
         });
       } else {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
@@ -12649,6 +12651,32 @@ __webpack_require__.r(__webpack_exports__);
     } else {
       favCounter.removeClass('filled');
     }
+  }
+
+  function testAjax() {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.tester').each(function () {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).click(function () {
+        var listingid = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id');
+        console.log('clicked');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+          type: "POST",
+          url: "favourites/deleteListingFromFavourites",
+          data: {
+            id: listingid
+          },
+          success: function success(data) {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.listings-content').html(data);
+          }
+        }).done(function (msg) {
+          alert("Data Saved: " + msg);
+        });
+      }); // $.ajax('favourites/FavouriteListings',{
+      //   success: function(data) {
+      //     $('.listings-content').html(data);
+      //     console.log()
+      //   }
+      // });
+    });
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback) {

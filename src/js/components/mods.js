@@ -22,6 +22,7 @@ export default function () {
 
     //Actions
     addToFavourites();
+    testAjax();
   }
 
   function headerSettings()
@@ -144,7 +145,7 @@ export default function () {
         margin:26,
         nav: true,
         dots:true,
-        navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/next-arrow.svg"></span>'],
+        navText: ['<span class="nav-left"><img src="_resources/themes/starter/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/images/next-arrow.svg"></span>'],
         responsiveClass:true,
         responsive:{
           0:{
@@ -181,6 +182,7 @@ export default function () {
           favCounter.text(newCount);
           favCounter.attr('data-count', newCount)
           resetFavCounter(favCounter);
+          console.log(result);
         });
       } else {
         $(this).addClass('active');
@@ -190,6 +192,7 @@ export default function () {
           favCounter.html(newCount);
           favCounter.attr('data-count', newCount)
           resetFavCounter(favCounter);
+
         });
       }
     });
@@ -202,6 +205,33 @@ export default function () {
     } else {
       favCounter.removeClass('filled');
     }
+  }
+
+  function testAjax()
+  {
+    $('.tester').each(function() {
+      $(this).click(function () {
+        let listingid = $(this).attr('data-id');
+        console.log('clicked');
+        $.ajax({
+          type: "POST",
+          url: "favourites/deleteListingFromFavourites",
+          data: { id : listingid },
+          success: function (data) {
+            $('.listings-content').html(data);
+          }
+        })
+          .done(function( msg ) {
+            alert( "Data Saved: " + msg );
+          });
+      });
+      // $.ajax('favourites/FavouriteListings',{
+      //   success: function(data) {
+      //     $('.listings-content').html(data);
+      //     console.log()
+      //   }
+      // });
+    });
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback)
