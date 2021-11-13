@@ -330,6 +330,9 @@ pre {
   }
 }
 //Font Sizes
+.fontsize12 {
+  font-size: 12px;
+}
 .fontsize14 {
   font-size: 14px;
 }
@@ -454,6 +457,9 @@ pre {
 .theme-button-dark,
 .theme-button-gray,
 .theme-button-alt,
+.theme-button-long,
+.theme-button-long-yellow,
+.theme-button-long-yellow-arrow,
 .button-signup,
 .button-myportal{
   display: inline-block;
@@ -462,6 +468,7 @@ pre {
   padding: 15px 58px;
   transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1), border 200ms cubic-bezier(0.76, 0, 0.24, 1) ;
 }
+
 .theme-button {
   border-color: $cod-gray;
   background-color: transparent;
@@ -495,6 +502,43 @@ pre {
     color: $cod-gray;
   }
 }
+.theme-button-long {
+  min-width: 319px;
+  border-color: $cod-gray;
+  background-color: transparent;
+  transition: all 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  &:hover {
+    color: $white;
+    background-color: $cod-gray;
+  }
+}
+.theme-button-long-yellow,
+.theme-button-long-yellow-arrow {
+  min-width: 319px;
+  border: 0;
+  background-color: $saffron-mango;
+  transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  &:hover {
+    background-color: $marigold-yellow;
+    &:after {
+      right: 26px;
+    }
+  }
+}
+.theme-button-long-yellow-arrow {
+  position: relative;
+  padding: 13px 27px;
+  &:after {
+    position: absolute;
+    content: url("../images/btn-arrow.svg");
+    height: 17px;
+    right: 33px;
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
+    transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  }
+}
+
 .theme-button-gray,
 .theme-button-gray-small {
   background-color: $carra;

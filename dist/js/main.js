@@ -12470,10 +12470,11 @@ __webpack_require__.r(__webpack_exports__);
     sectionFilterBar();
     sectionFeaturedListings(); //Page
 
-    listingPage(); //Actions
+    listingPage();
+    signUpPage();
+    createListingPage(); //Actions
 
-    addToFavourites();
-    testAjax();
+    addToFavourites(); //testAjax();
   }
 
   function headerSettings() {
@@ -12509,14 +12510,15 @@ __webpack_require__.r(__webpack_exports__);
       sectionFilterBar.each(function () {
         var tab = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.tab .tablinks');
         tab.click(function () {
-          var dataID = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id');
+          var id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id');
           var icon = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i');
+          var tabContent = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tabcontent-' + id);
 
           if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
             icon.attr('class', 'fal fa-plus'); //hide tab content
 
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#' + dataID).removeClass('active');
+            tabContent.removeClass('active');
           } else {
             //reset tab siblings
             tab.each(function () {
@@ -12524,12 +12526,12 @@ __webpack_require__.r(__webpack_exports__);
               jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
               jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i').attr('class', 'fal fa-plus'); // hide siblings tab content
 
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#' + tabID).removeClass('active');
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tabcontent-' + tabID).removeClass('active');
             });
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
             icon.attr('class', 'fal fa-minus'); //show tab content
 
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#' + dataID).addClass('active');
+            tabContent.addClass('active');
           }
         });
       }); //dropdown
@@ -12609,6 +12611,188 @@ __webpack_require__.r(__webpack_exports__);
             nav: true
           }
         }
+      });
+    }
+  }
+
+  function signUpPage() {
+    var signUpForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm');
+
+    if (signUpForm.length > 0) {
+      var input, categories, passwordField, passwordConfirmField, emailField, emailConfirmField, errorField, modal;
+      emailField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Email');
+      emailConfirmField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_ConfirmEmail');
+      passwordField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Password_Holder');
+      passwordConfirmField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_ConfirmPassword_Holder');
+      categories = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.field.category');
+      errorField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.error-field').find('span');
+      modal = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#successRegistration');
+      passwordField.append('<a href="#" class="btn-reveal-password password-field"><span>Show</span></a>');
+      passwordConfirmField.append('<a href="#" class="btn-reveal-password passwordConfirm-field"><span>Show</span></a>');
+      passwordConfirmField.find('#Password_ConfirmPassword').attr('placeholder', 'Confirm Password*');
+      passwordField.on('click', '.password-field', function (e) {
+        e.preventDefault();
+        input = passwordField.find('input');
+        inputType(input, jquery__WEBPACK_IMPORTED_MODULE_0___default()(this));
+      });
+      passwordConfirmField.on('click', '.passwordConfirm-field', function (e) {
+        e.preventDefault();
+        input = passwordConfirmField.find('input');
+        inputType(input, jquery__WEBPACK_IMPORTED_MODULE_0___default()(this));
+      }); //Form Validation
+
+      signUpForm.on('submit', function (event) {
+        if (emailField.val() !== emailConfirmField.val()) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
+          emailConfirmField.addClass('holder-validation is-invalid');
+          emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
+          event.preventDefault();
+        }
+
+        if (passwordField.find('input[type=password]').val() !== passwordConfirmField.find('input[type=password]').val()) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmPassword').remove();
+          passwordConfirmField.find('input[type=password]').addClass('holder-validation is-invalid');
+          passwordConfirmField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback position-absolute" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
+          event.preventDefault();
+        }
+
+        if (categories.length > 0) {
+          var countFilledInputs = 0;
+          categories.each(function () {
+            var field = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.form-control').val();
+
+            if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(field).length > 0) {
+              countFilledInputs = parseInt(countFilledInputs) + 1;
+            }
+          });
+
+          if (countFilledInputs < 1) {
+            errorField.text('Select at least 1 category.');
+            event.preventDefault();
+          }
+        }
+      }); //ModalClose
+
+      modal.find('button.close').click(function () {
+        modal.removeClass('show');
+      });
+    }
+  }
+
+  function inputType(input, _this) {
+    if (input.attr('type') === 'password') {
+      input.attr('type', 'text');
+
+      _this.find('span').text('Hide');
+    } else {
+      input.attr('type', 'password');
+
+      _this.find('span').text('Show');
+    }
+  }
+
+  function createListingPage() {
+    var createListingForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm');
+
+    if (createListingForm.length > 0) {
+      var ListingFormCategory, ListingFormTags, ListingIsEventFree, currencyField;
+      ListingIsEventFree = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_isEventFree');
+      ListingFormCategory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Category_Holder');
+      ListingFormTags = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Tags_Holder');
+      currencyField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.currency-field');
+      ListingIsEventFree.find('input[type="radio"]').on('change', function () {
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).val() === '1') {
+          currencyField.removeClass('d-none');
+        } else {
+          currencyField.addClass('d-none');
+        }
+      });
+      createListingForm.find('select').each(function () {
+        // Cache the number of options
+        var dataType = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-type');
+        var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this),
+            numberOfOptions = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).children('option').length; // Hides the select element
+
+        $this.addClass('s-hidden'); // Wrap the select element in a div
+
+        $this.wrap('<div class="select"></div>'); // Insert a styled div to sit over the top of the hidden select element
+
+        $this.after('<div class="styledSelect"></div>'); // Cache the styled div
+
+        var $styledSelect = $this.next('div.styledSelect'); // Show the first select option in the styled div
+
+        $styledSelect.text($this.children('option').eq(0).text()); // Insert an unordered list after the styled div and also cache the list
+
+        var $list = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<ul />', {
+          'class': 'options'
+        }).insertAfter($styledSelect); // Insert a list item into the unordered list for each select option
+
+        for (var i = 0; i < numberOfOptions; i++) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('<li />', {
+            text: $this.children('option').eq(i).text(),
+            rel: $this.children('option').eq(i).val()
+          }).appendTo($list);
+        } // Cache the list items
+
+
+        var $listItems = $list.children('li'); // Show the unordered list when the styled div is clicked (also hides it if the div is clicked again)
+
+        $styledSelect.click(function (e) {
+          e.stopPropagation();
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('div.styledSelect.active').each(function () {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active').next('ul.options').hide();
+          });
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).toggleClass('active').next('ul.options').toggle();
+        }); // Hides the unordered list when a list item is clicked and updates the styled div to show the selected list item
+        // Updates the select element to have the value of the equivalent option
+
+        $listItems.click(function (e) {
+          e.stopPropagation();
+          $styledSelect.text(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()).removeClass('active');
+          $this.val(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('rel'));
+          $list.hide();
+          var selectedItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+          if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
+
+            if (dataType === 'category') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-item').each(function () {
+                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id') === selectedItem.text()) {
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).remove();
+                }
+              });
+            }
+
+            if (dataType === 'tag') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('.tag-item').each(function () {
+                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id') === selectedItem.text()) {
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).remove();
+                }
+              });
+            }
+          } else {
+            if (dataType === 'category') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-categories').removeClass('d-none').append('<a class="category-item" data-id="' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '"><span>' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '</span><span class="remove-item">X</span></a>');
+            }
+
+            if (dataType === 'tag') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags').removeClass('d-none').append('<a class="tag-item" data-id="' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '"><span>' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '</span><span class="remove-item">X</span></a>');
+            }
+
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
+          }
+
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('.remove-item').click(function () {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().remove();
+          });
+          /* alert($this.val()); Uncomment this for demonstration! */
+        }); // Hides the unordered list when clicking outside of it
+
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).click(function () {
+          $styledSelect.removeClass('active');
+          $list.hide();
+        });
       });
     }
   }

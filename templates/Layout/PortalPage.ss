@@ -1,4 +1,4 @@
 <% if $CurrentMember %>
-    <% include UserNavigation %>
+    <% include Includes/User/UserNavigation %>
 <% end_if %>
 <% include VisibleSection %>

@@ -10705,6 +10705,10 @@ pre {
   z-index: -1;
 }
 
+.fontsize12 {
+  font-size: 12px;
+}
+
 .fontsize14 {
   font-size: 14px;
 }
@@ -10854,6 +10858,9 @@ pre {
 .theme-button-dark,
 .theme-button-gray,
 .theme-button-alt,
+.theme-button-long,
+.theme-button-long-yellow,
+.theme-button-long-yellow-arrow,
 .button-signup,
 .button-myportal {
   display: inline-block;
@@ -10898,6 +10905,48 @@ pre {
 .theme-button-dark:hover {
   background-color: transparent;
   color: #141414;
+}
+
+.theme-button-long {
+  min-width: 319px;
+  border-color: #141414;
+  background-color: transparent;
+  transition: all 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.theme-button-long:hover {
+  color: #fff;
+  background-color: #141414;
+}
+
+.theme-button-long-yellow,
+.theme-button-long-yellow-arrow {
+  min-width: 319px;
+  border: 0;
+  background-color: #f8cc46;
+  transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.theme-button-long-yellow:hover,
+.theme-button-long-yellow-arrow:hover {
+  background-color: #f9d777;
+}
+.theme-button-long-yellow:hover:after,
+.theme-button-long-yellow-arrow:hover:after {
+  right: 26px;
+}
+
+.theme-button-long-yellow-arrow {
+  position: relative;
+  padding: 13px 27px;
+}
+.theme-button-long-yellow-arrow:after {
+  position: absolute;
+  content: url("../images/btn-arrow.svg");
+  height: 17px;
+  right: 33px;
+  top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
+  transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .theme-button-gray,

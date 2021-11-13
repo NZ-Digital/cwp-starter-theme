@@ -15043,6 +15043,10 @@ pre {
   z-index: -1;
 }
 
+.fontsize12 {
+  font-size: 12px;
+}
+
 .fontsize14 {
   font-size: 14px;
 }
@@ -15192,6 +15196,9 @@ pre {
 .theme-button-dark,
 .theme-button-gray,
 .theme-button-alt,
+.theme-button-long,
+.theme-button-long-yellow,
+.theme-button-long-yellow-arrow,
 .button-signup,
 .button-myportal {
   display: inline-block;
@@ -15236,6 +15243,48 @@ pre {
 .theme-button-dark:hover {
   background-color: transparent;
   color: #141414;
+}
+
+.theme-button-long {
+  min-width: 319px;
+  border-color: #141414;
+  background-color: transparent;
+  transition: all 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.theme-button-long:hover {
+  color: #fff;
+  background-color: #141414;
+}
+
+.theme-button-long-yellow,
+.theme-button-long-yellow-arrow {
+  min-width: 319px;
+  border: 0;
+  background-color: #f8cc46;
+  transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.theme-button-long-yellow:hover,
+.theme-button-long-yellow-arrow:hover {
+  background-color: #f9d777;
+}
+.theme-button-long-yellow:hover:after,
+.theme-button-long-yellow-arrow:hover:after {
+  right: 26px;
+}
+
+.theme-button-long-yellow-arrow {
+  position: relative;
+  padding: 13px 27px;
+}
+.theme-button-long-yellow-arrow:after {
+  position: absolute;
+  content: url("../images/btn-arrow.svg");
+  height: 17px;
+  right: 33px;
+  top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
+  transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .theme-button-gray,
@@ -15682,50 +15731,6 @@ header + .comments-holder-container .comments-holder .comments-list .comment .in
   background-position: calc(100% - calc(0.375em + 0.1875rem));
 }
 
-.text {
-  font-size: 16px;
-}
-.text.form-control {
-  height: 100%;
-  padding: 13.2px 26.2px;
-  border-radius: 50px;
-}
-
-.actions {
-  position: relative;
-}
-.actions .theme-form--btn {
-  text-align: left;
-  color: #141414;
-  width: 100%;
-  background-color: #f8cc46;
-  padding: 13px 27px;
-  border: 0;
-  border-radius: 50px !important;
-}
-.actions .forgot-password {
-  display: block;
-  padding-top: 8px;
-  margin-left: 20px;
-}
-.actions i {
-  position: absolute;
-  right: 20px;
-  top: 23%;
-  -webkit-transform: translate3d(0, -23%, 0);
-          transform: translate3d(0, -23%, 0);
-  transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
-}
-.actions:focus i, .actions:active i, .actions:hover i {
-  right: 15px;
-}
-
-.form-column {
-  width: 1320px;
-  margin-left: auto;
-  padding: 100px;
-}
-
 body > header .open > a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
@@ -15746,6 +15751,7 @@ body > header .open > a:focus {
 
 .site-header {
   padding: 49px 100px 31px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 }
 .site-header.scrolled {
   position: fixed;
@@ -16176,6 +16182,59 @@ body > header .open > a:focus {
   box-shadow: 0 0 0 0.2rem rgba(82, 142, 194, 0.5);
 }
 
+.form-header {
+  font-size: 60px;
+  font-weight: 200;
+  line-height: 100%;
+}
+
+.form-subheader {
+  font-size: 35px;
+  font-weight: 200;
+}
+
+.form-group .col-form-label {
+  display: none !important;
+}
+.form-group input[type=text], .form-group input[type=email], .form-group input[type=password] {
+  height: 100%;
+  padding: 13.2px 26.2px;
+  border-radius: 50px;
+  border-color: #a2a2a2;
+}
+.form-group input[type=text]::-webkit-input-placeholder, .form-group input[type=email]::-webkit-input-placeholder, .form-group input[type=password]::-webkit-input-placeholder {
+  color: #a2a2a2;
+}
+.form-group input[type=text]::-moz-placeholder, .form-group input[type=email]::-moz-placeholder, .form-group input[type=password]::-moz-placeholder {
+  color: #a2a2a2;
+}
+.form-group input[type=text]:-ms-input-placeholder, .form-group input[type=email]:-ms-input-placeholder, .form-group input[type=password]:-ms-input-placeholder {
+  color: #a2a2a2;
+}
+.form-group input[type=text]::-ms-input-placeholder, .form-group input[type=email]::-ms-input-placeholder, .form-group input[type=password]::-ms-input-placeholder {
+  color: #a2a2a2;
+}
+.form-group input[type=text]::placeholder, .form-group input[type=email]::placeholder, .form-group input[type=password]::placeholder {
+  color: #a2a2a2;
+}
+.form-group button.action {
+  width: 100%;
+}
+.form-group .password {
+  position: relative;
+}
+.form-group .password .btn-reveal-password {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
+}
+
+.actions {
+  display: none;
+}
+
 /** ----------------------------------------------------------
  *
  * Contains the custom style of the page.
@@ -16195,11 +16254,14 @@ body > header .open > a:focus {
  *      - Filter Bar
  *      - Image Banner
  *      - Latest News
+ *      - My Favourite Listings
+ *      - My Listings
  *      - Grid Listings
  *      - Line Separator
  *      - Sortable Listing
  *      - Upcoming Listing
  *      - User Navigation
+ *      - User Side Navigation
  *    3. Pages
  *      - Listing Page
  *    4. Global Settings
@@ -16474,6 +16536,27 @@ body > header .open > a:focus {
   -webkit-transform: translate3d(0, -50%, 0);
           transform: translate3d(0, -50%, 0);
 }
+.page-section.sectionMyListings .myListings-content .listing-content--location-date {
+  display: -ms-flexbox;
+  display: flex;
+}
+.page-section.sectionMyListings .myListings-content .listing-content--location-date .listing-date,
+.page-section.sectionMyListings .myListings-content .listing-content--location-date .listing-flag {
+  padding: 6px 18px;
+}
+.page-section.sectionMyListings .myListings-content .add-listing {
+  width: 100%;
+  border: 0;
+}
+.page-section.sectionMyListings .myListings-content .add-listing img {
+  height: 17vw;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.page-section.sectionMyListings .myListings-content .add-listing:active {
+  -webkit-transform: scale(0.99);
+          transform: scale(0.99);
+}
 .page-section.sectionGridListing .gridListing-container .listing-content--img img {
   width: 100%;
   height: 464px;
@@ -16620,18 +16703,70 @@ body > header .open > a:focus {
 .page-section.sectionUserNavigationBar .userNavigation-container .user-navigation--dropdown:after {
   display: none;
 }
-.page-section.sectionMyListings .myListings-content .my-listings--listings .addListing {
-  width: 100%;
-  border: 0;
+.page-section.sectionUserSideNav .userSideNav-container {
+  position: relative;
 }
-.page-section.sectionMyListings .myListings-content .my-listings--listings .addListing img {
-  height: 17vw;
-  -o-object-fit: contain;
-     object-fit: contain;
+.page-section.sectionUserSideNav .userSideNav-container.success-form li:before,
+.page-section.sectionUserSideNav .userSideNav-container.success-form .user-sidenav--btn-progress {
+  background-color: #fff !important;
 }
-.page-section.sectionMyListings .myListings-content .my-listings--listings .addListing:active {
-  -webkit-transform: scale(0.99);
-          transform: scale(0.99);
+.page-section.sectionUserSideNav .userSideNav-container .stepIndicator {
+  list-style: none;
+  padding: 0;
+}
+.page-section.sectionUserSideNav .userSideNav-container .stepIndicator li:not(.completed), .page-section.sectionUserSideNav .userSideNav-container .stepIndicator li.completed a {
+  position: relative;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  padding: 27px 0 27px 80px;
+}
+.page-section.sectionUserSideNav .userSideNav-container .stepIndicator li:not(.completed):before, .page-section.sectionUserSideNav .userSideNav-container .stepIndicator li.completed a:before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+  width: 48px;
+  height: 48px;
+  border-radius: 50px;
+  background-color: #A2A2A2;
+}
+.page-section.sectionUserSideNav .userSideNav-container .stepIndicator li.current:before, .page-section.sectionUserSideNav .userSideNav-container .stepIndicator li.completed a:before {
+  background-color: #fff;
+}
+.page-section.sectionUserSideNav .userSideNav-container .stepIndicator li a {
+  display: inline-block;
+  color: #fff;
+}
+.page-section.sectionUserSideNav .userSideNav-container .user-sidenav--step a {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  margin-bottom: 26px;
+}
+.page-section.sectionUserSideNav .userSideNav-container .user-sidenav--btn-progress {
+  width: 48px;
+  height: 48px;
+  margin-right: 34px;
+  border-radius: 50px;
+  background-color: #A2A2A2;
+}
+.page-section.sectionUserSideNav .userSideNav-container .user-sidenav--btn-progress.active {
+  background-color: #fff;
+}
+.page-section.sectionUserSideNav .userSideNav-container:after {
+  position: absolute;
+  content: "";
+  top: 25px;
+  right: -90px;
+  height: 15px;
+  width: 90px;
+  background-color: #f0efed;
 }
 
 /** Listing Page **/
@@ -16704,9 +16839,6 @@ body > header .open > a:focus {
 }
 
 /** LoginPage **/
-.LoginPage .site-header {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-}
 .LoginPage #LoginForm_LoginForm .fields {
   display: -ms-flexbox;
   display: flex;
@@ -16840,6 +16972,12 @@ hr {
 }
 .listing-content--location-date .listing-flag.pending-flag {
   background-color: #EB6543;
+}
+.listing-content--location-date .listing-flag.archived-flag {
+  background-color: #696163;
+}
+.listing-content--location-date .listing-flag.draft-flag {
+  background-color: #3e519f;
 }
 .listing-content--details {
   min-height: 135px;
