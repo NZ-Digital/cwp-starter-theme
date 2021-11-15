@@ -13,7 +13,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-4 pb-lg-7">
-                            <a href="create-listing" class="add-listing"><img src="$resourceURL('themes/starter/images/AddListing.jpg')"></a>
+                            <a href="create-listing?id={$GroupID}" class="add-listing"><img src="$resourceURL('themes/starter/images/AddListing.jpg')"></a>
                         </div>
                         <% loop $Listings %>
                             <div class="col-lg-4">

@@ -12619,12 +12619,23 @@ __webpack_require__.r(__webpack_exports__);
     var signUpForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm');
 
     if (signUpForm.length > 0) {
-      var input, categories, passwordField, passwordConfirmField, emailField, emailConfirmField, errorField, modal;
+      var input,
+          category,
+          selectedCategories = [],
+          passwordField,
+          passwordConfirmField,
+          emailField,
+          emailConfirmField,
+          selectedCategoryField,
+          errorField,
+          modal;
+      var requiredPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
       emailField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Email');
       emailConfirmField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_ConfirmEmail');
       passwordField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Password_Holder');
       passwordConfirmField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_ConfirmPassword_Holder');
-      categories = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.field.category');
+      selectedCategoryField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_SelectedCategories');
+      category = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-selector');
       errorField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.error-field').find('span');
       modal = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#successRegistration');
       passwordField.append('<a href="#" class="btn-reveal-password password-field"><span>Show</span></a>');
@@ -12639,42 +12650,72 @@ __webpack_require__.r(__webpack_exports__);
         e.preventDefault();
         input = passwordConfirmField.find('input');
         inputType(input, jquery__WEBPACK_IMPORTED_MODULE_0___default()(this));
-      }); //Form Validation
+      }); //Email and Password Validation
 
       signUpForm.on('submit', function (event) {
-        if (emailField.val() !== emailConfirmField.val()) {
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
-          emailConfirmField.addClass('holder-validation is-invalid');
-          emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
-          event.preventDefault();
-        }
-
-        if (passwordField.find('input[type=password]').val() !== passwordConfirmField.find('input[type=password]').val()) {
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmPassword').remove();
-          passwordConfirmField.find('input[type=password]').addClass('holder-validation is-invalid');
-          passwordConfirmField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback position-absolute" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
-          event.preventDefault();
-        }
-
-        if (categories.length > 0) {
-          var countFilledInputs = 0;
-          categories.each(function () {
-            var field = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.form-control').val();
-
-            if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(field).length > 0) {
-              countFilledInputs = parseInt(countFilledInputs) + 1;
-            }
-          });
-
-          if (countFilledInputs < 1) {
-            errorField.text('Select at least 1 category.');
+        if (passwordField.length > 0) {
+          if (emailField.val() !== emailConfirmField.val()) {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
+            emailConfirmField.addClass('holder-validation is-invalid');
+            emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
             event.preventDefault();
           }
-        }
-      }); //ModalClose
+
+          if (passwordField.find('.password').val() !== passwordConfirmField.find('.password').val()) {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmPassword').remove();
+            passwordConfirmField.find('.password').addClass('holder-validation is-invalid');
+            passwordConfirmField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
+            event.preventDefault();
+          }
+
+          if (!requiredPassword.test(passwordField.find('.password').val())) {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_Password').remove();
+            passwordField.find('.password').addClass('holder-validation is-invalid');
+            passwordField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters, contain 1 upper/lowercase and one number and one special character.</div>');
+            event.preventDefault();
+          }
+        } // if (category.length > 0) {
+        //   let countFilledInputs = 0;
+        //   categories.each(function () {
+        //     let field = $(this).find('.form-control').val();
+        //     if ($.trim(field).length > 0) {
+        //       countFilledInputs = parseInt(countFilledInputs) + 1;
+        //     }
+        //   });
+        //
+        //   if (countFilledInputs < 1) {
+        //     errorField.text('Select at least 1 category.')
+        //     event.preventDefault();
+        //   }
+        // }
+
+      }); //Category suggestions
+
+      if (category.length > 0) {
+        category.find('.form-check-input').each(function () {
+          if (this.checked) {
+            selectedCategories.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
+          }
+        });
+        category.on('change', '.form-check-input', function () {
+          var parent = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent('.form-check');
+
+          if (this.checked) {
+            parent.addClass('selected');
+            selectedCategories.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
+          } else {
+            parent.removeClass('selected');
+            selectedCategories.splice(jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'), selectedCategories), 1);
+          }
+
+          selectedCategoryField.val(selectedCategories.toString());
+        });
+      } //ModalClose
+
 
       modal.find('button.close').click(function () {
         modal.removeClass('show');
+        modal.css('display', 'none');
       });
     }
   }
@@ -12695,10 +12736,16 @@ __webpack_require__.r(__webpack_exports__);
     var createListingForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm');
 
     if (createListingForm.length > 0) {
-      var ListingFormCategory, ListingFormTags, ListingIsEventFree, currencyField;
+      var selectedCategory, selectedCategoryHolder, selectedSubCategoryHolder, selectedSubCategory, selectedTag, selectedTagHolder, btnAddSubCategory, subCategoryWrapper, ListingIsEventFree, currencyField;
+      var tagArray = [];
+      var modal = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#successRegistration');
+      selectedCategory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Categories');
+      selectedSubCategory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SubCategories');
+      selectedTag = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Tags');
+      selectedCategoryHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_CategorySelector_Holder');
+      selectedSubCategoryHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SubCategorySelector_Holder');
+      selectedTagHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_TagsSelector_Holder');
       ListingIsEventFree = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_isEventFree');
-      ListingFormCategory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Category_Holder');
-      ListingFormTags = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Tags_Holder');
       currencyField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.currency-field');
       ListingIsEventFree.find('input[type="radio"]').on('change', function () {
         if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).val() === '1') {
@@ -12707,6 +12754,30 @@ __webpack_require__.r(__webpack_exports__);
           currencyField.addClass('d-none');
         }
       });
+      /**
+       * Will show sub category options when toggled
+       */
+
+      btnAddSubCategory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.add-subcategory-btn');
+      subCategoryWrapper = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sub-category-wrapper');
+      btnAddSubCategory.click(function () {
+        var i = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i');
+
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
+          i.removeClass('fa-minus-circle');
+          i.addClass('fa-plus-circle');
+          subCategoryWrapper.removeClass('active');
+        } else {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
+          i.addClass('fa-minus-circle');
+          i.removeClass('fa-plus-circle');
+          subCategoryWrapper.addClass('active');
+        }
+      }); // if (selectedCategoriesItem.length > 0) {
+      //   selectedCategories.addClass('has-item');
+      // }
+
       createListingForm.find('select').each(function () {
         // Cache the number of options
         var dataType = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-type');
@@ -12751,48 +12822,113 @@ __webpack_require__.r(__webpack_exports__);
           $styledSelect.text(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()).removeClass('active');
           $this.val(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('rel'));
           $list.hide();
-          var selectedItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+          var selectedCategories, selectedCategoriesItem, selectedSubCategories, selectedSubCategoriesItem, selectedTags, selectedTagsItem;
+          selectedCategories = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-categories');
+          selectedCategoriesItem = selectedCategories.find('.item');
+          selectedSubCategories = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-subcategories');
+          selectedSubCategoriesItem = selectedSubCategories.find('.item');
+          selectedTags = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags');
+          selectedTagsItem = selectedTags.find('.item');
 
-          if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
+          if (dataType === 'category' || dataType === 'subcategory') {
+            if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
+            } else {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).siblings().removeClass('active');
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
 
-            if (dataType === 'category') {
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-item').each(function () {
-                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id') === selectedItem.text()) {
-                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).remove();
-                }
-              });
+              if (dataType === 'category') {
+                selectedCategories.addClass('has-item'); //Removing existing selected category
+
+                selectedCategoriesItem.remove();
+                selectedCategory.val(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
+                selectedCategories.append('<div class="item"><span>' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '</span><span class="remove-item">X</span></div>');
+              }
+
+              if (dataType === 'subcategory') {
+                selectedSubCategories.addClass('has-item'); //Removing existing selected subcategory
+
+                selectedSubCategoriesItem.remove();
+                selectedSubCategory.val(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
+                selectedSubCategories.append('<div class="item"><span>' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '</span><span class="remove-item">X</span></div>');
+              }
             }
-
-            if (dataType === 'tag') {
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()('.tag-item').each(function () {
-                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id') === selectedItem.text()) {
-                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).remove();
-                }
-              });
-            }
-          } else {
-            if (dataType === 'category') {
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-categories').removeClass('d-none').append('<a class="category-item" data-id="' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '"><span>' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '</span><span class="remove-item">X</span></a>');
-            }
-
-            if (dataType === 'tag') {
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags').removeClass('d-none').append('<a class="tag-item" data-id="' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '"><span>' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '</span><span class="remove-item">X</span></a>');
-            }
-
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
           }
 
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()('.remove-item').click(function () {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().remove();
-          });
+          if (dataType === 'tag') {
+            if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
+            } else {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
+              selectedTags.addClass('has-item');
+              tagArray.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
+              selectedTag.val(tagArray.toString());
+              selectedTags.append('<div class="item"><span>' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '</span><span class="remove-item" data-name="' + jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) + '">X</span></div>');
+            }
+          }
           /* alert($this.val()); Uncomment this for demonstration! */
+
         }); // Hides the unordered list when clicking outside of it
 
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).click(function () {
           $styledSelect.removeClass('active');
           $list.hide();
         });
+      }); //Preloader items
+
+      if (selectedCategory.val()) {
+        var preLoadselectedCategories = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-categories');
+        selectedCategoryHolder.find('.styledSelect').text(selectedCategory.val());
+        selectedCategoryHolder.find('.options li:contains(' + selectedCategory.val() + ')').addClass('active');
+        preLoadselectedCategories.addClass('has-item');
+        preLoadselectedCategories.append('<div class="item"><span>' + selectedCategory.val() + '</span><span class="remove-item">X</span></div>');
+      }
+
+      if (selectedSubCategory.val()) {
+        var preLoadselectedSubCategories = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-subcategories');
+        btnAddSubCategory.addClass('active');
+        btnAddSubCategory.find('i').removeClass('fa-plus-circle').addClass('fa-minus-circle');
+        subCategoryWrapper.addClass('active');
+        selectedSubCategoryHolder.find('.styledSelect').text(selectedSubCategory.val());
+        selectedSubCategoryHolder.find('.options li:contains(' + selectedSubCategory.val() + ')').addClass('active');
+        preLoadselectedSubCategories.addClass('has-item');
+        preLoadselectedSubCategories.append('<div class="item"><span>' + selectedSubCategory.val() + '</span><span class="remove-item">X</span></div>');
+      }
+
+      if (selectedTag.val()) {
+        var tagsVal = selectedTag.val();
+        var tagValArray = tagsVal.split(",");
+        var preLoadselectedTag = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags');
+        selectedTagHolder.find('.styledSelect').text(tagValArray[0]);
+
+        for (var i in tagValArray) {
+          console.log(tagValArray[i]);
+          selectedTagHolder.find('.options li:contains(' + tagValArray[i] + ')').addClass('active');
+          preLoadselectedTag.addClass('has-item');
+          preLoadselectedTag.append('<div class="item"><span>' + tagValArray[i] + '</span><span class="remove-item">X</span></div>');
+        }
+      }
+
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-categories .remove-item').click(function () {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().parent('.selected-categories').removeClass('has-item');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().remove();
+        selectedCategory.val("");
+      });
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-subcategories .remove-item').click(function () {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().parent('.selected-subcategories').removeClass('has-item');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().remove();
+        selectedSubCategory.val("");
+      });
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags .remove-item').click(function () {
+        selectedSubCategoryHolder.find('.options li:contains(' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-name') + ')').addClass('active');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().remove();
+        tagArray.splice(jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-name'), tagArray), 1);
+        selectedTag.val(tagArray.toString());
+      }); //ModalClose
+
+      modal.find('button.close').click(function () {
+        modal.removeClass('show');
+        modal.css('display', 'none');
       });
     }
   }

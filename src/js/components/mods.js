@@ -173,14 +173,20 @@ export default function () {
     let signUpForm = $('#RegistrationForm_RegistrationForm');
     if (signUpForm.length > 0)
     {
-      let input, categories, passwordField, passwordConfirmField, emailField, emailConfirmField, errorField, modal;
+      let input, category, selectedCategories = [], passwordField, passwordConfirmField,
+          emailField, emailConfirmField, selectedCategoryField,
+          errorField, modal;
+
+      let requiredPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
+
       emailField           = $('#RegistrationForm_RegistrationForm_Email');
       emailConfirmField    = $('#RegistrationForm_RegistrationForm_ConfirmEmail');
 
       passwordField        = $('#RegistrationForm_RegistrationForm_Password_Holder');
       passwordConfirmField = $('#RegistrationForm_RegistrationForm_ConfirmPassword_Holder');
 
-      categories = $('.field.category');
+      selectedCategoryField = $('#RegistrationForm_RegistrationForm_SelectedCategories');
+      category = $('.category-selector');
 
       errorField = $('.error-field').find('span');
 
@@ -201,43 +207,72 @@ export default function () {
         inputType(input, $(this));
       });
 
-      //Form Validation
+      //Email and Password Validation
       signUpForm.on('submit', function(event){
+        if (passwordField.length > 0) {
+          if (emailField.val() !== emailConfirmField.val()) {
+            $('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
+            emailConfirmField.addClass('holder-validation is-invalid');
+            emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
+            event.preventDefault();
+          }
 
-        if (emailField.val() !== emailConfirmField.val()) {
-          $('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
-          emailConfirmField.addClass('holder-validation is-invalid');
-          emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
-          event.preventDefault();
-        }
+          if (passwordField.find('.password').val() !== passwordConfirmField.find('.password').val()) {
+            $('#message-RegistrationForm_RegistrationForm_ConfirmPassword').remove();
+            passwordConfirmField.find('.password').addClass('holder-validation is-invalid')
+            passwordConfirmField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
+            event.preventDefault();
+          }
 
-        if (passwordField.find('input[type=password]').val() !== passwordConfirmField.find('input[type=password]').val()) {
-          $('#message-RegistrationForm_RegistrationForm_ConfirmPassword').remove();
-          passwordConfirmField.find('input[type=password]').addClass('holder-validation is-invalid')
-          passwordConfirmField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback position-absolute" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
-          event.preventDefault();
-        }
-
-        if (categories.length > 0) {
-          let countFilledInputs = 0;
-          categories.each(function () {
-            let field = $(this).find('.form-control').val();
-            if ($.trim(field).length > 0) {
-              countFilledInputs = parseInt(countFilledInputs) + 1;
-            }
-          });
-
-          if (countFilledInputs < 1) {
-            errorField.text('Select at least 1 category.')
+          if(!requiredPassword.test(passwordField.find('.password').val())){
+            $('#message-RegistrationForm_RegistrationForm_Password').remove();
+            passwordField.find('.password').addClass('holder-validation is-invalid')
+            passwordField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters, contain 1 upper/lowercase and one number and one special character.</div>');
             event.preventDefault();
           }
         }
+
+          // if (category.length > 0) {
+        //   let countFilledInputs = 0;
+        //   categories.each(function () {
+        //     let field = $(this).find('.form-control').val();
+        //     if ($.trim(field).length > 0) {
+        //       countFilledInputs = parseInt(countFilledInputs) + 1;
+        //     }
+        //   });
+        //
+        //   if (countFilledInputs < 1) {
+        //     errorField.text('Select at least 1 category.')
+        //     event.preventDefault();
+        //   }
+        // }
       });
 
+      //Category suggestions
+      if (category.length > 0) {
+        category.find('.form-check-input').each(function () {
+          if(this.checked) {
+            selectedCategories.push($(this).attr('name'));
+          }
+        });
+        category.on('change', '.form-check-input', function() {
+          let parent = $(this).parent('.form-check');
+          if(this.checked) {
+            parent.addClass('selected');
+            selectedCategories.push($(this).attr('name'));
+          } else {
+            parent.removeClass('selected');
+            selectedCategories.splice($.inArray($(this).attr('name'), selectedCategories), 1);
+          }
+          selectedCategoryField.val(selectedCategories.toString());
+        });
+      }
       //ModalClose
       modal.find('button.close').click(function () {
         modal.removeClass('show');
+        modal.css('display', 'none');
       });
+
     }
   }
 
@@ -256,12 +291,25 @@ export default function () {
     let createListingForm = $('#ListingForm_ListingForm');
     if (createListingForm.length > 0)
     {
+      let selectedCategory, selectedCategoryHolder, selectedSubCategoryHolder, selectedSubCategory,
+          selectedTag, selectedTagHolder,
+          btnAddSubCategory, subCategoryWrapper,
+          ListingIsEventFree, currencyField;
 
-      let ListingFormCategory, ListingFormTags, ListingIsEventFree, currencyField;
+      let tagArray = [];
+
+      let modal = $('#successRegistration');
+
+
+      selectedCategory = $('#ListingForm_ListingForm_Categories');
+      selectedSubCategory = $('#ListingForm_ListingForm_SubCategories');
+      selectedTag     = $('#ListingForm_ListingForm_Tags');
+
+      selectedCategoryHolder = $('#ListingForm_ListingForm_CategorySelector_Holder');
+      selectedSubCategoryHolder = $('#ListingForm_ListingForm_SubCategorySelector_Holder');
+      selectedTagHolder = $('#ListingForm_ListingForm_TagsSelector_Holder');
 
       ListingIsEventFree = $('#ListingForm_ListingForm_isEventFree');
-      ListingFormCategory = $('#ListingForm_ListingForm_Category_Holder');
-      ListingFormTags = $('#ListingForm_ListingForm_Tags_Holder');
 
       currencyField = $('.currency-field');
       ListingIsEventFree.find('input[type="radio"]').on('change', function() {
@@ -272,6 +320,30 @@ export default function () {
         }
       });
 
+
+      /**
+       * Will show sub category options when toggled
+       */
+      btnAddSubCategory = $('.add-subcategory-btn');
+      subCategoryWrapper= $('.sub-category-wrapper');
+      btnAddSubCategory.click(function () {
+        let i = $(this).find('i');
+        if ($(this).hasClass('active')) {
+          $(this).removeClass('active');
+          i.removeClass('fa-minus-circle');
+          i.addClass('fa-plus-circle');
+          subCategoryWrapper.removeClass('active');
+        } else {
+          $(this).addClass('active');
+          i.addClass('fa-minus-circle');
+          i.removeClass('fa-plus-circle');
+          subCategoryWrapper.addClass('active');
+        }
+      });
+
+      // if (selectedCategoriesItem.length > 0) {
+      //   selectedCategories.addClass('has-item');
+      // }
 
       createListingForm.find('select').each(function () {
         // Cache the number of options
@@ -321,43 +393,62 @@ export default function () {
 
         // Hides the unordered list when a list item is clicked and updates the styled div to show the selected list item
         // Updates the select element to have the value of the equivalent option
+
         $listItems.click(function (e) {
           e.stopPropagation();
           $styledSelect.text($(this).text()).removeClass('active');
           $this.val($(this).attr('rel'));
           $list.hide();
 
-          let selectedItem = $(this);
-          if ($(this).hasClass('active')) {
-            $(this).removeClass('active');
-            if (dataType === 'category') {
-              $('.category-item').each(function () {
-                  if ($(this).attr('data-id') === selectedItem.text()) {
-                    $(this).remove();
-                  }
-              });
-            }
-            if (dataType === 'tag') {
-              $('.tag-item').each(function () {
-                if ($(this).attr('data-id') === selectedItem.text()) {
-                  $(this).remove();
-                }
-              });
-            }
-          } else {
-            if (dataType === 'category') {
-              $('.selected-categories').removeClass('d-none').append('<a class="category-item" data-id="'+ $(this).text() +'"><span>'+ $(this).text() +'</span><span class="remove-item">X</span></a>');
-            }
+          let selectedCategories, selectedCategoriesItem,
+              selectedSubCategories, selectedSubCategoriesItem,
+              selectedTags, selectedTagsItem;
 
-            if (dataType === 'tag') {
-              $('.selected-tags').removeClass('d-none').append('<a class="tag-item" data-id="'+ $(this).text() +'"><span>'+ $(this).text() +'</span><span class="remove-item">X</span></a>');
+          selectedCategories = $('.selected-categories');
+          selectedCategoriesItem = selectedCategories.find('.item');
+          selectedSubCategories = $('.selected-subcategories');
+          selectedSubCategoriesItem = selectedSubCategories.find('.item');
+
+          selectedTags = $('.selected-tags');
+          selectedTagsItem = selectedTags.find('.item');
+
+          if (dataType === 'category' || dataType === 'subcategory') {
+            if ($(this).hasClass('active')) {
+              $(this).removeClass('active');
+            } else {
+              $(this).siblings().removeClass('active')
+              $(this).addClass('active');
+              if (dataType === 'category') {
+                selectedCategories.addClass('has-item');
+                //Removing existing selected category
+                selectedCategoriesItem.remove();
+                selectedCategory.val($.trim($(this).text()));
+                selectedCategories.append('<div class="item"><span>' + $(this).text() + '</span><span class="remove-item">X</span></div>');
+              }
+
+              if (dataType === 'subcategory') {
+                selectedSubCategories.addClass('has-item');
+                //Removing existing selected subcategory
+                selectedSubCategoriesItem.remove();
+                selectedSubCategory.val($.trim($(this).text()));
+                selectedSubCategories.append('<div class="item"><span>' + $(this).text() + '</span><span class="remove-item">X</span></div>');
+              }
             }
-            $(this).addClass('active');
           }
 
-          $('.remove-item').click(function () {
-              $(this).parent().remove();
-          });
+          if (dataType === 'tag') {
+            if ($(this).hasClass('active')) {
+              $(this).removeClass('active');
+            } else {
+              $(this).addClass('active');
+              selectedTags.addClass('has-item');
+              tagArray.push($.trim($(this).text()));
+              selectedTag.val(tagArray.toString());
+              selectedTags.append('<div class="item"><span>' + $(this).text() + '</span><span class="remove-item" data-name="'+ $.trim($(this).text()) +'">X</span></div>');
+            }
+          }
+
+
           /* alert($this.val()); Uncomment this for demonstration! */
         });
 
@@ -366,6 +457,64 @@ export default function () {
           $styledSelect.removeClass('active');
           $list.hide();
         });
+      });
+
+      //Preloader items
+      if (selectedCategory.val()) {
+        let preLoadselectedCategories = $('.selected-categories');
+        selectedCategoryHolder.find('.styledSelect').text(selectedCategory.val())
+        selectedCategoryHolder.find('.options li:contains('+selectedCategory.val()+')').addClass('active');
+        preLoadselectedCategories.addClass('has-item');
+        preLoadselectedCategories.append('<div class="item"><span>' + selectedCategory.val() + '</span><span class="remove-item">X</span></div>');
+      }
+
+      if (selectedSubCategory.val()) {
+        let preLoadselectedSubCategories = $('.selected-subcategories');
+        btnAddSubCategory.addClass('active');
+        btnAddSubCategory.find('i').removeClass('fa-plus-circle').addClass('fa-minus-circle');
+        subCategoryWrapper.addClass('active');
+        selectedSubCategoryHolder.find('.styledSelect').text(selectedSubCategory.val())
+        selectedSubCategoryHolder.find('.options li:contains('+selectedSubCategory.val()+')').addClass('active');
+        preLoadselectedSubCategories.addClass('has-item');
+        preLoadselectedSubCategories.append('<div class="item"><span>' + selectedSubCategory.val() + '</span><span class="remove-item">X</span></div>');
+      }
+
+      if (selectedTag.val()) {
+        let tagsVal = selectedTag.val();
+        let tagValArray = tagsVal.split(",");
+        let preLoadselectedTag = $('.selected-tags');
+        selectedTagHolder.find('.styledSelect').text(tagValArray[0])
+        for (let i in tagValArray){
+          console.log(tagValArray[i]);
+          selectedTagHolder.find('.options li:contains('+tagValArray[i]+')').addClass('active');
+          preLoadselectedTag.addClass('has-item');
+          preLoadselectedTag.append('<div class="item"><span>' + tagValArray[i] + '</span><span class="remove-item">X</span></div>');
+        }
+      }
+
+      $('.selected-categories .remove-item').click(function () {
+        $(this).parent().parent('.selected-categories').removeClass('has-item');
+        $(this).parent().remove();
+        selectedCategory.val("");
+      });
+
+      $('.selected-subcategories .remove-item').click(function () {
+        $(this).parent().parent('.selected-subcategories').removeClass('has-item');
+        $(this).parent().remove();
+        selectedSubCategory.val("");
+      });
+
+      $('.selected-tags .remove-item').click(function () {
+        selectedSubCategoryHolder.find('.options li:contains('+$(this).attr('data-name')+')').addClass('active');
+        $(this).parent().remove();
+        tagArray.splice($.inArray($(this).attr('data-name'), tagArray), 1);
+        selectedTag.val(tagArray.toString());
+      });
+
+      //ModalClose
+      modal.find('button.close').click(function () {
+        modal.removeClass('show');
+        modal.css('display', 'none');
       });
     }
   }
