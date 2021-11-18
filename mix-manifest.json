@@ -7,6 +7,7 @@
     "/images/arrow-left.svg": "/images/arrow-left.svg",
     "/images/arrow-right.svg": "/images/arrow-right.svg",
     "/images/btn-arrow.svg": "/images/btn-arrow.svg",
+    "/images/circle_plus.png": "/images/circle_plus.png",
     "/images/favicon.ico": "/images/favicon.ico",
     "/images/header-heart.svg": "/images/header-heart.svg",
     "/images/header-search.svg": "/images/header-search.svg",
@@ -36,6 +37,5 @@
     "/images/prev-icon.svg": "/images/prev-icon.svg",
     "/images/SignUp.svg": "/images/SignUp.svg",
     "/images/vertical-honing.jpg": "/images/vertical-honing.jpg",
-    "/dist/js/jquery.min.js": "/dist/js/jquery.min.js",
-    "/images/circle_plus.png": "/images/circle_plus.png"
+    "/dist/js/jquery.min.js": "/dist/js/jquery.min.js"
 }

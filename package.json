@@ -30,8 +30,10 @@
     "jquery-ui": "^1.13.0",
     "jquery-ui-bundle": "^1.12.1-migrate",
     "moment": "^2.29.1",
+    "moment-range": "^4.0.2",
     "owl.carousel": "^2.3.4",
     "path": "^0.12.7",
+    "pg-calendar": "^1.4.31",
     "pikaday": "^1.8.2",
     "popper.js": "^1.14.5",
     "tempusdominus-bootstrap-4": "^5.39.0"

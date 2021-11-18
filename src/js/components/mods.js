@@ -1,6 +1,10 @@
 /* eslint-disable */
 import $ from 'jquery';
 import 'owl.carousel';
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
+const moment = extendMoment(Moment);
+import 'pg-calendar/dist/js/pignose.calendar';
 import 'jquery-ui-bundle';
 
 export default function () {
@@ -231,21 +235,6 @@ export default function () {
             event.preventDefault();
           }
         }
-
-          // if (category.length > 0) {
-        //   let countFilledInputs = 0;
-        //   categories.each(function () {
-        //     let field = $(this).find('.form-control').val();
-        //     if ($.trim(field).length > 0) {
-        //       countFilledInputs = parseInt(countFilledInputs) + 1;
-        //     }
-        //   });
-        //
-        //   if (countFilledInputs < 1) {
-        //     errorField.text('Select at least 1 category.')
-        //     event.preventDefault();
-        //   }
-        // }
       });
 
       //Category suggestions
@@ -293,13 +282,11 @@ export default function () {
     {
       let selectedCategory, selectedCategoryHolder, selectedSubCategoryHolder, selectedSubCategory,
           selectedTag, selectedTagHolder,
-          btnAddSubCategory, subCategoryWrapper,
-          ListingIsEventFree, currencyField;
+          btnAddSubCategory, subCategoryWrapper;
 
       let tagArray = [];
 
       let modal = $('#successRegistration');
-
 
       selectedCategory = $('#ListingForm_ListingForm_Categories');
       selectedSubCategory = $('#ListingForm_ListingForm_SubCategories');
@@ -308,18 +295,6 @@ export default function () {
       selectedCategoryHolder = $('#ListingForm_ListingForm_CategorySelector_Holder');
       selectedSubCategoryHolder = $('#ListingForm_ListingForm_SubCategorySelector_Holder');
       selectedTagHolder = $('#ListingForm_ListingForm_TagsSelector_Holder');
-
-      ListingIsEventFree = $('#ListingForm_ListingForm_isEventFree');
-
-      currencyField = $('.currency-field');
-      ListingIsEventFree.find('input[type="radio"]').on('change', function() {
-        if ($(this).val() === '1') {
-          currencyField.removeClass('d-none');
-        } else {
-          currencyField.addClass('d-none');
-        }
-      });
-
 
       /**
        * Will show sub category options when toggled
@@ -393,7 +368,6 @@ export default function () {
 
         // Hides the unordered list when a list item is clicked and updates the styled div to show the selected list item
         // Updates the select element to have the value of the equivalent option
-
         $listItems.click(function (e) {
           e.stopPropagation();
           $styledSelect.text($(this).text()).removeClass('active');
@@ -448,8 +422,6 @@ export default function () {
             }
           }
 
-
-          /* alert($this.val()); Uncomment this for demonstration! */
         });
 
         // Hides the unordered list when clicking outside of it
@@ -516,7 +488,327 @@ export default function () {
         modal.removeClass('show');
         modal.css('display', 'none');
       });
+
+
+      //ListingCategoryStep
+      ListingCategoryStep();
+
+      //ListingDateAndTimeStep
+      ListingDateAndTimeStep();
+
+      //ListingPriceStep
+      ListingPriceStep()
+
+      //ListingUploadImages
+      ListingUploadImages()
     }
+  }
+
+  function ListingCategoryStep()
+  {
+
+  }
+
+  function ListingDateAndTimeStep()
+  {
+    let calendar, selectedDateRange, datesArray, formattedDate,
+        listingDateTimeContainer, listingSelectedDatesTextBox;
+
+    let id = 1;
+
+    listingDateTimeContainer    = $('.listingDateTimes');
+    listingSelectedDatesTextBox = $('#ListingForm_ListingForm_SelectedDates');
+
+    calendar = $('.calendar-datepicker');
+    calendar.pignoseCalendar({
+      multiple: true,
+      initialize: false,
+      week: 1,
+      weeks: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+      select: function(dates,context) { //date selection
+        let selectedDatesArray = [];
+        //removing selected date values textbox
+        listingSelectedDatesTextBox.val('');
+        if (dates.length > 1) {
+          //remove selected dates from div
+          listingDateTimeContainer.find('.date-time-item').remove();
+          if (dates[1]) {
+            selectedDateRange = moment.range(moment(dates[0]), moment(dates[1]));
+            datesArray = Array.from(selectedDateRange.by("days"));
+            datesArray.map(m => {
+              formattedDate = m.format("DD MMMM YYYY");
+              //appending selected date range
+              appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '' , id);
+
+              //automate push selected formatted date to array to use for populating textbox form field
+              selectedDatesArray.push(formattedDate);
+              id = id + 1;
+            });
+
+            //populate textbox with array of dates
+            listingSelectedDatesTextBox.val(selectedDatesArray);
+
+            //dropdown time selector functions
+            DropdownTimeSelector(listingDateTimeContainer);
+          }
+        }
+      },
+      prev: function(info, context) {
+        setTimeout(function () {
+          PopulateDateTimes(listingDateTimeContainer);
+        }, 50);
+      },
+      next: function(info, context) {
+        setTimeout(function () {
+          PopulateDateTimes(listingDateTimeContainer);
+        }, 50);
+      }
+    });
+
+    PopulateDateTimes(listingDateTimeContainer);
+    validateDateTimes();
+  }
+
+  function DropdownTimeSelector(listingDateTimeContainer)
+  {
+    let btnToggle, dropdownItem, selectedDropdownItem;
+    let dateTimeItem;
+
+    dateTimeItem = listingDateTimeContainer.find('.date-time-item');
+    dateTimeItem.find('.dropdown').each(function() {
+      let dropdownStartTime = $(this).hasClass('selectedStartTime');
+      $(this).on('show.bs.dropdown', function () {
+        btnToggle = $(this).find('.dropdown-toggle');
+        dropdownItem = $(this).find('.dropdown-menu .dropdown-item');
+        btnToggle.removeClass('text-danger').parent().removeClass('has-error');
+        dropdownItem.click(function(e) {
+          selectedDropdownItem = $(this).text();
+          if (dropdownStartTime) {
+            btnToggle.attr('data-start-time', selectedDropdownItem);
+          } else {
+            btnToggle.attr('data-end-time', selectedDropdownItem);
+          }
+          btnToggle.find('.text').text(selectedDropdownItem);
+          e.preventDefault();
+        });
+      })
+    });
+  }
+
+  function PopulateDateTimes(listingDateTimeContainer)
+  {
+    let listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox, listingSelectedDatesTextBox;
+
+    let selectedDates, selectedStartTime, selectedEndTime;
+
+    listingSelectedDatesTextBox     = $('#ListingForm_ListingForm_SelectedDates').val();
+    listingSelectedStartTimeTextBox = $('#ListingForm_ListingForm_SelectedStartTimes').val();
+    listingSelectedEndTimeTextBox   = $('#ListingForm_ListingForm_SelectedEndTimes').val();
+
+    if (listingSelectedDatesTextBox &&
+        listingSelectedStartTimeTextBox &&
+        listingSelectedEndTimeTextBox) {
+
+      selectedDates     = listingSelectedDatesTextBox.split(",");
+      selectedStartTime = listingSelectedStartTimeTextBox.split(",");
+      selectedEndTime   = listingSelectedEndTimeTextBox.split(",");
+
+      for (let i = 0; i < selectedDates.length; i++) {
+        //populate Calendar
+        let CalendarDateFormat = moment(selectedDates[i]).format('YYYY-MM-DD');
+        let EventDateFormat    = moment(selectedDates[i]).format("DD MMMM YYYY");
+
+        let unit = $('.pignose-calendar-unit[data-date='+ CalendarDateFormat +']');
+        if (i === 0) {
+          unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-first-active');
+        } else if (i !== 0 && i === selectedDates.length - 2) {
+          if (selectedDates.length < 4) {
+            unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first pignose-calendar-unit-range-last');
+          } else {
+            unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-last');
+          }
+        } else if (i === selectedDates.length - 1) {
+          unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-second-active');
+        } else {
+          if (selectedDates.length > 3) {
+            if (i === 1) {
+              unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first');
+            } else {
+              unit.addClass('pignose-calendar-unit-range');
+            }
+          }
+        }
+
+        //populate event dates
+        appendDateTimeItem(listingDateTimeContainer,EventDateFormat, selectedStartTime[i], selectedEndTime[i], i);
+
+        //dropdown time selector functions
+        DropdownTimeSelector(listingDateTimeContainer);
+      }
+    }
+  }
+
+  function validateDateTimes()
+  {
+    const errorTimeMessage = 'Please add specific time.', errorDateMessage = 'Please select specific dates above.';
+
+    let endTime, startTime;
+    let form, dropdownBtn, dropdownBtnAttr;
+    let actionBtn, errorField, errorMessage, errorFlag;
+    let listingDateTimeContainer, listingDateTimeItem;
+
+    let listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
+    let startTimeArray, endTimeArray;
+
+    form = $('#ListingForm_ListingForm');
+
+    listingSelectedStartTimeTextBox = $('#ListingForm_ListingForm_SelectedStartTimes');
+    listingSelectedEndTimeTextBox   = $('#ListingForm_ListingForm_SelectedEndTimes');
+
+    actionBtn = $('#ListingForm_ListingForm_action_next');
+    errorField = $('.error-field');
+
+    form.on('click', actionBtn, function (e) {
+      errorFlag = false;
+      startTimeArray = []; endTimeArray = [];
+      listingDateTimeContainer  = $('.listingDateTimes');
+      dropdownBtnAttr = $(e.target).attr('data-step')
+      if (dropdownBtnAttr === 'date-time') {
+        listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
+        if (listingDateTimeItem.length > 0) { //check if user selected date from calendar
+          // validate if all dropdown start time is selected
+          listingDateTimeItem.find('.dropdown').each(function() {
+            dropdownBtn = $(this).find('button');
+            if ($(this).hasClass('selectedStartTime')) {
+              startTime = dropdownBtn.attr('data-start-time');
+              if (!startTime) {
+                $(this).addClass('has-error');
+                dropdownBtn.addClass('text-danger');
+                errorFlag = true;
+                errorMessage = errorTimeMessage;
+              } else {
+                startTimeArray.push(startTime);
+                console.log(startTimeArray);
+              }
+            }
+            if ($(this).hasClass('selectedEndTime')) {
+              endTime = dropdownBtn.attr('data-end-time');
+              if (!endTime) {
+                $(this).addClass('has-error');
+                dropdownBtn.addClass('text-danger');
+                errorFlag = true;
+                errorMessage = errorTimeMessage;
+              } else {
+                endTimeArray.push(endTime);
+              }
+            }
+          });
+        } else {
+          errorFlag = true;
+          errorMessage = errorDateMessage;
+        }
+        if (startTimeArray.length > 0){
+          listingSelectedStartTimeTextBox.val(startTimeArray.toString());
+        }
+        if (startTimeArray.length > 0) {
+          listingSelectedEndTimeTextBox.val(endTimeArray.toString());
+        }
+      }
+      if (errorFlag) {
+        showError(errorMessage, errorField);
+        e.preventDefault();
+      }
+    });
+  }
+
+  function appendDateTimeItem(elem, date, startTime, endTime, id)
+  {
+    let startTimeText = startTime;
+    let endTimeText   = endTime;
+    if (!startTime) {
+      startTimeText = 'Select start time';
+    }
+
+    if (!endTime) {
+      endTimeText = 'Select end time';
+    }
+
+    elem.append('' +
+    '<div class="date-time-item row">' +
+      '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text">' + date + '</span><span class="btn-remove"><i class="fal fa-times"></i></div></div>' +
+      '<div class="col-lg-4 pb-4">' +
+        '<div class="selectedStartTime dropdown">' +
+          '<button class="dropdown-toggle" type="button" id="startDate'+ id +'" data-start-time="'+startTime+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+ startTimeText +'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+          '<div class="dropdown-menu" aria-labelledby="startDate'+id+'">' + timeOptions() + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="col-lg-4 pb-4">' +
+        '<div class="selectedEndTime dropdown">' +
+          '<button class="dropdown-toggle" type="button" id="endDate'+ id +'" data-end-time="'+endTime+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+ endTimeText +'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+          '<div class="dropdown-menu" aria-labelledby="endDate'+id+'">' + timeOptions() + '</div>' +
+        '</div>' +
+    '</div>');
+  }
+
+  function timeOptions()
+  {
+    let options = '';
+    const arrayTimes =
+      [ '6:00 am', '7:00 am', '8:00 am', '9:00 am', '10:00 am',
+        '11:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm',
+        '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm', '6:00 pm',
+        '7:00 pm', '8:00 pm', '9:00 pm', '10:00 pm'
+      ];
+
+    for (let i = 0; i < arrayTimes.length; i++) {
+      options += '<a class="dropdown-item" href="#">' + arrayTimes[i] + '</a>';
+    }
+    return options;
+  }
+
+  function showError(err, elem)
+  {
+    elem.find('.text-danger').remove();
+    return elem.addClass('show').append('<span class="text-danger">' + err + '</span>');
+  }
+
+  function ListingPriceStep()
+  {
+    let isEventFreeRadio = $('#ListingForm_ListingForm_isEventFree');
+    let pricesInputTextContainer = $('.price-inputs');
+    let checkedRadio = isEventFreeRadio.find('input[name="isEventFree"]:checked').val();
+    if (checkedRadio === '1') {
+      pricesInputTextContainer.addClass('d-none');
+    } else {
+      pricesInputTextContainer.removeClass('d-none');
+    }
+    isEventFreeRadio.find('input[type="radio"]').on('change', function() {
+      if ($(this).val() === '1') {
+        pricesInputTextContainer.addClass('d-none');
+      } else {
+        pricesInputTextContainer.removeClass('d-none');
+      }
+    });
+  }
+
+  function ListingUploadImages()
+  {
+
+  }
+
+  function preloadCategories()
+  {
+
+  }
+
+  function preloadSubCategories()
+  {
+
+  }
+
+  function preloadTags()
+  {
+
   }
 
   function addToFavourites()

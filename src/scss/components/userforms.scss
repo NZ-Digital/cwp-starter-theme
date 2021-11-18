@@ -27,6 +27,17 @@
         color: $footer-gray;
       }
     }
+    &.input-price {
+      //max-width: 237px;
+      padding-left: 35px;
+    }
+    &.input-line,
+    &.input-price {
+      font-size: 20px;
+      border-radius: 0;
+      border: 0;
+      border-bottom: 1px solid #707070;
+    }
   }
   select.dropdown {
     height: 100%;
@@ -35,7 +46,6 @@
     background: url('../images/arrow-down.png') 96% center no-repeat !important;
     border-radius: 50px;
     border-color: $footer-gray;
-
   }
   .textarea {
     min-height: 367px;
@@ -57,8 +67,221 @@
       transform: translate3d(0, -50%, 0);
     }
   }
+  .optionset {
+    .form-check {
+      position: relative;
+      text-align: center;
+      padding: 0;
+      &:first-child {
+        padding-right: 30px;
+      }
+      input[type='radio'] {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        padding: 0;
+        visibility: hidden;
+        &:checked + label {
+          background-color: $footer-gray;
+          color: #fff;
+        }
+      }
+      label {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $scorpion;
+        width: 100%;
+        min-width: 194px;
+        padding: 14px;
+        border-radius: 50px;
+        border: 1px solid $footer-gray;
+        margin-bottom: 0;
+      }
+    }
+  }
 }
-
+.currency-code {
+  position: absolute;
+  font-size: 20px;
+  top: 13px;
+}
+.calendar-datepicker {
+  .pignose-calendar {
+    width: 100%;
+    max-width: 100%;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    .pignose-calendar-top {
+      display: flex;
+      align-items: center;
+      background-color: #E6E6E6;
+      padding: 0;
+      border: 0;
+      box-shadow: none;
+      .pignose-calendar-top-date {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        .pignose-calendar-top-month {
+          text-transform: none;
+          margin-bottom: 0;
+          margin-right: 5px;
+        }
+        .pignose-calendar-top-month,
+        .pignose-calendar-top-year{
+          font-family: $font-family-arial;
+          font-size: 16px;
+          font-weight: 400;
+          color: #141414;
+        }
+      }
+      .pignose-calendar-top-prev {
+        margin-left: 0.5em;
+      }
+      .pignose-calendar-top-next {
+        margin-right: 0.5em;
+      }
+    }
+    .pignose-calendar-header {
+      background-color: #EBEBEB;
+      .pignose-calendar-week {
+        color: #141414 !important;
+      }
+    }
+    .pignose-calendar-body {
+      background-color: #F2F2F2;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+    .pignose-calendar-header,
+    .pignose-calendar-body{
+      font-size: 14px;
+      font-weight: normal;
+      margin-top: 0;
+      padding: 0;
+    }
+    .pignose-calendar-unit {
+      height: 3rem;
+      line-height: 3em;
+      a {
+        color: $footer-gray;
+      }
+      &-active {
+        a {
+          font-weight: 400;
+          border: 1px solid #e96649;
+          color: #E96649 !important;
+          border-radius: 0;
+          background-color: transparent;
+          box-shadow: none;
+        }
+      }
+    }
+    .pignose-calendar-unit-range {
+      a {
+        color: #fff;
+        background-color: #e96649;
+      }
+    }
+    .icon-arrow-left,
+    .icon-arrow-right {
+      font-family: $font-family-font-awesomePro !important;
+      &:before {
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+    }
+    .icon-arrow-left {
+      &:before {
+        background-image: url("../images/prev-icon.svg");
+      }
+    }
+    .icon-arrow-right {
+      &:before {
+        background-image: url("../images/next-icon.svg");
+      }
+    }
+  }
+}
+.listingDateTimes {
+  .date-time-item {
+    .selectedDate,
+    .selectedStartTime,
+    .selectedEndTime {
+      position: relative;
+      max-width: 237px;
+      border-bottom: 1px solid #707070;
+      padding-bottom: 8px;
+      &.has-error {
+        border-color: $danger;
+        .text {
+          color: $danger;
+        }
+      }
+    }
+    .selectedStartTime,
+    .selectedEndTime {
+      &.show {
+        i {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    .dropdown-toggle {
+      text-align: left;
+      width: 100%;
+      background-color: transparent;
+      border: 0;
+      line-height: 100%;
+      &:after {
+        display: none;
+      }
+    }
+    .dropdown-menu {
+      max-height: 290px;
+      width: 100%;
+      overflow: auto;
+      margin-top: 15px;
+      padding: 25px 26px;
+      border: 0;
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+      background-color: $carra;
+      box-shadow: 0 1px 5px rgb(0 0 0 / 16%);
+      .dropdown-item {
+        color: $scorpion;
+        padding: 0;
+        transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1) ;
+        &.active,
+        &:hover {
+          color: $cod-gray;
+          background-color: transparent;
+        }
+        &:not(:last-child) {
+          border-bottom: 1px solid $footer-gray;
+          padding: 7px 0;
+        }
+        &:last-child {
+          padding-top: 7px;
+        }
+      }
+    }
+    .text {
+      color: $tundora;
+    }
+    .btn-remove,
+    .btn-arrowdown {
+      cursor: pointer;
+      position: absolute;
+      right: 10px;
+    }
+    .btn-arrowdown {
+      font-size: 26px;
+    }
+  }
+}
 .category-selector {
   .form-check {
     padding-left: 0;
@@ -110,6 +333,13 @@ input[type='submit'] {
   .forgot-password {
     display: block;
     padding: 5px 15px;
+  }
+}
+
+.error-field {
+  display: none;
+  &.show {
+    display: block;
   }
 }
 
