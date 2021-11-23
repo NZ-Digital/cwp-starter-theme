@@ -20,7 +20,7 @@
         </div>
         <div class="listing-content--details">
             <p class="mb-3 mt-4"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Name}</span></p>
-            <p><span class="halyard-display fontsize19 font-weight-book line-height-100"><% if $Content %>{$Content.LimitWordCount(15)}<% else %>$Listing.Content.LimitWordCount(15)<% end_if %></span></p>
+            <p><span class="halyard-display fontsize19 font-weight-book line-height-100"><% if $Content %>{$Content.RAW.LimitWordCount(15)}<% else %>$Listing.Content.LimitWordCount(15).RAW<% end_if %></span></p>
         </div>
         <div class="listing-content--tags">
             <button class="btn-utils addtofavourites fontsize35<% if $inFavourites %> active<% end_if %>" data-id="<% if $Listing.ID %>{$Listing.ID}<% else %>{$ID}<% end_if %>"><i class="<% if $inFavourites %>fas<% else %>far<% end_if %> fa-heart"></i></button>

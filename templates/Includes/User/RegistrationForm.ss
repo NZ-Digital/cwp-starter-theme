@@ -19,7 +19,7 @@
             $RegistrationForm
 
             <% if $Success %>
-                <div class="modal fade show position-absolute" id="successRegistration" tabindex="-1" role="dialog" aria-labelledby="successRegistration" aria-hidden="true" style="display: block;">
+                <div class="modal fade show position-absolute" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-success" aria-hidden="true" style="display: block;">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">

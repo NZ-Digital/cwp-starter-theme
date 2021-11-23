@@ -1,11 +1,14 @@
 <% if $CurrentMember %>
-    <% if $URLSegment == 'my-portal' || $URLSegment == 'my-favourites' || $URLSegment == 'my-listings' || $URLSegment == 'my-recommended' || $URLSegment == 'account-settings' || $URLSegment == 'create-listing' %>
+    <% if $URLSegment == 'my-portal' || $URLSegment == 'my-favourites' || $URLSegment == 'my-listings' || $URLSegment == 'my-recommended' || $URLSegment == 'account-settings' || $URLSegment == 'create-listing' || $URLSegment == 'my-recommended' %>
         <% include Includes/User/UserNavigation %>
         <% if $URLSegment == 'my-favourites' %>
             <% include Includes/User/MyFavourites %>
         <% end_if %>
         <% if $URLSegment == 'my-listings' %>
             <% include Includes/User/MyListings %>
+        <% end_if %>
+        <% if $URLSegment == 'my-recommended' %>
+            <% include Includes/User/RecommendedListings %>
         <% end_if %>
         <% if $URLSegment == 'account-settings' %>
             <% include Includes/User/AccountSettings %>

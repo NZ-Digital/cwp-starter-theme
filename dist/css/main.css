@@ -16264,7 +16264,7 @@ body > header .open > a:focus {
   border-radius: 50px;
   border-color: #a2a2a2;
 }
-.form-group .textarea {
+.form-group textarea {
   min-height: 367px;
   border: 1px solid #a2a2a2;
   border-radius: 0;
@@ -16312,6 +16312,15 @@ body > header .open > a:focus {
   border-radius: 50px;
   border: 1px solid #a2a2a2;
   margin-bottom: 0;
+}
+
+.message.required {
+  color: #dc3545;
+}
+
+.image-upload label {
+  font-size: 20px;
+  margin-bottom: 25px;
 }
 
 .currency-code {
@@ -16422,8 +16431,6 @@ body > header .open > a:focus {
 .listingDateTimes .date-time-item .selectedEndTime {
   position: relative;
   max-width: 237px;
-  border-bottom: 1px solid #707070;
-  padding-bottom: 8px;
 }
 .listingDateTimes .date-time-item .selectedDate.has-error,
 .listingDateTimes .date-time-item .selectedStartTime.has-error,
@@ -16435,6 +16442,10 @@ body > header .open > a:focus {
 .listingDateTimes .date-time-item .selectedEndTime.has-error .text {
   color: #dc3545;
 }
+.listingDateTimes .date-time-item .selectedDate {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #707070;
+}
 .listingDateTimes .date-time-item .selectedStartTime.show i,
 .listingDateTimes .date-time-item .selectedEndTime.show i {
   -webkit-transform: rotate(180deg);
@@ -16443,12 +16454,18 @@ body > header .open > a:focus {
 .listingDateTimes .date-time-item .dropdown-toggle {
   text-align: left;
   width: 100%;
+  padding-bottom: 10px;
   background-color: transparent;
   border: 0;
+  border-bottom: 1px solid;
   line-height: 100%;
+  color: #433f40;
 }
 .listingDateTimes .date-time-item .dropdown-toggle:after {
   display: none;
+}
+.listingDateTimes .date-time-item button[disabled].dropdown-toggle {
+  color: grey;
 }
 .listingDateTimes .date-time-item .dropdown-menu {
   max-height: 290px;
@@ -16477,9 +16494,6 @@ body > header .open > a:focus {
 }
 .listingDateTimes .date-time-item .dropdown-menu .dropdown-item:last-child {
   padding-top: 7px;
-}
-.listingDateTimes .date-time-item .text {
-  color: #433f40;
 }
 .listingDateTimes .date-time-item .btn-remove,
 .listingDateTimes .date-time-item .btn-arrowdown {
@@ -16545,6 +16559,29 @@ input[type=submit].action {
 }
 .error-field.show {
   display: block;
+}
+
+.dropzone-holder.uploadable {
+  padding-bottom: 0;
+}
+
+.featured-image .fileattachment ul.file-attachment-field-previews.grid li,
+.featured-logo .fileattachment ul.file-attachment-field-previews.grid li {
+  border: 0 !important;
+  max-width: 100% !important;
+  margin: 10px 0 0 !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.featured-image .fileattachment ul.file-attachment-field-previews.grid li .file-icon,
+.featured-logo .fileattachment ul.file-attachment-field-previews.grid li .file-icon {
+  width: initial !important;
+}
+.featured-image .fileattachment ul.file-attachment-field-previews.grid .file-icon img,
+.featured-logo .fileattachment ul.file-attachment-field-previews.grid .file-icon img {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 #RegistrationForm_RegistrationForm .actions,
@@ -16614,7 +16651,7 @@ input[type=submit].action {
 .options li:not(:last-child) {
   border-bottom: 1px solid #a2a2a2;
 }
-.options li.active {
+.options li.selected {
   color: #141414;
 }
 .options li:hover {
@@ -16622,17 +16659,18 @@ input[type=submit].action {
   background-color: transparent;
 }
 
-.selected-categories,
-.selected-subcategories,
+.selected-category,
+.selected-subcategory,
 .selected-tags {
   display: none;
 }
-.selected-categories .item,
-.selected-subcategories .item,
+.selected-category .item,
+.selected-subcategory .item,
 .selected-tags .item {
   position: relative;
   display: block;
   text-align: left;
+  text-transform: uppercase;
   text-decoration: none;
   width: 100%;
   max-width: 296px;
@@ -16642,15 +16680,18 @@ input[type=submit].action {
   background-color: #f0efed;
   border: 0;
 }
-.selected-categories .item .remove-item,
-.selected-subcategories .item .remove-item,
+.selected-category .item .remove-item,
+.selected-subcategory .item .remove-item,
 .selected-tags .item .remove-item {
   cursor: pointer;
   position: absolute;
+  top: 50%;
   right: 30px;
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
 }
-.selected-categories.has-item,
-.selected-subcategories.has-item,
+.selected-category.has-item,
+.selected-subcategory.has-item,
 .selected-tags.has-item {
   display: block;
 }
@@ -16662,21 +16703,21 @@ input[type=submit].action {
   display: block;
 }
 
-#successRegistration {
+#modal-success {
   overflow: unset;
 }
-#successRegistration .modal-dialog {
+#modal-success .modal-dialog {
   max-width: 850px;
 }
-#successRegistration .modal-dialog .modal-content {
+#modal-success .modal-dialog .modal-content {
   background-color: #f0efed;
   box-shadow: -10px 0px 20px 0 rgba(0, 0, 0, 0.16);
   border: 0;
 }
-#successRegistration .modal-dialog .modal-content .modal-header {
+#modal-success .modal-dialog .modal-content .modal-header {
   border: 0;
 }
-#successRegistration .modal-dialog .modal-content .modal-body {
+#modal-success .modal-dialog .modal-content .modal-body {
   padding: 30px 20px 80px;
 }
 

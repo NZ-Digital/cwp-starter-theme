@@ -27,7 +27,7 @@
                         </div>
                         <div class="listing-content--details">
                             <p class="mb-3 mt-4"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Listing.Name}</span></p>
-                            <p><span class="halyard-display fontsize19 font-weight-book line-height-100">$Listing.Content.LimitWordCount(15)</span></p>
+                            <p><span class="halyard-display fontsize19 font-weight-book line-height-100">$Listing.Content.RAW.LimitWordCount(15)</span></p>
                         </div>
                         <div class="listing-content--tags">
                             <button class="btn-utils addtofavourites fontsize35 active" data-id="{$Listing.ID}"><i class="fas fa-heart"></i></button>
@@ -45,7 +45,7 @@
             <div class="col-lg-12 pt-lg-8 pb-lg-8">
                 <p class="text-center"><span class="fontsize50 font-weight-book lineheight-60px letterspacing-1px">Click here to start adding your favourite<br> {$GroupName} Listings</span></p>
                 <p class="text-center pt-5"><span class="fontsize19 font-weight-book">Click the heart icon to save any listing to your favourites</span></p>
-                <p class="text-center pt-5"><span class="fontsize18 font-weight-medium theme-button-alt">$GroupName</span></p>
+                <p class="text-center pt-5"><a href="$GroupPageLink"><span class="fontsize18 font-weight-medium theme-button-alt">$GroupName</span></a></p>
             </div>
         <% end_if %>
         <% if not $Last %>

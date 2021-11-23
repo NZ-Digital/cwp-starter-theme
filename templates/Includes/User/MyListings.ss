@@ -8,7 +8,7 @@
                             <p><span class="fontsize25 halyard-display font-weight-medium letterspacing-7px text-uppercase">My $GroupName Listings</span></p>
                         </div>
                         <div class="col-auto">
-                            <p class="text-center"><a href="#" class="d-flex align-items-center text-decoration-none"><span class="fontsize18 halyard-display font-weight-medium theme-button-alt">See all</span></a></p>
+                            <p class="text-center"><a href="$GroupPageLink" class="d-flex align-items-center text-decoration-none"><span class="fontsize18 halyard-display font-weight-medium theme-button-alt">See all</span></a></p>
                         </div>
                     </div>
                     <div class="row">
@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="listing-content--details">
                                         <p class="mb-3 mt-4"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Name}</span></p>
-                                        <p><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.LimitWordCount(15)</span></p>
+                                        <p><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.RAW.LimitWordCount(15)</span></p>
                                     </div>
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35" data-id="$ID"><i class="far fa-heart"></i></button>

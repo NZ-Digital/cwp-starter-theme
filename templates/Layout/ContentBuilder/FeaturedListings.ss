@@ -21,7 +21,7 @@
                     </div>
                     <div class="listing-content--details">
                         <p class="mb-3"><span class="halyard-display fontsize35 font-weight-normal">{$Name}</span></p>
-                        <p class="mb-5"><span class="halyard-display fontsize19 font-weight-book">{$Content.LimitWordCount(39)}</span></p>
+                        <p class="mb-5"><span class="halyard-display fontsize19 font-weight-book">{$Content.RAW.LimitWordCount(39)}</span></p>
                         <p><a href="<% if $ListingPage %>$ListingPage.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small halyard-display font-weight-medium fontsize16">More info</span></a></p>
                     </div>
                 </div>

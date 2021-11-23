@@ -34843,7 +34843,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     signUpPage();
     createListingPage(); //Actions
 
-    addToFavourites(); //testAjax();
+    addToFavourites();
+    closeModal(); //testAjax();
   }
 
   function headerSettings() {
@@ -34989,24 +34990,20 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
     if (signUpForm.length > 0) {
       var input,
-          category,
+          categorySelector,
           selectedCategories = [],
           passwordField,
           passwordConfirmField,
           emailField,
           emailConfirmField,
-          selectedCategoryField,
-          errorField,
-          modal;
+          selectedCategoryField;
       var requiredPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
       emailField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Email');
       emailConfirmField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_ConfirmEmail');
       passwordField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Password_Holder');
       passwordConfirmField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_ConfirmPassword_Holder');
       selectedCategoryField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_SelectedCategories');
-      category = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-selector');
-      errorField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.error-field').find('span');
-      modal = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#successRegistration');
+      categorySelector = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-selector');
       passwordField.append('<a href="#" class="btn-reveal-password password-field"><span>Show</span></a>');
       passwordConfirmField.append('<a href="#" class="btn-reveal-password passwordConfirm-field"><span>Show</span></a>');
       passwordConfirmField.find('#Password_ConfirmPassword').attr('placeholder', 'Confirm Password*');
@@ -35046,13 +35043,13 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         }
       }); //Category suggestions
 
-      if (category.length > 0) {
-        category.find('.form-check-input').each(function () {
+      if (categorySelector.length > 0) {
+        categorySelector.find('.form-check-input').each(function () {
           if (this.checked) {
             selectedCategories.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
           }
         });
-        category.on('change', '.form-check-input', function () {
+        categorySelector.on('change', '.form-check-input', function () {
           var parent = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent('.form-check');
 
           if (this.checked) {
@@ -35065,13 +35062,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
           selectedCategoryField.val(selectedCategories.toString());
         });
-      } //ModalClose
-
-
-      modal.find('button.close').click(function () {
-        modal.removeClass('show');
-        modal.css('display', 'none');
-      });
+      }
     }
   }
 
@@ -35087,195 +35078,20 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     }
   }
 
+  function closeModal() {
+    var modal = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.modal');
+    modal.find('button.close').click(function () {
+      modal.removeClass('show');
+      modal.css('display', 'none');
+    });
+  }
+
   function createListingPage() {
     var createListingForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm');
 
     if (createListingForm.length > 0) {
-      var selectedCategory, selectedCategoryHolder, selectedSubCategoryHolder, selectedSubCategory, selectedTag, selectedTagHolder, btnAddSubCategory, subCategoryWrapper;
-      var tagArray = [];
-      var modal = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#successRegistration');
-      selectedCategory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Categories');
-      selectedSubCategory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SubCategories');
-      selectedTag = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Tags');
-      selectedCategoryHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_CategorySelector_Holder');
-      selectedSubCategoryHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SubCategorySelector_Holder');
-      selectedTagHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_TagsSelector_Holder');
-      /**
-       * Will show sub category options when toggled
-       */
-
-      btnAddSubCategory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.add-subcategory-btn');
-      subCategoryWrapper = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sub-category-wrapper');
-      btnAddSubCategory.click(function () {
-        var i = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i');
-
-        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
-          i.removeClass('fa-minus-circle');
-          i.addClass('fa-plus-circle');
-          subCategoryWrapper.removeClass('active');
-        } else {
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
-          i.addClass('fa-minus-circle');
-          i.removeClass('fa-plus-circle');
-          subCategoryWrapper.addClass('active');
-        }
-      }); // if (selectedCategoriesItem.length > 0) {
-      //   selectedCategories.addClass('has-item');
-      // }
-
-      createListingForm.find('select').each(function () {
-        // Cache the number of options
-        var dataType = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-type');
-        var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this),
-            numberOfOptions = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).children('option').length; // Hides the select element
-
-        $this.addClass('s-hidden'); // Wrap the select element in a div
-
-        $this.wrap('<div class="select"></div>'); // Insert a styled div to sit over the top of the hidden select element
-
-        $this.after('<div class="styledSelect"></div>'); // Cache the styled div
-
-        var $styledSelect = $this.next('div.styledSelect'); // Show the first select option in the styled div
-
-        $styledSelect.text($this.children('option').eq(0).text()); // Insert an unordered list after the styled div and also cache the list
-
-        var $list = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<ul />', {
-          'class': 'options'
-        }).insertAfter($styledSelect); // Insert a list item into the unordered list for each select option
-
-        for (var i = 0; i < numberOfOptions; i++) {
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()('<li />', {
-            text: $this.children('option').eq(i).text(),
-            rel: $this.children('option').eq(i).val()
-          }).appendTo($list);
-        } // Cache the list items
-
-
-        var $listItems = $list.children('li'); // Show the unordered list when the styled div is clicked (also hides it if the div is clicked again)
-
-        $styledSelect.click(function (e) {
-          e.stopPropagation();
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()('div.styledSelect.active').each(function () {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active').next('ul.options').hide();
-          });
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).toggleClass('active').next('ul.options').toggle();
-        }); // Hides the unordered list when a list item is clicked and updates the styled div to show the selected list item
-        // Updates the select element to have the value of the equivalent option
-
-        $listItems.click(function (e) {
-          e.stopPropagation();
-          $styledSelect.text(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()).removeClass('active');
-          $this.val(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('rel'));
-          $list.hide();
-          var selectedCategories, selectedCategoriesItem, selectedSubCategories, selectedSubCategoriesItem, selectedTags, selectedTagsItem;
-          selectedCategories = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-categories');
-          selectedCategoriesItem = selectedCategories.find('.item');
-          selectedSubCategories = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-subcategories');
-          selectedSubCategoriesItem = selectedSubCategories.find('.item');
-          selectedTags = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags');
-          selectedTagsItem = selectedTags.find('.item');
-
-          if (dataType === 'category' || dataType === 'subcategory') {
-            if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
-            } else {
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).siblings().removeClass('active');
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
-
-              if (dataType === 'category') {
-                selectedCategories.addClass('has-item'); //Removing existing selected category
-
-                selectedCategoriesItem.remove();
-                selectedCategory.val(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
-                selectedCategories.append('<div class="item"><span>' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '</span><span class="remove-item">X</span></div>');
-              }
-
-              if (dataType === 'subcategory') {
-                selectedSubCategories.addClass('has-item'); //Removing existing selected subcategory
-
-                selectedSubCategoriesItem.remove();
-                selectedSubCategory.val(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
-                selectedSubCategories.append('<div class="item"><span>' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '</span><span class="remove-item">X</span></div>');
-              }
-            }
-          }
-
-          if (dataType === 'tag') {
-            if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
-            } else {
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
-              selectedTags.addClass('has-item');
-              tagArray.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
-              selectedTag.val(tagArray.toString());
-              selectedTags.append('<div class="item"><span>' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() + '</span><span class="remove-item" data-name="' + jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) + '">X</span></div>');
-            }
-          }
-        }); // Hides the unordered list when clicking outside of it
-
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).click(function () {
-          $styledSelect.removeClass('active');
-          $list.hide();
-        });
-      }); //Preloader items
-
-      if (selectedCategory.val()) {
-        var preLoadselectedCategories = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-categories');
-        selectedCategoryHolder.find('.styledSelect').text(selectedCategory.val());
-        selectedCategoryHolder.find('.options li:contains(' + selectedCategory.val() + ')').addClass('active');
-        preLoadselectedCategories.addClass('has-item');
-        preLoadselectedCategories.append('<div class="item"><span>' + selectedCategory.val() + '</span><span class="remove-item">X</span></div>');
-      }
-
-      if (selectedSubCategory.val()) {
-        var preLoadselectedSubCategories = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-subcategories');
-        btnAddSubCategory.addClass('active');
-        btnAddSubCategory.find('i').removeClass('fa-plus-circle').addClass('fa-minus-circle');
-        subCategoryWrapper.addClass('active');
-        selectedSubCategoryHolder.find('.styledSelect').text(selectedSubCategory.val());
-        selectedSubCategoryHolder.find('.options li:contains(' + selectedSubCategory.val() + ')').addClass('active');
-        preLoadselectedSubCategories.addClass('has-item');
-        preLoadselectedSubCategories.append('<div class="item"><span>' + selectedSubCategory.val() + '</span><span class="remove-item">X</span></div>');
-      }
-
-      if (selectedTag.val()) {
-        var tagsVal = selectedTag.val();
-        var tagValArray = tagsVal.split(",");
-        var preLoadselectedTag = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags');
-        selectedTagHolder.find('.styledSelect').text(tagValArray[0]);
-
-        for (var i in tagValArray) {
-          console.log(tagValArray[i]);
-          selectedTagHolder.find('.options li:contains(' + tagValArray[i] + ')').addClass('active');
-          preLoadselectedTag.addClass('has-item');
-          preLoadselectedTag.append('<div class="item"><span>' + tagValArray[i] + '</span><span class="remove-item">X</span></div>');
-        }
-      }
-
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-categories .remove-item').click(function () {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().parent('.selected-categories').removeClass('has-item');
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().remove();
-        selectedCategory.val("");
-      });
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-subcategories .remove-item').click(function () {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().parent('.selected-subcategories').removeClass('has-item');
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().remove();
-        selectedSubCategory.val("");
-      });
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags .remove-item').click(function () {
-        selectedSubCategoryHolder.find('.options li:contains(' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-name') + ')').addClass('active');
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().remove();
-        tagArray.splice(jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-name'), tagArray), 1);
-        selectedTag.val(tagArray.toString());
-      }); //ModalClose
-
-      modal.find('button.close').click(function () {
-        modal.removeClass('show');
-        modal.css('display', 'none');
-      }); //ListingCategoryStep
-
-      ListingCategoryStep(); //ListingDateAndTimeStep
+      //ListingCategoryStep
+      ListingCategoryStep(createListingForm); //ListingDateAndTimeStep
 
       ListingDateAndTimeStep(); //ListingPriceStep
 
@@ -35285,13 +35101,288 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     }
   }
 
-  function ListingCategoryStep() {}
+  function ListingCategoryStep(form) {
+    var selectedCategoryHolder,
+        selectedCategoryText,
+        selectedSubCategoryHolder,
+        selectedSubCategoryText,
+        selectedTagsHolder,
+        selectedTagsText,
+        selectedTagsArray = [];
+    var categoryError, tagError, actionBtn;
+    categoryError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-error');
+    tagError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.tag-error');
+    actionBtn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_action_next');
+    selectedCategoryText = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="Categories"]');
+    selectedSubCategoryText = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SubCategories"]');
+    selectedTagsText = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="Tags"]');
+    form.find('select').each(function () {
+      var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this),
+          dataType = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-type'),
+          firstData = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-first'),
+          numberOfOptions = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).children('option').length,
+          $styledSelect;
+      $this.addClass('s-hidden');
+      $this.wrap('<div class="select"></div>');
+      $this.after('<div class="styledSelect"></div>');
+      $styledSelect = $this.next('div.styledSelect');
+      $styledSelect.text(firstData);
+      var $list = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<ul />', {
+        'class': 'options'
+      }).insertAfter($styledSelect); // $('<li />', {
+      //   text: firstData,
+      //   rel: 0
+      // }).appendTo($list);
+
+      for (var i = 0; i < numberOfOptions; i++) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('<li />', {
+          text: $this.children('option').eq(i).text(),
+          rel: $this.children('option').eq(i).val()
+        }).appendTo($list);
+      }
+
+      var $listItems = $list.children('li');
+      $styledSelect.click(function (e) {
+        e.stopPropagation();
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('div.styledSelect.active').each(function () {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active').next('ul.options').hide();
+        });
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).toggleClass('active').next('ul.options').toggle();
+      });
+      $listItems.click(function (e) {
+        var selectedItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+        e.stopPropagation();
+        $styledSelect.text(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()).removeClass('active');
+        $this.val(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('rel'));
+        $list.hide();
+        selectedCategoryHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-category');
+        selectedSubCategoryHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-subcategory');
+        selectedTagsHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags');
+
+        if (selectedItem.hasClass('selected')) {
+          selectedItem.removeClass('selected');
+
+          if (dataType === 'category') {
+            selectedCategoryHolder.removeClass('has-item');
+            selectedCategoryHolder.find('.item-holder').empty();
+            selectedCategoryText.val('');
+          }
+
+          if (dataType === 'subcategory') {
+            selectedSubCategoryHolder.removeClass('has-item');
+            selectedSubCategoryHolder.find('.item-holder').empty();
+            selectedSubCategoryText.val('');
+          }
+
+          if (dataType === 'tag') {
+            var item = selectedTagsHolder.find('.item-holder .text:contains(' + selectedItem.text() + ')');
+            item.parent().remove();
+            selectedTagsArray.splice(jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(selectedItem.text(), selectedTagsArray), 1);
+            selectedTagsText.val(selectedTagsArray);
+
+            if (selectedTagsArray.length < 1) {
+              selectedTagsHolder.removeClass('has-item');
+              selectedTagsHolder.find('.item-holder').empty();
+              selectedTagsText.val('');
+            }
+          }
+        } else {
+          if (dataType === 'category' || dataType === 'subcategory') {
+            selectedItem.addClass('selected').siblings().removeClass('selected');
+
+            if (dataType === 'category') {
+              selectedCategoryHolder.addClass('has-item');
+              selectedCategoryHolder.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedItem.text() + '</span><span class="remove-item">X</span></div>');
+              selectedCategoryText.val(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(selectedItem.text()));
+            }
+
+            if (dataType === 'subcategory') {
+              selectedSubCategoryHolder.addClass('has-item');
+              selectedSubCategoryHolder.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedItem.text() + '</span><span class="remove-item">X</span></div>');
+              selectedSubCategoryText.val(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(selectedItem.text()));
+            }
+          }
+
+          if (dataType === 'tag') {
+            if (!selectedTagsText.val()) {
+              selectedTagsArray = [];
+            } else {
+              selectedTagsArray = selectedTagsText.val().split(",");
+            }
+
+            selectedItem.addClass('selected');
+            selectedTagsHolder.addClass('has-item');
+            selectedTagsArray.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(selectedItem.text()));
+            selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + selectedItem.text() + '</span><span class="remove-item">X</span></div>');
+            selectedTagsText.val(selectedTagsArray.toString());
+          }
+        }
+
+        removeSelectedItem(selectedCategoryText, selectedSubCategoryText, selectedTagsText);
+      }); // Hides the unordered list when clicking outside of it
+
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).click(function () {
+        $styledSelect.removeClass('active');
+        $list.hide();
+      });
+    });
+    var btnAddSubCategory, subCategoryWrapper;
+    /**
+     * Will show sub category options when toggled
+     */
+
+    btnAddSubCategory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.add-subcategory-btn');
+    subCategoryWrapper = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sub-category-wrapper');
+    btnAddSubCategory.click(function () {
+      var i = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i');
+
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
+        i.removeClass('fa-minus-circle');
+        i.addClass('fa-plus-circle');
+        subCategoryWrapper.removeClass('active');
+      } else {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
+        i.addClass('fa-minus-circle');
+        i.removeClass('fa-plus-circle');
+        subCategoryWrapper.addClass('active');
+      }
+    });
+    actionBtn.click(function (e) {
+      var attr = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-step');
+
+      if (attr === 'category-tag') {
+        if (!selectedCategoryText.val()) {
+          e.preventDefault();
+          categoryError.empty().append('<span>Please select a category.</span>');
+        } else {
+          categoryError.empty().append('<span>&nbsp;</span>');
+        }
+
+        if (!selectedTagsText.val()) {
+          e.preventDefault();
+          tagError.empty().append('<span>Please select at least one tag.</span>');
+        } else {
+          tagError.empty().append('<span>&nbsp;</span>');
+        }
+      }
+    });
+    loadSelectedCategoriesAndTags(selectedCategoryText, selectedSubCategoryText, selectedTagsText);
+  }
+
+  function removeSelectedItem(category, subcategory, tags) {
+    var dataType;
+
+    var _this,
+        parentDiv,
+        btnRemove = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.remove-item'),
+        categorySelectorHolder,
+        subcategorySelectorHolder,
+        tagSelectorHolder;
+
+    var tagArrays = [];
+    categorySelectorHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_CategorySelector_Holder');
+    subcategorySelectorHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SubCategorySelector_Holder');
+    tagSelectorHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_TagsSelector_Holder');
+    btnRemove.click(function () {
+      _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+      parentDiv = _this.parent().parent().parent();
+      dataType = parentDiv.attr('data-type');
+
+      if (dataType === 'category' || dataType === 'subcategory') {
+        parentDiv.removeClass('has-item');
+        parentDiv.find('item-holder').empty();
+
+        if (dataType === 'category') {
+          category.val(''); //resets dropdown value
+
+          categorySelectorHolder.find('.styledSelect').text('Please select one category');
+          categorySelectorHolder.find('.options li').removeClass('selected');
+        }
+
+        if (dataType === 'subcategory') {
+          subcategory.val(''); //resets dropdown value
+
+          subcategorySelectorHolder.find('.styledSelect').text('Please select one subcategory');
+          subcategorySelectorHolder.find('.options li').removeClass('selected');
+        }
+      }
+
+      if (dataType === 'tag') {
+        if (tags.val().includes(',')) {
+          _this.parent().remove();
+
+          tagArrays = tags.val().split(",");
+          tagArrays.splice(jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(_this.siblings().text()), tagArrays), 1);
+          tags.val(tagArrays);
+        } else {
+          parentDiv.removeClass('has-item');
+          parentDiv.find('.item-holder').empty();
+          tags.val(''); //resets dropdown value
+
+          tagSelectorHolder.find('.styledSelect').text('Please select tags');
+          tagSelectorHolder.find('.options li').removeClass('selected');
+        }
+
+        tagSelectorHolder.find('.options li:contains(' + _this.siblings().text() + ')').removeClass('selected');
+      }
+    });
+  }
+
+  function loadSelectedCategoriesAndTags(category, subcategory, tags) {
+    var selectedCategoryHolder, selectedSubCategoryHolder, selectedTagsHolder, categorySelectorHolder, subcategorySelectorHolder, tagSelectorHolder;
+    var btnAddSubCategory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.add-subcategory-btn');
+    var tagArrays = [];
+    selectedCategoryHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-category');
+    selectedSubCategoryHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-subcategory');
+    selectedTagsHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags');
+    categorySelectorHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_CategorySelector_Holder');
+    subcategorySelectorHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SubCategorySelector_Holder');
+    tagSelectorHolder = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_TagsSelector_Holder');
+
+    if (category.val()) {
+      categorySelectorHolder.find('.styledSelect').text(category.val());
+      categorySelectorHolder.find('.options li:contains(' + category.val() + ')').addClass('selected');
+      selectedCategoryHolder.addClass('has-item');
+      selectedCategoryHolder.find('.item-holder').append('<div class="item"><span class="text">' + category.val() + '</span><span class="remove-item">X</span></div>');
+    }
+
+    if (subcategory.val()) {
+      btnAddSubCategory.addClass('active').find('i').removeClass('fa-plus-circle').addClass('fa-minus-circle');
+      subcategorySelectorHolder.parent().addClass('active');
+      subcategorySelectorHolder.find('.styledSelect').text(subcategory.val());
+      subcategorySelectorHolder.find('.options li:contains(' + subcategory.val() + ')').addClass('selected');
+      selectedSubCategoryHolder.addClass('has-item');
+      selectedSubCategoryHolder.find('.item-holder').append('<div class="item"><span class="text">' + subcategory.val() + '</span><span class="remove-item">X</span></div>');
+    }
+
+    if (tags.val()) {
+      if (tags.val().includes(',')) {
+        tagArrays = tags.val().split(",");
+        selectedTagsHolder.addClass('has-item');
+
+        for (var i = 0; i < tagArrays.length; i++) {
+          tagSelectorHolder.find('.styledSelect').text(tagArrays[i]);
+          tagSelectorHolder.find('.options li:contains(' + tagArrays[i] + ')').addClass('selected');
+          selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tagArrays[i] + '</span><span class="remove-item">X</span></div>');
+        }
+      } else {
+        tagSelectorHolder.find('.styledSelect').text(tags.val());
+        tagSelectorHolder.find('.options li:contains(' + tags.val() + ')').addClass('selected');
+        selectedTagsHolder.addClass('has-item');
+        selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tags.val() + '</span><span class="remove-item">X</span></div>');
+      }
+    }
+
+    removeSelectedItem(category, subcategory, tags);
+  }
 
   function ListingDateAndTimeStep() {
-    var calendar, selectedDateRange, datesArray, formattedDate, listingDateTimeContainer, listingSelectedDatesTextBox;
-    var id = 1;
+    var calendar, selectedDateRange, datesArray, formattedDate, listingDateTimeContainer, listingSelectedDatesTextBox, listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
     listingDateTimeContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.listingDateTimes');
-    listingSelectedDatesTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SelectedDates');
+    listingSelectedDatesTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedDates"]');
+    listingSelectedStartTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedStartTimes"]');
+    listingSelectedEndTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedEndTimes"]');
     calendar = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.calendar-datepicker');
     calendar.pignoseCalendar({
       multiple: true,
@@ -35300,29 +35391,41 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       weeks: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       select: function select(dates, context) {
         //date selection
-        var selectedDatesArray = []; //removing selected date values textbox
+        var selectedDates = []; //removing selected date values textbox
 
         listingSelectedDatesTextBox.val('');
+        listingSelectedStartTimeTextBox.val('');
+        listingSelectedEndTimeTextBox.val('');
 
-        if (dates.length > 1) {
-          //remove selected dates from div
+        if (dates.length > 0) {
           listingDateTimeContainer.find('.date-time-item').remove();
 
-          if (dates[1]) {
-            selectedDateRange = moment.range(moment(dates[0]), moment(dates[1]));
-            datesArray = Array.from(selectedDateRange.by("days"));
-            datesArray.map(function (m) {
-              formattedDate = m.format("DD MMMM YYYY"); //appending selected date range
+          for (var i = 0; i < dates.length; i++) {
+            if (dates[i] !== null) {
+              selectedDates.push(dates[i].format("DD MMMM YYYY"));
 
-              appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '', id); //automate push selected formatted date to array to use for populating textbox form field
+              if (selectedDates.length > 1) {
+                (function () {
+                  var rangeOfDatesArray = [];
+                  listingDateTimeContainer.empty();
+                  selectedDateRange = moment.range(moment(dates[0]), moment(dates[1]));
+                  datesArray = Array.from(selectedDateRange.by("days"));
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default().map(datesArray, function (date, i) {
+                    formattedDate = date.format("DD MMMM YYYY");
+                    rangeOfDatesArray.push(formattedDate);
+                    appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '', i);
+                  });
+                  listingSelectedDatesTextBox.val(rangeOfDatesArray);
+                })();
+              } else {
+                formattedDate = dates[i].format("DD MMMM YYYY");
+                appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '', i);
+                listingSelectedDatesTextBox.val(selectedDates);
+              } //dropdown time selector functions
 
-              selectedDatesArray.push(formattedDate);
-              id = id + 1;
-            }); //populate textbox with array of dates
 
-            listingSelectedDatesTextBox.val(selectedDatesArray); //dropdown time selector functions
-
-            DropdownTimeSelector(listingDateTimeContainer);
+              DropdownTimeSelector(listingDateTimeContainer);
+            }
           }
         }
       },
@@ -35370,11 +35473,11 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
   function PopulateDateTimes(listingDateTimeContainer) {
     var listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox, listingSelectedDatesTextBox;
     var selectedDates, selectedStartTime, selectedEndTime;
-    listingSelectedDatesTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SelectedDates').val();
-    listingSelectedStartTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SelectedStartTimes').val();
-    listingSelectedEndTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SelectedEndTimes').val();
+    listingSelectedDatesTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedDates"]').val();
+    listingSelectedStartTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedStartTimes"]').val();
+    listingSelectedEndTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedEndTimes"]').val();
 
-    if (listingSelectedDatesTextBox && listingSelectedStartTimeTextBox && listingSelectedEndTimeTextBox) {
+    if (listingSelectedDatesTextBox) {
       selectedDates = listingSelectedDatesTextBox.split(",");
       selectedStartTime = listingSelectedStartTimeTextBox.split(",");
       selectedEndTime = listingSelectedEndTimeTextBox.split(",");
@@ -35417,14 +35520,14 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     var errorTimeMessage = 'Please add specific time.',
         errorDateMessage = 'Please select specific dates above.';
     var endTime, startTime;
-    var form, dropdownBtn, dropdownBtnAttr;
+    var form, dropdownBtnAttr;
     var actionBtn, errorField, errorMessage, errorFlag;
     var listingDateTimeContainer, listingDateTimeItem;
     var listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
     var startTimeArray, endTimeArray;
     form = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm');
-    listingSelectedStartTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SelectedStartTimes');
-    listingSelectedEndTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SelectedEndTimes');
+    listingSelectedStartTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedStartTimes"]');
+    listingSelectedEndTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedEndTimes"]');
     actionBtn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_action_next');
     errorField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.error-field');
     form.on('click', actionBtn, function (e) {
@@ -35439,35 +35542,41 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
         if (listingDateTimeItem.length > 0) {
           //check if user selected date from calendar
-          // validate if all dropdown start time is selected
-          listingDateTimeItem.find('.dropdown').each(function () {
-            dropdownBtn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button');
+          listingDateTimeItem.each(function () {
+            var appointmentIsChecked = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('input[name="appointment_only"]').prop('checked');
 
-            if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedStartTime')) {
-              startTime = dropdownBtn.attr('data-start-time');
+            if (!appointmentIsChecked) {
+              // validate if all dropdown start time is selected
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown').each(function () {
+                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedStartTime')) {
+                  startTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-start-time');
 
-              if (!startTime) {
-                jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error');
-                dropdownBtn.addClass('text-danger');
-                errorFlag = true;
-                errorMessage = errorTimeMessage;
-              } else {
-                startTimeArray.push(startTime);
-                console.log(startTimeArray);
-              }
-            }
+                  if (startTime === null || startTime === "undefined" || !startTime) {
+                    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
+                    errorFlag = true;
+                    errorMessage = errorTimeMessage;
+                  } else {
+                    startTimeArray.push(startTime);
+                  }
+                }
 
-            if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedEndTime')) {
-              endTime = dropdownBtn.attr('data-end-time');
+                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedEndTime')) {
+                  endTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-end-time');
 
-              if (!endTime) {
-                jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error');
-                dropdownBtn.addClass('text-danger');
-                errorFlag = true;
-                errorMessage = errorTimeMessage;
-              } else {
-                endTimeArray.push(endTime);
-              }
+                  if (endTime === null || endTime === "undefined" || !endTime) {
+                    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
+                    errorFlag = true;
+                    errorMessage = errorTimeMessage;
+                  } else {
+                    endTimeArray.push(endTime);
+                  }
+                }
+              });
+            } else {
+              var appointment = 'Appointment Only';
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown').removeClass('has-error text-danger');
+              startTimeArray.push(appointment);
+              endTimeArray.push(appointment);
             }
           });
         } else {
@@ -35479,14 +35588,14 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           listingSelectedStartTimeTextBox.val(startTimeArray.toString());
         }
 
-        if (startTimeArray.length > 0) {
+        if (endTimeArray.length > 0) {
           listingSelectedEndTimeTextBox.val(endTimeArray.toString());
         }
-      }
 
-      if (errorFlag) {
-        showError(errorMessage, errorField);
-        e.preventDefault();
+        if (errorFlag) {
+          showError(errorMessage, errorField);
+          e.preventDefault();
+        }
       }
     });
   }
@@ -35494,24 +35603,69 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
   function appendDateTimeItem(elem, date, startTime, endTime, id) {
     var startTimeText = startTime;
     var endTimeText = endTime;
+    var startTimeDisabled = '';
+    var endTimeDisabled = '';
+    var appointment = '';
 
-    if (!startTime) {
+    if (!startTime || startTime === 'Appointment Only') {
       startTimeText = 'Select start time';
+
+      if (startTime === 'Appointment Only') {
+        startTimeDisabled = 'disabled';
+        appointment = 'checked';
+      }
     }
 
-    if (!endTime) {
+    if (!endTime || endTime === 'Appointment Only') {
       endTimeText = 'Select end time';
+
+      if (endTime === 'Appointment Only') {
+        endTimeDisabled = 'disabled';
+        appointment = 'checked';
+      }
     }
 
-    elem.append('' + '<div class="date-time-item row">' + '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text">' + date + '</span><span class="btn-remove"><i class="fal fa-times"></i></div></div>' + '<div class="col-lg-4 pb-4">' + '<div class="selectedStartTime dropdown">' + '<button class="dropdown-toggle" type="button" id="startDate' + id + '" data-start-time="' + startTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + startTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions() + '</div>' + '</div>' + '</div>' + '<div class="col-lg-4 pb-4">' + '<div class="selectedEndTime dropdown">' + '<button class="dropdown-toggle" type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="endDate' + id + '">' + timeOptions() + '</div>' + '</div>' + '</div>');
+    elem.append('' + '<div class="date-time-item row d-flex align-items-end">' + '<div class="col-lg-3 pb-4"><div class="selectedDate"><span class="text">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
+    '<div class="col-lg-3 pb-4">' + '<div class="selectedStartTime dropdown">' + '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="' + startTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + startTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' + '</div>' + '</div>' + '<div class="col-lg-3 pb-4">' + '<div class="selectedEndTime dropdown">' + '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' + '</div>' + '</div>' + '<div class="col-lg-3 pb-4">' + '<div class="appointment d-flex align-items-center">' + '<input type="checkbox" name="appointment_only" id="appointmentOnly' + id + '" ' + appointment + '> ' + '<label class="ml-2 mb-0" for="appointmentOnly' + id + '"><span class="font-weight-normal">Appointment only</span></label>' + '</div>' + '</div>' + '</div>'); //Disable time selector when toggled
+
+    var inputAppointment = elem.find('input[name="appointment_only"]');
+    inputAppointment.change(function () {
+      var dropdown = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().parent().siblings();
+
+      if (this.checked) {
+        dropdown.find('.selectedStartTime').removeClass('has-error text-danger');
+        dropdown.find('.selectedStartTime button').find('.text').text('Select start time');
+        dropdown.find('.selectedStartTime button').prop("disabled", true);
+        dropdown.find('.selectedEndTime').removeClass('has-error text-danger');
+        dropdown.find('.selectedEndTime button').find('.text').text('Select end time');
+        dropdown.find('.selectedEndTime button').prop("disabled", true);
+      } else {
+        dropdown.find('button').prop("disabled", false);
+        dropdown.find('.selectedStartTime button').attr('data-start-time', '');
+        dropdown.find('.selectedEndTime button').attr('data-end-time', '');
+      }
+    });
+    elem.find('.selectedStartTime.dropdown').on('show.bs.dropdown', function () {
+      var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+      var dropdownItem = _this.find('.dropdown-menu .dropdown-item');
+
+      dropdownItem.click(function (e) {
+        var index = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-index')) + 1;
+
+        _this.parent().siblings().find('.dropdown-toggle .text').text('Select end time');
+
+        _this.parent().siblings().find('.dropdown-menu').empty().append(timeOptions(index));
+      });
+    });
   }
 
-  function timeOptions() {
+  function timeOptions(index) {
     var options = '';
-    var arrayTimes = ['6:00 am', '7:00 am', '8:00 am', '9:00 am', '10:00 am', '11:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm', '6:00 pm', '7:00 pm', '8:00 pm', '9:00 pm', '10:00 pm'];
+    var arrayTimes = ['6:00 am', '7:00 am', '8:00 am', '9:00 am', '10:00 am', '11:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm', '6:00 pm', '7:00 pm', '8:00 pm', '9:00 pm', '10:00 pm', '11:00 pm', '12:00 am', '1:00 am', '2:00 am'];
 
-    for (var i = 0; i < arrayTimes.length; i++) {
-      options += '<a class="dropdown-item" href="#">' + arrayTimes[i] + '</a>';
+    for (var i = index; i < arrayTimes.length; i++) {
+      options += '<a class="dropdown-item" href="#" data-index="' + i + '">' + arrayTimes[i] + '</a>';
     }
 
     return options;
@@ -35544,12 +35698,6 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
   function ListingUploadImages() {}
 
-  function preloadCategories() {}
-
-  function preloadSubCategories() {}
-
-  function preloadTags() {}
-
   function addToFavourites() {
     var btn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.addtofavourites');
     btn.click(function () {
@@ -35567,7 +35715,6 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           favCounter.text(newCount);
           favCounter.attr('data-count', newCount);
           resetFavCounter(favCounter);
-          console.log(result);
         });
       } else {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
