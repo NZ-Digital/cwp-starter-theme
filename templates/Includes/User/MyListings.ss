@@ -27,10 +27,10 @@
                                     </div>
                                     <div class="listing-content--location-date align-items-center">
                                         <div class="listing-date">
-                                            <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px"><% if $ListingClosestToCurrentDate %>$ListingClosestToCurrentDate<% else %>THU 18 NOV<% end_if %></span>
+                                            <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px"><% if $ListingClosestToCurrentDate %>$ListingClosestToCurrentDate<% end_if %></span>
                                         </div>
                                         <div class="listing-flag<% if $Flag == 'Active' %> active-flag<% else_if $Flag == 'Draft' %> draft-flag<% else_if $Flag == 'Archive' %> archived-flag<% else %> pending-flag<% end_if %>">
-                                            <span class="halyard-display font-weight-medium fontsize16 text-white text-uppercase letterspacing-1px"><i class="fas fa-flag"></i><% if $Flag %> $Flag<% else %> Pending<% end_if %></span>
+                                            <span class="halyard-display font-weight-medium fontsize16 text-white text-uppercase letterspacing-1px"><i class="fas fa-flag"></i><% if $Flag %> $Flag<% end_if %></span>
                                         </div>
                                         <div class="listing-location ml-auto">
                                             <span class="text-footer-gray text-underline">$City</span>
@@ -46,9 +46,6 @@
                                             <% loop $Tags %>
                                                 <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
                                             <% end_loop %>
-                                        <% else %>
-                                            <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">Jazz</span></a>
-                                            <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">Workshop</span></a>
                                         <% end_if %>
                                         <p class="ml-auto"><a href="#"><span class="theme-button-gray-small halyard-display font-weight-medium fontsize16">More info</span></a></p>
                                     </div>

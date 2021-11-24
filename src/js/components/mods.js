@@ -563,8 +563,8 @@ export default function () {
   function ListingDateAndTimeStep()
   {
     let calendar, selectedDateRange, datesArray, formattedDate,
-      listingDateTimeContainer, listingSelectedDatesTextBox,
-      listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
+        listingDateTimeContainer, listingSelectedDatesTextBox,
+        listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
 
     listingDateTimeContainer    = $('.listingDateTimes');
     listingSelectedDatesTextBox = $('input[name="SelectedDates"]');

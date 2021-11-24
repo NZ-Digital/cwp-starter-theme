@@ -4,7 +4,7 @@
             <% loop $VisibleListingGroups %>
                 <button class="tablinks col-md-4<% if $Pos == '1' %> active<% end_if %>" data-id="{$ID}" style="background-color: #{$GroupColor};">
                     $Content
-                    <% if $Pos == '1' %><i class="fal fa-minus"></i><% else %><i class="fal fa-plus"></i><% end_if %>
+                    <% if $Pos == '1' %><i class="fal fa-minus fontsize25"></i><% else %><i class="fal fa-plus fontsize25"></i><% end_if %>
                 </button>
             <% end_loop %>
         </div>
@@ -46,7 +46,7 @@
                                                     <% loop $VisibleLocations %><button class="dropdown-item" type="button">$Name</button><% end_loop %>
                                                 <% end_if %>
                                                 <% if $FieldType == "Category" %>
-                                                    <% loop $VisibleCategories %><button class="dropdown-item" type="button">$Name</button><% end_loop %>
+                                                    <% loop $VisibleCategories %><button class="dropdown-item" type="button">$Title</button><% end_loop %>
                                                 <% end_if %>
                                             </div>
                                         </div>
