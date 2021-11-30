@@ -2,19 +2,55 @@ body > header .open > a:focus {
   @include outline-focus();
 }
 .pre-header {
-  padding: 15px 100px;
   border-radius: 0;
   border: 0;
   &.alert-dismissible {
     .close {
       top: 50%;
       transform: translate3d(0, -50%, 0);
-      padding-right: 100px;
+      @media only screen and (min-width: 1590px) {
+        padding-right: 100px;
+      }
+      @media only screen and (max-width: 1589px) and (min-width: 669px){
+        padding: 20px 40px;
+      }
+      @media only screen and (max-width: 668px) {
+        padding: 15px 20px;
+      }
+    }
+  }
+  @media only screen and (min-width: 1590px) {
+    padding: 15px 100px;
+    .preheader-text {
+      &--mobile {
+        display: none;
+      }
+    }
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 669px){
+    padding: 20px 40px;
+    .preheader-text {
+      &--desktop {
+        display: none;
+      }
+      &--mobile {
+        padding-right: 40px;
+      }
+    }
+  }
+  @media only screen and (max-width: 668px) {
+    padding: 15px 20px;
+    .preheader-text {
+      &--desktop {
+        display: none;
+      }
+      &--mobile {
+        padding-right: 20px;
+      }
     }
   }
 }
 .site-header {
-  padding: 49px 100px 31px;
   box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
   &.scrolled {
     position: fixed;
@@ -36,6 +72,15 @@ body > header .open > a:focus {
     .fa-language {
       margin-right: $font-size-base * 0.5;
     }
+  }
+  @media only screen and (min-width: 1590px) {
+    padding: 49px 100px 31px;
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 669px){
+    padding: 29px 40px 25px;
+  }
+  @media only screen and (max-width: 668px) {
+    padding: 15px 20px;
   }
 }
 

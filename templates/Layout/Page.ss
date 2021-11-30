@@ -1,5 +1,5 @@
 <% if $CurrentMember %>
-    <% if $URLSegment == 'my-portal' || $URLSegment == 'my-favourites' || $URLSegment == 'my-listings' || $URLSegment == 'my-recommended' || $URLSegment == 'account-settings' || $URLSegment == 'create-listing' || $URLSegment == 'my-recommended' %>
+    <% if $URLSegment == 'my-portal' || $URLSegment == 'my-favourites' || $URLSegment == 'my-listings' || $URLSegment == 'my-recommended' || $URLSegment == 'account-settings' || $URLSegment == 'create-listing' || $URLSegment == 'my-recommended' ||  $URLSegment == 'submit-a-news-article' %>
         <% include Includes/User/UserNavigation %>
         <% if $URLSegment == 'my-favourites' %>
             <% include Includes/User/MyFavourites %>
@@ -12,6 +12,9 @@
         <% end_if %>
         <% if $URLSegment == 'account-settings' %>
             <% include Includes/User/AccountSettings %>
+        <% end_if %>
+        <% if $URLSegment == 'submit-a-news-article' %>
+            <% include Includes/User/CreateArticle %>
         <% end_if %>
         <% if $URLSegment == 'create-listing' %>
             <% include Includes/User/CreateListing %>

@@ -1,11 +1,3 @@
-<% if $SiteConfig.PreHeader %>
-    <div class="alert alert-dismissible fade show pre-header mb-0" role="alert" style="background-color: #{$SiteConfig.PreHeaderBg};">
-        <div class="">$SiteConfig.PreHeader</div>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<% end_if %>
 <div class="container-fluid site-header d-flex align-items-end clearfix">
     <% include SkipLinks %>
     <div class="site-header-brand">
@@ -17,9 +9,14 @@
                             width: {$SiteConfig.LogoWidth}px;
                         }
                     }
-                    @media only screen and (max-width: 1589px) {
+                    @media only screen and (max-width: 1589px) and (min-width: 669px) {
                         .logo-img {
                             width: {$SiteConfig.LogoWidthIpad}px;
+                        }
+                    }
+                    @media only screen and (max-width: 668px) {
+                        .logo-img {
+                            width: 100px;
                         }
                     }
                 </style>
@@ -38,8 +35,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
+
     <% include MainNav %>
-    <% include HeaderSearch %>
     <% include LanguageSelector %>
 </div>
 <div class="container-fluid site-header scrolled d-flex align-items-end clearfix">
@@ -62,7 +59,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
+
     <% include MainNav %>
-    <% include HeaderSearch %>
     <% include LanguageSelector %>
 </div>
+

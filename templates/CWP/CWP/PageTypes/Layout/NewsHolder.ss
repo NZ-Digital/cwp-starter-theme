@@ -1,49 +1,38 @@
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <header class="page-header">
-                $Breadcrumbs
-                <h1>$Title</h1>
-            </header>
+<% include VisibleSection %>
+<section class="sectionLatestNews page-section col-lg-12 pt-lg-8 pb-lg-8 padding-left-100px padding-right-100px" id="news-lists">
+    <div class="container-fluid p-0">
+        <div class="latestNews-container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="filter">
+                        <div class="filter--categories mb-6">
+                            <p><span class="text-footer-gray">Sort by categories</span></p>
+                            <div class="filter-items pt-5">
+                                <p><a href="news/?tag=All#news-lists"><span class="fontsize30 font-weight-medium text-scorpion">All</span></a></p>
+                                <% loop $NewsCategories %>
+                                    <% if $Title != 'All' %>
+                                        <p><a href="news/?tag={$Title}#news-lists"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a></p>
+                                    <% end_if %>
+                                <% end_loop %>
+                            </div>
+                        </div>
+                        <hr style="border-color: #696163;">
+                        <div class="filter--author mt-5 mb-7">
+                            <p><span class="text-footer-gray">Sort by author</span></p>
+                                <div class="filter-items pt-5">
+                                    <% loop $NewsAuthorLists %>
+                                        <p><a href="news/?author={$Title}#news-lists"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a></p>
+                                    <% end_loop %>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 pl-lg-10">
+                    <div class="row">
+                        <% include Includes/User/FilteredNews %>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-            <% if $Content.RichLinks %>
-                $Content.RichLinks
-            <% else %>
-                $Content
-            <% end_if %>
-
-            <% include NewsFilterContext %>
-
-            <section class="listing">
-                <% if $FilteredUpdates %>
-                    <% include FilteredUpdates ControllerName=$ClassName %>
-                <% else %>
-                    <article>
-                        <p><%t CWP_FilteredUpdates.NoNews "No news" %></p>
-                    </article>
-                <% end_if %>
-            </section>
-        </div>
-
-        <aside class="col-lg-3 offset-lg-1 sidebar">
-            <h2 class="h3"><%t CWP_NewsEvents.FILTERS "Filters" %></h2>
-            <% if $UpdateTagsWithLinks %>
-                <% include UpdateTags %>
-            <% end_if %>
-
-            <% include DateRange %>
-
-            <% if $AvailableMonths %>
-                <% include AvailableMonths ControllerName=$ClassName %>
-            <% end_if %>
-        </aside>
-
-    </div>
-</div>
-
-<% include PageUtilities %>
-
+</section>

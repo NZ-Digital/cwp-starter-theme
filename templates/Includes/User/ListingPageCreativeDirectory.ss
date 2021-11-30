@@ -1,0 +1,143 @@
+<section class="page-section sectionListingPageContent col-lg-12 pt-lg-5 pb-lg-4 inner-padding">
+    <div class="container-fluid p-0">
+        <div class="row align-items-center listing-content creative-directory--layout mb-0">
+            <div class="col-lg-6 pb-lg-5">
+                <div class="listing-content--title">
+                    <p><span class="fontsize50 font-weight-book">$Title</span></p>
+                </div>
+            </div>
+            <div class="col-lg-6 pb-lg-5">
+                <div class="listing-content--tags justify-content-end">
+                    <% if $Listing.Tags %>
+                        <% loop $Listing.Tags %>
+                            <a href="#" class="tag-name mr-lg-3"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
+                        <% end_loop %>
+                    <% end_if %>
+                    <button class="btn-utils addtofavourites fontsize35 pl-lg-3" data-id="$Listing.ID"><i class="far fa-heart"></i></button>
+                    <button class="btn-utils sharelisting pl-lg-3"><img src="$resourceURL('themes/starter/images/Iconawesome-share-alt.svg')" alt="$SiteConfig.Title - share listing"> </button>
+                    <button class="btn-utils downloadlisting pl-lg-3"><img src="$resourceURL('themes/starter/images/Iconawesome-download.svg')" alt="$SiteConfig.Title - download listing"> </button>
+                    <button class="btn-utils getdirection pl-lg-3"><img src="$resourceURL('themes/starter/images/Icon-awesome-map.svg')" alt="$SiteConfig.Title - get direction"> </button>
+                    <p><a href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"><span class="theme-button-gray font-weight-medium fontsize18">Book Online</span></a></p>
+                </div>
+            </div>
+        </div>
+        <div class="row listing-content">
+            <div class="col-lg-8 pb-lg-7">
+                <% if $Listing.Content2 %>
+                    <div class="listing-content--bar">$Listing.Content2</div>
+                <% end_if %>
+                <div class="listing-content--img">
+                    <img src="$Listing.FeaturedImage.URL" alt="$Listing.Name">
+                </div>
+                <div class="listing-content--details mb-lg-3">
+                    <span class="fontsize19 font-weight-book">$Listing.Content</span>
+                </div>
+                <% if $Listing.GalleryImages %>
+                    <div class="listing-content--gallery mt-lg-8">
+                        <div class="owl-carousel">
+                            <% loop $Listing.GalleryImages %>
+                                <div class="gallery-image">
+                                    <img src="$URL" alt="Listing gallery image">
+                                </div>
+                            <% end_loop %>
+                        </div>
+                    </div>
+                <% end_if %>
+                <hr class="mt-lg-6 mb-lg-5" style="border-color: #A2A2A2;">
+                <div class="listing-content--tags">
+                    <% if $Listing.Tags %>
+                        <span class="halyard-display font-weight-medium fontsize25 text-uppercase letterspacing-3px">Tags</span>
+                        <% loop $Listing.Tags %>
+                            <a href="#" class="tag-name mr-lg-3 ml-lg-5"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
+                        <% end_loop %>
+                    <% end_if %>
+                </div>
+            </div>
+            <div class="col-lg-3 offset-1">
+                <div class="row">
+                    <div class="col-lg-12 pb-lg-2">
+                        <% if $Listing.CreatedMember.ProfilePhoto %>
+                            <img class="listing-creator-image" src="$Listing.CreatedMember.ProfilePhoto.URL" alt="$SiteConfig.Title - User photo">
+                        <% else %>
+                            <img src="https://ui-avatars.com/api/?name={$Listing.CreatedMember.Name}&background=f8cc46&color=414141&size=56" alt="$SiteConfig.Title - User photo">
+                        <% end_if %>
+                        <p><span class="fontsize20 font-weight-medium text-uppercase">$Listing.CreatedMember.Name</span></p>
+                    </div>
+                    <div class="col-lg-12 pb-lg-4">
+                        <hr style="border-color: #A2A2A2;">
+                    </div>
+                    <div class="col-lg-2 pb-lg-2">
+                        <img src="$resourceURL('themes/starter/images/iconcontact.svg')" class="icon" alt="Listing icon">
+                    </div>
+                    <div class="col-lg-10 pb-lg-3">
+                        <p><span class="fontsize20 font-weight-medium text-uppercase">Contact</span></p>
+                    </div>
+                    <div class="col-lg-12 offset-2 pb-lg-1">
+                        <p class="pb-lg-3"><img src="$resourceURL('themes/starter/images/Iconawesome-phone.svg')" style="height: 22px; width: 22px;" class="icon mr-lg-3" alt="Listing icon"><span class="fontsize19 font-weight-book">$Listing.Phone</span></p>
+                        <p class="pb-lg-3"><img src="$resourceURL('themes/starter/images/Iconzocial-email.svg')" style="height: 22px; width: 22px;" class="icon mr-lg-3" alt="Listing icon"><span class="fontsize19 font-weight-book">$Listing.Email</span></p>
+                        <p class="pb-lg-3"><img src="$resourceURL('themes/starter/images/Iconmaterial-web.svg')" style="height: 22px; width: 22px;" class="icon mr-lg-3" alt="Listing icon"><span class="fontsize19 font-weight-book">$Listing.Website</span></p>
+                        <p class="pb-lg-3"><img src="$resourceURL('themes/starter/images/Iconawesome-facebook-f.svg')" style="height: 22px; width: 22px;" class="icon mr-lg-3" alt="Listing icon"><span class="fontsize19 font-weight-book">$Listing.Facebook</span></p>
+                        <p class="pb-lg-3"><img src="$resourceURL('themes/starter/images/Iconawesome-instagram.svg')" style="height: 22px; width: 22px;" class="icon mr-lg-3" alt="Listing icon"><span class="fontsize19 font-weight-book">$Listing.Instagram</span></p>
+                    </div>
+
+                    <div class="col-lg-12 pt-lg-4 pb-lg-4">
+                        <hr style="border-color: #A2A2A2;">
+                    </div>
+
+                    <% if $Listing.VisibleDatesAndTimes %>
+                        <div class="col-lg-2 pb-lg-2">
+                            <img src="$resourceURL('themes/starter/images/icon-date-time.svg')" class="icon" alt="Listing icon">
+                        </div>
+                        <div class="col-lg-10 pb-lg-3">
+                            <p><span class="fontsize20 font-weight-medium text-uppercase">Event dates & times</span></p>
+                        </div>
+                        <% loop $Listing.VisibleDatesAndTimes %>
+                            <div class="col-lg-5 offset-2 pb-lg-1">
+                                <p><span class="fontsize19 font-weight-book">$Date.Format('E, dd LLL')</span></p>
+                            </div>
+                            <div class="col-lg-5 pb-lg-1">
+                                <p><span class="fontsize19 font-weight-book">$Time</span></p>
+                            </div>
+                        <% end_loop %>
+                    <% end_if %>
+                    <div class="col-lg-12 pt-lg-4 pb-lg-4">
+                        <hr style="border-color: #A2A2A2;">
+                    </div>
+                    <div class="col-lg-2 pb-lg-2">
+                        <img src="$resourceURL('themes/starter/images/icon-map.svg')" class="icon" alt="Listing icon">
+                    </div>
+                    <div class="col-lg-10 pb-lg-3">
+                        <p><span class="fontsize20 font-weight-medium text-uppercase">Location</span></p>
+                    </div>
+                    <div class="col-lg-12 offset-2 pb-lg-1">
+                        <p><span class="fontsize19 font-weight-book">$Listing.BuildingName <br> $Listing.Address, $Listing.City, <br>$Listing.Town $Listing.Postcode</span></p>
+<%--                        <p class="pt-lg-5"><span class="fontsize16 font-weight-medium text-underline">Open in maps</span></p>--%>
+                    </div>
+
+                    <div class="col-lg-12 pt-lg-4 pb-lg-4">
+                        <hr style="border-color: #A2A2A2;">
+                    </div>
+                    <div class="col-lg-2 pb-lg-2">
+                        <img src="$resourceURL('themes/starter/images/icon-price.svg')" class="icon" alt="Listing icon">
+                    </div>
+                    <div class="col-lg-10 pb-lg-3">
+                        <p><span class="fontsize20 font-weight-medium text-uppercase">Price & Bookings</span></p>
+                    </div>
+                    <div class="col-lg-12 offset-2 pb-lg-1">
+                        <p><span class="fontsize19 font-weight-book">$Listing.Prices.RAW</span></p>
+                    </div>
+
+                    <div class="col-lg-12 pt-lg-4 pb-lg-4">
+                        <hr style="border-color: #A2A2A2;">
+                    </div>
+
+                    <% if $Listing.ListingLogo %>
+                        <div class="col-lg-10 pb-lg-3">
+                            <img src="$Listing.ListingLogo.URL" alt="$Listing.Name - Logo">
+                        </div>
+                    <% end_if %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

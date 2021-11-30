@@ -390,6 +390,25 @@ input[type='submit'] {
   }
 }
 
+#NewsArticleForm_NewsArticleForm {
+  .form-group {
+    .col-form-label {
+      display: block !important;
+      font-size: 20px !important;
+      font-weight: 400 !important;
+    }
+    textarea {
+      border-radius: 25px;
+      padding: 20px;
+    }
+    #NewsArticleForm_NewsArticleForm_Content {
+      min-height: 237px;
+    }
+    #NewsArticleForm_NewsArticleForm_AuthorBio {
+      min-height: 148px;
+    }
+  }
+}
 #RegistrationForm_RegistrationForm,
 #ListingForm_ListingForm,
 #AccountForm_AccountForm {
@@ -397,12 +416,32 @@ input[type='submit'] {
     display: none;
   }
 }
+#AccountForm_AccountForm {
+  .fields {
+    align-items: center !important;
+  }
+  input[type='submit'].action {
+    width: auto;
+    min-width: 212px;
+  }
+}
+
 .s-hidden {
   visibility:hidden;
   padding-right:10px;
 }
 .select {
   position:relative;
+}
+.dropdown-tags {
+  .options {
+    li {
+      display: none;
+      &.show {
+        display: block;
+      }
+    }
+  }
 }
 .styledSelect {
   position:absolute;
@@ -496,10 +535,9 @@ input[type='submit'] {
   }
 }
 
-
 //Modal Success
 #modal-success{
-  overflow: unset;
+  opacity: 0;
   .modal-dialog {
     max-width: 850px;
     .modal-content {
@@ -513,5 +551,9 @@ input[type='submit'] {
         padding: 30px 20px 80px;
       }
     }
+  }
+  &.show {
+    display: block;
+    opacity: 1;
   }
 }

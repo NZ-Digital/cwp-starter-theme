@@ -5,7 +5,7 @@
                 <div class="listing-content">
                     <% if $FeaturedImage %>
                         <div class="listing-content--img">
-                            <img src="{$FeaturedImage.URL}" alt="{$SiteConfig.Title} - {$Name}">
+                            <a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><img src="{$FeaturedImage.URL}" alt="{$SiteConfig.Title} - {$Name}"></a>
                         </div>
                     <% end_if %>
                     <div class="listing-content--date">
@@ -20,9 +20,9 @@
                         <% end_if %>
                     </div>
                     <div class="listing-content--details">
-                        <p class="mb-3"><span class="halyard-display fontsize35 font-weight-normal">{$Name}</span></p>
-                        <p class="mb-5"><span class="halyard-display fontsize19 font-weight-book">{$Content.RAW.LimitWordCount(39)}</span></p>
-                        <p><a href="<% if $ListingPage %>$ListingPage.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small halyard-display font-weight-medium fontsize16">More info</span></a></p>
+                        <p class="mb-3"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize35 font-weight-normal">{$Name}</span></a></p>
+                        <p class="mb-5"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book">{$Content.RAW.LimitWordCount(39)}</span></a></p>
+                        <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                     </div>
                 </div>
             <% end_loop %>

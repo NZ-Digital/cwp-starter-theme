@@ -6,6 +6,7 @@ import { extendMoment } from 'moment-range';
 const moment = extendMoment(Moment);
 import 'pg-calendar/dist/js/pignose.calendar';
 import 'jquery-ui-bundle';
+import 'stickyfilljs';
 
 export default function () {
   $(document).ready(function () {
@@ -14,6 +15,7 @@ export default function () {
 
   function initializeDocument() {
     headerSettings();
+    closeSearchForm();
 
     //Sections
     sectionFilterBar();
@@ -32,17 +34,34 @@ export default function () {
   }
 
   function headerSettings() {
+    let hamburger = $('.hamburger');
+    let mobileNav = $('.mobile-nav');
     //for pre header
     $('.close').click(function () {
       $('.alert').fadeOut();
     });
 
     //hamburger menu
-    $('.hamburger').click(function () {
-      if ($(this).hasClass('is-active')) {
-        $(this).removeClass('is-active')
+    hamburger.click(function () {
+      if (hamburger.hasClass('is-active')) {
+        hamburger.removeClass('is-active')
+        mobileNav.fadeOut();
       } else {
-        $(this).addClass('is-active');
+        hamburger.addClass('is-active');
+        mobileNav.fadeIn();
+      }
+    });
+
+    //search
+    let searchBtn = $('.nav-search');
+    let searchForm = $('.site-header-search');
+    searchBtn.click(function () {
+      if (searchForm.hasClass('active')) {
+        searchForm.removeClass('active');
+        searchForm.fadeOut();
+      } else {
+        searchForm.addClass('active');
+        searchForm.fadeIn();
       }
     });
 
@@ -54,6 +73,19 @@ export default function () {
         siteHeader.addClass('open');
       } else {
         siteHeader.removeClass('open');
+      }
+    });
+  }
+
+  function closeSearchForm()
+  {
+    let searchForm = $('.site-header-search');
+    let closeBtn  = searchForm.find('.btn-close');
+
+    closeBtn.click(function () {
+      if (searchForm.hasClass('active')) {
+        searchForm.removeClass('active');
+        searchForm.fadeOut();
       }
     });
   }
@@ -200,27 +232,49 @@ export default function () {
 
       //Email and Password Validation
       signUpForm.on('submit', function (event) {
+        let _this = $(this);
+        let error = false;
         if (passwordField.length > 0) {
-          if (emailField.val() !== emailConfirmField.val()) {
-            $('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
-            emailConfirmField.addClass('holder-validation is-invalid');
-            emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
-            event.preventDefault();
-          }
-
           if (passwordField.find('.password').val() !== passwordConfirmField.find('.password').val()) {
             $('#message-RegistrationForm_RegistrationForm_ConfirmPassword').remove();
             passwordConfirmField.find('.password').addClass('holder-validation is-invalid')
             passwordConfirmField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
             event.preventDefault();
+            error = true;
           }
-
           if (!requiredPassword.test(passwordField.find('.password').val())) {
             $('#message-RegistrationForm_RegistrationForm_Password').remove();
             passwordField.find('.password').addClass('holder-validation is-invalid')
             passwordField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters, contain 1 upper/lowercase and one number and one special character.</div>');
             event.preventDefault();
+            error = true;
           }
+        }
+
+        if (emailField.length > 0) {
+          event.preventDefault();
+          callAPIEndpoint('ajax/validateEmail', 'POST', 'email=' + $.trim(emailField.val()), function (result) {
+            if (result.data.count > 0) {
+              $('#message-RegistrationForm_RegistrationForm_Email').remove();
+              emailField.addClass('holder-validation is-invalid');
+              emailField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_Email" class="invalid-feedback" role="alert" aria-atomic="true">An account with email '+ $.trim(emailField.val()) +' already exists.</div>');
+              error = true;
+            }
+          });
+
+          if (emailField.val() !== emailConfirmField.val()) {
+            $('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
+            emailConfirmField.addClass('holder-validation is-invalid');
+            emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
+            error = true;
+          }
+
+          setTimeout(function () {
+            if (error === false) {
+              console.log(error);
+              event.currentTarget.submit();
+            }
+          },1000);
         }
       });
 
@@ -383,6 +437,35 @@ export default function () {
               selectedCategoryHolder.addClass('has-item');
               selectedCategoryHolder.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedItem.text() + '</span><span class="remove-item">X</span></div>');
               selectedCategoryText.val($.trim(selectedItem.text()));
+              callAPIEndpoint('ajax/getTagsByCategory', 'POST', 'id=' + $.trim(selectedItem.attr('rel')), function (result) {
+                if (result.data) {
+                  let liShown = [];
+                  let dropdownTags = $('.dropdown-tags');
+                  let selectedStyle = dropdownTags.find('.styledSelect');
+                  let list = dropdownTags.find('ul.options li');
+                  let data = result.data;
+
+                  list.removeClass('show');
+                  selectedStyle.text('Please select tags');
+                  selectedTagsHolder.removeClass('has-item');
+                  selectedTagsHolder.find('.item-holder').empty();
+                  selectedTagsText.val('');
+
+                  for (let i = 0; i < data.length; i++) {
+                    list.each(function () {
+                      $(this).removeClass('selected');
+                      if ($.trim($(this).text()) === data[i].name) {
+                        if(jQuery.inArray($.trim($(this).text()), liShown) === -1) {
+                          liShown.push($.trim($(this).text()));
+                          if (!$(this).hasClass('show')) {
+                            $(this).addClass('show');
+                          }
+                        }
+                      }
+                    })
+                  }
+                }
+              });
             }
             if (dataType === 'subcategory') {
               selectedSubCategoryHolder.addClass('has-item');
@@ -480,6 +563,12 @@ export default function () {
           //resets dropdown value
           categorySelectorHolder.find('.styledSelect').text('Please select one category');
           categorySelectorHolder.find('.options li').removeClass('selected');
+
+          tags.val('');
+          $('.selected-tags').removeClass('has-item');
+          $('.selected-tags .item-holder').empty();
+          tagSelectorHolder.find('.styledSelect').text('Please select tags');
+          tagSelectorHolder.find('.options li').removeClass('show').removeClass('selected');
         }
         if (dataType === 'subcategory') {
           subcategory.val('');
@@ -494,6 +583,7 @@ export default function () {
           tagArrays = tags.val().split(",");
           tagArrays.splice($.inArray($.trim(_this.siblings().text()), tagArrays), 1);
           tags.val(tagArrays);
+          console.log('sasa');
         } else {
           parentDiv.removeClass('has-item');
           parentDiv.find('.item-holder').empty();
@@ -541,22 +631,57 @@ export default function () {
     }
 
     if (tags.val()) {
+      callAPIEndpoint('ajax/getTagByCategoryName', 'POST', 'name=' + category.val(), function (result) {
+        if (result.data) {
+          let liShown = [];
+          let dropdownTags = $('.dropdown-tags');
+          let list = dropdownTags.find('ul.options li');
+          let data = result.data;
+          for (let i = 0; i < data.length; i++) {
+            list.each(function () {
+              if ($.trim($(this).text()) === data[i].name) {
+                if(jQuery.inArray($.trim($(this).text()), liShown) === -1) {
+                  liShown.push($.trim($(this).text()));
+                  if (!$(this).hasClass('show')) {
+                    $(this).addClass('show');
+                  }
+                }
+              }
+            });
+          }
+        }
+      })
+      let listTag = tagSelectorHolder.find('ul.options li');
+      let liTagShown = [];
       if (tags.val().includes(',')) {
         tagArrays = tags.val().split(",");
         selectedTagsHolder.addClass('has-item');
         for (let i = 0; i < tagArrays.length; i++) {
           tagSelectorHolder.find('.styledSelect').text(tagArrays[i]);
-          tagSelectorHolder.find('.options li:contains('+tagArrays[i]+')').addClass('selected');
+          listTag.each(function () {
+            if ($.trim($(this).text()) === tagArrays[i]) {
+              if(jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
+                liTagShown.push($.trim($(this).text()));
+                $(this).addClass('selected');
+              }
+            }
+          });
           selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tagArrays[i] + '</span><span class="remove-item">X</span></div>');
         }
       } else {
         tagSelectorHolder.find('.styledSelect').text(tags.val());
-        tagSelectorHolder.find('.options li:contains('+tags.val()+')').addClass('selected');
+        listTag.each(function () {
+          if ($.trim($(this).text()) === tagArrays[i]) {
+            if(jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
+              liTagShown.push($.trim($(this).text()));
+              $(this).addClass('selected');
+            }
+          }
+        });
         selectedTagsHolder.addClass('has-item');
         selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tags.val() + '</span><span class="remove-item">X</span></div>');
       }
     }
-
     removeSelectedItem(category, subcategory, tags);
   }
 
@@ -937,7 +1062,6 @@ export default function () {
           favCounter.html(newCount);
           favCounter.attr('data-count', newCount)
           resetFavCounter(favCounter);
-
         });
       }
     });

@@ -18,7 +18,7 @@
             <div class="form-container pl-lg-8 position-relative">
                 $ListingForm
                 <% if $Success %>
-                    <div class="modal fade show position-absolute" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-success" aria-hidden="true" style="display: block;">
+                    <div class="modal fade show" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-success" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -26,12 +26,8 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body text-center">
-                                    <p class="mb-3"><span class="fontsize60 font-weight-light">Success!</span></p>
-                                    <p class="mb-6"><span class="fontsize35 lineheight-40px font-weight-light">Thanks for submitting a local event!<br> We’ve sent you an email on what will next.</span></p>
-                                    <p class="mb-3"><a href="home"><span class="theme-button-long font-weight-medium fontsize-18">Go back to Home</span></a></p>
-                                    <p class="mb-3"><a href="my-favourites"><span class="theme-button-long font-weight-medium fontsize-18">Go back to My Favourites</span></a></p>
-                                    <p class="mb-3"><a href="whats-on"><span class="theme-button-long font-weight-medium fontsize-18">Go back to What’s on</span></a></p>
+                                <div class="modal-body">
+                                    $SiteConfig.CreateListingMessageSuccess
                                 </div>
                             </div>
                         </div>

@@ -2,8 +2,8 @@
     <% if $VisibleCardItems %>
     <div class="row no-gutters">
         <% loop $VisibleCardItems %>
-            <div class="{$CardWidth}<% loop $ReadableCardPaddings %> $Name<% end_loop %>">
-              $Content
+            <div class="{$CardWidth}">
+                <div class="<% loop $ReadableCardPaddings %> $Name<% end_loop %>">$Content</div>
             </div>
         <% end_loop %>
     </div>

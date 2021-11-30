@@ -30,7 +30,6 @@
                             <% end_if %>
                         </li>
                     <% end_loop %>
-
                 </ul>
                 <ul class="user-nav">
                     <li><a href="<% if $CurrentUser %>{$LogoutURL}&BackURL=login<% else %>sign-up<% end_if %>" class="nav-link"><span class="text-uppercase moderna-sans"><% if $CurrentUser %>Sign Out<% else %>Sign up<% end_if %></span><img src="$resourceURL('themes/starter/images/SignUp.svg')"  class="link-icon" alt="$SiteConfig.Title - Signup Icon"></a></li>
@@ -38,7 +37,7 @@
                 </ul>
                 <ul class="util-nav">
                     <li><a href="my-favourites" class="nav-link nav-favourites"><i class="far fa-heart fontsize27"></i><% if $CurrentUser %><span class="fav-counter<% if $CountFavourites %> filled<% end_if %>" data-count="$CountFavourites">$CountFavourites</span><% end_if %></a></li>
-                    <li><a href="#" class="nav-link nav-search"><img src="$resourceURL('themes/starter/images/header-search.svg')"  class="link-icon" alt="$SiteConfig.Title - Search Icon"></a></li>
+                    <li><button class="nav-link nav-search"><img src="$resourceURL('themes/starter/images/header-search.svg')"  class="link-icon" alt="$SiteConfig.Title - Search Icon"></button></li>
                 </ul>
                 <% if $VisibleSocials %>
                     <ul class="socials">

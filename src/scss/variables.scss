@@ -46,6 +46,7 @@ $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 //custom colours
 $site-gray: #848484 !default;
+$light-gray: #707070 !default;
 $footer-gray: #a2a2a2 !default;
 $burnt-sienna: #eb6543 !default;
 $saffron-mango: #f8cc46 !default;
@@ -57,6 +58,7 @@ $cod-gray: #141414 !default;
 $tundora: #433f40 !default;
 $scorpion: #696163 !default;
 $carra: #f0efed !default;
+
 
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -101,6 +103,7 @@ $theme-colors: map-merge(
     "light":      $light,
     "dark":       $dark,
     "site-gray":  $site-gray,
+    "light-gray":  $light-gray,
     "footer-gray": $footer-gray,
     "burnt-sienna": $burnt-sienna,
     "saffron-mango": $saffron-mango,

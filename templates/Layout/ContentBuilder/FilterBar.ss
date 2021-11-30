@@ -2,15 +2,15 @@
     <% if $VisibleListingGroups %>
         <div class="tab row no-gutters" id="tab-{$ID}">
             <% loop $VisibleListingGroups %>
-                <button class="tablinks col-md-4<% if $Pos == '1' %> active<% end_if %>" data-id="{$ID}" style="background-color: #{$GroupColor};">
+                <button class="tablinks col-lg-4<% if $Up.ListingGroupID == $ID %> active<% end_if %><% if $Up.URLSegment == "home" && $Pos == "1"%> active<% end_if %>" data-id="{$ID}" style="background-color: #{$GroupColor};">
                     $Content
-                    <% if $Pos == '1' %><i class="fal fa-minus fontsize25"></i><% else %><i class="fal fa-plus fontsize25"></i><% end_if %>
+                    <span class="fontsize25"><% if $Up.ListingGroupID == $ID %><i class="fal fa-minus"></i><% else_if $Up.URLSegment == "home" && $Pos == "1" %><i class="fal fa-minus"></i> <% else %><i class="fal fa-plus"></i><% end_if %></span>
                 </button>
             <% end_loop %>
         </div>
         <% loop $VisibleListingGroups %>
             <% if $Filter.VisibleFieldItems %>
-                <div id="tabcontent-{$ID}" class="tabcontent<% if $Pos == '1' %> active<% end_if %>" style="background-color: #{$GroupColor};">
+                <div id="tabcontent-{$ID}" class="tabcontent<% if $Up.ListingGroupID == $ID %> active<% end_if %><% if $Up.URLSegment == "home" && $Pos == "1"%> active<% end_if %>" style="background-color: #{$GroupColor};">
                     <div class="row no-gutters justify-content-center filters">
                         <% loop $Filter.VisibleFieldItems %>
                             <div class="col filter-item">
@@ -59,6 +59,9 @@
                                 </div>
                             </div>
                         <% end_loop %>
+                        <div class="filter-action pl-lg-2">
+                            <button class="theme-button-yellow-small-arrow"><span class="font-weight-medium letterspacing-1px">Search</span></button>
+                        </div>
                     </div>
                 </div>
             <% end_if %>

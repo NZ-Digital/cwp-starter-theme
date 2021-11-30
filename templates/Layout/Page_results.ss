@@ -1,3 +1,4 @@
+<section class="sectionSearchForm col-lg-12 pt-7 inner-padding pb-7">
 <div class="content search-results">
     <div class="container">
         <div class="row">
@@ -75,5 +76,5 @@
             </section>
         </div>
     </div>
-    <% include PageUtilities %>
 </div>
+</section>

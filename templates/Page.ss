@@ -12,9 +12,12 @@
         <% include Favicon %>
     </head>
     <body class="$ClassName">
+        <% include HeaderSearch %>
+        <% include PreHeader %>
         <header role="banner">
             <% include Header %>
         </header>
+        <% include MobileNav %>
         <main id="main" class="main row no-gutters" role="main">
             $Layout
         </main>

@@ -34671,6 +34671,545 @@ Popper.Defaults = Defaults;
 
 /***/ }),
 
+/***/ "./node_modules/stickyfilljs/dist/stickyfill.js":
+/*!******************************************************!*\
+  !*** ./node_modules/stickyfilljs/dist/stickyfill.js ***!
+  \******************************************************/
+/***/ (function(module) {
+
+/*!
+  * Stickyfill – `position: sticky` polyfill
+  * v. 2.1.0 | https://github.com/wilddeer/stickyfill
+  * MIT License
+  */
+;
+
+(function (window, document) {
+  'use strict';
+  /*
+   * 1. Check if the browser supports `position: sticky` natively or is too old to run the polyfill.
+   *    If either of these is the case set `seppuku` flag. It will be checked later to disable key features
+   *    of the polyfill, but the API will remain functional to avoid breaking things.
+   */
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var seppuku = false;
+  var isWindowDefined = typeof window !== 'undefined'; // The polyfill can’t function properly without `window` or `window.getComputedStyle`.
+
+  if (!isWindowDefined || !window.getComputedStyle) seppuku = true; // Dont’t get in a way if the browser supports `position: sticky` natively.
+  else {
+    (function () {
+      var testNode = document.createElement('div');
+      if (['', '-webkit-', '-moz-', '-ms-'].some(function (prefix) {
+        try {
+          testNode.style.position = prefix + 'sticky';
+        } catch (e) {}
+
+        return testNode.style.position != '';
+      })) seppuku = true;
+    })();
+  }
+  /*
+   * 2. “Global” vars used across the polyfill
+   */
+
+  var isInitialized = false; // Check if Shadow Root constructor exists to make further checks simpler
+
+  var shadowRootExists = typeof ShadowRoot !== 'undefined'; // Last saved scroll position
+
+  var scroll = {
+    top: null,
+    left: null
+  }; // Array of created Sticky instances
+
+  var stickies = [];
+  /*
+   * 3. Utility functions
+   */
+
+  function extend(targetObj, sourceObject) {
+    for (var key in sourceObject) {
+      if (sourceObject.hasOwnProperty(key)) {
+        targetObj[key] = sourceObject[key];
+      }
+    }
+  }
+
+  function parseNumeric(val) {
+    return parseFloat(val) || 0;
+  }
+
+  function getDocOffsetTop(node) {
+    var docOffsetTop = 0;
+
+    while (node) {
+      docOffsetTop += node.offsetTop;
+      node = node.offsetParent;
+    }
+
+    return docOffsetTop;
+  }
+  /*
+   * 4. Sticky class
+   */
+
+
+  var Sticky = function () {
+    function Sticky(node) {
+      _classCallCheck(this, Sticky);
+
+      if (!(node instanceof HTMLElement)) throw new Error('First argument must be HTMLElement');
+      if (stickies.some(function (sticky) {
+        return sticky._node === node;
+      })) throw new Error('Stickyfill is already applied to this node');
+      this._node = node;
+      this._stickyMode = null;
+      this._active = false;
+      stickies.push(this);
+      this.refresh();
+    }
+
+    _createClass(Sticky, [{
+      key: 'refresh',
+      value: function refresh() {
+        if (seppuku || this._removed) return;
+        if (this._active) this._deactivate();
+        var node = this._node;
+        /*
+         * 1. Save node computed props
+         */
+
+        var nodeComputedStyle = getComputedStyle(node);
+        var nodeComputedProps = {
+          position: nodeComputedStyle.position,
+          top: nodeComputedStyle.top,
+          display: nodeComputedStyle.display,
+          marginTop: nodeComputedStyle.marginTop,
+          marginBottom: nodeComputedStyle.marginBottom,
+          marginLeft: nodeComputedStyle.marginLeft,
+          marginRight: nodeComputedStyle.marginRight,
+          cssFloat: nodeComputedStyle.cssFloat
+        };
+        /*
+         * 2. Check if the node can be activated
+         */
+
+        if (isNaN(parseFloat(nodeComputedProps.top)) || nodeComputedProps.display == 'table-cell' || nodeComputedProps.display == 'none') return;
+        this._active = true;
+        /*
+         * 3. Check if the current node position is `sticky`. If it is, it means that the browser supports sticky positioning,
+         *    but the polyfill was force-enabled. We set the node’s position to `static` before continuing, so that the node
+         *    is in it’s initial position when we gather its params.
+         */
+
+        var originalPosition = node.style.position;
+        if (nodeComputedStyle.position == 'sticky' || nodeComputedStyle.position == '-webkit-sticky') node.style.position = 'static';
+        /*
+         * 4. Get necessary node parameters
+         */
+
+        var referenceNode = node.parentNode;
+        var parentNode = shadowRootExists && referenceNode instanceof ShadowRoot ? referenceNode.host : referenceNode;
+        var nodeWinOffset = node.getBoundingClientRect();
+        var parentWinOffset = parentNode.getBoundingClientRect();
+        var parentComputedStyle = getComputedStyle(parentNode);
+        this._parent = {
+          node: parentNode,
+          styles: {
+            position: parentNode.style.position
+          },
+          offsetHeight: parentNode.offsetHeight
+        };
+        this._offsetToWindow = {
+          left: nodeWinOffset.left,
+          right: document.documentElement.clientWidth - nodeWinOffset.right
+        };
+        this._offsetToParent = {
+          top: nodeWinOffset.top - parentWinOffset.top - parseNumeric(parentComputedStyle.borderTopWidth),
+          left: nodeWinOffset.left - parentWinOffset.left - parseNumeric(parentComputedStyle.borderLeftWidth),
+          right: -nodeWinOffset.right + parentWinOffset.right - parseNumeric(parentComputedStyle.borderRightWidth)
+        };
+        this._styles = {
+          position: originalPosition,
+          top: node.style.top,
+          bottom: node.style.bottom,
+          left: node.style.left,
+          right: node.style.right,
+          width: node.style.width,
+          marginTop: node.style.marginTop,
+          marginLeft: node.style.marginLeft,
+          marginRight: node.style.marginRight
+        };
+        var nodeTopValue = parseNumeric(nodeComputedProps.top);
+        this._limits = {
+          start: nodeWinOffset.top + window.pageYOffset - nodeTopValue,
+          end: parentWinOffset.top + window.pageYOffset + parentNode.offsetHeight - parseNumeric(parentComputedStyle.borderBottomWidth) - node.offsetHeight - nodeTopValue - parseNumeric(nodeComputedProps.marginBottom)
+        };
+        /*
+         * 5. Ensure that the node will be positioned relatively to the parent node
+         */
+
+        var parentPosition = parentComputedStyle.position;
+
+        if (parentPosition != 'absolute' && parentPosition != 'relative') {
+          parentNode.style.position = 'relative';
+        }
+        /*
+         * 6. Recalc node position.
+         *    It’s important to do this before clone injection to avoid scrolling bug in Chrome.
+         */
+
+
+        this._recalcPosition();
+        /*
+         * 7. Create a clone
+         */
+
+
+        var clone = this._clone = {};
+        clone.node = document.createElement('div'); // Apply styles to the clone
+
+        extend(clone.node.style, {
+          width: nodeWinOffset.right - nodeWinOffset.left + 'px',
+          height: nodeWinOffset.bottom - nodeWinOffset.top + 'px',
+          marginTop: nodeComputedProps.marginTop,
+          marginBottom: nodeComputedProps.marginBottom,
+          marginLeft: nodeComputedProps.marginLeft,
+          marginRight: nodeComputedProps.marginRight,
+          cssFloat: nodeComputedProps.cssFloat,
+          padding: 0,
+          border: 0,
+          borderSpacing: 0,
+          fontSize: '1em',
+          position: 'static'
+        });
+        referenceNode.insertBefore(clone.node, node);
+        clone.docOffsetTop = getDocOffsetTop(clone.node);
+      }
+    }, {
+      key: '_recalcPosition',
+      value: function _recalcPosition() {
+        if (!this._active || this._removed) return;
+        var stickyMode = scroll.top <= this._limits.start ? 'start' : scroll.top >= this._limits.end ? 'end' : 'middle';
+        if (this._stickyMode == stickyMode) return;
+
+        switch (stickyMode) {
+          case 'start':
+            extend(this._node.style, {
+              position: 'absolute',
+              left: this._offsetToParent.left + 'px',
+              right: this._offsetToParent.right + 'px',
+              top: this._offsetToParent.top + 'px',
+              bottom: 'auto',
+              width: 'auto',
+              marginLeft: 0,
+              marginRight: 0,
+              marginTop: 0
+            });
+            break;
+
+          case 'middle':
+            extend(this._node.style, {
+              position: 'fixed',
+              left: this._offsetToWindow.left + 'px',
+              right: this._offsetToWindow.right + 'px',
+              top: this._styles.top,
+              bottom: 'auto',
+              width: 'auto',
+              marginLeft: 0,
+              marginRight: 0,
+              marginTop: 0
+            });
+            break;
+
+          case 'end':
+            extend(this._node.style, {
+              position: 'absolute',
+              left: this._offsetToParent.left + 'px',
+              right: this._offsetToParent.right + 'px',
+              top: 'auto',
+              bottom: 0,
+              width: 'auto',
+              marginLeft: 0,
+              marginRight: 0
+            });
+            break;
+        }
+
+        this._stickyMode = stickyMode;
+      }
+    }, {
+      key: '_fastCheck',
+      value: function _fastCheck() {
+        if (!this._active || this._removed) return;
+        if (Math.abs(getDocOffsetTop(this._clone.node) - this._clone.docOffsetTop) > 1 || Math.abs(this._parent.node.offsetHeight - this._parent.offsetHeight) > 1) this.refresh();
+      }
+    }, {
+      key: '_deactivate',
+      value: function _deactivate() {
+        var _this = this;
+
+        if (!this._active || this._removed) return;
+
+        this._clone.node.parentNode.removeChild(this._clone.node);
+
+        delete this._clone;
+        extend(this._node.style, this._styles);
+        delete this._styles; // Check whether element’s parent node is used by other stickies.
+        // If not, restore parent node’s styles.
+
+        if (!stickies.some(function (sticky) {
+          return sticky !== _this && sticky._parent && sticky._parent.node === _this._parent.node;
+        })) {
+          extend(this._parent.node.style, this._parent.styles);
+        }
+
+        delete this._parent;
+        this._stickyMode = null;
+        this._active = false;
+        delete this._offsetToWindow;
+        delete this._offsetToParent;
+        delete this._limits;
+      }
+    }, {
+      key: 'remove',
+      value: function remove() {
+        var _this2 = this;
+
+        this._deactivate();
+
+        stickies.some(function (sticky, index) {
+          if (sticky._node === _this2._node) {
+            stickies.splice(index, 1);
+            return true;
+          }
+        });
+        this._removed = true;
+      }
+    }]);
+
+    return Sticky;
+  }();
+  /*
+   * 5. Stickyfill API
+   */
+
+
+  var Stickyfill = {
+    stickies: stickies,
+    Sticky: Sticky,
+    forceSticky: function forceSticky() {
+      seppuku = false;
+      init();
+      this.refreshAll();
+    },
+    addOne: function addOne(node) {
+      // Check whether it’s a node
+      if (!(node instanceof HTMLElement)) {
+        // Maybe it’s a node list of some sort?
+        // Take first node from the list then
+        if (node.length && node[0]) node = node[0];else return;
+      } // Check if Stickyfill is already applied to the node
+      // and return existing sticky
+
+
+      for (var i = 0; i < stickies.length; i++) {
+        if (stickies[i]._node === node) return stickies[i];
+      } // Create and return new sticky
+
+
+      return new Sticky(node);
+    },
+    add: function add(nodeList) {
+      // If it’s a node make an array of one node
+      if (nodeList instanceof HTMLElement) nodeList = [nodeList]; // Check if the argument is an iterable of some sort
+
+      if (!nodeList.length) return; // Add every element as a sticky and return an array of created Sticky instances
+
+      var addedStickies = [];
+
+      var _loop = function _loop(i) {
+        var node = nodeList[i]; // If it’s not an HTMLElement – create an empty element to preserve 1-to-1
+        // correlation with input list
+
+        if (!(node instanceof HTMLElement)) {
+          addedStickies.push(void 0);
+          return 'continue';
+        } // If Stickyfill is already applied to the node
+        // add existing sticky
+
+
+        if (stickies.some(function (sticky) {
+          if (sticky._node === node) {
+            addedStickies.push(sticky);
+            return true;
+          }
+        })) return 'continue'; // Create and add new sticky
+
+        addedStickies.push(new Sticky(node));
+      };
+
+      for (var i = 0; i < nodeList.length; i++) {
+        var _ret2 = _loop(i);
+
+        if (_ret2 === 'continue') continue;
+      }
+
+      return addedStickies;
+    },
+    refreshAll: function refreshAll() {
+      stickies.forEach(function (sticky) {
+        return sticky.refresh();
+      });
+    },
+    removeOne: function removeOne(node) {
+      // Check whether it’s a node
+      if (!(node instanceof HTMLElement)) {
+        // Maybe it’s a node list of some sort?
+        // Take first node from the list then
+        if (node.length && node[0]) node = node[0];else return;
+      } // Remove the stickies bound to the nodes in the list
+
+
+      stickies.some(function (sticky) {
+        if (sticky._node === node) {
+          sticky.remove();
+          return true;
+        }
+      });
+    },
+    remove: function remove(nodeList) {
+      // If it’s a node make an array of one node
+      if (nodeList instanceof HTMLElement) nodeList = [nodeList]; // Check if the argument is an iterable of some sort
+
+      if (!nodeList.length) return; // Remove the stickies bound to the nodes in the list
+
+      var _loop2 = function _loop2(i) {
+        var node = nodeList[i];
+        stickies.some(function (sticky) {
+          if (sticky._node === node) {
+            sticky.remove();
+            return true;
+          }
+        });
+      };
+
+      for (var i = 0; i < nodeList.length; i++) {
+        _loop2(i);
+      }
+    },
+    removeAll: function removeAll() {
+      while (stickies.length) {
+        stickies[0].remove();
+      }
+    }
+  };
+  /*
+   * 6. Setup events (unless the polyfill was disabled)
+   */
+
+  function init() {
+    if (isInitialized) {
+      return;
+    }
+
+    isInitialized = true; // Watch for scroll position changes and trigger recalc/refresh if needed
+
+    function checkScroll() {
+      if (window.pageXOffset != scroll.left) {
+        scroll.top = window.pageYOffset;
+        scroll.left = window.pageXOffset;
+        Stickyfill.refreshAll();
+      } else if (window.pageYOffset != scroll.top) {
+        scroll.top = window.pageYOffset;
+        scroll.left = window.pageXOffset; // recalc position for all stickies
+
+        stickies.forEach(function (sticky) {
+          return sticky._recalcPosition();
+        });
+      }
+    }
+
+    checkScroll();
+    window.addEventListener('scroll', checkScroll); // Watch for window resizes and device orientation changes and trigger refresh
+
+    window.addEventListener('resize', Stickyfill.refreshAll);
+    window.addEventListener('orientationchange', Stickyfill.refreshAll); //Fast dirty check for layout changes every 500ms
+
+    var fastCheckTimer = void 0;
+
+    function startFastCheckTimer() {
+      fastCheckTimer = setInterval(function () {
+        stickies.forEach(function (sticky) {
+          return sticky._fastCheck();
+        });
+      }, 500);
+    }
+
+    function stopFastCheckTimer() {
+      clearInterval(fastCheckTimer);
+    }
+
+    var docHiddenKey = void 0;
+    var visibilityChangeEventName = void 0;
+
+    if ('hidden' in document) {
+      docHiddenKey = 'hidden';
+      visibilityChangeEventName = 'visibilitychange';
+    } else if ('webkitHidden' in document) {
+      docHiddenKey = 'webkitHidden';
+      visibilityChangeEventName = 'webkitvisibilitychange';
+    }
+
+    if (visibilityChangeEventName) {
+      if (!document[docHiddenKey]) startFastCheckTimer();
+      document.addEventListener(visibilityChangeEventName, function () {
+        if (document[docHiddenKey]) {
+          stopFastCheckTimer();
+        } else {
+          startFastCheckTimer();
+        }
+      });
+    } else startFastCheckTimer();
+  }
+
+  if (!seppuku) init();
+  /*
+   * 7. Expose Stickyfill
+   */
+
+  if ( true && module.exports) {
+    module.exports = Stickyfill;
+  } else if (isWindowDefined) {
+    window.Stickyfill = Stickyfill;
+  }
+})(window, document);
+
+/***/ }),
+
 /***/ "./src/js/components/content.js":
 /*!**************************************!*\
   !*** ./src/js/components/content.js ***!
@@ -34820,6 +35359,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var pg_calendar_dist_js_pignose_calendar__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(pg_calendar_dist_js_pignose_calendar__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var jquery_ui_bundle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! jquery-ui-bundle */ "./node_modules/jquery-ui-bundle/jquery-ui.js");
 /* harmony import */ var jquery_ui_bundle__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(jquery_ui_bundle__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var stickyfilljs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! stickyfilljs */ "./node_modules/stickyfilljs/dist/stickyfill.js");
+/* harmony import */ var stickyfilljs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(stickyfilljs__WEBPACK_IMPORTED_MODULE_6__);
 /* eslint-disable */
 
 
@@ -34828,13 +35369,15 @@ __webpack_require__.r(__webpack_exports__);
 var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment__WEBPACK_IMPORTED_MODULE_2___default()));
 
 
+
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
   jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
     initializeDocument();
   });
 
   function initializeDocument() {
-    headerSettings(); //Sections
+    headerSettings();
+    closeSearchForm(); //Sections
 
     sectionFilterBar();
     sectionFeaturedListings(); //Page
@@ -34848,16 +35391,32 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
   }
 
   function headerSettings() {
-    //for pre header
+    var hamburger = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.hamburger');
+    var mobileNav = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.mobile-nav'); //for pre header
+
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('.close').click(function () {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('.alert').fadeOut();
     }); //hamburger menu
 
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.hamburger').click(function () {
-      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('is-active')) {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('is-active');
+    hamburger.click(function () {
+      if (hamburger.hasClass('is-active')) {
+        hamburger.removeClass('is-active');
+        mobileNav.fadeOut();
       } else {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('is-active');
+        hamburger.addClass('is-active');
+        mobileNav.fadeIn();
+      }
+    }); //search
+
+    var searchBtn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.nav-search');
+    var searchForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.site-header-search');
+    searchBtn.click(function () {
+      if (searchForm.hasClass('active')) {
+        searchForm.removeClass('active');
+        searchForm.fadeOut();
+      } else {
+        searchForm.addClass('active');
+        searchForm.fadeIn();
       }
     }); //Scroll
 
@@ -34869,6 +35428,17 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         siteHeader.addClass('open');
       } else {
         siteHeader.removeClass('open');
+      }
+    });
+  }
+
+  function closeSearchForm() {
+    var searchForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.site-header-search');
+    var closeBtn = searchForm.find('.btn-close');
+    closeBtn.click(function () {
+      if (searchForm.hasClass('active')) {
+        searchForm.removeClass('active');
+        searchForm.fadeOut();
       }
     });
   }
@@ -35019,19 +35589,17 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       }); //Email and Password Validation
 
       signUpForm.on('submit', function (event) {
-        if (passwordField.length > 0) {
-          if (emailField.val() !== emailConfirmField.val()) {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
-            emailConfirmField.addClass('holder-validation is-invalid');
-            emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
-            event.preventDefault();
-          }
+        var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
 
+        var error = false;
+
+        if (passwordField.length > 0) {
           if (passwordField.find('.password').val() !== passwordConfirmField.find('.password').val()) {
             jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmPassword').remove();
             passwordConfirmField.find('.password').addClass('holder-validation is-invalid');
             passwordConfirmField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
             event.preventDefault();
+            error = true;
           }
 
           if (!requiredPassword.test(passwordField.find('.password').val())) {
@@ -35039,7 +35607,34 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
             passwordField.find('.password').addClass('holder-validation is-invalid');
             passwordField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters, contain 1 upper/lowercase and one number and one special character.</div>');
             event.preventDefault();
+            error = true;
           }
+        }
+
+        if (emailField.length > 0) {
+          event.preventDefault();
+          callAPIEndpoint('ajax/validateEmail', 'POST', 'email=' + jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(emailField.val()), function (result) {
+            if (result.data.count > 0) {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_Email').remove();
+              emailField.addClass('holder-validation is-invalid');
+              emailField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_Email" class="invalid-feedback" role="alert" aria-atomic="true">An account with email ' + jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(emailField.val()) + ' already exists.</div>');
+              error = true;
+            }
+          });
+
+          if (emailField.val() !== emailConfirmField.val()) {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
+            emailConfirmField.addClass('holder-validation is-invalid');
+            emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
+            error = true;
+          }
+
+          setTimeout(function () {
+            if (error === false) {
+              console.log(error);
+              event.currentTarget.submit();
+            }
+          }, 1000);
         }
       }); //Category suggestions
 
@@ -35134,10 +35729,10 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       //   rel: 0
       // }).appendTo($list);
 
-      for (var i = 0; i < numberOfOptions; i++) {
+      for (var _i = 0; _i < numberOfOptions; _i++) {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()('<li />', {
-          text: $this.children('option').eq(i).text(),
-          rel: $this.children('option').eq(i).val()
+          text: $this.children('option').eq(_i).text(),
+          rel: $this.children('option').eq(_i).val()
         }).appendTo($list);
       }
 
@@ -35194,6 +35789,42 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
               selectedCategoryHolder.addClass('has-item');
               selectedCategoryHolder.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedItem.text() + '</span><span class="remove-item">X</span></div>');
               selectedCategoryText.val(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(selectedItem.text()));
+              callAPIEndpoint('ajax/getTagsByCategory', 'POST', 'id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(selectedItem.attr('rel')), function (result) {
+                if (result.data) {
+                  (function () {
+                    var liShown = [];
+                    var dropdownTags = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.dropdown-tags');
+                    var selectedStyle = dropdownTags.find('.styledSelect');
+                    var list = dropdownTags.find('ul.options li');
+                    var data = result.data;
+                    list.removeClass('show');
+                    selectedStyle.text('Please select tags');
+                    selectedTagsHolder.removeClass('has-item');
+                    selectedTagsHolder.find('.item-holder').empty();
+                    selectedTagsText.val('');
+
+                    var _loop = function _loop(_i2) {
+                      list.each(function () {
+                        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('selected');
+
+                        if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === data[_i2].name) {
+                          if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liShown) === -1) {
+                            liShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
+
+                            if (!jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('show')) {
+                              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('show');
+                            }
+                          }
+                        }
+                      });
+                    };
+
+                    for (var _i2 = 0; _i2 < data.length; _i2++) {
+                      _loop(_i2);
+                    }
+                  })();
+                }
+              });
             }
 
             if (dataType === 'subcategory') {
@@ -35298,6 +35929,11 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
           categorySelectorHolder.find('.styledSelect').text('Please select one category');
           categorySelectorHolder.find('.options li').removeClass('selected');
+          tags.val('');
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags').removeClass('has-item');
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-tags .item-holder').empty();
+          tagSelectorHolder.find('.styledSelect').text('Please select tags');
+          tagSelectorHolder.find('.options li').removeClass('show').removeClass('selected');
         }
 
         if (dataType === 'subcategory') {
@@ -35315,6 +35951,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           tagArrays = tags.val().split(",");
           tagArrays.splice(jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(_this.siblings().text()), tagArrays), 1);
           tags.val(tagArrays);
+          console.log('sasa');
         } else {
           parentDiv.removeClass('has-item');
           parentDiv.find('.item-holder').empty();
@@ -35357,21 +35994,72 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     }
 
     if (tags.val()) {
-      if (tags.val().includes(',')) {
-        tagArrays = tags.val().split(",");
-        selectedTagsHolder.addClass('has-item');
+      (function () {
+        callAPIEndpoint('ajax/getTagByCategoryName', 'POST', 'name=' + category.val(), function (result) {
+          if (result.data) {
+            (function () {
+              var liShown = [];
+              var dropdownTags = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.dropdown-tags');
+              var list = dropdownTags.find('ul.options li');
+              var data = result.data;
 
-        for (var i = 0; i < tagArrays.length; i++) {
-          tagSelectorHolder.find('.styledSelect').text(tagArrays[i]);
-          tagSelectorHolder.find('.options li:contains(' + tagArrays[i] + ')').addClass('selected');
-          selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tagArrays[i] + '</span><span class="remove-item">X</span></div>');
+              var _loop2 = function _loop2(_i3) {
+                list.each(function () {
+                  if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === data[_i3].name) {
+                    if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liShown) === -1) {
+                      liShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
+
+                      if (!jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('show')) {
+                        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('show');
+                      }
+                    }
+                  }
+                });
+              };
+
+              for (var _i3 = 0; _i3 < data.length; _i3++) {
+                _loop2(_i3);
+              }
+            })();
+          }
+        });
+        var listTag = tagSelectorHolder.find('ul.options li');
+        var liTagShown = [];
+
+        if (tags.val().includes(',')) {
+          tagArrays = tags.val().split(",");
+          selectedTagsHolder.addClass('has-item');
+
+          var _loop3 = function _loop3(_i4) {
+            tagSelectorHolder.find('.styledSelect').text(tagArrays[_i4]);
+            listTag.each(function () {
+              if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === tagArrays[_i4]) {
+                if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liTagShown) === -1) {
+                  liTagShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('selected');
+                }
+              }
+            });
+            selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tagArrays[_i4] + '</span><span class="remove-item">X</span></div>');
+          };
+
+          for (var _i4 = 0; _i4 < tagArrays.length; _i4++) {
+            _loop3(_i4);
+          }
+        } else {
+          tagSelectorHolder.find('.styledSelect').text(tags.val());
+          listTag.each(function () {
+            if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === tagArrays[i]) {
+              if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liTagShown) === -1) {
+                liTagShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
+                jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('selected');
+              }
+            }
+          });
+          selectedTagsHolder.addClass('has-item');
+          selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tags.val() + '</span><span class="remove-item">X</span></div>');
         }
-      } else {
-        tagSelectorHolder.find('.styledSelect').text(tags.val());
-        tagSelectorHolder.find('.options li:contains(' + tags.val() + ')').addClass('selected');
-        selectedTagsHolder.addClass('has-item');
-        selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tags.val() + '</span><span class="remove-item">X</span></div>');
-      }
+      })();
     }
 
     removeSelectedItem(category, subcategory, tags);
@@ -35400,9 +36088,9 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         if (dates.length > 0) {
           listingDateTimeContainer.find('.date-time-item').remove();
 
-          for (var i = 0; i < dates.length; i++) {
-            if (dates[i] !== null) {
-              selectedDates.push(dates[i].format("DD MMMM YYYY"));
+          for (var _i5 = 0; _i5 < dates.length; _i5++) {
+            if (dates[_i5] !== null) {
+              selectedDates.push(dates[_i5].format("DD MMMM YYYY"));
 
               if (selectedDates.length > 1) {
                 (function () {
@@ -35418,8 +36106,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
                   listingSelectedDatesTextBox.val(rangeOfDatesArray);
                 })();
               } else {
-                formattedDate = dates[i].format("DD MMMM YYYY");
-                appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '', i);
+                formattedDate = dates[_i5].format("DD MMMM YYYY");
+                appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '', _i5);
                 listingSelectedDatesTextBox.val(selectedDates);
               } //dropdown time selector functions
 
@@ -35482,25 +36170,25 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       selectedStartTime = listingSelectedStartTimeTextBox.split(",");
       selectedEndTime = listingSelectedEndTimeTextBox.split(",");
 
-      for (var i = 0; i < selectedDates.length; i++) {
+      for (var _i6 = 0; _i6 < selectedDates.length; _i6++) {
         //populate Calendar
-        var CalendarDateFormat = moment(selectedDates[i]).format('YYYY-MM-DD');
-        var EventDateFormat = moment(selectedDates[i]).format("DD MMMM YYYY");
+        var CalendarDateFormat = moment(selectedDates[_i6]).format('YYYY-MM-DD');
+        var EventDateFormat = moment(selectedDates[_i6]).format("DD MMMM YYYY");
         var unit = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.pignose-calendar-unit[data-date=' + CalendarDateFormat + ']');
 
-        if (i === 0) {
+        if (_i6 === 0) {
           unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-first-active');
-        } else if (i !== 0 && i === selectedDates.length - 2) {
+        } else if (_i6 !== 0 && _i6 === selectedDates.length - 2) {
           if (selectedDates.length < 4) {
             unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first pignose-calendar-unit-range-last');
           } else {
             unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-last');
           }
-        } else if (i === selectedDates.length - 1) {
+        } else if (_i6 === selectedDates.length - 1) {
           unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-second-active');
         } else {
           if (selectedDates.length > 3) {
-            if (i === 1) {
+            if (_i6 === 1) {
               unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first');
             } else {
               unit.addClass('pignose-calendar-unit-range');
@@ -35509,7 +36197,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         } //populate event dates
 
 
-        appendDateTimeItem(listingDateTimeContainer, EventDateFormat, selectedStartTime[i], selectedEndTime[i], i); //dropdown time selector functions
+        appendDateTimeItem(listingDateTimeContainer, EventDateFormat, selectedStartTime[_i6], selectedEndTime[_i6], _i6); //dropdown time selector functions
 
         DropdownTimeSelector(listingDateTimeContainer);
       }
@@ -35664,8 +36352,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     var options = '';
     var arrayTimes = ['6:00 am', '7:00 am', '8:00 am', '9:00 am', '10:00 am', '11:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm', '6:00 pm', '7:00 pm', '8:00 pm', '9:00 pm', '10:00 pm', '11:00 pm', '12:00 am', '1:00 am', '2:00 am'];
 
-    for (var i = index; i < arrayTimes.length; i++) {
-      options += '<a class="dropdown-item" href="#" data-index="' + i + '">' + arrayTimes[i] + '</a>';
+    for (var _i7 = index; _i7 < arrayTimes.length; _i7++) {
+      options += '<a class="dropdown-item" href="#" data-index="' + _i7 + '">' + arrayTimes[_i7] + '</a>';
     }
 
     return options;

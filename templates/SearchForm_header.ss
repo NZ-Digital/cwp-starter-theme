@@ -2,7 +2,7 @@
     <div class="input-group">
         <input name="Search" aria-label="search" type="text" class="form-control" placeholder="<%t CWP_Search.Placeholder "Search..." %>">
         <div class="input-group-append">
-            <button type="submit" class="btn btn-secondary"><%t CWP_Search.Button "Search" %></button>
+            <button type="submit" class="btn btn-secondary"><i class="fas fa-search fontsize30"></i></button>
         </div>
     </div>
 </form>
