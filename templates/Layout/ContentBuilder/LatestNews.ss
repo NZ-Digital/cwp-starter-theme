@@ -1,51 +1,38 @@
 <div class="latestNews-container">
-    <% if $NewsLists %>
-        <div class="row no-gutters align-items-center justify-content-between pr-lg-7 pb-lg-8">
-            <div class="col-auto">
-                <p><span class="font-weight-light fontsize80 halyard-display yellow-line">$Name</span></p>
-            </div>
-            <div class="col-auto">
-                <% if $PageLink %>
-                    <a href="{$PageLink.Link}"><span class="theme-button-hover-dark fontsize18 font-weight-medium">{$ButtonText}</span></a>
-                <% end_if %>
-            </div>
-        </div>
+    <% if $VisibleLatestNews %>
         <div class="container-fluid p-0">
-            <div class="row no-gutters pl-lg-9 pr-lg-7">
-                <div class="align-self-center col-lg-4 pr-lg-4">
-                    $Content
-                    <% if $Image %>
-                        <img src="$Image.URL" class="content-img" alt="{$SiteConfig.Title} - {$Name}">
-                    <% end_if %>
+            <div class="row no-gutters">
+                <div class="align-self-center col-lg-4">
                 </div>
-                <div class="col-lg-8 pl-lg-5">
+                <div class="col-lg-8 padding-left-150px">
                     <div class="row">
-                        <% loop $NewsLists %>
+                        <% loop $VisibleLatestNews %>
                             <div class="col-lg-12<% if not $Last %> pb-lg-7<% end_if %>">
                                 <div class="newslist-content">
-                                    <% if $FeaturedImage %>
-                                        <div class="newslist-content--img">
-                                            <img src="{$FeaturedImage.URL}" class="mb-2" alt="{$SiteConfig.Title} - {$Name}">
-                                        </div>
-                                    <% end_if %>
                                     <div class="newslist-content--details">
                                         <div class="row">
                                             <div class="col-lg-2">
-                                                <% if $NewsCategories %>
-                                                    <% loop $NewsCategories %>
-                                                        <span class="halyard-display fontsize30 font-weight-medium line-height-100">$Title</span>
-                                                    <% end_loop %>
-                                                <% end_if %>
+                                                <div class="news-categories">
+                                                    <% if $NewsCategories %>
+                                                        <% loop $NewsCategories %>
+                                                            <span class="halyard-display fontsize30 font-weight-medium text-scorpion line-height-100">$Title</span>
+                                                        <% end_loop %>
+                                                    <% end_if %>
+                                                </div>
+                                                <div class="news-date mt-3"><p><span class="text-footer-gray">$Created.Ago</span></p></div>
                                             </div>
                                             <div class="col-lg-10 pr-lg-7">
-                                                <p class="mb-3"><span class="halyard-display fontsize30 font-weight-medium line-height-100">{$Name}</span></p>
-                                                <p><span class="halyard-display fontsize19 font-weight-book line-height-140">{$Content.LimitWordCount(35)}</span></p>
+                                                <p class="mb-3"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize30 font-weight-medium line-height-100 text-scorpion">{$Name}</span></a></p>
+                                                <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-140 text-scorpion">{$ContentSummary.LimitWordCount(60)}</span></a></p>
                                                 <div class="newslist-content--link"><i class="fal fa-angle-right fontsize35"></i></div>
                                             </div>
                                         </div>
                                     </div>
+                                    <% if $FeaturedImage %>
+                                        <div class="featured-news--img"><img src="$FeaturedImage.URL" alt="$SiteConfig.Title - News - {$Title}"></div>
+                                    <% end_if %>
                                 </div>
-                                <hr class="mt-lg-5">
+                                <hr class="mt-lg-5" style="border-color: #696163;">
                             </div>
                         <% end_loop %>
                     </div>

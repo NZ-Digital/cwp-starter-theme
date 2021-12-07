@@ -33,6 +33,31 @@
                         </div>
                     </div>
                 <% end_if %>
+                <% if $ListActivate %>
+                    <div class="modal fade show" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-success" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    $GroupNameFromParam
+                                    <% if $GroupNameFromParam == "1" %>
+                                        $SiteConfig.WhatsOnListingActivateMessage
+                                    <% end_if %>
+                                    <% if $GroupNameFromParam == "2" %>
+                                        $SiteConfig.CreativeListingActivateMessage
+                                    <% end_if %>
+                                    <% if $GroupNameFromParam == "3" %>
+                                        $SiteConfig.FindSpaceListingActivateMessage
+                                    <% end_if %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% end_if %>
             </div>
         </div>
     </section>

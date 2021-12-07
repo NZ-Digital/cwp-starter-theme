@@ -118,7 +118,8 @@
   font-size: 20px;
   top: 13px;
 }
-.calendar-datepicker {
+.calendar-datepicker,
+.calendar-datepicker--dropdown {
   .pignose-calendar {
     width: 100%;
     max-width: 100%;
@@ -216,6 +217,13 @@
         background-image: url("../images/next-icon.svg");
       }
     }
+  }
+}
+.calendar-datepicker--dropdown {
+  .pignose-calendar {
+    border: 0;
+    box-shadow: none;
+    margin-top: 20px;
   }
 }
 .listingDateTimes {

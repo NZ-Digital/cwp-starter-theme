@@ -10792,36 +10792,103 @@ pre {
   font-size: 20px;
 }
 
-.fontsize25 {
-  font-size: 25px;
+@media only screen and (min-width: 1590px) {
+  .fontsize25 {
+    font-size: 25px;
+  }
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize25 {
+    font-size: 18px;
+  }
 }
 
-.fontsize27 {
-  font-size: 25px;
+@media only screen and (min-width: 1590px) {
+  .fontsize27 {
+    font-size: 27px;
+  }
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize27 {
+    font-size: 19px;
+  }
 }
 
-.fontsize30 {
-  font-size: 30px;
+@media only screen and (min-width: 1590px) {
+  .fontsize30 {
+    font-size: 30px;
+  }
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize30 {
+    font-size: 20px;
+  }
 }
 
-.fontsize35 {
-  font-size: 35px;
+@media only screen and (min-width: 1590px) {
+  .fontsize35 {
+    font-size: 35px;
+  }
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize35 {
+    font-size: 25px;
+  }
 }
 
-.fontsize45 {
-  font-size: 45px;
+@media only screen and (min-width: 1590px) {
+  .fontsize40 {
+    font-size: 40px;
+  }
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize40 {
+    font-size: 25px;
+  }
 }
 
-.fontsize50 {
-  font-size: 50px;
+@media only screen and (min-width: 1590px) {
+  .fontsize45 {
+    font-size: 45px;
+  }
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize45 {
+    font-size: 30px;
+  }
 }
 
-.fontsize60 {
-  font-size: 60px;
+@media only screen and (min-width: 1590px) {
+  .fontsize50 {
+    font-size: 50px;
+  }
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize50 {
+    font-size: 30px;
+  }
 }
 
-.fontsize80 {
-  font-size: 80px;
+@media only screen and (min-width: 1590px) {
+  .fontsize60 {
+    font-size: 60px;
+  }
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize60 {
+    font-size: 35px;
+  }
+}
+
+@media only screen and (min-width: 1590px) {
+  .fontsize80 {
+    font-size: 80px;
+  }
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize80 {
+    font-size: 40px;
+  }
 }
 
 .font-weight-book {
@@ -11056,10 +11123,10 @@ pre {
 .theme-button-gray-small {
   position: relative;
   display: inline-block;
-  min-width: 212px;
+  min-width: 226px;
   border-radius: 50px;
   border: 0;
-  padding: 9px 30px;
+  padding: 12px 30px;
   transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 
@@ -11081,6 +11148,32 @@ pre {
   transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 .theme-button-gray-small-arrow:hover:after {
+  right: 15px;
+}
+
+.theme-button-white-arrow-small {
+  position: relative;
+  border-radius: 50px;
+  border: 0;
+  padding: 8px 62px 8px 30px;
+  background-color: #fff;
+  transition: all 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.theme-button-white-arrow-small:after {
+  position: absolute;
+  content: url("../images/btn-arrow.svg");
+  height: 17px;
+  right: 20px;
+  top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
+  transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  line-height: 0;
+}
+.theme-button-white-arrow-small:hover {
+  background-color: #f0efed;
+}
+.theme-button-white-arrow-small:hover:after {
   right: 15px;
 }
 

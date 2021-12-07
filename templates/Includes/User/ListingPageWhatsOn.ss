@@ -8,16 +8,20 @@
             </div>
             <div class="col-lg-6 pb-lg-5">
                 <div class="listing-content--tags justify-content-end">
-                    <% if $Listing.Tags %>
-                        <% loop $Listing.Tags %>
-                            <a href="#" class="tag-name mr-lg-3"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
-                        <% end_loop %>
-                    <% end_if %>
-                    <button class="btn-utils addtofavourites fontsize35 pl-lg-3" data-id="$Listing.ID"><i class="far fa-heart"></i></button>
-                    <button class="btn-utils sharelisting pl-lg-3"><img src="$resourceURL('themes/starter/images/Iconawesome-share-alt.svg')" alt="$SiteConfig.Title - share listing"> </button>
-                    <button class="btn-utils downloadlisting pl-lg-3"><img src="$resourceURL('themes/starter/images/Iconawesome-download.svg')" alt="$SiteConfig.Title - download listing"> </button>
-                    <button class="btn-utils getdirection pl-lg-3"><img src="$resourceURL('themes/starter/images/Icon-awesome-map.svg')" alt="$SiteConfig.Title - get direction"> </button>
-                    <p><a href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"><span class="theme-button-gray font-weight-medium fontsize18">Buy tickets</span></a></p>
+                    <div class="tags">
+                        <div class="tag-item row no-gutters">
+                            <% if $Listing.Tags %>
+                                <% loop $Listing.Tags %>
+                                    <a href="#" class="tag-name mr-lg-3"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
+                                <% end_loop %>
+                            <% end_if %>
+                        </div>
+                    </div>
+                    <button class="btn-utils addtofavourites fontsize25 ml-3" data-id="$Listing.ID"><i class="far fa-heart"></i></button>
+                    <button class="btn-utils sharelisting fontsize25 ml-3 text-scorpion"><i class="fas fa-share-alt"></i></button>
+                    <button class="btn-utils downloadlisting fontsize25 ml-3 text-scorpion"><i class="fas fa-arrow-alt-to-bottom"></i></button>
+                    <button class="btn-utils getdirection fontsize25 ml-3 text-scorpion"><i class="fas fa-map"></i> </button>
+                    <p class="ml-3"><a href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"><span class="theme-button-gray-small font-weight-medium fontsize18 text-center">Buy tickets</span></a></p>
                 </div>
             </div>
         </div>
@@ -26,7 +30,7 @@
                 <% if $Listing.Content2 %>
                     <div class="listing-content--bar">$Listing.Content2</div>
                 <% end_if %>
-                <div class="listing-content--img">
+                <div class="listing-content--featured-img">
                     <img src="$Listing.FeaturedImage.URL" alt="$Listing.Name">
                 </div>
             </div>
@@ -49,7 +53,7 @@
 
                 <div class="listing-content--tags">
                     <% if $Listing.Tags %>
-                        <span class="halyard-display font-weight-medium fontsize25 text-uppercase letterspacing-3px">Tags</span>
+                        <span class="halyard-display font-weight-medium fontsize25 text-uppercase letterspacing-7px">Tags</span>
                         <% loop $Listing.Tags %>
                             <a href="#" class="tag-name mr-lg-3 ml-lg-5"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
                         <% end_loop %>
@@ -59,7 +63,7 @@
             <div class="col-lg-3 offset-1">
                 <div class="row">
                     <% if $Listing.VisibleDatesAndTimes %>
-                        <div class="col-lg-2 pb-lg-2">
+                        <div class="col-lg-2 pb-lg-2 pr-0">
                             <img src="$resourceURL('themes/starter/images/icon-date-time.svg')" class="icon" alt="Listing icon">
                         </div>
                         <div class="col-lg-10 pb-lg-3">
@@ -78,7 +82,7 @@
                     <div class="col-lg-12 pt-lg-4 pb-lg-4">
                         <hr style="border-color: #A2A2A2;">
                     </div>
-                    <div class="col-lg-2 pb-lg-2">
+                    <div class="col-lg-2 pb-lg-2 pr-0">
                         <img src="$resourceURL('themes/starter/images/icon-map.svg')" class="icon" alt="Listing icon">
                     </div>
                     <div class="col-lg-10 pb-lg-3">
@@ -86,13 +90,12 @@
                     </div>
                     <div class="col-lg-12 offset-2 pb-lg-1">
                         <p><span class="fontsize19 font-weight-book">$Listing.BuildingName <br> $Listing.Address, $Listing.City, <br>$Listing.Town $Listing.Postcode</span></p>
-<%--                        <p class="pt-lg-5"><span class="fontsize16 font-weight-medium text-underline">Open in maps</span></p>--%>
                     </div>
 
                     <div class="col-lg-12 pt-lg-4 pb-lg-4">
                         <hr style="border-color: #A2A2A2;">
                     </div>
-                    <div class="col-lg-2 pb-lg-2">
+                    <div class="col-lg-2 pb-lg-2 pr-0">
                         <img src="$resourceURL('themes/starter/images/icon-price.svg')" class="icon" alt="Listing icon">
                     </div>
                     <div class="col-lg-10 pb-lg-3">
@@ -105,7 +108,7 @@
                     <div class="col-lg-12 pt-lg-4 pb-lg-4">
                         <hr style="border-color: #A2A2A2;">
                     </div>
-                    <div class="col-lg-2 pb-lg-2">
+                    <div class="col-lg-2 pb-lg-2 pr-0">
                         <img src="$resourceURL('themes/starter/images/iconcontact.svg')" class="icon" alt="Listing icon">
                     </div>
                     <div class="col-lg-10 pb-lg-3">
@@ -122,13 +125,28 @@
                     <div class="col-lg-12 pt-lg-4 pb-lg-4">
                         <hr style="border-color: #A2A2A2;">
                     </div>
-
                     <% if $Listing.ListingLogo %>
                         <div class="col-lg-10 pb-lg-3">
                             <img src="$Listing.ListingLogo.URL" alt="$Listing.Name - Logo">
                         </div>
                     <% end_if %>
                 </div>
+            </div>
+            <div class="col-lg-12">
+                <hr style="border-color: #A2A2A2;">
+            </div>
+            <div class="col-lg-12 pt-5 pb-7">
+                <p><a href="/whats-on"><span class="theme-button-long text-center">Back to What's On</span></a></p>
+            </div>
+            <div class="col-lg-12 pt-5">
+                <p><span class="halyard-display font-weight-medium fontsize25 text-uppercase letterspacing-7px">Related Events</span></p>
+                <% if $getRelatedListings($Listing.ID) %>
+                    <div class="row pt-6">
+                        <% loop $getRelatedListings($Listing.ID) %>
+                            <% include ListingContent %>
+                        <% end_loop %>
+                    </div>
+                <% end_if %>
             </div>
         </div>
     </div>

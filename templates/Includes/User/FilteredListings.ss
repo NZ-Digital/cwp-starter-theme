@@ -1,7 +1,7 @@
-<% if $Listings %>
-    <div class="row">
+<div class="row">
+    <% if $Listings %>
         <% loop $Listings %>
-            <div class="col-lg-4">
+            <div class="<% if $Up.GroupID == "3" %>col-lg-3<% else %>col-lg-4<% end_if %>">
                 <div class="listing-content">
                     <div class="listing-content--img">
                         <% if $FeaturedImage %>
@@ -11,10 +11,12 @@
                         <% end_if %>
                     </div>
                     <div class="listing-content--location-date align-items-center">
+                        <% if $Up.GroupID == "1" %>
                         <div class="listing-date">
                             <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px"><% if $ListingClosestToCurrentDate %>$ListingClosestToCurrentDate<% end_if %></span>
                         </div>
-                        <div class="listing-location ml-auto">
+                        <% end_if %>
+                        <div class="listing-location <% if $Up.GroupID == "1" %>ml-auto<% end_if %>">
                             <span class="text-footer-gray text-underline">$City</span>
                         </div>
                     </div>
@@ -34,5 +36,10 @@
                 </div>
             </div>
         <% end_loop %>
-    </div>
-<% end_if %>
+    <% else %>
+        <div class="col-lg-12">
+            <p><span class="fontsize30 font-weight-semibold">No results found.</span></p>
+        </div>
+    <% end_if %>
+</div>
+

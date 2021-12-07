@@ -8,8 +8,15 @@
                             <a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><img src="{$FeaturedImage.URL}" alt="{$SiteConfig.Title} - {$Name}"></a>
                         </div>
                     <% end_if %>
-                    <div class="listing-content--date">
-                        <span class="halyard-display font-weight-medium fontsize16 text-uppercase letterspacing-1px">$ListingClosestToCurrentDate</span>
+                    <div class="listing-content--location-date align-items-center">
+                        <div class="listing-date bg-saffron-mango">
+                            <span class="halyard-display font-weight-medium fontsize16 text-uppercase letterspacing-1px text-cod-gray">$ListingClosestToCurrentDate</span>
+                        </div>
+                        <% if $Availability %>
+                            <div class="listing-availability ml-auto">
+                                <span class="halyard-display font-weight-medium fontsize16 letterspacing-1px text-cod-gray">$Availability</span>
+                            </div>
+                        <% end_if %>
                     </div>
                     <div class="listing-content--tags">
                         <button class="btn-utils addtofavourites fontsize35<% if $Up.wasAddedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.wasAddedToFavourites($ID)" data-status=""><i class="<% if $Up.wasAddedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>

@@ -25,6 +25,7 @@ export default function () {
     listingPage();
     signUpPage();
     createListingPage();
+    articlePage();
 
     //Actions
     addToFavourites();
@@ -123,30 +124,93 @@ export default function () {
 
       //dropdown
       sectionFilterBar.find('.dropdown').each(function () {
-        $(this).on('show.bs.dropdown', function () {
-          let btnToggle = $(this).find('.dropdown-toggle');
+        $(this).on('show.bs.dropdown', function (e) {
+          let _this = $(this);
+          let btnToggle = _this.find('.dropdown-toggle');
           let dataType = btnToggle.attr('data-type');
-          let dropdownItem = $(this).find('.dropdown-menu .dropdown-item');
+          let dropdownItem = _this.find('.dropdown-menu .dropdown-item');
           dropdownItem.click(function (e) {
-            let selectedDropdownItem = $(this).text();
+            let selectedDropdownItem = $(this);
             dropdownItem.each(function () {
               $(this).removeClass('active');
             });
             $(this).addClass('active');
-            btnToggle.find('span').text(selectedDropdownItem);
+            btnToggle.find('span').text(selectedDropdownItem.text());
+            btnToggle.find('span').attr('data-keyword',selectedDropdownItem.attr('data-keyword'));
           });
           if (dataType === 'Date') {
-            let dataID = btnToggle.attr('data-id');
-            $('#datepicker' + dataID).datepicker({
-              showOtherMonths: true,
-              dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+            let filterDate = $(this).find('.calendar-datepicker--dropdown');
+            filterDate.pignoseCalendar({
+              multiple: true,
+              initialize: false,
+              week: 1,
+              weeks: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+              select: function (dates, context) { //date selection
+                let selectedDateRange, datesArray, formattedDate, rangeOfDatesArray = [];
+                if (dates[1] !== null) {
+                  selectedDateRange = moment.range(moment(dates[0]), moment(dates[1]));
+                  datesArray = Array.from(selectedDateRange.by("days"));
+                  $.map(datesArray, function (date, i)  {
+                    formattedDate = date.format("YYYY-MM-DD");
+                    rangeOfDatesArray.push(formattedDate);
+                  });
+                  //btnToggle.find('span').text(rangeOfDatesArray.toString());
+                  btnToggle.find('span').text(moment(dates[0]).format("DD MMM YYYY") + ' to ' + moment(dates[1]).format("DD MMM YYYY"));
+                  btnToggle.find('span').attr('data-keyword', rangeOfDatesArray.toString());
+                } else {
+                  if (dates[0] === null) {
+                    btnToggle.find('span').text('Any date');
+                  } else {
+                    formattedDate = moment(dates[0]).format("YYYY-MM-DD");
+                    btnToggle.find('span').text(moment(dates[0]).format('DD MMM YYYY'));
+                    btnToggle.find('span').attr('data-keyword', formattedDate);
+                  }
+                }
+              }
             });
-            $('.ui-corner-all').click(function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            });
+            // let dataID = btnToggle.attr('data-id');
+            // $('#datepicker' + dataID).datepicker({
+            //   showOtherMonths: true,
+            //   dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+            // });
+            // $('.ui-corner-all').click(function (e) {
+            //   e.preventDefault();
+            //   e.stopPropagation();
+            // });
           }
         });
+      });
+
+      let action = $('.filter-action .action');
+      action.click(function () {
+        let url = $(this).attr('data-url');
+        let params = "";
+        let filters = $(this).parent().parent('.filters').find('.filter-item');
+        filters.each(function () {
+          let date = $(this).find('.filterDate .dropdown-toggle span').attr('data-keyword');
+          let dateRange = $(this).find('.filterDate .dropdown-toggle span').text();
+          let location = $(this).find('.filterLocation .dropdown-toggle span').attr('data-keyword');
+          let category = $(this).find('.filterCategory .dropdown-toggle span').attr('data-keyword');
+          let keywords = $(this).find('.filterKeywords input').val();
+            if (date) {
+              params += "?date=" + date + "&daterange=" +dateRange;
+            }
+            if (location) {
+              params += "&location=" + location;
+            }
+            if (category) {
+              params += "&category="+category;
+            }
+            if (keywords) {
+              params +="&keywords="+keywords;
+            }
+            if (keywords === "") {
+              params +="&keywords=";
+            }
+        });
+        if (params) {
+          window.location = url+params+'#sortable-listings';
+        }
       });
     }
   }
@@ -173,6 +237,37 @@ export default function () {
     if (listingPage.length > 0) {
       let listingPageGallery = listingPage.find('.owl-carousel');
       listingPageGallery.owlCarousel({
+        items: 2,
+        loop: true,
+        margin: 26,
+        nav: true,
+        dots: true,
+        navText: ['<span class="nav-left"><img src="_resources/themes/starter/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/images/next-arrow.svg"></span>'],
+        responsiveClass: true,
+        responsive: {
+          0: {
+            items: 1,
+            nav: true
+          },
+          900: {
+            items: 2,
+            nav: true,
+          },
+          1921: {
+            items: 3,
+            nav: true,
+          }
+        }
+      });
+    }
+  }
+
+  function articlePage()
+  {
+    let articleGallery = $('.article-gallery');
+    if (articleGallery.length > 0) {
+      let gallery = articleGallery.find('.owl-carousel');
+      gallery.owlCarousel({
         items: 2,
         loop: true,
         margin: 26,

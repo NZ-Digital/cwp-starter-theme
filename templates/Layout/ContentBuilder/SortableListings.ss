@@ -1,4 +1,4 @@
-<div class="sortableListings-container">
+<div class="sortableListings-container" id="sortable-listings">
     <div class="sortable-listings">
         <div class="sortable-listings--sorter">
             <div class="dropdown">
@@ -15,8 +15,9 @@
             </div>
         </div>
         <div class="loader">Loading...</div>
+
         <div class="sortable-listings--item">
-            <% include Includes/User/FilteredListings Listings=$FilteredListings %>
+            <% include Includes/User/FilteredListings Listings=$FilteredListings, GroupID=$ListingGroupID %>
         </div>
     </div>
 </div>

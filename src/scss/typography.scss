@@ -359,28 +359,76 @@ pre {
   font-size: 20px;
 }
 .fontsize25 {
-  font-size: 25px;
+  @media only screen and (min-width: 1590px) {
+    font-size: 25px;
+  }
+  @media only screen and (max-width: 1589px) {
+    font-size: 18px;
+  }
 }
 .fontsize27 {
-  font-size: 25px;
+  @media only screen and (min-width: 1590px) {
+    font-size: 27px;
+  }
+  @media only screen and (max-width: 1589px) {
+    font-size: 19px;
+  }
 }
 .fontsize30 {
-  font-size: 30px;
+  @media only screen and (min-width: 1590px) {
+    font-size: 30px;
+  }
+  @media only screen and (max-width: 1589px) {
+    font-size: 20px;
+  }
 }
 .fontsize35 {
-  font-size: 35px;
+  @media only screen and (min-width: 1590px) {
+    font-size: 35px;
+  }
+  @media only screen and (max-width: 1589px) {
+    font-size: 25px;
+  }
+}
+.fontsize40 {
+  @media only screen and (min-width: 1590px) {
+    font-size: 40px;
+  }
+  @media only screen and (max-width: 1589px) {
+    font-size: 25px;
+  }
 }
 .fontsize45 {
-  font-size: 45px;
+  @media only screen and (min-width: 1590px) {
+    font-size: 45px;
+  }
+  @media only screen and (max-width: 1589px) {
+    font-size: 30px;
+  }
 }
 .fontsize50 {
-  font-size: 50px;
+  @media only screen and (min-width: 1590px) {
+    font-size: 50px;
+  }
+  @media only screen and (max-width: 1589px) {
+    font-size: 30px;
+  }
 }
 .fontsize60 {
-  font-size: 60px;
+  @media only screen and (min-width: 1590px) {
+    font-size: 60px;
+  }
+  @media only screen and (max-width: 1589px) {
+    font-size: 35px;
+  }
 }
 .fontsize80 {
-  font-size: 80px;
+  @media only screen and (min-width: 1590px) {
+    font-size: 80px;
+  }
+  @media only screen and (max-width: 1589px) {
+    font-size: 40px;
+  }
 }
 //Font weight
 .font-weight-book {
@@ -590,10 +638,10 @@ pre {
 .theme-button-gray-small {
   position: relative;
   display: inline-block;
-  min-width: 212px;
+  min-width: 226px;
   border-radius: 50px;
   border: 0;
-  padding: 9px 30px;
+  padding: 12px 30px;
   transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 .theme-button-gray-small-arrow {
@@ -612,6 +660,31 @@ pre {
     transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
   }
   &:hover {
+    &:after {
+      right: 15px;
+    }
+  }
+}
+
+.theme-button-white-arrow-small {
+  position: relative;
+  border-radius: 50px;
+  border: 0;
+  padding: 8px 62px 8px 30px;
+  background-color: #fff;
+  transition: all 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  &:after {
+    position: absolute;
+    content: url("../images/btn-arrow.svg");
+    height: 17px;
+    right: 20px;
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
+    transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
+    line-height: 0;
+  }
+  &:hover {
+    background-color: $carra;
     &:after {
       right: 15px;
     }

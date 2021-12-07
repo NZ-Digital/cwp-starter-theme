@@ -50,7 +50,19 @@
                     </div>
                 </div>
                 <div class="col-lg-8 pl-lg-10 pb-8">
-                    <div class="news-content pb-5">$News.Content</div>
+                    <div class="news-content pb-7">$News.Content.RAW</div>
+                    <% if $News.GalleryImages %>
+                        <div class="article-gallery pb-5">
+                            <div class="owl-carousel">
+                                <% loop $News.GalleryImages %>
+                                    <div class="gallery-image">
+                                        <img src="$URL" alt="Listing gallery image">
+                                    </div>
+                                <% end_loop %>
+                            </div>
+                        </div>
+                    <% end_if %>
+
                     <hr>
                     <div class="news-footer pt-5 row">
                         <div class="col-lg-auto">

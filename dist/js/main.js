@@ -35384,7 +35384,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
     listingPage();
     signUpPage();
-    createListingPage(); //Actions
+    createListingPage();
+    articlePage(); //Actions
 
     addToFavourites();
     closeModal(); //testAjax();
@@ -35477,31 +35478,107 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       }); //dropdown
 
       sectionFilterBar.find('.dropdown').each(function () {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).on('show.bs.dropdown', function () {
-          var btnToggle = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown-toggle');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).on('show.bs.dropdown', function (e) {
+          var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+          var btnToggle = _this.find('.dropdown-toggle');
+
           var dataType = btnToggle.attr('data-type');
-          var dropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown-menu .dropdown-item');
+
+          var dropdownItem = _this.find('.dropdown-menu .dropdown-item');
+
           dropdownItem.click(function (e) {
-            var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text();
+            var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
             dropdownItem.each(function () {
               jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
             });
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
-            btnToggle.find('span').text(selectedDropdownItem);
+            btnToggle.find('span').text(selectedDropdownItem.text());
+            btnToggle.find('span').attr('data-keyword', selectedDropdownItem.attr('data-keyword'));
           });
 
           if (dataType === 'Date') {
-            var dataID = btnToggle.attr('data-id');
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#datepicker' + dataID).datepicker({
-              showOtherMonths: true,
-              dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
-            });
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.ui-corner-all').click(function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            });
+            var filterDate = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.calendar-datepicker--dropdown');
+            filterDate.pignoseCalendar({
+              multiple: true,
+              initialize: false,
+              week: 1,
+              weeks: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+              select: function select(dates, context) {
+                //date selection
+                var selectedDateRange,
+                    datesArray,
+                    formattedDate,
+                    rangeOfDatesArray = [];
+
+                if (dates[1] !== null) {
+                  selectedDateRange = moment.range(moment(dates[0]), moment(dates[1]));
+                  datesArray = Array.from(selectedDateRange.by("days"));
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default().map(datesArray, function (date, i) {
+                    formattedDate = date.format("YYYY-MM-DD");
+                    rangeOfDatesArray.push(formattedDate);
+                  }); //btnToggle.find('span').text(rangeOfDatesArray.toString());
+
+                  btnToggle.find('span').text(moment(dates[0]).format("DD MMM YYYY") + ' to ' + moment(dates[1]).format("DD MMM YYYY"));
+                  btnToggle.find('span').attr('data-keyword', rangeOfDatesArray.toString());
+                } else {
+                  if (dates[0] === null) {
+                    btnToggle.find('span').text('Any date');
+                  } else {
+                    formattedDate = moment(dates[0]).format("YYYY-MM-DD");
+                    btnToggle.find('span').text(moment(dates[0]).format('DD MMM YYYY'));
+                    btnToggle.find('span').attr('data-keyword', formattedDate);
+                  }
+                }
+              }
+            }); // let dataID = btnToggle.attr('data-id');
+            // $('#datepicker' + dataID).datepicker({
+            //   showOtherMonths: true,
+            //   dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+            // });
+            // $('.ui-corner-all').click(function (e) {
+            //   e.preventDefault();
+            //   e.stopPropagation();
+            // });
           }
         });
+      });
+      var action = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.filter-action .action');
+      action.click(function () {
+        var url = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-url');
+        var params = "";
+        var filters = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().parent('.filters').find('.filter-item');
+        filters.each(function () {
+          var date = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.filterDate .dropdown-toggle span').attr('data-keyword');
+          var dateRange = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.filterDate .dropdown-toggle span').text();
+          var location = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.filterLocation .dropdown-toggle span').attr('data-keyword');
+          var category = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.filterCategory .dropdown-toggle span').attr('data-keyword');
+          var keywords = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.filterKeywords input').val();
+
+          if (date) {
+            params += "?date=" + date + "&daterange=" + dateRange;
+          }
+
+          if (location) {
+            params += "&location=" + location;
+          }
+
+          if (category) {
+            params += "&category=" + category;
+          }
+
+          if (keywords) {
+            params += "&keywords=" + keywords;
+          }
+
+          if (keywords === "") {
+            params += "&keywords=";
+          }
+        });
+
+        if (params) {
+          window.location = url + params + '#sortable-listings';
+        }
       });
     }
   }
@@ -35530,6 +35607,37 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     if (listingPage.length > 0) {
       var listingPageGallery = listingPage.find('.owl-carousel');
       listingPageGallery.owlCarousel({
+        items: 2,
+        loop: true,
+        margin: 26,
+        nav: true,
+        dots: true,
+        navText: ['<span class="nav-left"><img src="_resources/themes/starter/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/images/next-arrow.svg"></span>'],
+        responsiveClass: true,
+        responsive: {
+          0: {
+            items: 1,
+            nav: true
+          },
+          900: {
+            items: 2,
+            nav: true
+          },
+          1921: {
+            items: 3,
+            nav: true
+          }
+        }
+      });
+    }
+  }
+
+  function articlePage() {
+    var articleGallery = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.article-gallery');
+
+    if (articleGallery.length > 0) {
+      var gallery = articleGallery.find('.owl-carousel');
+      gallery.owlCarousel({
         items: 2,
         loop: true,
         margin: 26,
