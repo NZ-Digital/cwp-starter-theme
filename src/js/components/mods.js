@@ -29,6 +29,8 @@ export default function () {
 
     //Actions
     addToFavourites();
+    showTags();
+    showMoreNews();
 
     closeModal();
     //testAjax();
@@ -63,6 +65,7 @@ export default function () {
       } else {
         searchForm.addClass('active');
         searchForm.fadeIn();
+        searchForm.find('#SearchForm_SearchForm_Search').focus();
       }
     });
 
@@ -100,11 +103,13 @@ export default function () {
           let id = $(this).attr('data-id');
           let icon = $(this).find('i');
           let tabContent = $('#tabcontent-' + id);
+          let tabContentMob = $('#tabcontent-mob-' + id);
           if ($(this).hasClass('active')) {
             $(this).removeClass('active');
             icon.attr('class', 'fal fa-plus');
             //hide tab content
             tabContent.removeClass('active');
+            tabContentMob.removeClass('active');
           } else {
             //reset tab siblings
             tab.each(function () {
@@ -113,11 +118,13 @@ export default function () {
               $(this).find('i').attr('class', 'fal fa-plus');
               // hide siblings tab content
               $('#tabcontent-' + tabID).removeClass('active');
+              $('#tabcontent-mob-' + tabID).removeClass('active');
             });
             $(this).addClass('active');
             icon.attr('class', 'fal fa-minus');
             //show tab content
             tabContent.addClass('active');
+            tabContentMob.addClass('active');
           }
         });
       });
@@ -223,11 +230,28 @@ export default function () {
         items: 1,
         loop: true,
         center: true,
-        stagePadding: 330,
-        margin: 100,
         nav: true,
         dots: true,
-        navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/arrow-left.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/arrow-right.svg"></span>']
+        navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/arrow-left.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/arrow-right.svg"></span>'],
+        responsive:{
+          0:{
+            nav:true,
+            stagePadding: 0,
+            margin: 10,
+          },
+          669: {
+            stagePadding: 20,
+            margin: 20,
+          },
+          992: {
+            stagePadding: 40,
+            margin: 40,
+          },
+          1590: {
+            stagePadding: 330,
+            margin: 100,
+          }
+        }
       });
     }
   }
@@ -1160,6 +1184,34 @@ export default function () {
         });
       }
     });
+  }
+
+  function showTags()
+  {
+    $('.see-more').click(function () {
+      if ($(this).hasClass('toggled')) {
+        $(this).removeClass('toggled');
+        $(this).parent().siblings('.more-tags').removeClass('show');
+      } else {
+        $(this).addClass('toggled');
+        $(this).parent().siblings('.more-tags').addClass('show');
+      }
+    });
+  }
+
+  function showMoreNews()
+  {
+    let sectionLatestNews  = $('.sectionLatestNews');
+    if (sectionLatestNews.length > 0) {
+      $(".news-item").slice(0, 4).show();
+      $(".loadmore-news").on('click', function (e) {
+        e.preventDefault();
+        $(".news-item:hidden").slice(0, 4).slideDown();
+        if ($(".news-item:hidden").length === 0) {
+          $(".loadmore-news").hide;
+        }
+      });
+    }
   }
 
   function resetFavCounter(favCounter)

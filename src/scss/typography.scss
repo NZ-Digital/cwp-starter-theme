@@ -317,8 +317,17 @@ pre {
 .yellow-line,
 .white-line {
   position: relative;
-  padding-left: 100px;
   z-index: 1;
+  @media only screen and (min-width: 1590px) {
+    padding-left: 100px;
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 669px) {
+    padding-left: 40px;
+  }
+  @media only screen and (max-width: 668px) {
+    padding-left: 25px;
+  }
+
   &:after {
     position: absolute;
     content: "";
@@ -327,16 +336,33 @@ pre {
     top: 55%;
     left: 0;
     z-index: -1;
+    @media only screen and (min-width: 669px) {
+      width: 624px;
+    }
+    @media only screen and (max-width: 668px) {
+      width: 370px;
+    }
   }
 }
 .yellow-line {
   &:after {
-    border-top: 15px solid $marigold-yellow;
+
+    @media only screen and (min-width: 669px) {
+      border-top: 15px solid $marigold-yellow;
+    }
+    @media only screen and (max-width: 668px) {
+      border-top: 10px solid $marigold-yellow;
+    }
   }
 }
 .white-line {
   &:after {
-    border-top: 15px solid #fff;
+    @media only screen and (min-width: 669px) {
+      border-top: 15px solid #fff;
+    }
+    @media only screen and (max-width: 668px) {
+      border-top: 10px solid #fff;
+    }
   }
 }
 //Font Sizes
@@ -350,7 +376,12 @@ pre {
   font-size: 16px;
 }
 .fontsize18 {
-  font-size: 18px;
+  @media only screen and (min-width: 669px) {
+    font-size: 18px;
+  }
+  @media only screen and (max-width: 668px) {
+    font-size: 13px;
+  }
 }
 .fontsize19 {
   font-size: 19px;
@@ -457,22 +488,70 @@ pre {
 
 //Line Height
 .lineheight-30px {
-  line-height: 30px !important;
+  @media only screen and (min-width: 1590px) {
+    line-height: 30px !important;
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 669px){
+    line-height: 20px !important;
+  }
+  @media only screen and (max-width: 668px) {
+    line-height: 2rem !important;
+  }
 }
 .lineheight-40px {
-  line-height: 40px !important;
+  @media only screen and (min-width: 1590px) {
+    line-height: 40px !important
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 669px){
+    line-height: 30px !important;
+  }
+  @media only screen and (max-width: 668px) {
+    line-height: 2rem !important;
+  }
 }
 .lineheight-50px {
-  line-height: 50px !important;
+  @media only screen and (min-width: 1590px) {
+    line-height: 50px !important
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 669px){
+    line-height: 35px !important;
+  }
+  @media only screen and (max-width: 668px) {
+    line-height: 2rem !important;
+  }
 }
 .lineheight-60px {
-  line-height: 60px !important;
+  @media only screen and (min-width: 1590px) {
+    line-height: 60px !important
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 669px){
+    line-height: 40px !important;
+  }
+  @media only screen and (max-width: 668px) {
+    line-height: 2rem !important;
+  }
 }
 .lineheight-70px {
-  line-height: 70px !important;
+  @media only screen and (min-width: 1590px) {
+    line-height: 70px !important
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 669px){
+    line-height: 45px !important;
+  }
+  @media only screen and (max-width: 668px) {
+    line-height: 2rem !important;
+  }
 }
 .lineheight-75px {
-  line-height: 75px !important;
+  @media only screen and (min-width: 1590px) {
+    line-height: 75px !important
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 669px){
+    line-height: 50px !important;
+  }
+  @media only screen and (max-width: 668px) {
+    line-height: 2rem !important;
+  }
 }
 .line-height-100 {
   line-height: 100% !important;
@@ -532,6 +611,9 @@ pre {
   border-radius: 50px !important;
   padding: 15px 58px;
   transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1), border 200ms cubic-bezier(0.76, 0, 0.24, 1) ;
+  @media only screen and (max-width: 991px) {
+    padding: 10px 28px;
+  }
 }
 
 .theme-button {

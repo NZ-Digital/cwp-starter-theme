@@ -13,7 +13,7 @@
                 <div class="accordion" id="accordion">
                     <% loop $VisibleAccordionItems %>
                         <% if $HeaderText %>
-                            <p class="<% if not $First %>mt-8<% end_if %>"><span class="text-uppercase text-saffron-mango fontsize25 font-weight-medium letterspacing-7px">$HeaderText</span></p>
+                            <p class="<% if not $First %>mt-8<% end_if %>"><span class="text-uppercase fontsize25 font-weight-medium letterspacing-7px" <% if $HeaderColor %>style="color: #{$HeaderColor};"<% end_if %>>$HeaderText</span></p>
                         <% end_if %>
                         <div class="card">
                             <div class="card-header" id="accordion-{$ID}">

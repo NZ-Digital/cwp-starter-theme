@@ -35388,6 +35388,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     articlePage(); //Actions
 
     addToFavourites();
+    showTags();
+    showMoreNews();
     closeModal(); //testAjax();
   }
 
@@ -35418,6 +35420,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       } else {
         searchForm.addClass('active');
         searchForm.fadeIn();
+        searchForm.find('#SearchForm_SearchForm_Search').focus();
       }
     }); //Scroll
 
@@ -35454,12 +35457,14 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           var id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id');
           var icon = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i');
           var tabContent = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tabcontent-' + id);
+          var tabContentMob = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tabcontent-mob-' + id);
 
           if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('active')) {
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('active');
             icon.attr('class', 'fal fa-plus'); //hide tab content
 
             tabContent.removeClass('active');
+            tabContentMob.removeClass('active');
           } else {
             //reset tab siblings
             tab.each(function () {
@@ -35468,11 +35473,13 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
               jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i').attr('class', 'fal fa-plus'); // hide siblings tab content
 
               jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tabcontent-' + tabID).removeClass('active');
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tabcontent-mob-' + tabID).removeClass('active');
             });
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('active');
             icon.attr('class', 'fal fa-minus'); //show tab content
 
             tabContent.addClass('active');
+            tabContentMob.addClass('active');
           }
         });
       }); //dropdown
@@ -35592,11 +35599,28 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         items: 1,
         loop: true,
         center: true,
-        stagePadding: 330,
-        margin: 100,
         nav: true,
         dots: true,
-        navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/arrow-left.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/arrow-right.svg"></span>']
+        navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/arrow-left.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/arrow-right.svg"></span>'],
+        responsive: {
+          0: {
+            nav: true,
+            stagePadding: 0,
+            margin: 10
+          },
+          669: {
+            stagePadding: 20,
+            margin: 20
+          },
+          992: {
+            stagePadding: 40,
+            margin: 40
+          },
+          1590: {
+            stagePadding: 330,
+            margin: 100
+          }
+        }
       });
     }
   }
@@ -36523,6 +36547,34 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         });
       }
     });
+  }
+
+  function showTags() {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.see-more').click(function () {
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('toggled')) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('toggled');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().siblings('.more-tags').removeClass('show');
+      } else {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('toggled');
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().siblings('.more-tags').addClass('show');
+      }
+    });
+  }
+
+  function showMoreNews() {
+    var sectionLatestNews = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sectionLatestNews');
+
+    if (sectionLatestNews.length > 0) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(".news-item").slice(0, 4).show();
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(".loadmore-news").on('click', function (e) {
+        e.preventDefault();
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(".news-item:hidden").slice(0, 4).slideDown();
+
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(".news-item:hidden").length === 0) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(".loadmore-news").hide;
+        }
+      });
+    }
   }
 
   function resetFavCounter(favCounter) {

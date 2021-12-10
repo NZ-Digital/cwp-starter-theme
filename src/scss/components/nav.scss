@@ -217,6 +217,7 @@
       }
       .nav-favourites {
         position: relative;
+        font-size: 25px;
         .fav-counter {
           display: none;
           position: absolute;
@@ -248,8 +249,14 @@
     display: flex;
     position: absolute;
     right: 0;
-    top: -90px;
+
     list-style: none;
+    @media only screen and (min-width: 1590px) {
+      top: -90px;
+    }
+    @media only screen and (max-width: 1589px) {
+      top: -60px;
+    }
     li {
       .nav-link {
         font-size: 18px;

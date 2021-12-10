@@ -100,6 +100,11 @@
     }
   }
 }
+.searchfield {
+  &:focus {
+    box-shadow: none;
+  }
+}
 .message {
   &.required {
     color: $danger
@@ -113,6 +118,29 @@
     margin-bottom: 25px;
   }
 }
+.mark,
+mark {
+  color: $cod-gray !important;
+  background-color: transparent;
+  border-bottom: 2px solid $cod-gray;
+  padding: 0;
+}
+.result  {
+  &.listing__item {
+    a {
+      text-decoration: none;
+    }
+  }
+}
+.page-summary {
+  padding: 10px 15px;
+}
+.results  {
+  &.listing {
+    padding: 10px 15px;
+  }
+}
+
 .currency-code {
   position: absolute;
   font-size: 20px;
@@ -461,7 +489,7 @@ input[type='submit'] {
   border: 1px solid $carra;
   border-radius: 50px;
   background-color:white;
-  background: url('../images/arrow-down.png') 96% center no-repeat !important;
+  background: url('../images/arrow-down-gray.png') 96% center no-repeat !important;
 }
 .styledSelect:after {
   content:"";

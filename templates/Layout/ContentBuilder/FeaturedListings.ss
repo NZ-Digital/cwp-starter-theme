@@ -21,9 +21,29 @@
                     <div class="listing-content--tags">
                         <button class="btn-utils addtofavourites fontsize35<% if $Up.wasAddedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.wasAddedToFavourites($ID)" data-status=""><i class="<% if $Up.wasAddedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                         <% if $Tags %>
-                            <% loop $Tags %>
-                                <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                            <% end_loop %>
+                            <% if $Tags.Count > 4 %>
+                                <div class="tags">
+                                    <div class="d-flex">
+                                        <div class="short-tags w-110">
+                                            <% loop $Tags.Limit(4) %>
+                                                <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
+                                            <% end_loop %>
+                                        </div>
+                                        <button class="see-more"><span class="halyard-display font-weight-medium fontsize16 d-block"><i class="fas fa-angle-down"></i></span></button>
+                                    </div>
+                                    <div class="more-tags">
+                                        <% loop $Tags %>
+                                            <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
+                                        <% end_loop %>
+                                    </div>
+                                </div>
+                            <% else %>
+                                <div class="tags">
+                                    <% loop $Tags %>
+                                        <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
+                                    <% end_loop %>
+                                </div>
+                            <% end_if %>
                         <% end_if %>
                     </div>
                     <div class="listing-content--details">

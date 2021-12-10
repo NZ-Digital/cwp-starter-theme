@@ -50,9 +50,10 @@
                     </div>
                 </div>
                 <div class="col-lg-8 pl-lg-10 pb-8">
-                    <div class="news-content pb-7">$News.Content.RAW</div>
+                    <div class="news-content pb-7 font-weight-book fontsize19">$News.Content.RAW</div>
                     <% if $News.GalleryImages %>
                         <div class="article-gallery pb-5">
+                            <% if $News.GalleryImages.Count > 2 %>
                             <div class="owl-carousel">
                                 <% loop $News.GalleryImages %>
                                     <div class="gallery-image">
@@ -60,20 +61,36 @@
                                     </div>
                                 <% end_loop %>
                             </div>
+                            <% else %>
+                                <div class="row article-gallery">
+                                    <% loop $News.GalleryImages %>
+                                        <div class="col-lg-6">
+                                            <div class="gallery-image">
+                                                <img src="$URL" alt="Listing gallery image">
+                                            </div>
+                                        </div>
+                                    <% end_loop %>
+                                </div>
+                            <% end_if %>
                         </div>
                     <% end_if %>
 
                     <hr>
-                    <div class="news-footer pt-5 row">
+                    <div class="news-footer pt-5 row align-items-end">
                         <div class="col-lg-auto">
                             <div class="d-flex align-items-center">
                                 <span class="text-uppercase fontsize25 font-weight-medium letterspacing-7px mr-4">Tags</span><% loop $News.NewsCategories %><% if $Title != "All" %><a href="news/?tag={$Title}#news-lists"><span class="text-uppercase text-underline font-weight-semibold text-footer-gray">{$Title} +</span></a><% end_if %><% end_loop %>
                             </div>
                         </div>
-                        <div class="col-lg-auto">
-
+                        <div class="col-lg-auto ml-auto">
+                            <p class="pb-3 text-lg-right"><span class="text-footer-gray">Share this story</span></p>
+                            <div class="share-socials">
+                                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={$AbsoluteLink}"><i class="fab fa-facebook-f"></i></a>
+                                <a target="_blank" href="https://twitter.com/share?url={$AbsoluteLink}"><i class="fab fa-twitter"></i></a>
+                                <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={$AbsoluteLink}"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
                         </div>
-                        <div class="col-lg-12 pt-7">
+                        <div class="col-lg-12 pt-6">
                             <p><a href="news"><span class="theme-button">Back to all news</span></a></p>
                         </div>
                     </div>

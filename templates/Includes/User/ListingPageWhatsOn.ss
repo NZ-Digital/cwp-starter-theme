@@ -20,7 +20,7 @@
                     <button class="btn-utils addtofavourites fontsize25 ml-3" data-id="$Listing.ID"><i class="far fa-heart"></i></button>
                     <button class="btn-utils sharelisting fontsize25 ml-3 text-scorpion"><i class="fas fa-share-alt"></i></button>
                     <button class="btn-utils downloadlisting fontsize25 ml-3 text-scorpion"><i class="fas fa-arrow-alt-to-bottom"></i></button>
-                    <button class="btn-utils getdirection fontsize25 ml-3 text-scorpion"><i class="fas fa-map"></i> </button>
+                    <a target="_blank" href="https://www.google.com/maps/place/{$Listing.Address} {$Listing.City}" class="btn-utils getdirection fontsize25 ml-3 text-scorpion"> <i class="fas fa-map"></i> </a>
                     <p class="ml-3"><a href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"><span class="theme-button-gray-small font-weight-medium fontsize18 text-center">Buy tickets</span></a></p>
                 </div>
             </div>
@@ -39,15 +39,27 @@
                     <span class="fontsize19 font-weight-book">$Listing.Content</span>
                 </div>
                 <% if $Listing.GalleryImages %>
-                    <div class="listing-content--gallery mt-lg-8">
-                        <div class="owl-carousel">
+                    <% if $Listing.GalleryImages.Count > 2 %>
+                        <div class="listing-content--gallery mt-lg-8">
+                            <div class="owl-carousel">
+                                <% loop $Listing.GalleryImages %>
+                                    <div class="gallery-image">
+                                        <img src="$URL" alt="Listing gallery image">
+                                    </div>
+                                <% end_loop %>
+                            </div>
+                        </div>
+                    <% else %>
+                        <div class="row listing-content--gallery ">
                             <% loop $Listing.GalleryImages %>
-                                <div class="gallery-image">
-                                    <img src="$URL" alt="Listing gallery image">
+                                <div class="col-lg-6">
+                                    <div class="gallery-image">
+                                        <img src="$URL" alt="Listing gallery image">
+                                    </div>
                                 </div>
                             <% end_loop %>
                         </div>
-                    </div>
+                    <% end_if %>
                 <% end_if %>
                 <hr class="mt-lg-6 mb-lg-5" style="border-color: #A2A2A2;">
 
@@ -79,7 +91,7 @@
                         <% end_loop %>
                     <% end_if %>
 
-                    <div class="col-lg-12 pt-lg-4 pb-lg-4">
+                    <div class="col-lg-12 pt-lg-5 pb-lg-5">
                         <hr style="border-color: #A2A2A2;">
                     </div>
                     <div class="col-lg-2 pb-lg-2 pr-0">
@@ -89,10 +101,11 @@
                         <p><span class="fontsize20 font-weight-medium text-uppercase">Location</span></p>
                     </div>
                     <div class="col-lg-12 offset-2 pb-lg-1">
-                        <p><span class="fontsize19 font-weight-book">$Listing.BuildingName <br> $Listing.Address, $Listing.City, <br>$Listing.Town $Listing.Postcode</span></p>
+                        <p><span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.BuildingName %>$Listing.BuildingName<br><% end_if %><% if $Listing.Address %>$Listing.Address, <% end_if %><% if $Listing.City %>$Listing.City, <br><% end_if %><% if $Listing.Town %>$Listing.Town<% end_if %><% if $Listing.Postcode %>$Listing.Postcode<% end_if %></span></p>
+                        <p class="pt-lg-5"><a target="_blank" href="https://www.google.com/maps/place/{$Listing.Address} {$Listing.City}"> <span class="fontsize16 font-weight-medium text-underline">Open in maps</span></a></p>
                     </div>
 
-                    <div class="col-lg-12 pt-lg-4 pb-lg-4">
+                    <div class="col-lg-12 pt-lg-5 pb-lg-5">
                         <hr style="border-color: #A2A2A2;">
                     </div>
                     <div class="col-lg-2 pb-lg-2 pr-0">
@@ -102,10 +115,11 @@
                         <p><span class="fontsize20 font-weight-medium text-uppercase">Price & Bookings</span></p>
                     </div>
                     <div class="col-lg-12 offset-2 pb-lg-1">
-                        <p><span class="fontsize19 font-weight-book">$Listing.Prices.RAW</span></p>
+                        <p><span class="fontsize19 font-weight-book moderna-sans">$Listing.Prices.RAW</span></p>
+                        <p class="pt-lg-5"><a target="_blank" href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"> <span class="fontsize16 font-weight-medium text-underline">Buy tickets</span></a></p>
                     </div>
 
-                    <div class="col-lg-12 pt-lg-4 pb-lg-4">
+                    <div class="col-lg-12 pt-lg-5 pb-lg-5">
                         <hr style="border-color: #A2A2A2;">
                     </div>
                     <div class="col-lg-2 pb-lg-2 pr-0">
@@ -115,14 +129,14 @@
                         <p><span class="fontsize20 font-weight-medium text-uppercase">Contact</span></p>
                     </div>
                     <div class="col-lg-12 offset-2 pb-lg-1">
-                        <% if $Listing.Phone %><p class="pb-lg-3"><a href="tel:{$Listing.Phone}"><i class="fas fa-phone-alt mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book">$Listing.Phone</span></a></p><% end_if %>
-                        <% if $Listing.Email %><p class="pb-lg-3"><a href="mailto:{$Listing.Email}"><i class="fas fa-envelope mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book">$Listing.Email</span></a></p><% end_if %>
-                        <% if $Listing.Website %><p class="pb-lg-3"><a href="//$Listing.Website" target="_blank" rel="nofollow"><i class="fas fa-globe mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book">$Listing.Website</span></a></p><% end_if %>
-                        <% if $Listing.Facebook %><p class="pb-lg-3"><a href="//$Listing.Facebook" target="_blank" rel="nofollow"><i class="fab fa-facebook-f mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book">$Listing.Facebook</span></a></p><% end_if %>
-                        <% if $Listing.Instagram %><p class="pb-lg-3"><a href="//$Listing.Instagram" target="_blank" rel="nofollow"><i class="fab fa-instagram mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book">$Listing.Instagram</span></a></p><% end_if %>
-                        <% if $Listing.Twitter %><p class="pb-lg-3"><a href="//$Listing.Twitter" target="_blank" rel="nofollow"><i class="fab fa-twitter mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book">$Listing.Twitter</span></a></p><% end_if %>
+                        <% if $Listing.Phone %><p class="pb-lg-3"><a href="tel:{$Listing.Phone}"><i class="fas fa-phone-alt mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Phone</span></a></p><% end_if %>
+                        <% if $Listing.Email %><p class="pb-lg-3"><a href="mailto:{$Listing.Email}"><i class="fas fa-envelope mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Email</span></a></p><% end_if %>
+                        <% if $Listing.Website %><p class="pb-lg-3"><a href="//$Listing.Website" target="_blank" rel="nofollow"><i class="fas fa-globe mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Website</span></a></p><% end_if %>
+                        <% if $Listing.Facebook %><p class="pb-lg-3"><a href="//$Listing.Facebook" target="_blank" rel="nofollow"><i class="fab fa-facebook-f mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Facebook</span></a></p><% end_if %>
+                        <% if $Listing.Instagram %><p class="pb-lg-3"><a href="//$Listing.Instagram" target="_blank" rel="nofollow"><i class="fab fa-instagram mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Instagram</span></a></p><% end_if %>
+                        <% if $Listing.Twitter %><p class="pb-lg-3"><a href="//$Listing.Twitter" target="_blank" rel="nofollow"><i class="fab fa-twitter mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Twitter</span></a></p><% end_if %>
                     </div>
-                    <div class="col-lg-12 pt-lg-4 pb-lg-4">
+                    <div class="col-lg-12 pt-lg-5 pb-lg-5">
                         <hr style="border-color: #A2A2A2;">
                     </div>
                     <% if $Listing.ListingLogo %>

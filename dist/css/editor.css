@@ -10745,8 +10745,25 @@ pre {
 .yellow-line,
 .white-line {
   position: relative;
-  padding-left: 100px;
   z-index: 1;
+}
+@media only screen and (min-width: 1590px) {
+  .yellow-line,
+.white-line {
+    padding-left: 100px;
+  }
+}
+@media only screen and (max-width: 1589px) and (min-width: 669px) {
+  .yellow-line,
+.white-line {
+    padding-left: 40px;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .yellow-line,
+.white-line {
+    padding-left: 25px;
+  }
 }
 .yellow-line:after,
 .white-line:after {
@@ -10759,13 +10776,39 @@ pre {
   left: 0;
   z-index: -1;
 }
-
-.yellow-line:after {
-  border-top: 15px solid #f9d777;
+@media only screen and (min-width: 669px) {
+  .yellow-line:after,
+.white-line:after {
+    width: 624px;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .yellow-line:after,
+.white-line:after {
+    width: 370px;
+  }
 }
 
-.white-line:after {
-  border-top: 15px solid #fff;
+@media only screen and (min-width: 669px) {
+  .yellow-line:after {
+    border-top: 15px solid #f9d777;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .yellow-line:after {
+    border-top: 10px solid #f9d777;
+  }
+}
+
+@media only screen and (min-width: 669px) {
+  .white-line:after {
+    border-top: 15px solid #fff;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .white-line:after {
+    border-top: 10px solid #fff;
+  }
 }
 
 .fontsize12 {
@@ -10780,8 +10823,15 @@ pre {
   font-size: 16px;
 }
 
-.fontsize18 {
-  font-size: 18px;
+@media only screen and (min-width: 669px) {
+  .fontsize18 {
+    font-size: 18px;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .fontsize18 {
+    font-size: 13px;
+  }
 }
 
 .fontsize19 {
@@ -10919,28 +10969,100 @@ pre {
   opacity: 25%;
 }
 
-.lineheight-30px {
-  line-height: 30px !important;
+@media only screen and (min-width: 1590px) {
+  .lineheight-30px {
+    line-height: 30px !important;
+  }
+}
+@media only screen and (max-width: 1589px) and (min-width: 669px) {
+  .lineheight-30px {
+    line-height: 20px !important;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .lineheight-30px {
+    line-height: 2rem !important;
+  }
 }
 
-.lineheight-40px {
-  line-height: 40px !important;
+@media only screen and (min-width: 1590px) {
+  .lineheight-40px {
+    line-height: 40px !important;
+  }
+}
+@media only screen and (max-width: 1589px) and (min-width: 669px) {
+  .lineheight-40px {
+    line-height: 30px !important;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .lineheight-40px {
+    line-height: 2rem !important;
+  }
 }
 
-.lineheight-50px {
-  line-height: 50px !important;
+@media only screen and (min-width: 1590px) {
+  .lineheight-50px {
+    line-height: 50px !important;
+  }
+}
+@media only screen and (max-width: 1589px) and (min-width: 669px) {
+  .lineheight-50px {
+    line-height: 35px !important;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .lineheight-50px {
+    line-height: 2rem !important;
+  }
 }
 
-.lineheight-60px {
-  line-height: 60px !important;
+@media only screen and (min-width: 1590px) {
+  .lineheight-60px {
+    line-height: 60px !important;
+  }
+}
+@media only screen and (max-width: 1589px) and (min-width: 669px) {
+  .lineheight-60px {
+    line-height: 40px !important;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .lineheight-60px {
+    line-height: 2rem !important;
+  }
 }
 
-.lineheight-70px {
-  line-height: 70px !important;
+@media only screen and (min-width: 1590px) {
+  .lineheight-70px {
+    line-height: 70px !important;
+  }
+}
+@media only screen and (max-width: 1589px) and (min-width: 669px) {
+  .lineheight-70px {
+    line-height: 45px !important;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .lineheight-70px {
+    line-height: 2rem !important;
+  }
 }
 
-.lineheight-75px {
-  line-height: 75px !important;
+@media only screen and (min-width: 1590px) {
+  .lineheight-75px {
+    line-height: 75px !important;
+  }
+}
+@media only screen and (max-width: 1589px) and (min-width: 669px) {
+  .lineheight-75px {
+    line-height: 50px !important;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .lineheight-75px {
+    line-height: 2rem !important;
+  }
 }
 
 .line-height-100 {
@@ -11007,6 +11129,21 @@ pre {
   border-radius: 50px !important;
   padding: 15px 58px;
   transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1), border 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+@media only screen and (max-width: 991px) {
+  .theme-button,
+.theme-button-hover-dark,
+.theme-button-dark,
+.theme-button-gray,
+.theme-button-alt,
+.theme-button-long,
+.theme-button-long-yellow,
+.theme-button-long-yellow-arrow,
+.theme-button-long-yellow-arrow-left,
+.button-signup,
+.button-myportal {
+    padding: 10px 28px;
+  }
 }
 
 .theme-button {

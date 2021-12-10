@@ -3,7 +3,9 @@
         <div class="row">
             <div class="col-auto mr-auto">
                 <div class="site-logo">
-                    <img src="$SiteConfig.LogoScrolled.URL" alt="$SiteConfig.Title">
+                    <a href="$BaseHref">
+                        <img src="$SiteConfig.LogoScrolled.URL" alt="$SiteConfig.Title">
+                    </a>
                 </div>
             </div>
             <div class="col-auto">

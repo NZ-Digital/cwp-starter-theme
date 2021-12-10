@@ -27,9 +27,36 @@
                     <div class="listing-content--tags">
                         <button class="btn-utils addtofavourites fontsize35" data-id="$ID"><i class="far fa-heart"></i></button>
                         <% if $Tags %>
-                            <% loop $Tags %>
-                                <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                            <% end_loop %>
+                            <% if $Tags.Count > 2 %>
+                                <div class="tags">
+                                    <div class="d-flex">
+                                        <div class="short-tags w-110">
+                                            <% if $Up.GroupID == "1" %>
+                                                <% loop $Tags.Limit(2) %>
+                                                    <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
+                                                <% end_loop %>
+                                            <% else %>
+                                                <% loop $Tags.Limit(1) %>
+                                                    <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
+                                                <% end_loop %>
+
+                                            <% end_if %>
+                                        </div>
+                                        <button class="see-more"><span class="halyard-display font-weight-medium fontsize16 d-block"><i class="fas fa-angle-down"></i></span></button>
+                                    </div>
+                                    <div class="more-tags">
+                                        <% loop $Tags %>
+                                            <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
+                                        <% end_loop %>
+                                    </div>
+                                </div>
+                            <% else %>
+                                <div class="tags">
+                                    <% loop $Tags %>
+                                        <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
+                                    <% end_loop %>
+                                </div>
+                            <% end_if %>
                         <% end_if %>
                         <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                     </div>
