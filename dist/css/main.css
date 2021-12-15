@@ -16699,6 +16699,9 @@ body > header .open > a:focus {
       flex-wrap: wrap;
 }
 
+.form-group.has-error {
+  margin-bottom: 0.5rem;
+}
 .form-group .col-form-label {
   display: none !important;
 }
@@ -17160,6 +17163,9 @@ input[type=submit].action {
 }
 .dropdown-tags .options li.show {
   display: block;
+}
+.dropdown-tags .options li.show:last-child {
+  border-bottom: 0;
 }
 
 .styledSelect {
@@ -17699,9 +17705,7 @@ input[type=submit].action {
 .page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field {
   position: relative;
 }
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-toggle,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-toggle,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-toggle {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filter-dropdown .dropdown-toggle {
   width: 100%;
   text-align: left;
   border: 0;
@@ -17710,15 +17714,11 @@ input[type=submit].action {
   background-color: white;
 }
 @media only screen and (max-width: 1589px) {
-  .page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-toggle,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-toggle,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-toggle {
+  .page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filter-dropdown .dropdown-toggle {
     border-radius: 50px;
   }
 }
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-toggle span,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-toggle span,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-toggle span {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filter-dropdown .dropdown-toggle span {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -17726,9 +17726,7 @@ input[type=submit].action {
   display: inline-block;
   vertical-align: middle;
 }
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filter-dropdown .dropdown-menu {
   width: 100%;
   margin-top: -4px;
   padding: 25px 26px;
@@ -17738,35 +17736,23 @@ input[type=submit].action {
   background-color: #f0efed;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.16);
 }
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu .dropdown-item,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu .dropdown-item,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu .dropdown-item {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filter-dropdown .dropdown-menu .dropdown-item {
   color: #696163;
   padding: 0;
   transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1);
 }
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu .dropdown-item.active, .page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu .dropdown-item:hover,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu .dropdown-item.active,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu .dropdown-item:hover,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu .dropdown-item.active,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu .dropdown-item:hover {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filter-dropdown .dropdown-menu .dropdown-item.active, .page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filter-dropdown .dropdown-menu .dropdown-item:hover {
   color: #141414;
   background-color: transparent;
 }
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu .dropdown-item:not(:last-child),
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu .dropdown-item:not(:last-child),
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu .dropdown-item:not(:last-child) {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filter-dropdown .dropdown-menu .dropdown-item:not(:last-child) {
   border-bottom: 1px solid #a2a2a2;
   padding: 7px 0;
 }
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate .dropdown-menu .dropdown-item:last-child,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation .dropdown-menu .dropdown-item:last-child,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory .dropdown-menu .dropdown-item:last-child {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filter-dropdown .dropdown-menu .dropdown-item:last-child {
   padding-top: 7px;
 }
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterDate.show i,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterLocation.show i,
-.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filterCategory.show i {
+.page-section.sectionFilterBar .filterBar-container .filters .filter-item .filter-field .filter-dropdown.show i {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
@@ -18917,9 +18903,14 @@ textarea::placeholder {
 }
 
 .see-more {
+  padding: 0;
   border: 0;
   background-color: transparent;
   color: #3e519f;
+}
+.see-more.toggled i {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 
 .short-tags {
@@ -18941,12 +18932,45 @@ textarea::placeholder {
   left: -10px;
   background-color: #f0efed;
   border-radius: 10px;
-  width: 370px;
+  width: 270px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   z-index: 1;
 }
 .more-tags.show {
   display: block;
+}
+
+.share-socials--dropdown {
+  position: absolute;
+  left: 200px;
+  display: none;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  padding: 43px 36px 20px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  background-color: #fff;
+  z-index: 3;
+}
+.share-socials--dropdown a i {
+  background-color: #a2a2a2;
+  color: #fff;
+  border-radius: 50px;
+  padding: 7px 0 2px;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.share-socials--dropdown a:hover i {
+  background-color: #141414;
+}
+.share-socials--dropdown.active {
+  display: block;
+}
+
+.overflow-wrap {
+  overflow-wrap: break-word;
 }
 
 .profile-img img {

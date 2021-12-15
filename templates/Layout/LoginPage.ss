@@ -6,8 +6,6 @@
             </div>
             <div class="col-lg-7">
                 <div class="form-container pl-lg-8">
-                    <p><span class="fontsize60 font-weight-light line-height-100">Kia ora, welcome to<br> Te Wāhi Toi</span></p>
-                    <p class="pt-lg-5 pb-lg-4"><span class="fontsize35 font-weight-light">You are just one step away to your portal.</span></p>
                     $LoginForm
                 </div>
             </div>

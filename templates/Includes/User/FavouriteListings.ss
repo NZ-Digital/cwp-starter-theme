@@ -14,7 +14,7 @@
 <%--        </div>--%>
         <% if $Listings %>
             <% loop $Listings %>
-                <div class="col-lg-4">
+                <div class="col-xl-4">
                     <div class="listing-content">
                         <% if $Listing.FeaturedImage %>
                             <div class="listing-content--img">
@@ -36,9 +36,7 @@
                         <div class="listing-content--tags">
                             <button class="btn-utils addtofavourites fontsize35 active" data-id="{$Listing.ID}"><i class="fas fa-heart"></i></button>
                             <% if $Listing.Tags %>
-                                <% loop $Listing.Tags %>
-                                    <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                                <% end_loop %>
+                                <% include ListingTags Tags=$Listing.Tags %>
                             <% end_if %>
                             <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                         </div>
@@ -46,14 +44,14 @@
                 </div>
             <% end_loop %>
         <% else %>
-            <div class="col-lg-12 pt-lg-8 pb-lg-8">
+            <div class="col-xl-12 pt-lg-8 pb-lg-8">
                 <p class="text-center"><span class="fontsize50 font-weight-book lineheight-60px letterspacing-1px">Click here to start adding your favourite<br> {$GroupName} Listings</span></p>
                 <p class="text-center pt-5"><span class="fontsize19 font-weight-book">Click the heart icon to save any listing to your favourites</span></p>
                 <p class="text-center pt-5"><a href="$GroupPageLink"><span class="fontsize18 font-weight-medium theme-button-alt">$GroupName</span></a></p>
             </div>
         <% end_if %>
         <% if not $Last %>
-            <div class="col-lg-12 pb-lg-7"><hr></div>
+            <div class="col-xl-12 pb-lg-7"><hr></div>
         <% end_if %>
     </div>
 <% end_loop %>

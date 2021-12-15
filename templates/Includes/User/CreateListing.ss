@@ -43,14 +43,13 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    $GroupNameFromParam
-                                    <% if $GroupNameFromParam == "1" %>
+                                    <% if $GroupIDFromParam == "1" %>
                                         $SiteConfig.WhatsOnListingActivateMessage
                                     <% end_if %>
-                                    <% if $GroupNameFromParam == "2" %>
+                                    <% if $GroupIDFromParam == "2" %>
                                         $SiteConfig.CreativeListingActivateMessage
                                     <% end_if %>
-                                    <% if $GroupNameFromParam == "3" %>
+                                    <% if $GroupIDFromParam == "3" %>
                                         $SiteConfig.FindSpaceListingActivateMessage
                                     <% end_if %>
                                 </div>

@@ -2,11 +2,11 @@
     <% if $VisibleListings %>
         <div class="container-fluid p-0">
             <div class="row no-gutters pl-lg-7 pr-lg-10">
-                <div class="col-lg-4 pr-lg-4">$SideContent</div>
-                <div class="col-lg-8 pl-lg-5">
+                <div class="col-xl-4 pr-lg-4">$SideContent</div>
+                <div class="col-xl-8 pl-lg-5">
                     <div class="row">
                         <% loop $VisibleListings.Limit($Limit) %>
-                            <div class="col-lg-6">
+                            <div class="col-xl-6">
                                 <div class="listing-content">
                                     <% if $FeaturedImage %>
                                         <div class="listing-content--img">
@@ -25,30 +25,7 @@
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.wasAddedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.wasAddedToFavourites($ID)"><i class="<% if $Up.wasAddedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                                         <% if $Tags %>
-                                            <% if $Tags.Count > 2 %>
-                                                <div class="tags">
-                                                    <div class="d-flex">
-                                                        <div class="short-tags">
-                                                            <% loop $Tags.Limit(4) %>
-                                                                <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                                                            <% end_loop %>
-
-                                                        </div>
-                                                        <button class="tag-name see-more"><span class="halyard-display font-weight-medium fontsize16 d-block"><i class="fas fa-angle-down"></i></span></button>
-                                                    </div>
-                                                    <div class="more-tags">
-                                                        <% loop $Tags %>
-                                                            <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                                                        <% end_loop %>
-                                                    </div>
-                                                </div>
-                                            <% else %>
-                                                <div class="tags">
-                                                    <% loop $Tags %>
-                                                        <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                                                    <% end_loop %>
-                                                </div>
-                                            <% end_if %>
+                                            <% include ListingTags Tags=$Tags %>
                                         <% end_if %>
                                         <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                                     </div>

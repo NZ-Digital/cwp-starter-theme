@@ -9,19 +9,31 @@
             <div class="col-lg-6 pb-lg-5">
                 <div class="listing-content--tags justify-content-end">
                     <div class="tags">
-                        <div class="tag-item row no-gutters">
-                            <% if $Listing.Tags %>
-                                <% loop $Listing.Tags %>
-                                    <a href="#" class="tag-name mr-lg-3"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
-                                <% end_loop %>
-                            <% end_if %>
+                        <div class="tag-container">
+                            <div class="tag-items">
+                                <% if $Listing.Categories %>
+                                    <% loop $Listing.Categories %>
+                                        <a href="/all-listings?category={$Title}" class="tag-name mr-lg-3"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
+                                    <% end_loop %>
+                                <% end_if %>
+                            </div>
                         </div>
                     </div>
                     <button class="btn-utils addtofavourites fontsize25 ml-3" data-id="$Listing.ID"><i class="far fa-heart"></i></button>
                     <button class="btn-utils sharelisting fontsize25 ml-3 text-scorpion"><i class="fas fa-share-alt"></i></button>
                     <button class="btn-utils downloadlisting fontsize25 ml-3 text-scorpion"><i class="fas fa-arrow-alt-to-bottom"></i></button>
                     <a target="_blank" href="https://www.google.com/maps/place/{$Listing.Address} {$Listing.City}" class="btn-utils getdirection fontsize25 ml-3 text-scorpion"> <i class="fas fa-map"></i> </a>
-                    <p class="ml-3"><a href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"><span class="theme-button-gray-small font-weight-medium fontsize18 text-center">Buy tickets</span></a></p>
+                    <p class="ml-3"><a target="_blank" href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"><span class="theme-button-gray-small font-weight-medium fontsize18 text-center">Buy tickets</span></a></p>
+                </div>
+                <div class="share-socials--dropdown">
+                    <p class="text-center">
+                        <a target="_blank" class="pl-1 pr-1" href="https://www.facebook.com/sharer/sharer.php?u={$AbsoluteLink}"><i class="fab fa-facebook-f"></i></a>
+                        <a target="_blank" class="pl-1 pr-1" href="https://twitter.com/share?url={$AbsoluteLink}"><i class="fab fa-twitter"></i></a>
+                        <a target="_blank" class="pl-1 pr-1" href="https://www.linkedin.com/shareArticle?mini=true&url={$AbsoluteLink}"><i class="fab fa-linkedin-in"></i></a>
+                    </p>
+                    <hr style="border-color: #a2a2a2;">
+                    <p><a href="#"><span class="fontsize16 font-weight-medium">Report</span></a></p>
+                    <p><a href="#" class="copy-link"><span class="fontsize16 font-weight-medium">Copy link</span></a></p>
                 </div>
             </div>
         </div>
@@ -67,7 +79,7 @@
                     <% if $Listing.Tags %>
                         <span class="halyard-display font-weight-medium fontsize25 text-uppercase letterspacing-7px">Tags</span>
                         <% loop $Listing.Tags %>
-                            <a href="#" class="tag-name mr-lg-3 ml-lg-5"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
+                            <a href="/all-listings?tag={$Title}" class="tag-name mr-lg-3 ml-lg-5"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
                         <% end_loop %>
                     <% end_if %>
                 </div>

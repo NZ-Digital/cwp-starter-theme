@@ -35390,6 +35390,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     addToFavourites();
     showTags();
     showMoreNews();
+    showShareSocials();
+    sliderTags();
     closeModal(); //testAjax();
   }
 
@@ -35699,7 +35701,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           emailField,
           emailConfirmField,
           selectedCategoryField;
-      var requiredPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
+      var requiredPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=-\?;,./{}|\":<>\[\]\\\' ~_]).{10,20}/; ///^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
+
       emailField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Email');
       emailConfirmField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_ConfirmEmail');
       passwordField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Password_Holder');
@@ -35729,7 +35732,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           if (passwordField.find('.password').val() !== passwordConfirmField.find('.password').val()) {
             jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmPassword').remove();
             passwordConfirmField.find('.password').addClass('holder-validation is-invalid');
-            passwordConfirmField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
+            passwordConfirmField.addClass('holder-validation has-error').parent().append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback d-block pl-2 pr-2 mb-3 mt-0" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
             event.preventDefault();
             error = true;
           }
@@ -35737,7 +35740,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           if (!requiredPassword.test(passwordField.find('.password').val())) {
             jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_Password').remove();
             passwordField.find('.password').addClass('holder-validation is-invalid');
-            passwordField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters, contain 1 upper/lowercase and one number and one special character.</div>');
+            passwordField.addClass('holder-validation has-error').parent().append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback d-block pl-2 pr-2 mb-3 mt-0" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters, contain 1 upper/lowercase and one number and one special character.</div>');
             event.preventDefault();
             error = true;
           }
@@ -35923,38 +35926,33 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
               selectedCategoryText.val(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(selectedItem.text()));
               callAPIEndpoint('ajax/getTagsByCategory', 'POST', 'id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(selectedItem.attr('rel')), function (result) {
                 if (result.data) {
-                  (function () {
-                    var liShown = [];
-                    var dropdownTags = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.dropdown-tags');
-                    var selectedStyle = dropdownTags.find('.styledSelect');
-                    var list = dropdownTags.find('ul.options li');
-                    var data = result.data;
-                    list.removeClass('show');
-                    selectedStyle.text('Please select tags');
-                    selectedTagsHolder.removeClass('has-item');
-                    selectedTagsHolder.find('.item-holder').empty();
-                    selectedTagsText.val('');
+                  var liShown = [];
+                  var dropdownTags = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.dropdown-tags');
+                  var selectedStyle = dropdownTags.find('.styledSelect');
+                  var list = dropdownTags.find('ul.options');
+                  var data = result.data;
+                  list.find('li').removeClass('show selected');
+                  selectedStyle.text('Please select tags');
+                  selectedTagsHolder.removeClass('has-item');
+                  selectedTagsHolder.find('.item-holder').empty();
+                  selectedTagsText.val('');
 
-                    var _loop = function _loop(_i2) {
-                      list.each(function () {
-                        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('selected');
-
-                        if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === data[_i2].name) {
-                          if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liShown) === -1) {
-                            liShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
-
-                            if (!jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('show')) {
-                              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('show');
-                            }
-                          }
-                        }
-                      });
-                    };
-
-                    for (var _i2 = 0; _i2 < data.length; _i2++) {
-                      _loop(_i2);
-                    }
-                  })();
+                  for (var _i2 = 0; _i2 < data.length; _i2++) {
+                    list.find('li[rel="' + data[_i2].id + '"]').addClass('show'); // list.each(function () {
+                    //   $(this).removeClass('selected');
+                    //   // console.log('data-id '+  data[i].id);
+                    //   // console.log('rel-id ' + $(this).attr('rel'));
+                    //   if ($(this).attr('rel') === data[i].id) {
+                    //     console.log($(this).attr('rel'));
+                    //     // if(jQuery.inArray($.trim($(this).text()), liShown) === -1) {
+                    //     //   liShown.push($.trim($(this).text()));
+                    //       if (!$(this).hasClass('show')) {
+                    //         $(this).addClass('show');
+                    //       }
+                    //     // }
+                    //   }
+                    // })
+                  }
                 }
               });
             }
@@ -36135,7 +36133,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
               var list = dropdownTags.find('ul.options li');
               var data = result.data;
 
-              var _loop2 = function _loop2(_i3) {
+              var _loop = function _loop(_i3) {
                 list.each(function () {
                   if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === data[_i3].name) {
                     if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liShown) === -1) {
@@ -36150,7 +36148,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
               };
 
               for (var _i3 = 0; _i3 < data.length; _i3++) {
-                _loop2(_i3);
+                _loop(_i3);
               }
             })();
           }
@@ -36162,7 +36160,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           tagArrays = tags.val().split(",");
           selectedTagsHolder.addClass('has-item');
 
-          var _loop3 = function _loop3(_i4) {
+          var _loop2 = function _loop2(_i4) {
             tagSelectorHolder.find('.styledSelect').text(tagArrays[_i4]);
             listTag.each(function () {
               if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === tagArrays[_i4]) {
@@ -36176,7 +36174,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           };
 
           for (var _i4 = 0; _i4 < tagArrays.length; _i4++) {
-            _loop3(_i4);
+            _loop2(_i4);
           }
         } else {
           tagSelectorHolder.find('.styledSelect').text(tags.val());
@@ -36575,6 +36573,27 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         }
       });
     }
+  }
+
+  function showShareSocials() {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sharelisting').click(function () {
+      var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+      if (_this.hasClass('active')) {
+        _this.removeClass('active');
+
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.share-socials--dropdown').removeClass('active');
+      } else {
+        _this.addClass('active');
+
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.share-socials--dropdown').addClass('active');
+      }
+    });
+  }
+
+  function sliderTags() {// var flky = new Flickity( '.tag-test ', {
+    //   pageDots: false,
+    // });
   }
 
   function resetFavCounter(favCounter) {

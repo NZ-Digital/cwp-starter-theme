@@ -31,6 +31,8 @@ export default function () {
     addToFavourites();
     showTags();
     showMoreNews();
+    showShareSocials();
+    sliderTags();
 
     closeModal();
     //testAjax();
@@ -323,7 +325,7 @@ export default function () {
       let input, categorySelector, selectedCategories = [], passwordField, passwordConfirmField,
         emailField, emailConfirmField, selectedCategoryField;
 
-      let requiredPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
+      let requiredPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=-\?;,./{}|\":<>\[\]\\\' ~_]).{10,20}/;///^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
 
       emailField = $('#RegistrationForm_RegistrationForm_Email');
       emailConfirmField = $('#RegistrationForm_RegistrationForm_ConfirmEmail');
@@ -357,14 +359,14 @@ export default function () {
           if (passwordField.find('.password').val() !== passwordConfirmField.find('.password').val()) {
             $('#message-RegistrationForm_RegistrationForm_ConfirmPassword').remove();
             passwordConfirmField.find('.password').addClass('holder-validation is-invalid')
-            passwordConfirmField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
+            passwordConfirmField.addClass('holder-validation has-error').parent().append('<div id="message-RegistrationForm_RegistrationForm_ConfirmPassword" class="invalid-feedback d-block pl-2 pr-2 mb-3 mt-0" role="alert" aria-atomic="true">The password confirmation does not match your password.</div>');
             event.preventDefault();
             error = true;
           }
           if (!requiredPassword.test(passwordField.find('.password').val())) {
             $('#message-RegistrationForm_RegistrationForm_Password').remove();
             passwordField.find('.password').addClass('holder-validation is-invalid')
-            passwordField.addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback position-absolute pt-1 pl-2 pr-2" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters, contain 1 upper/lowercase and one number and one special character.</div>');
+            passwordField.addClass('holder-validation has-error').parent().append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback d-block pl-2 pr-2 mb-3 mt-0" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters, contain 1 upper/lowercase and one number and one special character.</div>');
             event.preventDefault();
             error = true;
           }
@@ -561,27 +563,31 @@ export default function () {
                   let liShown = [];
                   let dropdownTags = $('.dropdown-tags');
                   let selectedStyle = dropdownTags.find('.styledSelect');
-                  let list = dropdownTags.find('ul.options li');
+                  let list = dropdownTags.find('ul.options');
                   let data = result.data;
 
-                  list.removeClass('show');
+                  list.find('li').removeClass('show selected');
                   selectedStyle.text('Please select tags');
                   selectedTagsHolder.removeClass('has-item');
                   selectedTagsHolder.find('.item-holder').empty();
                   selectedTagsText.val('');
 
                   for (let i = 0; i < data.length; i++) {
-                    list.each(function () {
-                      $(this).removeClass('selected');
-                      if ($.trim($(this).text()) === data[i].name) {
-                        if(jQuery.inArray($.trim($(this).text()), liShown) === -1) {
-                          liShown.push($.trim($(this).text()));
-                          if (!$(this).hasClass('show')) {
-                            $(this).addClass('show');
-                          }
-                        }
-                      }
-                    })
+                    list.find('li[rel="'+data[i].id+'"]').addClass('show');
+                    // list.each(function () {
+                    //   $(this).removeClass('selected');
+                    //   // console.log('data-id '+  data[i].id);
+                    //   // console.log('rel-id ' + $(this).attr('rel'));
+                    //   if ($(this).attr('rel') === data[i].id) {
+                    //     console.log($(this).attr('rel'));
+                    //     // if(jQuery.inArray($.trim($(this).text()), liShown) === -1) {
+                    //     //   liShown.push($.trim($(this).text()));
+                    //       if (!$(this).hasClass('show')) {
+                    //         $(this).addClass('show');
+                    //       }
+                    //     // }
+                    //   }
+                    // })
                   }
                 }
               });
@@ -1212,6 +1218,26 @@ export default function () {
         }
       });
     }
+  }
+
+  function showShareSocials() {
+    $('.sharelisting').click(function() {
+      let _this = $(this);
+      if (_this.hasClass('active')) {
+        _this.removeClass('active');
+        $('.share-socials--dropdown').removeClass('active');
+      } else {
+        _this.addClass('active');
+        $('.share-socials--dropdown').addClass('active');
+      }
+    });
+  }
+
+  function sliderTags()
+  {
+    // var flky = new Flickity( '.tag-test ', {
+    //   pageDots: false,
+    // });
   }
 
   function resetFavCounter(favCounter)

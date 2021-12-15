@@ -12,11 +12,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4 pb-lg-7">
+                        <div class="col-xl-4 pb-lg-7">
                             <a href="create-listing?id={$GroupID}" class="add-listing"><img src="$resourceURL('themes/starter/images/AddListing.jpg')"></a>
                         </div>
                         <% loop $Listings %>
-                            <div class="col-lg-4">
+                            <div class="col-xl-4">
                                 <div class="listing-content">
                                     <div class="listing-content--img">
                                         <% if $FeaturedImage %>
@@ -43,36 +43,7 @@
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.wasAddedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.wasAddedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.wasAddedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                                         <% if $Tags %>
-                                            <% if $Tags.Count > 2 %>
-                                                <div class="tags">
-                                                    <div class="d-flex">
-                                                        <div class="short-tags w-110">
-                                                            <% if $Up.GroupID == "1" %>
-                                                                <% loop $Tags.Limit(2) %>
-                                                                    <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                                                                <% end_loop %>
-                                                            <% else %>
-                                                                <% loop $Tags.Limit(1) %>
-                                                                    <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                                                                <% end_loop %>
-
-                                                            <% end_if %>
-                                                        </div>
-                                                        <button class="see-more"><span class="halyard-display font-weight-medium fontsize16 d-block"><i class="fas fa-angle-down"></i></span></button>
-                                                    </div>
-                                                    <div class="more-tags">
-                                                        <% loop $Tags %>
-                                                            <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                                                        <% end_loop %>
-                                                    </div>
-                                                </div>
-                                            <% else %>
-                                                <div class="tags">
-                                                    <% loop $Tags %>
-                                                        <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                                                    <% end_loop %>
-                                                </div>
-                                            <% end_if %>
+                                            <% include ListingTags Tags=$Tags %>
                                         <% end_if %>
 <%--                                        <div class="tag-container">--%>
 <%--                                            <div class="tag-items">--%>
@@ -88,7 +59,7 @@
                                 </div>
                             </div>
                         <% end_loop %>
-                        <% if not $Last %><div class="col-lg-12 pb-lg-7"><hr></div><% end_if %>
+                        <% if not $Last %><div class="col-xl-12 pb-lg-7"><hr></div><% end_if %>
                     </div>
                 <% end_loop %>
             <% end_if %>

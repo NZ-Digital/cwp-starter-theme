@@ -1,4 +1,4 @@
-<div class="col-lg-4">
+<div class="col-xl-4">
     <div class="listing-content">
         <% if $FeaturedImage %>
             <div class="listing-content--img">
@@ -25,13 +25,7 @@
         <div class="listing-content--tags">
             <button class="btn-utils addtofavourites fontsize35<% if $inFavourites %> active<% end_if %>" data-id="<% if $Listing.ID %>{$Listing.ID}<% else %>{$ID}<% end_if %>"><i class="<% if $inFavourites %>fas<% else %>far<% end_if %> fa-heart"></i></button>
             <% if $Tags %>
-                <% loop $Tags %>
-                    <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                <% end_loop %>
-            <% else %>
-                <% loop $Listing.Tags %>
-                    <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                <% end_loop %>
+                <% include ListingTags Tags=$Tags %>
             <% end_if %>
             <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
         </div>

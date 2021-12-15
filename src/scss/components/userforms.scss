@@ -12,6 +12,9 @@
   flex-wrap: wrap;
 }
 .form-group {
+  &.has-error {
+    margin-bottom: .5rem;
+  }
   .col-form-label {
     display: none !important;
   }
@@ -475,6 +478,9 @@ input[type='submit'] {
       display: none;
       &.show {
         display: block;
+        &:last-child {
+          border-bottom: 0;
+        }
       }
     }
   }

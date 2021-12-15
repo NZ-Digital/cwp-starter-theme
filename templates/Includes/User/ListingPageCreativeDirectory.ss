@@ -10,11 +10,11 @@
                 <div class="listing-content--tags justify-content-end">
                     <% if $Listing.AssignedGroupID == "2" %>
                         <div class="tags">
-                            <div class="tags-items">
-                                <div class="tag-item">
-                                    <% if $Listing.Tags %>
-                                        <% loop $Listing.Tags %>
-                                            <a href="#" class="tag-name mr-lg-3"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
+                            <div class="tag-container">
+                                <div class="tag-items">
+                                    <% if $Listing.Categories %>
+                                        <% loop $Listing.Categories %>
+                                            <a href="/all-listings?category={$Title}" class="tag-name mr-lg-3"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline">$Title</span></a>
                                         <% end_loop %>
                                     <% end_if %>
                                 </div>
@@ -25,7 +25,17 @@
                     <button class="btn-utils sharelisting fontsize25 ml-3 text-scorpion"><i class="fas fa-share-alt"></i></button>
                     <button class="btn-utils downloadlisting fontsize25 ml-3 text-scorpion"><i class="fas fa-arrow-alt-to-bottom"></i></button>
                     <a target="_blank" href="https://www.google.com/maps/place/{$Listing.Address} {$Listing.City}" class="btn-utils getdirection fontsize25 ml-3 text-scorpion"> <i class="fas fa-map"></i> </a>
-                    <p class="ml-3"><a href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"><span class="theme-button-gray-small font-weight-medium fontsize18 text-center">Book Online</span></a></p>
+                    <p class="ml-3"><a target="_blank" href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"><span class="theme-button-gray-small font-weight-medium fontsize18 text-center">Book Online</span></a></p>
+                </div>
+                <div class="share-socials--dropdown">
+                    <p class="text-center">
+                        <a target="_blank" class="pl-1 pr-1" href="https://www.facebook.com/sharer/sharer.php?u={$AbsoluteLink}"><i class="fab fa-facebook-f"></i></a>
+                        <a target="_blank" class="pl-1 pr-1" href="https://twitter.com/share?url={$AbsoluteLink}"><i class="fab fa-twitter"></i></a>
+                        <a target="_blank" class="pl-1 pr-1" href="https://www.linkedin.com/shareArticle?mini=true&url={$AbsoluteLink}"><i class="fab fa-linkedin-in"></i></a>
+                    </p>
+                    <hr style="border-color: #a2a2a2;">
+                    <p><a href="#"><span class="fontsize16 font-weight-medium">Report</span></a></p>
+                    <p><a href="#" class="copy-link"><span class="fontsize16 font-weight-medium">Copy link</span></a></p>
                 </div>
             </div>
         </div>
@@ -68,7 +78,7 @@
                     <% if $Listing.Tags %>
                         <span class="halyard-display font-weight-medium fontsize25 text-uppercase letterspacing-7px">Tags</span>
                         <% loop $Listing.Tags %>
-                            <a href="#" class="tag-name mr-lg-3 ml-lg-5"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline text-footer-gray">$Title</span></a>
+                            <a href="/all-listings?tag={$Title}" class="tag-name mr-lg-3 ml-lg-5"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline text-footer-gray">$Title</span></a>
                         <% end_loop %>
                     <% end_if %>
                 </div>
@@ -97,12 +107,12 @@
                         <p><span class="fontsize20 font-weight-medium text-uppercase">Contact</span></p>
                     </div>
                     <div class="col-lg-12 offset-2 pb-lg-1">
-                        <% if $Listing.Phone %><p class="pb-lg-3"><a href="tel:{$Listing.Phone}"><i class="fas fa-phone-alt mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Phone</span></a></p><% end_if %>
-                        <% if $Listing.Email %><p class="pb-lg-3"><a href="mailto:{$Listing.Email}"><i class="fas fa-envelope mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Email</span></a></p><% end_if %>
-                        <% if $Listing.Website %><p class="pb-lg-3"><a href="//$Listing.Website" target="_blank" rel="nofollow"><i class="fas fa-globe mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Website</span></a></p><% end_if %>
-                        <% if $Listing.Facebook %><p class="pb-lg-3"><a href="//$Listing.Facebook" target="_blank" rel="nofollow"><i class="fab fa-facebook-f mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Facebook</span></a></p><% end_if %>
-                        <% if $Listing.Instagram %><p class="pb-lg-3"><a href="//$Listing.Instagram" target="_blank" rel="nofollow"><i class="fab fa-instagram mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Instagram</span></a></p><% end_if %>
-                        <% if $Listing.Twitter %><p class="pb-lg-3"><a href="//$Listing.Twitter" target="_blank" rel="nofollow"><i class="fab fa-twitter mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Twitter</span></a></p><% end_if %>
+                        <% if $Listing.Phone %><p class="pb-lg-3"><a href="tel:{$Listing.Phone}" class="d-flex align-items-center"><i class="fas fa-phone-alt mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Phone</span></a></p><% end_if %>
+                        <% if $Listing.Email %><p class="pb-lg-3"><a href="mailto:{$Listing.Email}" class="d-flex align-items-center"><i class="fas fa-envelope mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book  moderna-sans overflow-wrap w-100 line-height-100">$Listing.Email</span></a></p><% end_if %>
+                        <% if $Listing.Website %><p class="pb-lg-3"><a href="//$Listing.Website" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fas fa-globe mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Website</span></a></p><% end_if %>
+                        <% if $Listing.Facebook %><p class="pb-lg-3"><a href="//$Listing.Facebook" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fab fa-facebook-f mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Facebook</span></a></p><% end_if %>
+                        <% if $Listing.Instagram %><p class="pb-lg-3"><a href="//$Listing.Instagram" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fab fa-instagram mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Instagram</span></a></p><% end_if %>
+                        <% if $Listing.Twitter %><p class="pb-lg-3"><a href="//$Listing.Twitter" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fab fa-twitter mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Twitter</span></a></p><% end_if %>
                     </div>
                     <div class="col-lg-12 pt-lg-5 pb-lg-5">
                         <hr style="border-color: #A2A2A2;">
@@ -163,12 +173,12 @@
                             <p><span class="fontsize20 font-weight-medium text-uppercase">Contact</span></p>
                         </div>
                         <div class="col-lg-12 offset-2 pb-lg-1">
-                            <% if $Listing.Phone %><p class="pb-lg-3"><a href="tel:{$Listing.Phone}"><i class="fas fa-phone-alt mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Phone</span></a></p><% end_if %>
-                            <% if $Listing.Email %><p class="pb-lg-3"><a href="mailto:{$Listing.Email}"><i class="fas fa-envelope mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book  moderna-sans">$Listing.Email</span></a></p><% end_if %>
-                            <% if $Listing.Website %><p class="pb-lg-3"><a href="//$Listing.Website" target="_blank" rel="nofollow"><i class="fas fa-globe mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Website</span></a></p><% end_if %>
-                            <% if $Listing.Facebook %><p class="pb-lg-3"><a href="//$Listing.Facebook" target="_blank" rel="nofollow"><i class="fab fa-facebook-f mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Facebook</span></a></p><% end_if %>
-                            <% if $Listing.Instagram %><p class="pb-lg-3"><a href="//$Listing.Instagram" target="_blank" rel="nofollow"><i class="fab fa-instagram mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Instagram</span></a></p><% end_if %>
-                            <% if $Listing.Twitter %><p class="pb-lg-3"><a href="//$Listing.Twitter" target="_blank" rel="nofollow"><i class="fab fa-twitter mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans">$Listing.Twitter</span></a></p><% end_if %>
+                            <% if $Listing.Phone %><p class="pb-lg-3"><a href="tel:{$Listing.Phone}" class="d-flex align-items-center"><i class="fas fa-phone-alt mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Phone</span></a></p><% end_if %>
+                            <% if $Listing.Email %><p class="pb-lg-3"><a href="mailto:{$Listing.Email}" class="d-flex align-items-center"><i class="fas fa-envelope mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book  moderna-sans overflow-wrap w-100 line-height-100">$Listing.Email</span></a></p><% end_if %>
+                            <% if $Listing.Website %><p class="pb-lg-3"><a href="//$Listing.Website" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fas fa-globe mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Website</span></a></p><% end_if %>
+                            <% if $Listing.Facebook %><p class="pb-lg-3"><a href="//$Listing.Facebook" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fab fa-facebook-f mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Facebook</span></a></p><% end_if %>
+                            <% if $Listing.Instagram %><p class="pb-lg-3"><a href="//$Listing.Instagram" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fab fa-instagram mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Instagram</span></a></p><% end_if %>
+                            <% if $Listing.Twitter %><p class="pb-lg-3"><a href="//$Listing.Twitter" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fab fa-twitter mr-lg-3 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Twitter</span></a></p><% end_if %>
                         </div>
                         <div class="col-lg-12 pt-lg-5 pb-lg-5">
                             <hr style="border-color: #A2A2A2;">

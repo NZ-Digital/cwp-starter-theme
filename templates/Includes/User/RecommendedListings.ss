@@ -20,7 +20,7 @@
                 <div class="row">
                     <% if $GroupID == '1' %>
                         <% loop $RecommendedWhatsOnListings %>
-                            <div class="col-lg-4">
+                            <div class="col-xl-4">
                                 <div class="listing-content">
                                     <% if $FeaturedImage %>
                                         <div class="listing-content--img">
@@ -42,9 +42,7 @@
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.wasAddedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.wasAddedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.wasAddedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                                         <% if $Tags %>
-                                            <% loop $Tags %>
-                                                <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                                            <% end_loop %>
+                                            <% include ListingTags Tags=$Tags %>
                                         <% end_if %>
                                         <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                                     </div>
@@ -53,7 +51,7 @@
                         <% end_loop %>
                     <% else %>
                         <% loop $RecommendedCreativeDirectory %>
-                            <div class="col-lg-4">
+                            <div class="col-xl-4">
                                 <div class="listing-content">
                                     <% if $FeaturedImage %>
                                         <div class="listing-content--img">
@@ -75,9 +73,7 @@
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.wasAddedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.wasAddedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.wasAddedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                                         <% if $Tags %>
-                                            <% loop $Tags %>
-                                                <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-                                            <% end_loop %>
+                                            <% include ListingTags Tags=$Tags %>
                                         <% end_if %>
                                         <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                                     </div>
@@ -85,9 +81,8 @@
                             </div>
                         <% end_loop %>
                     <% end_if %>
-
                     <% if not $Last %>
-                        <div class="col-lg-12 pb-lg-7"><hr></div>
+                        <div class="col-xl-12 pb-lg-7"><hr></div>
                     <% end_if %>
                 </div>
             <% end_loop %>

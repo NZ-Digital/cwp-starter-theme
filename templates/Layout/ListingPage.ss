@@ -4,10 +4,6 @@
     <% include Includes/User/ListingPageWhatsOn %>
 <% end_if %>
 
-<% if $Listing.AssignedGroup.ID == "2" %>
-    <% include Includes/User/ListingPageCreativeDirectory%>
-<% end_if %>
-
-<% if $Listing.AssignedGroup.ID == "3" %>
+<% if $Listing.AssignedGroup.ID == "2" || $Listing.AssignedGroup.ID == "3" %>
     <% include Includes/User/ListingPageCreativeDirectory%>
 <% end_if %>
