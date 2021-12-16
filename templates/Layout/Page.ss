@@ -24,7 +24,4 @@
 <% if $URLSegment == 'sign-up' %>
     <% include Includes/User/RegistrationForm %>
 <% end_if %>
-<% if $URLSegment == 'all-listings' %>
-    <% include Includes/User/ListingsByTag %>
-<% end_if %>
 <% include VisibleSection %>

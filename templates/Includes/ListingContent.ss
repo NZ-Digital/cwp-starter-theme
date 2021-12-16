@@ -15,7 +15,7 @@
                 <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px"><% if $ListingClosestToCurrentDate %>$ListingClosestToCurrentDate<% else %>$Listing.ListingClosestToCurrentDate<% end_if %></span>
             </div>
             <div class="listing-location ml-auto">
-                <span class="text-footer-gray text-underline"><% if $City %>$City<% else %>$Listing.City<% end_if %></span>
+                <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline"><% if $City %>$City<% else %>$Listing.City<% end_if %></span></a>
             </div>
         </div>
         <div class="listing-content--details">

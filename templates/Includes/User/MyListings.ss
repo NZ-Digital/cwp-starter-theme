@@ -33,7 +33,7 @@
                                             <span class="halyard-display font-weight-medium fontsize16 text-white text-uppercase letterspacing-1px"><i class="fas fa-flag"></i><% if $Flag %> $Flag<% end_if %></span>
                                         </div>
                                         <div class="listing-location ml-auto">
-                                            <span class="text-footer-gray text-underline">$City</span>
+                                            <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline">$City</span></a>
                                         </div>
                                     </div>
                                     <div class="listing-content--details">
@@ -41,7 +41,7 @@
                                         <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.RAW.LimitWordCount(15)</span></a></p>
                                     </div>
                                     <div class="listing-content--tags">
-                                        <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.wasAddedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.wasAddedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.wasAddedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
+                                        <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                                         <% if $Tags %>
                                             <% include ListingTags Tags=$Tags %>
                                         <% end_if %>

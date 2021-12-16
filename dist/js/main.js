@@ -35430,7 +35430,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       var topPos = jquery__WEBPACK_IMPORTED_MODULE_0___default()(window).scrollTop();
       var siteHeader = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.site-header.scrolled');
 
-      if (topPos > 550) {
+      if (topPos > 250) {
         siteHeader.addClass('open');
       } else {
         siteHeader.removeClass('open');

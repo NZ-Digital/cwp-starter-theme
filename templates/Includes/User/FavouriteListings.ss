@@ -8,10 +8,10 @@
         </div>
     </div>
     <div class="row">
-<%--        <div class="col-lg-12">--%>
-<%--            <img src="$resourceURL('themes/starter/images/favouritesIcon.png')" alt="{$SiteConfig.Title} - Favourites Icon">--%>
-<%--                <p>Your favourited listings all in one spot</p>--%>
-<%--        </div>--%>
+        <%--        <div class="col-lg-12">--%>
+        <%--            <img src="$resourceURL('themes/starter/images/favouritesIcon.png')" alt="{$SiteConfig.Title} - Favourites Icon">--%>
+        <%--                <p>Your favourited listings all in one spot</p>--%>
+        <%--        </div>--%>
         <% if $Listings %>
             <% loop $Listings %>
                 <div class="col-xl-4">
@@ -26,7 +26,7 @@
                                 <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$Listing.ListingClosestToCurrentDate</span>
                             </div>
                             <div class="listing-location ml-auto">
-                                <span class="text-footer-gray text-underline">$Listing.City</span>
+                                <a href="/all-listings?city={$Listing.City}"><span class="text-footer-gray text-underline">$Listing.City</span></a>
                             </div>
                         </div>
                         <div class="listing-content--details">

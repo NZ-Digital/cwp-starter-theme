@@ -16,14 +16,15 @@
                                         </div>
                                     <% end_if %>
                                     <div class="listing-content--location">
-                                        <a href="#"><span class="text-footer-gray text-underline">$City</span></a>
+                                        <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline">$City</span></a>
                                     </div>
                                     <div class="listing-content--details">
                                         <p class="mb-3 mt-4"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Name}</span></a></p>
                                         <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">{$Content.RAW.LimitWordCount(15)}</span></a></p>
                                     </div>
                                     <div class="listing-content--tags">
-                                        <button class="btn-utils addtofavourites fontsize35<% if $Up.wasAddedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.wasAddedToFavourites($ID)"><i class="<% if $Up.wasAddedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
+
+                                        <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)"><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                                         <% if $Tags %>
                                             <% include ListingTags Tags=$Tags %>
                                         <% end_if %>

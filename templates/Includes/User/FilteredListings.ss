@@ -17,7 +17,7 @@
                         </div>
                         <% end_if %>
                         <div class="listing-location <% if $Up.GroupID == "1" %>ml-auto<% end_if %>">
-                            <span class="text-footer-gray text-underline">$City</span>
+                            <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline">$City</span></a>
                         </div>
                     </div>
                     <div class="listing-content--details">
@@ -25,7 +25,7 @@
                         <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.RAW.LimitWordCount(15)</span></a></p>
                     </div>
                     <div class="listing-content--tags">
-                        <button class="btn-utils addtofavourites fontsize35" data-id="$ID"><i class="far fa-heart"></i></button>
+                        <button class="btn-utils addtofavourites fontsize35<% if $Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.addedToFavourites($ID)"><i class="<% if $Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                         <% if $Tags %>
                             <% include ListingTags Tags=$Tags %>
                         <% end_if %>

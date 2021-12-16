@@ -75,7 +75,7 @@ export default function () {
     window.addEventListener("scroll", function () {
       let topPos = $(window).scrollTop();
       let siteHeader = $('.site-header.scrolled');
-      if (topPos > 550) {
+      if (topPos > 250) {
         siteHeader.addClass('open');
       } else {
         siteHeader.removeClass('open');

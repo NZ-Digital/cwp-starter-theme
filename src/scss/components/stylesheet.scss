@@ -18,6 +18,7 @@
  *      - Content
  *      - Featured Listing
  *      - Filter Bar
+ *      - Filtered News
  *      - Image Banner
  *      - Image with Content
  *      - Latest News
@@ -592,6 +593,69 @@
     }
   }
 
+  // -- Filtered News -- //
+  &.sectionFilteredNews  {
+    .filteredNews-container {
+      position: relative;
+      &:before {
+        position: absolute;
+        content: "";
+        top: 5px;
+        left: -150px;
+        height: 15px;
+        width: 100px;
+        background-color: $marigold-yellow;
+      }
+      .news-item {
+        position: static;
+      }
+      .newslist-content--details:hover + .featured-news--img {
+        opacity: 1;
+        z-index: 1;
+      }
+      .featured-news--img {
+        position: absolute;
+        opacity: 0;
+        left: 0;
+        top: 77%;
+        transform: translate3d(0, 0, 0);
+        transition: opacity 200ms cubic-bezier(0.76, 0, 0.24, 1), z-index 200ms cubic-bezier(0.76, 0, 0.24, 1);
+        z-index: -1;
+        img {
+          height: 423px;
+          width: 423px;
+          object-fit: cover;
+        }
+      }
+      .newslist-content {
+        &--link {
+          position: absolute;
+          top: 50%;
+          right: 20px;
+          transform: translate3d(0, -50%, 0);
+        }
+        &--details {
+          cursor: pointer;
+          .news-categories span,
+          a span {
+            transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+          }
+          &:hover {
+            .news-categories span,
+            a span,
+            i {
+              color: $cod-gray !important;
+            }
+          }
+        }
+      }
+      .intro-content {
+        max-width: 950px;
+        margin-bottom: 100px;
+      }
+    }
+  }
+
   // -- Image Banner -- //
   &.sectionImageBanner {
     position: relative;
@@ -797,20 +861,6 @@
               color: $cod-gray !important;
             }
           }
-        }
-      }
-    }
-    &#news-lists {
-      .latestNews-container {
-        .featured-news--img {
-          position: absolute;
-          left: 0;
-          top: 77%;
-          transform: translate3d(0, 0, 0);
-        }
-        .intro-content {
-          max-width: 950px;
-          margin-bottom: 100px;
         }
       }
     }
