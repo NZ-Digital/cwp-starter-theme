@@ -366,7 +366,7 @@ export default function () {
           if (!requiredPassword.test(passwordField.find('.password').val())) {
             $('#message-RegistrationForm_RegistrationForm_Password').remove();
             passwordField.find('.password').addClass('holder-validation is-invalid')
-            passwordField.addClass('holder-validation has-error').parent().append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback d-block pl-2 pr-2 mb-3 mt-0" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters, contain 1 upper/lowercase and one number and one special character.</div>');
+            passwordField.addClass('holder-validation has-error').parent().append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback d-block pl-2 pr-2 mb-3 mt-0" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters. Contain 1 uppercase & 1 lowercase, 1 number and 1 special character.</div>');
             event.preventDefault();
             error = true;
           }

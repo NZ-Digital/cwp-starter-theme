@@ -23,9 +23,9 @@
                     <% end_if %>
                     <button class="btn-utils addtofavourites pl-lg-3 <% if $addedToFavourites($Listing.ID) %> active<% end_if %>" data-id="$Listing.ID"><i class="<% if $addedToFavourites($Listing.ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                     <button class="btn-utils sharelisting fontsize25 ml-3 text-scorpion"><i class="fas fa-share-alt"></i></button>
-                    <button class="btn-utils downloadlisting fontsize25 ml-3 text-scorpion"><i class="fas fa-arrow-alt-to-bottom"></i></button>
+<%--                    <button class="btn-utils downloadlisting fontsize25 ml-3 text-scorpion"><i class="fas fa-arrow-alt-to-bottom"></i></button>--%>
                     <a target="_blank" href="https://www.google.com/maps/place/{$Listing.Address} {$Listing.City}" class="btn-utils getdirection fontsize25 ml-3 text-scorpion"> <i class="fas fa-map"></i> </a>
-                    <p class="ml-3"><a target="_blank" href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"><span class="theme-button-gray-small font-weight-medium fontsize18 text-center">Book Online</span></a></p>
+                    <% if $Listing.BookingURL %><p class="ml-3"><a target="_blank" href="$Listing.BookingURL"><span class="theme-button-gray-small font-weight-medium fontsize18 text-center">Book Online</span></a></p><% end_if %>
                 </div>
                 <div class="share-socials--dropdown">
                     <p class="text-center">
