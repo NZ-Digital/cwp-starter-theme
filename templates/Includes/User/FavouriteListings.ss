@@ -3,9 +3,11 @@
         <div class="col-auto">
             <p><span class="fontsize25 halyard-display font-weight-medium letterspacing-7px text-uppercase">My $GroupName Favourites</span></p>
         </div>
+        <% if $Up.CurrentUserIsContributor %>
         <div class="col-auto">
             <p><a href="create-listing?id={$GroupID}" class="d-flex align-items-center text-decoration-none"><span class="fontsize25 halyard-display font-weight-medium mr-5">$GroupButtonText</span> <i class="fal fa-plus-circle fontsize35"></i></a></p>
         </div>
+        <% end_if %>
     </div>
     <div class="row">
         <%--        <div class="col-lg-12">--%>
@@ -35,8 +37,8 @@
                         </div>
                         <div class="listing-content--tags">
                             <button class="btn-utils addtofavourites fontsize35 active" data-id="{$Listing.ID}"><i class="fas fa-heart"></i></button>
-                            <% if $Listing.Tags %>
-                                <% include ListingTags Tags=$Listing.Tags %>
+                            <% if $Listing.Categories %>
+                                <% include ListingTags Categories=$Listing.Categories %>
                             <% end_if %>
                             <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                         </div>

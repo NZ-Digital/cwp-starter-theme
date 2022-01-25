@@ -35380,10 +35380,12 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     closeSearchForm(); //Sections
 
     sectionFilterBar();
-    sectionFeaturedListings(); //Page
+    sectionFeaturedListings();
+    sectionVideoSlider(); //Page
 
     listingPage();
     signUpPage();
+    contributorPage();
     createListingPage();
     articlePage(); //Actions
 
@@ -35627,10 +35629,40 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     }
   }
 
+  function sectionVideoSlider() {
+    var sectionVideoSlider = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.sectionVideoSlider');
+
+    if (sectionVideoSlider.length > 0) {
+      var video = sectionVideoSlider.find('video');
+      var playBtn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.btn--video-play');
+      playBtn.click(function () {
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('play')) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).removeClass('play');
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i').removeClass('fa-pause-circle').addClass('fa-play-circle');
+          video.get(0).pause();
+        } else {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('play');
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('i').removeClass('fa-play-circle').addClass('fa-pause-circle');
+          video.get(0).play();
+        }
+      });
+    }
+  }
+
   function listingPage() {
     var listingPage = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.ListingPage');
 
     if (listingPage.length > 0) {
+      var copyLinkModal = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.copy-link--modal');
+      var copyLinkClose = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.copy-link--close');
+      var copyLink = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.copy-link');
+      copyLink.click(function () {
+        copyLinkModal.addClass('active');
+        copyToClipboard(copyLinkModal.find('input').val());
+      });
+      copyLinkClose.click(function () {
+        copyLinkModal.removeClass('active');
+      });
       var listingPageGallery = listingPage.find('.owl-carousel');
       listingPageGallery.owlCarousel({
         items: 2,
@@ -35656,6 +35688,17 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         }
       });
     }
+  }
+
+  function copyToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    document.body.appendChild(textArea);
+    textArea.value = text; //save main text in it
+
+    textArea.select(); //select textarea contenrs
+
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
   }
 
   function articlePage() {
@@ -35694,21 +35737,26 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
     if (signUpForm.length > 0) {
       var input,
-          categorySelector,
-          selectedCategories = [],
+          categorySelectorWhatsOn,
+          categorySelectorCreativeDirectory,
+          selectedCategoriesWhatsOn = [],
+          selectedCategoriesCreativeDirectory = [],
           passwordField,
           passwordConfirmField,
           emailField,
           emailConfirmField,
-          selectedCategoryField;
+          selectedCategoryWhatsOnField,
+          selectedCategoryCreativeDirectoryField;
       var requiredPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=-\?;,./{}|\":<>\[\]\\\' ~_]).{10,20}/; ///^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
 
       emailField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Email');
       emailConfirmField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_ConfirmEmail');
       passwordField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Password_Holder');
       passwordConfirmField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_ConfirmPassword_Holder');
-      selectedCategoryField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_SelectedCategories');
-      categorySelector = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-selector');
+      selectedCategoryWhatsOnField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_SelectedCategoriesWhatsOn');
+      selectedCategoryCreativeDirectoryField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_SelectedCategoriesCreativeDirectory');
+      categorySelectorWhatsOn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-selector.whatsOn-category');
+      categorySelectorCreativeDirectory = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-selector.creativeDirectory-category');
       passwordField.append('<a href="#" class="btn-reveal-password password-field"><span>Show</span></a>');
       passwordConfirmField.append('<a href="#" class="btn-reveal-password passwordConfirm-field"><span>Show</span></a>');
       passwordConfirmField.find('#Password_ConfirmPassword').attr('placeholder', 'Confirm Password*');
@@ -35727,6 +35775,15 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
 
         var error = false;
+        var errorField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.error-field');
+
+        if (selectedCategoryWhatsOnField.length > 0) {
+          if (!selectedCategoryWhatsOnField.val()) {
+            event.preventDefault();
+            errorField.addClass('d-block').find('span').text('Please select at least 1 category');
+            error = true;
+          }
+        }
 
         if (passwordField.length > 0) {
           if (passwordField.find('.password').val() !== passwordConfirmField.find('.password').val()) {
@@ -35766,33 +35823,173 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
           setTimeout(function () {
             if (error === false) {
-              console.log(error);
               event.currentTarget.submit();
             }
           }, 1000);
         }
-      }); //Category suggestions
+      });
+      var dropdownToggle = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-toggle');
+      var selectedLocation = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-location');
+      var locationField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#RegistrationForm_RegistrationForm_Location');
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item').click(function (e) {
+        var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
 
-      if (categorySelector.length > 0) {
-        categorySelector.find('.form-check-input').each(function () {
+        var selectedDropdownItem = _this.text();
+
+        if (_this.hasClass('active')) {
+          _this.removeClass('active');
+
+          dropdownToggle.text('Select location');
+          selectedLocation.find('.item-holder').empty();
+          selectedLocation.removeClass('has-item');
+          locationField.val('');
+        } else {
+          _this.addClass('active').siblings().removeClass('active');
+
+          dropdownToggle.text(selectedDropdownItem);
+          selectedLocation.addClass('has-item');
+          selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
+          locationField.val(_this.attr('data-id'));
+          selectedLocation.find('.remove-item').click(function () {
+            var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
+            selectedDropdownItem.removeClass('active');
+            dropdownToggle.text('Select location');
+            selectedLocation.removeClass('has-item');
+            selectedLocation.find('.item-holder').empty();
+            locationField.val('');
+          });
+        }
+      });
+
+      if (locationField.val()) {
+        var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + locationField.val() + ']');
+        dropdownToggle.text(selectedDropdownItem.text());
+        selectedDropdownItem.addClass('active');
+        selectedLocation.addClass('has-item');
+        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationField.val() + '">X</span></div>');
+        selectedLocation.find('.remove-item').click(function () {
+          var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
+          selectedDropdownItem.removeClass('active');
+          dropdownToggle.text('Select location');
+          selectedLocation.removeClass('has-item');
+          selectedLocation.find('.item-holder').empty();
+          locationField.val('');
+        });
+      } //Category whats On
+
+
+      if (categorySelectorWhatsOn.length > 0) {
+        categorySelectorWhatsOn.find('.form-check-input').each(function () {
           if (this.checked) {
-            selectedCategories.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
+            selectedCategoriesWhatsOn.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
+          } else {
+            if (selectedCategoryWhatsOnField.val()) {
+              var currentSelectedCategories = selectedCategoryWhatsOnField.val().split(",");
+              console.log(currentSelectedCategories);
+
+              if (jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'), currentSelectedCategories) !== -1) {
+                jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).prop('checked', true);
+                jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().addClass('selected');
+              }
+            }
           }
         });
-        categorySelector.on('change', '.form-check-input', function () {
+        categorySelectorWhatsOn.on('change', '.form-check-input', function () {
           var parent = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent('.form-check');
 
           if (this.checked) {
             parent.addClass('selected');
-            selectedCategories.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
+            selectedCategoriesWhatsOn.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
           } else {
             parent.removeClass('selected');
-            selectedCategories.splice(jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'), selectedCategories), 1);
+            selectedCategoriesWhatsOn.splice(jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'), selectedCategoriesWhatsOn), 1);
           }
 
-          selectedCategoryField.val(selectedCategories.toString());
+          selectedCategoryWhatsOnField.val(selectedCategoriesWhatsOn.toString());
+        });
+      } //Category creative directory
+
+
+      if (categorySelectorCreativeDirectory.length > 0) {
+        categorySelectorCreativeDirectory.find('.form-check-input').each(function () {
+          if (this.checked) {
+            selectedCategoriesCreativeDirectory.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
+          } else {
+            if (selectedCategoryCreativeDirectoryField.val()) {
+              var currentSelectedCategories = selectedCategoryCreativeDirectoryField.val().split(",");
+
+              if (jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'), currentSelectedCategories) !== -1) {
+                jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).prop('checked', true);
+                jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().addClass('selected');
+              }
+            }
+          }
+        });
+        categorySelectorCreativeDirectory.on('change', '.form-check-input', function () {
+          var parent = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent('.form-check');
+
+          if (this.checked) {
+            parent.addClass('selected');
+            selectedCategoriesCreativeDirectory.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
+          } else {
+            parent.removeClass('selected');
+            selectedCategoriesCreativeDirectory.splice(jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'), selectedCategoriesCreativeDirectory), 1);
+          }
+
+          selectedCategoryCreativeDirectoryField.val(selectedCategoriesCreativeDirectory.toString());
         });
       }
+    }
+  }
+
+  function contributorPage() {
+    var contributorForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ContributorForm_ContributorForm');
+
+    if (contributorForm.length > 0) {
+      var emailField, emailConfirmField;
+      emailField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ContributorForm_ContributorForm_Email');
+      emailConfirmField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ContributorForm_ContributorForm_ConfirmEmail');
+      contributorForm.on('submit', function (event) {
+        var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+        var error = false;
+
+        if (emailField.length > 0) {
+          event.preventDefault();
+
+          if (emailField.val() !== emailConfirmField.val()) {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
+            emailConfirmField.addClass('holder-validation is-invalid');
+            emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
+            error = true;
+          }
+
+          setTimeout(function () {
+            if (error === false) {
+              event.currentTarget.submit();
+            }
+          }, 1000);
+        }
+      });
+      var dropdownToggle = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-toggle');
+      var locationField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ContributorForm_ContributorForm_Location');
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item').click(function (e) {
+        var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+        var selectedDropdownItem = _this.text();
+
+        if (_this.hasClass('active')) {
+          _this.removeClass('active');
+
+          dropdownToggle.text('Region*');
+          locationField.val('');
+        } else {
+          _this.addClass('active').siblings().removeClass('active');
+
+          dropdownToggle.text(selectedDropdownItem);
+          locationField.val(_this.attr('data-id'));
+        }
+      });
     }
   }
 
@@ -35820,7 +36017,9 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     var createListingForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm');
 
     if (createListingForm.length > 0) {
-      //ListingCategoryStep
+      //ListingDetailsStep
+      ListingDetailsStep(); //ListingCategoryStep
+
       ListingCategoryStep(createListingForm); //ListingDateAndTimeStep
 
       ListingDateAndTimeStep(); //ListingPriceStep
@@ -35828,6 +36027,173 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       ListingPriceStep(); //ListingUploadImages
 
       ListingUploadImages();
+    }
+  }
+
+  function ListingDetailsStep() {
+    var locationSelector, typeSelector, sizeSelector, locationField, typeField, sizeField;
+    var locationDropdownToggle, typeDropdownToggle, sizeDropdownToggle;
+    var selectedLocation, selectedType, selectedSize;
+    locationSelector = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item');
+    typeSelector = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.type-selector .dropdown-item');
+    sizeSelector = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.size-selector .dropdown-item');
+    locationDropdownToggle = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-toggle');
+    typeDropdownToggle = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.type-selector .dropdown-toggle');
+    sizeDropdownToggle = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.size-selector .dropdown-toggle');
+    locationField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Location');
+    typeField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Type');
+    sizeField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Size');
+    selectedLocation = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-location');
+    selectedType = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-type');
+    selectedSize = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-size');
+    locationSelector.click(function (e) {
+      var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+      var selectedDropdownItem = _this.text();
+
+      if (_this.hasClass('active')) {
+        _this.removeClass('active');
+
+        locationDropdownToggle.text('Location*');
+        selectedLocation.find('.item-holder').empty();
+        selectedLocation.removeClass('has-item');
+        locationField.val('');
+      } else {
+        _this.addClass('active').siblings().removeClass('active');
+
+        locationDropdownToggle.text(selectedDropdownItem);
+        selectedLocation.addClass('has-item');
+        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
+        locationField.val(_this.attr('data-id'));
+        selectedLocation.find('.remove-item').click(function () {
+          var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
+          selectedDropdownItem.removeClass('active');
+          locationDropdownToggle.text('Location*');
+          selectedLocation.removeClass('has-item');
+          selectedLocation.find('.item-holder').empty();
+          locationField.val('');
+        });
+      }
+    });
+
+    if (locationField.val()) {
+      var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + locationField.val() + ']');
+      locationDropdownToggle.text(selectedDropdownItem.text());
+      selectedDropdownItem.addClass('active');
+      selectedLocation.addClass('has-item');
+      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationField.val() + '">X</span></div>');
+      selectedLocation.find('.remove-item').click(function () {
+        var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
+        selectedDropdownItem.removeClass('active');
+        locationDropdownToggle.text('Select location');
+        selectedLocation.removeClass('has-item');
+        selectedLocation.find('.item-holder').empty();
+        locationField.val('');
+      });
+    } else {
+      locationDropdownToggle.text('Location*');
+    }
+
+    typeSelector.click(function (e) {
+      var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+      var selectedDropdownItem = _this.text();
+
+      if (_this.hasClass('active')) {
+        _this.removeClass('active');
+
+        typeDropdownToggle.text('Type of Listing');
+        selectedType.find('.item-holder').empty();
+        selectedType.removeClass('has-item');
+        typeField.val('');
+      } else {
+        _this.addClass('active').siblings().removeClass('active');
+
+        typeDropdownToggle.text(selectedDropdownItem);
+        selectedType.addClass('has-item');
+        selectedType.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
+        typeField.val(_this.attr('data-id'));
+        selectedType.find('.remove-item').click(function () {
+          var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.type-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
+          selectedDropdownItem.removeClass('active');
+          typeDropdownToggle.text('Type of Listing');
+          selectedType.removeClass('has-item');
+          selectedType.find('.item-holder').empty();
+          typeField.val('');
+        });
+      }
+    });
+
+    if (typeField.val()) {
+      var _selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.type-selector .dropdown-item[data-id=' + typeField.val() + ']');
+
+      typeDropdownToggle.text(_selectedDropdownItem.text());
+
+      _selectedDropdownItem.addClass('active');
+
+      selectedType.addClass('has-item');
+      selectedType.find('.item-holder').empty().append('<div class="item"><span class="text">' + _selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + typeField.val() + '">X</span></div>');
+      selectedType.find('.remove-item').click(function () {
+        var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.type-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
+        selectedDropdownItem.removeClass('active');
+        typeDropdownToggle.text('Type of Listing');
+        selectedType.removeClass('has-item');
+        selectedType.find('.item-holder').empty();
+        typeField.val('');
+      });
+    } else {
+      typeDropdownToggle.text('Type of Listing');
+    }
+
+    sizeSelector.click(function (e) {
+      var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+      var selectedDropdownItem = _this.text();
+
+      if (_this.hasClass('active')) {
+        _this.removeClass('active');
+
+        sizeDropdownToggle.text('Type of Space');
+        selectedSize.find('.item-holder').empty();
+        selectedSize.removeClass('has-item');
+        sizeField.val('');
+      } else {
+        _this.addClass('active').siblings().removeClass('active');
+
+        sizeDropdownToggle.text(selectedDropdownItem);
+        selectedSize.addClass('has-item');
+        selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
+        sizeField.val(_this.attr('data-id'));
+        selectedType.find('.remove-item').click(function () {
+          var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.size-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
+          selectedDropdownItem.removeClass('active');
+          sizeDropdownToggle.text('Type of Space');
+          selectedSize.removeClass('has-item');
+          selectedSize.find('.item-holder').empty();
+          sizeField.val('');
+        });
+      }
+    });
+
+    if (sizeField.val()) {
+      var _selectedDropdownItem2 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.size-selector .dropdown-item[data-id=' + typeField.val() + ']');
+
+      sizeDropdownToggle.text(_selectedDropdownItem2.text());
+
+      _selectedDropdownItem2.addClass('active');
+
+      selectedSize.addClass('has-item');
+      selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + _selectedDropdownItem2.text() + '</span><span class="remove-item"  id="' + typeField.val() + '">X</span></div>');
+      selectedSize.find('.remove-item').click(function () {
+        var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.size-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
+        selectedDropdownItem.removeClass('active');
+        sizeDropdownToggle.text('Type of Space');
+        selectedSize.removeClass('has-item');
+        selectedSize.find('.item-holder').empty();
+        sizeField.val('');
+      });
+    } else {
+      sizeDropdownToggle.text('Type of Space');
     }
   }
 
@@ -35839,13 +36205,16 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         selectedTagsHolder,
         selectedTagsText,
         selectedTagsArray = [];
-    var categoryError, tagError, actionBtn;
+    var categoryError, tagError, locationError, actionBtn;
+    var selectedLocationText;
+    locationError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-error');
     categoryError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-error');
     tagError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.tag-error');
     actionBtn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_action_next');
     selectedCategoryText = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="Categories"]');
     selectedSubCategoryText = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SubCategories"]');
     selectedTagsText = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="Tags"]');
+    selectedLocationText = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Location');
     form.find('select').each(function () {
       var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this),
           dataType = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-type'),
@@ -36025,6 +36394,15 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           tagError.empty().append('<span>Please select at least one tag.</span>');
         } else {
           tagError.empty().append('<span>&nbsp;</span>');
+        }
+      }
+
+      if (attr === 'listing-details') {
+        if (!selectedLocationText.val()) {
+          e.preventDefault();
+          locationError.empty().append('<span>Please select a location.</span>');
+        } else {
+          locationError.empty().append('<span>&nbsp;</span>');
         }
       }
     });
@@ -36361,41 +36739,40 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         if (listingDateTimeItem.length > 0) {
           //check if user selected date from calendar
           listingDateTimeItem.each(function () {
-            var appointmentIsChecked = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('input[name="appointment_only"]').prop('checked');
+            var appointmentIsChecked = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('input[name="appointment_only"]').prop('checked'); // if (!appointmentIsChecked) {
+            // validate if all dropdown start time is selected
 
-            if (!appointmentIsChecked) {
-              // validate if all dropdown start time is selected
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown').each(function () {
-                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedStartTime')) {
-                  startTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-start-time');
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown').each(function () {
+              if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedStartTime')) {
+                startTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-start-time');
 
-                  if (startTime === null || startTime === "undefined" || !startTime) {
-                    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
-                    errorFlag = true;
-                    errorMessage = errorTimeMessage;
-                  } else {
-                    startTimeArray.push(startTime);
-                  }
+                if (startTime === null || startTime === "undefined" || !startTime) {
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
+                  errorFlag = true;
+                  errorMessage = errorTimeMessage;
+                } else {
+                  startTimeArray.push(startTime);
                 }
+              }
 
-                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedEndTime')) {
-                  endTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-end-time');
+              if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedEndTime')) {
+                endTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-end-time');
 
-                  if (endTime === null || endTime === "undefined" || !endTime) {
-                    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
-                    errorFlag = true;
-                    errorMessage = errorTimeMessage;
-                  } else {
-                    endTimeArray.push(endTime);
-                  }
+                if (endTime === null || endTime === "undefined" || !endTime) {
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
+                  errorFlag = true;
+                  errorMessage = errorTimeMessage;
+                } else {
+                  endTimeArray.push(endTime);
                 }
-              });
-            } else {
-              var appointment = 'Appointment Only';
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown').removeClass('has-error text-danger');
-              startTimeArray.push(appointment);
-              endTimeArray.push(appointment);
-            }
+              }
+            }); // } else {
+            //   const appointment = 'Appointment Only';
+            //
+            //   $(this).find('.dropdown').removeClass('has-error text-danger');
+            //   startTimeArray.push(appointment);
+            //   endTimeArray.push(appointment);
+            // }
           });
         } else {
           errorFlag = true;
@@ -36443,8 +36820,14 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       }
     }
 
-    elem.append('' + '<div class="date-time-item row d-flex align-items-end">' + '<div class="col-lg-3 pb-4"><div class="selectedDate"><span class="text">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
-    '<div class="col-lg-3 pb-4">' + '<div class="selectedStartTime dropdown">' + '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="' + startTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + startTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' + '</div>' + '</div>' + '<div class="col-lg-3 pb-4">' + '<div class="selectedEndTime dropdown">' + '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' + '</div>' + '</div>' + '<div class="col-lg-3 pb-4">' + '<div class="appointment d-flex align-items-center">' + '<input type="checkbox" name="appointment_only" id="appointmentOnly' + id + '" ' + appointment + '> ' + '<label class="ml-2 mb-0" for="appointmentOnly' + id + '"><span class="font-weight-normal">Appointment only</span></label>' + '</div>' + '</div>' + '</div>'); //Disable time selector when toggled
+    elem.append('' + '<div class="date-time-item row d-flex align-items-end">' + '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text text-tundora">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
+    '<div class="col-lg-4 pb-4">' + '<div class="selectedStartTime dropdown">' + '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="' + startTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + startTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' + '</div>' + '</div>' + '<div class="col-lg-4 pb-4">' + '<div class="selectedEndTime dropdown">' + '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' + '</div>' + '</div>' + // '<div class="col-lg-3 pb-4">' +
+    //   '<div class="appointment d-flex align-items-center">' +
+    //     '<input type="checkbox" name="appointment_only" id="appointmentOnly'+id+'" ' + appointment + '> ' +
+    //     '<label class="ml-2 mb-0" for="appointmentOnly'+id+'"><span class="font-weight-normal">Appointment only</span></label>' +
+    //   '</div>' +
+    // '</div>' +
+    '</div>'); //Disable time selector when toggled
 
     var inputAppointment = elem.find('input[name="appointment_only"]');
     inputAppointment.change(function () {
@@ -36483,7 +36866,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     var arrayTimes = ['6:00 am', '7:00 am', '8:00 am', '9:00 am', '10:00 am', '11:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm', '6:00 pm', '7:00 pm', '8:00 pm', '9:00 pm', '10:00 pm', '11:00 pm', '12:00 am', '1:00 am', '2:00 am'];
 
     for (var _i7 = index; _i7 < arrayTimes.length; _i7++) {
-      options += '<a class="dropdown-item" href="#" data-index="' + _i7 + '">' + arrayTimes[_i7] + '</a>';
+      options += '<a class="dropdown-item" href="#" data-index="' + _i7 + '"><span class="text-tundora">' + arrayTimes[_i7] + '</span></a>';
     }
 
     return options;

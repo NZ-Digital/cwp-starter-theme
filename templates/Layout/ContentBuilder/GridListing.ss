@@ -25,8 +25,8 @@
                                     <div class="listing-content--tags">
 
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)"><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
-                                        <% if $Tags %>
-                                            <% include ListingTags Tags=$Tags %>
+                                        <% if $Categories %>
+                                            <% include ListingTags Categories=$Categories %>
                                         <% end_if %>
                                         <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                                     </div>

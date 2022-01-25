@@ -23,19 +23,25 @@
                     <% end_if %>
                     <button class="btn-utils addtofavourites pl-lg-3 <% if $addedToFavourites($Listing.ID) %> active<% end_if %>" data-id="$Listing.ID"><i class="<% if $addedToFavourites($Listing.ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                     <button class="btn-utils sharelisting fontsize25 ml-3 text-scorpion"><i class="fas fa-share-alt"></i></button>
+                    <div class="share-socials--dropdown" id="socials-dropdown">
+                        <p class="text-center">
+                            <a target="_blank" class="pl-1 pr-1" href="https://www.facebook.com/sharer/sharer.php?u={$AbsoluteLink}"><i class="fab fa-facebook-f"></i></a>
+                            <a target="_blank" class="pl-1 pr-1" href="https://twitter.com/share?url={$AbsoluteLink}"><i class="fab fa-twitter"></i></a>
+                            <a target="_blank" class="pl-1 pr-1" href="https://www.linkedin.com/shareArticle?mini=true&url={$AbsoluteLink}"><i class="fab fa-linkedin-in"></i></a>
+                        </p>
+                        <hr style="border-color: #a2a2a2;">
+                        <p><a href="#" class="report-listing"><span class="fontsize16 font-weight-medium">Report</span></a></p>
+                        <p><a href="#" class="copy-link"><span class="fontsize16 font-weight-medium">Copy link</span></a></p>
+                        <div class="copy-link--modal">
+                            <div class="body">
+                                <p class="pb-3"><span class="font-weight-medium">Link copied</span> <button class="copy-link--close"><i class="fal fa-times"></i></button></p>
+                                <input type="text" disabled  name="pageurl" value="$AbsoluteLink" class="copy-link">
+                            </div>
+                        </div>
+                    </div>
 <%--                    <button class="btn-utils downloadlisting fontsize25 ml-3 text-scorpion"><i class="fas fa-arrow-alt-to-bottom"></i></button>--%>
                     <a target="_blank" href="https://www.google.com/maps/place/{$Listing.Address} {$Listing.City}" class="btn-utils getdirection fontsize25 ml-3 text-scorpion"> <i class="fas fa-map"></i> </a>
                     <% if $Listing.BookingURL %><p class="ml-3"><a target="_blank" href="$Listing.BookingURL"><span class="theme-button-gray-small font-weight-medium fontsize18 text-center">Book Online</span></a></p><% end_if %>
-                </div>
-                <div class="share-socials--dropdown">
-                    <p class="text-center">
-                        <a target="_blank" class="pl-1 pr-1" href="https://www.facebook.com/sharer/sharer.php?u={$AbsoluteLink}"><i class="fab fa-facebook-f"></i></a>
-                        <a target="_blank" class="pl-1 pr-1" href="https://twitter.com/share?url={$AbsoluteLink}"><i class="fab fa-twitter"></i></a>
-                        <a target="_blank" class="pl-1 pr-1" href="https://www.linkedin.com/shareArticle?mini=true&url={$AbsoluteLink}"><i class="fab fa-linkedin-in"></i></a>
-                    </p>
-                    <hr style="border-color: #a2a2a2;">
-                    <p><a href="#"><span class="fontsize16 font-weight-medium">Report</span></a></p>
-                    <p><a href="#" class="copy-link"><span class="fontsize16 font-weight-medium">Copy link</span></a></p>
                 </div>
             </div>
         </div>

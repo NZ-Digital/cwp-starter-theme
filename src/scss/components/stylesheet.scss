@@ -31,6 +31,7 @@
  *      - Upcoming Listing
  *      - User Navigation
  *      - User Side Navigation
+ *      - Video Slider
  *    3. Pages
  *      - Listing Page
  *    4. Global Settings
@@ -1288,6 +1289,47 @@
     }
   }
 
+  // -- User Side Navigation -- //
+  &.sectionVideoSlider {
+    .videoSlider-container {
+      .video-content {
+        &--video {
+          position: relative;
+          line-height: 0;
+          video {
+            height: 100%;
+            width: 100%;
+            line-height: 0;
+          }
+          .btn--video-play {
+            position: absolute;
+            background: transparent;
+            border: 0;
+            color: #f8cc46;
+            z-index: 1;
+            left: 50%;
+            top: 50%;
+            transform: translate3d(-50%, -50%, 0);
+            transition: opacity 200ms cubic-bezier(0.76, 0, 0.24, 1);
+            outline: none;
+            &.play {
+              opacity: 0;
+            }
+            i {
+              font-size: 8vw;
+            }
+          }
+          &:hover {
+            .btn--video-play {
+              &.play {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 //	3. Pages
@@ -1785,6 +1827,7 @@ textarea::placeholder {
     background: transparent;
     margin-right: 20px;
     transition: transform 200ms cubic-bezier(0.76, 0, 0.24, 1);
+    outline: none;
     &:active,
     &:target {
       transform: scale(0.8);
@@ -1830,10 +1873,10 @@ textarea::placeholder {
     display: block;
   }
 }
-
 .share-socials--dropdown {
   position: absolute;
-  left: 200px;
+  right: 100px;
+  bottom: -120px;
   display: none;
   width: 100%;
   max-width: 300px;
@@ -1858,6 +1901,40 @@ textarea::placeholder {
         background-color: $cod-gray;
       }
     }
+  }
+  &.active {
+    display: block;
+  }
+}
+.copy-link--modal {
+  position: absolute;
+  bottom: -140px;
+  left: 0;
+  display: none;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  padding: 23px 20px 20px;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+  background-color: #fff;
+  z-index: 3;
+  button {
+    font-size: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-color: transparent;
+    border: 0;
+    outline: none;
+  }
+  input {
+    font-size: 14px;
+    padding: 10px 15px;
+    border-radius: 50px;
+    width: 100%;
+    background-color: $carra;
+    color: #a4a4a4;
+    border: 0;
   }
   &.active {
     display: block;

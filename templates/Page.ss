@@ -28,13 +28,21 @@
         <% require themedJavascript('dist/js/jquery.min.js') %>
         <% require themedJavascript('dist/js/main.js') %>
         <script>
+
             window.Userback = window.Userback || {};
+
             Userback.access_token = '32243|61395|JULe63uJWZNk4LVD36qVySMpX';
+            setTimeout(function () {
+                $('.report-listing').click(function () {
+                    $('.userback-button-e').trigger( "click" );
+                });
+            },1000);
             (function(d) {
                 var s = d.createElement('script');s.async = true;
                 s.src = 'https://static.userback.io/widget/v1.js';
                 (d.head || d.body).appendChild(s);
             })(document);
+
         </script>
         <div id="fb-root"></div>
         <script>(function(d, s, id) {

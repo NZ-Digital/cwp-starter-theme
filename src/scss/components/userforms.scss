@@ -1,11 +1,22 @@
 .form-header {
+  position: relative;
   font-size: 60px;
   font-weight: $font-weight-light;
   line-height: 100%;
+  &:before {
+    position: absolute;
+    content: "";
+    bottom: 20px;
+    left: -143px;
+    height: 15px;
+    width: 90px;
+    background-color: $carra;
+  }
 }
 .form-subheader {
   font-size: 35px;
   font-weight: $font-weight-light;
+  max-width: 620px;
 }
 .fields {
   display: flex;
@@ -18,6 +29,15 @@
   .col-form-label {
     display: none !important;
   }
+  .form-text {
+    font-size: 16px;
+    color: $footer-gray;
+    padding-left: 10px;
+  }
+  input,
+  textarea {
+    border: 1px solid $footer-gray;
+  }
   input {
     &[type='text'],
     &[type='email'],
@@ -25,7 +45,6 @@
       height: 100%;
       padding: 13.2px 26.2px;
       border-radius: 50px;
-      border-color: $footer-gray;
       &::placeholder {
         color: $footer-gray;
       }
@@ -46,7 +65,7 @@
     height: 100%;
     padding: 13.2px 26.2px;
     appearance: none;
-    background: url('../images/arrow-down.png') 96% center no-repeat !important;
+    background: url('../images/arrow-down-gray.png') 96% center no-repeat !important;
     border-radius: 50px;
     border-color: $footer-gray;
   }
@@ -54,6 +73,16 @@
     min-height: 367px;
     border: 1px solid $footer-gray;
     border-radius: 0;
+    &.rounded-textarea {
+      padding: 20px;
+      border-radius: 25px;
+    }
+    &.textarea-small {
+      min-height: 162px;
+    }
+  }
+  textarea::placeholder {
+    color: $footer-gray;
   }
   button,
   input[type='submit'] {
@@ -70,7 +99,8 @@
       transform: translate3d(0, -50%, 0);
     }
   }
-  .optionset {
+  .optionset,
+  .single-option {
     .form-check {
       position: relative;
       text-align: center;
@@ -78,7 +108,8 @@
       &:first-child {
         padding-right: 30px;
       }
-      input[type='radio'] {
+      input[type='radio'],
+      input[type='checkbox']{
         position: absolute;
         top: 0;
         left: 50%;
@@ -95,13 +126,94 @@
         color: $scorpion;
         width: 100%;
         min-width: 194px;
-        padding: 14px;
+        padding: 10px 0;
         border-radius: 50px;
         border: 1px solid $footer-gray;
         margin-bottom: 0;
+        cursor: pointer;
+        transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1), background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+        &:hover {
+          background-color: $footer-gray;
+          color: #fff;
+        }
       }
     }
   }
+  .single-option {
+    .form-check {
+      width: 100%;
+      &:first-child {
+        padding-right: 0;
+      }
+      label {
+        width: 100%;
+      }
+    }
+  }
+}
+.dropdown-selector {
+  &.show {
+    .dropdown-toggle {
+      &:after {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  .dropdown-toggle {
+    cursor: pointer;
+    height: 100%;
+    color: #a2a2a2;
+    border: 1px solid #a2a2a2;
+    border-radius: 50px;
+    padding: 13.2px 26.2px 13.2px 26.2px;
+    transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1), color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+    width: 100%;
+    text-align: left;
+    &:after {
+      position: absolute;
+      background: url('../images/arrow-down-gray.png') 96% center no-repeat !important;
+      border: 0;
+      top: 20px;
+      right: 28px;
+      height: 15px;
+      width: 15px;
+    }
+  }
+  .dropdown-menu {
+    width: 100%;
+    margin-top: 0;
+    padding: 25px 26px;
+    border: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    background-color: $carra;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 16%);
+    .dropdown-item {
+      cursor: pointer;
+      color: #A2A2A2;
+      padding: 0;
+      transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1) ;
+      &.active,
+      &:hover {
+        color: $cod-gray;
+        background-color: transparent;
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid $footer-gray;
+        padding: 7px 0;
+      }
+      &:last-child {
+        padding-top: 7px;
+      }
+    }
+  }
+}
+.skip-btn {
+  border: 0;
+  background-color: transparent;
+  padding-top: 18px;
+  padding-left: 26px;
+  outline: none;
 }
 .searchfield {
   &:focus {
@@ -118,7 +230,27 @@
   }
   label {
     font-size: 20px;
-    margin-bottom: 25px;
+    //margin-bottom: 25px;
+  }
+  #FeaturedImage {
+    label {
+      &:after {
+        content: '(Image should be 1440 pixels wide x 750 pixels tall, max image size 150kb)';
+        display: block;
+        font-size: 16px;
+        color: $footer-gray;
+      }
+    }
+  }
+  #GalleryImages {
+    label {
+      &:after {
+        content: '(Add up to four gallery images, images should be 1440 pixels wide x 750 pixels tall, max image size 150kb each)';
+        display: block;
+        font-size: 16px;
+        color: $footer-gray;
+      }
+    }
   }
 }
 .mark,
@@ -402,6 +534,15 @@ input[type='submit'] {
 }
 .dropzone-holder.uploadable {
   padding-bottom: 0;
+  background-color: $carra;
+  height: 236px;
+  width: 439px;
+  border: 0 !important;
+  border-radius: 0;
+  margin-top: 33px;
+  P {
+    font-size: 14px;
+  }
 }
 .featured-image,
 .featured-logo {
@@ -450,7 +591,8 @@ input[type='submit'] {
 }
 #RegistrationForm_RegistrationForm,
 #ListingForm_ListingForm,
-#AccountForm_AccountForm {
+#AccountForm_AccountForm,
+#ContributorForm_ContributorForm{
   .actions {
     display: none;
   }
@@ -492,7 +634,8 @@ input[type='submit'] {
   bottom:0;
   left:0;
   padding: 14px 20px;
-  border: 1px solid $carra;
+  border: 1px solid $footer-gray;
+  color: $footer-gray;
   border-radius: 50px;
   background-color:white;
   background: url('../images/arrow-down-gray.png') 96% center no-repeat !important;
@@ -543,7 +686,8 @@ input[type='submit'] {
 }
 .selected-category,
 .selected-subcategory,
-.selected-tags {
+.selected-tags,
+.selected-dropdown {
   display: none;
   .item {
     position: relative;
@@ -557,6 +701,7 @@ input[type='submit'] {
     border-radius: 50px;
     margin-bottom: 10px;
     background-color: $carra;
+    color: $scorpion;
     border: 0;
     .remove-item {
       cursor: pointer;
@@ -568,6 +713,12 @@ input[type='submit'] {
   }
   &.has-item {
     display: block;
+  }
+}
+.selected-dropdown {
+  .item {
+    text-transform: none;
+    color: $scorpion;
   }
 }
 .sub-category-wrapper {

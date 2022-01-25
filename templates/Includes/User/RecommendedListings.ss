@@ -6,9 +6,11 @@
                     <div class="col-auto">
                         <p><span class="fontsize25 halyard-display font-weight-medium letterspacing-7px text-uppercase">Recommended $GroupName</span></p>
                     </div>
+                    <% if $Up.CurrentUserIsContributor %>
                     <div class="col-auto">
                         <p><a href="create-listing?id={$GroupID}" class="d-flex align-items-center text-decoration-none"><span class="fontsize25 halyard-display font-weight-medium mr-5">$GroupButtonText</span> <i class="fal fa-plus-circle fontsize35"></i></a></p>
                     </div>
+                    <% end_if %>
                     <div class="col-12"></div>
                     <div class="col-lg-6 pt-3">
                         <div class="row align-items-center">
@@ -73,7 +75,7 @@
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                                         <% if $Tags %>
-                                            <% include ListingTags Tags=$Tags %>
+                                            <% include ListingTags Categories=$Categories %>
                                         <% end_if %>
                                         <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                                     </div>

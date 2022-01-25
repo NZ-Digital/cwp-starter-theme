@@ -43,7 +43,7 @@
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                                         <% if $Tags %>
-                                            <% include ListingTags Tags=$Tags %>
+                                            <% include ListingTags Categories=$Categories %>
                                         <% end_if %>
 <%--                                        <div class="tag-container">--%>
 <%--                                            <div class="tag-items">--%>

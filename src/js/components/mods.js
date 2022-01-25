@@ -20,10 +20,12 @@ export default function () {
     //Sections
     sectionFilterBar();
     sectionFeaturedListings();
+    sectionVideoSlider();
 
     //Page
     listingPage();
     signUpPage();
+    contributorPage();
     createListingPage();
     articlePage();
 
@@ -258,9 +260,43 @@ export default function () {
     }
   }
 
+  function sectionVideoSlider()
+  {
+    let sectionVideoSlider = $('.sectionVideoSlider');
+    if (sectionVideoSlider.length > 0) {
+      let video   = sectionVideoSlider.find('video');
+      let playBtn = $('.btn--video-play');
+      playBtn.click(function () {
+        if ($(this).hasClass('play')) {
+          $(this).removeClass('play');
+          $(this).find('i').removeClass('fa-pause-circle').addClass('fa-play-circle');
+          video.get(0).pause();
+        } else {
+          $(this).addClass('play');
+          $(this).find('i').removeClass('fa-play-circle').addClass('fa-pause-circle');
+          video.get(0).play();
+        }
+      });
+    }
+  }
+
   function listingPage() {
     let listingPage = $('.ListingPage');
     if (listingPage.length > 0) {
+
+      let copyLinkModal = $('.copy-link--modal');
+      let copyLinkClose = $('.copy-link--close');
+      let copyLink      = $('.copy-link');
+
+      copyLink.click(function () {
+        copyLinkModal.addClass('active');
+        copyToClipboard(copyLinkModal.find('input').val());
+      });
+
+      copyLinkClose.click(function (){
+        copyLinkModal.removeClass('active');
+      });
+
       let listingPageGallery = listingPage.find('.owl-carousel');
       listingPageGallery.owlCarousel({
         items: 2,
@@ -286,6 +322,15 @@ export default function () {
         }
       });
     }
+  }
+
+  function copyToClipboard(text) {
+    let textArea = document.createElement("textarea");
+    document.body.appendChild(textArea);
+    textArea.value = text; //save main text in it
+    textArea.select(); //select textarea contenrs
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
   }
 
   function articlePage()
@@ -322,8 +367,8 @@ export default function () {
   function signUpPage() {
     let signUpForm = $('#RegistrationForm_RegistrationForm');
     if (signUpForm.length > 0) {
-      let input, categorySelector, selectedCategories = [], passwordField, passwordConfirmField,
-        emailField, emailConfirmField, selectedCategoryField;
+      let input, categorySelectorWhatsOn, categorySelectorCreativeDirectory, selectedCategoriesWhatsOn = [], selectedCategoriesCreativeDirectory = [], passwordField, passwordConfirmField,
+        emailField, emailConfirmField, selectedCategoryWhatsOnField, selectedCategoryCreativeDirectoryField;
 
       let requiredPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=-\?;,./{}|\":<>\[\]\\\' ~_]).{10,20}/;///^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
 
@@ -333,8 +378,10 @@ export default function () {
       passwordField = $('#RegistrationForm_RegistrationForm_Password_Holder');
       passwordConfirmField = $('#RegistrationForm_RegistrationForm_ConfirmPassword_Holder');
 
-      selectedCategoryField = $('#RegistrationForm_RegistrationForm_SelectedCategories');
-      categorySelector = $('.category-selector');
+      selectedCategoryWhatsOnField           = $('#RegistrationForm_RegistrationForm_SelectedCategoriesWhatsOn');
+      selectedCategoryCreativeDirectoryField = $('#RegistrationForm_RegistrationForm_SelectedCategoriesCreativeDirectory');
+      categorySelectorWhatsOn                = $('.category-selector.whatsOn-category');
+      categorySelectorCreativeDirectory      = $('.category-selector.creativeDirectory-category')
 
       passwordField.append('<a href="#" class="btn-reveal-password password-field"><span>Show</span></a>');
       passwordConfirmField.append('<a href="#" class="btn-reveal-password passwordConfirm-field"><span>Show</span></a>');
@@ -355,6 +402,16 @@ export default function () {
       signUpForm.on('submit', function (event) {
         let _this = $(this);
         let error = false;
+
+        let errorField = $('.error-field');
+        if (selectedCategoryWhatsOnField.length > 0) {
+          if (!selectedCategoryWhatsOnField.val()) {
+            event.preventDefault();
+            errorField.addClass('d-block').find('span').text('Please select at least 1 category');
+            error = true;
+          }
+        }
+
         if (passwordField.length > 0) {
           if (passwordField.find('.password').val() !== passwordConfirmField.find('.password').val()) {
             $('#message-RegistrationForm_RegistrationForm_ConfirmPassword').remove();
@@ -389,35 +446,161 @@ export default function () {
             emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
             error = true;
           }
-
           setTimeout(function () {
             if (error === false) {
-              console.log(error);
               event.currentTarget.submit();
             }
           },1000);
         }
       });
 
-      //Category suggestions
-      if (categorySelector.length > 0) {
-        categorySelector.find('.form-check-input').each(function () {
+      let dropdownToggle = $('.location-selector .dropdown-toggle');
+      let selectedLocation     = $('.selected-location');
+      let locationField        = $('#RegistrationForm_RegistrationForm_Location');
+      $('.location-selector .dropdown-item').click(function(e) {
+        let _this = $(this);
+        let selectedDropdownItem = _this.text();
+        if (_this.hasClass('active')) {
+          _this.removeClass('active');
+          dropdownToggle.text('Select location');
+          selectedLocation.find('.item-holder').empty()
+          selectedLocation.removeClass('has-item');
+          locationField.val('');
+        } else {
+          _this.addClass('active').siblings().removeClass('active');
+          dropdownToggle.text(selectedDropdownItem);
+          selectedLocation.addClass('has-item');
+          selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="'+ _this.attr('data-id') +'">X</span></div>');
+          locationField.val(_this.attr('data-id'));
+
+          selectedLocation.find('.remove-item').click(function () {
+            let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
+            selectedDropdownItem.removeClass('active');
+            dropdownToggle.text('Select location');
+            selectedLocation.removeClass('has-item')
+            selectedLocation.find('.item-holder').empty();
+            locationField.val('');
+          });
+        }
+      });
+
+      if (locationField.val()) {
+        let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + locationField.val() + ']');
+        dropdownToggle.text(selectedDropdownItem.text());
+        selectedDropdownItem.addClass('active');
+        selectedLocation.addClass('has-item');
+        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="'+ locationField.val() +'">X</span></div>');
+
+        selectedLocation.find('.remove-item').click(function () {
+          let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
+          selectedDropdownItem.removeClass('active');
+          dropdownToggle.text('Select location');
+          selectedLocation.removeClass('has-item')
+          selectedLocation.find('.item-holder').empty();
+          locationField.val('');
+        });
+      }
+
+      //Category whats On
+      if (categorySelectorWhatsOn.length > 0) {
+        categorySelectorWhatsOn.find('.form-check-input').each(function () {
           if (this.checked) {
-            selectedCategories.push($(this).attr('name'));
+            selectedCategoriesWhatsOn.push($(this).attr('name'));
+          } else {
+            if (selectedCategoryWhatsOnField.val()) {
+              let currentSelectedCategories = selectedCategoryWhatsOnField.val().split(",");
+              console.log(currentSelectedCategories);
+              if($.inArray($(this).attr('name'), currentSelectedCategories) !== -1) {
+                $(this).prop('checked', true);
+                $(this).parent().addClass('selected');
+              }
+            }
           }
         });
-        categorySelector.on('change', '.form-check-input', function () {
+        categorySelectorWhatsOn.on('change', '.form-check-input', function () {
           let parent = $(this).parent('.form-check');
           if (this.checked) {
             parent.addClass('selected');
-            selectedCategories.push($(this).attr('name'));
+            selectedCategoriesWhatsOn.push($(this).attr('name'));
           } else {
             parent.removeClass('selected');
-            selectedCategories.splice($.inArray($(this).attr('name'), selectedCategories), 1);
+            selectedCategoriesWhatsOn.splice($.inArray($(this).attr('name'), selectedCategoriesWhatsOn), 1);
           }
-          selectedCategoryField.val(selectedCategories.toString());
+          selectedCategoryWhatsOnField.val(selectedCategoriesWhatsOn.toString());
         });
       }
+
+      //Category creative directory
+      if (categorySelectorCreativeDirectory.length > 0) {
+        categorySelectorCreativeDirectory.find('.form-check-input').each(function () {
+          if (this.checked) {
+            selectedCategoriesCreativeDirectory.push($(this).attr('name'));
+          } else {
+            if (selectedCategoryCreativeDirectoryField.val()) {
+              let currentSelectedCategories = selectedCategoryCreativeDirectoryField.val().split(",");
+              if($.inArray($(this).attr('name'), currentSelectedCategories) !== -1) {
+                $(this).prop('checked', true);
+                $(this).parent().addClass('selected');
+              }
+            }
+          }
+        });
+        categorySelectorCreativeDirectory.on('change', '.form-check-input', function () {
+          let parent = $(this).parent('.form-check');
+          if (this.checked) {
+            parent.addClass('selected');
+            selectedCategoriesCreativeDirectory.push($(this).attr('name'));
+          } else {
+            parent.removeClass('selected');
+            selectedCategoriesCreativeDirectory.splice($.inArray($(this).attr('name'), selectedCategoriesCreativeDirectory), 1);
+          }
+          selectedCategoryCreativeDirectoryField.val(selectedCategoriesCreativeDirectory.toString());
+        });
+      }
+    }
+  }
+
+  function contributorPage() {
+    let contributorForm = $('#ContributorForm_ContributorForm');
+    if (contributorForm.length > 0) {
+      let emailField, emailConfirmField;
+      emailField = $('#ContributorForm_ContributorForm_Email');
+      emailConfirmField = $('#ContributorForm_ContributorForm_ConfirmEmail');
+
+      contributorForm.on('submit', function (event) {
+        let _this = $(this);
+        let error = false;
+        if (emailField.length > 0) {
+          event.preventDefault();
+          if (emailField.val() !== emailConfirmField.val()) {
+            $('#message-RegistrationForm_RegistrationForm_ConfirmEmail').remove();
+            emailConfirmField.addClass('holder-validation is-invalid');
+            emailConfirmField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_ConfirmEmail" class="invalid-feedback" role="alert" aria-atomic="true">The email confirmation does not match your email address.</div>');
+            error = true;
+          }
+          setTimeout(function () {
+            if (error === false) {
+              event.currentTarget.submit();
+            }
+          },1000);
+        }
+      });
+
+      let dropdownToggle = $('.location-selector .dropdown-toggle');
+      let locationField  = $('#ContributorForm_ContributorForm_Location');
+      $('.location-selector .dropdown-item').click(function(e) {
+        let _this = $(this);
+        let selectedDropdownItem = _this.text();
+        if (_this.hasClass('active')) {
+          _this.removeClass('active');
+          dropdownToggle.text('Region*');
+          locationField.val('');
+        } else {
+          _this.addClass('active').siblings().removeClass('active');
+          dropdownToggle.text(selectedDropdownItem);
+          locationField.val(_this.attr('data-id'));
+        }
+      });
     }
   }
 
@@ -446,6 +629,9 @@ export default function () {
     let createListingForm = $('#ListingForm_ListingForm');
     if (createListingForm.length > 0)
     {
+      //ListingDetailsStep
+      ListingDetailsStep();
+
       //ListingCategoryStep
       ListingCategoryStep(createListingForm);
 
@@ -460,6 +646,168 @@ export default function () {
     }
   }
 
+  function ListingDetailsStep()
+  {
+
+    let locationSelector, typeSelector, sizeSelector, locationField, typeField, sizeField;
+    let locationDropdownToggle, typeDropdownToggle, sizeDropdownToggle;
+    let selectedLocation, selectedType, selectedSize;
+
+    locationSelector = $('.location-selector .dropdown-item');
+    typeSelector     = $('.type-selector .dropdown-item');
+    sizeSelector     = $('.size-selector .dropdown-item');
+
+    locationDropdownToggle = $('.location-selector .dropdown-toggle');
+    typeDropdownToggle     = $('.type-selector .dropdown-toggle');
+    sizeDropdownToggle     = $('.size-selector .dropdown-toggle');
+
+    locationField = $('#ListingForm_ListingForm_Location');
+    typeField     = $('#ListingForm_ListingForm_Type');
+    sizeField     = $('#ListingForm_ListingForm_Size');
+
+    selectedLocation = $('.selected-location');
+    selectedType     = $('.selected-type');
+    selectedSize     = $('.selected-size');
+
+    locationSelector.click(function(e) {
+      let _this = $(this);
+      let selectedDropdownItem = _this.text();
+      if (_this.hasClass('active')) {
+        _this.removeClass('active');
+        locationDropdownToggle.text('Location*');
+        selectedLocation.find('.item-holder').empty()
+        selectedLocation.removeClass('has-item');
+        locationField.val('');
+      } else {
+        _this.addClass('active').siblings().removeClass('active');
+        locationDropdownToggle.text(selectedDropdownItem);
+        selectedLocation.addClass('has-item');
+        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="'+ _this.attr('data-id') +'">X</span></div>');
+        locationField.val(_this.attr('data-id'));
+
+        selectedLocation.find('.remove-item').click(function () {
+          let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
+          selectedDropdownItem.removeClass('active');
+          locationDropdownToggle.text('Location*');
+          selectedLocation.removeClass('has-item')
+          selectedLocation.find('.item-holder').empty();
+          locationField.val('');
+        });
+      }
+    });
+
+    if (locationField.val()) {
+      let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + locationField.val() + ']');
+      locationDropdownToggle.text(selectedDropdownItem.text());
+      selectedDropdownItem.addClass('active');
+      selectedLocation.addClass('has-item');
+      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="'+ locationField.val() +'">X</span></div>');
+
+      selectedLocation.find('.remove-item').click(function () {
+        let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
+        selectedDropdownItem.removeClass('active');
+        locationDropdownToggle.text('Select location');
+        selectedLocation.removeClass('has-item')
+        selectedLocation.find('.item-holder').empty();
+        locationField.val('');
+      });
+    } else {
+      locationDropdownToggle.text('Location*');
+    }
+
+    typeSelector.click(function(e) {
+      let _this = $(this);
+      let selectedDropdownItem = _this.text();
+      if (_this.hasClass('active')) {
+        _this.removeClass('active');
+        typeDropdownToggle.text('Type of Listing');
+        selectedType.find('.item-holder').empty()
+        selectedType.removeClass('has-item');
+        typeField.val('');
+      } else {
+        _this.addClass('active').siblings().removeClass('active');
+        typeDropdownToggle.text(selectedDropdownItem);
+        selectedType.addClass('has-item');
+        selectedType.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="'+ _this.attr('data-id') +'">X</span></div>');
+        typeField.val(_this.attr('data-id'));
+
+        selectedType.find('.remove-item').click(function () {
+          let selectedDropdownItem = $('.type-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
+          selectedDropdownItem.removeClass('active');
+          typeDropdownToggle.text('Type of Listing');
+          selectedType.removeClass('has-item')
+          selectedType.find('.item-holder').empty();
+          typeField.val('');
+        });
+      }
+    });
+
+    if (typeField.val()) {
+      let selectedDropdownItem = $('.type-selector .dropdown-item[data-id=' + typeField.val() + ']');
+      typeDropdownToggle.text(selectedDropdownItem.text());
+      selectedDropdownItem.addClass('active');
+      selectedType.addClass('has-item');
+      selectedType.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="'+ typeField.val() +'">X</span></div>');
+
+      selectedType.find('.remove-item').click(function () {
+        let selectedDropdownItem = $('.type-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
+        selectedDropdownItem.removeClass('active');
+        typeDropdownToggle.text('Type of Listing');
+        selectedType.removeClass('has-item')
+        selectedType.find('.item-holder').empty();
+        typeField.val('');
+      });
+    } else {
+      typeDropdownToggle.text('Type of Listing');
+    }
+
+    sizeSelector.click(function(e) {
+      let _this = $(this);
+      let selectedDropdownItem = _this.text();
+      if (_this.hasClass('active')) {
+        _this.removeClass('active');
+        sizeDropdownToggle.text('Type of Space');
+        selectedSize.find('.item-holder').empty()
+        selectedSize.removeClass('has-item');
+        sizeField.val('');
+      } else {
+        _this.addClass('active').siblings().removeClass('active');
+        sizeDropdownToggle.text(selectedDropdownItem);
+        selectedSize.addClass('has-item');
+        selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="'+ _this.attr('data-id') +'">X</span></div>');
+        sizeField.val(_this.attr('data-id'));
+
+        selectedType.find('.remove-item').click(function () {
+          let selectedDropdownItem = $('.size-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
+          selectedDropdownItem.removeClass('active');
+          sizeDropdownToggle.text('Type of Space');
+          selectedSize.removeClass('has-item')
+          selectedSize.find('.item-holder').empty();
+          sizeField.val('');
+        });
+      }
+    });
+
+    if (sizeField.val()) {
+      let selectedDropdownItem = $('.size-selector .dropdown-item[data-id=' + typeField.val() + ']');
+      sizeDropdownToggle.text(selectedDropdownItem.text());
+      selectedDropdownItem.addClass('active');
+      selectedSize.addClass('has-item');
+      selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="'+ typeField.val() +'">X</span></div>');
+
+      selectedSize.find('.remove-item').click(function () {
+        let selectedDropdownItem = $('.size-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
+        selectedDropdownItem.removeClass('active');
+        sizeDropdownToggle.text('Type of Space');
+        selectedSize.removeClass('has-item')
+        selectedSize.find('.item-holder').empty();
+        sizeField.val('');
+      });
+    } else {
+      sizeDropdownToggle.text('Type of Space');
+    }
+  }
+
   function ListingCategoryStep(form)
   {
     let selectedCategoryHolder, selectedCategoryText,
@@ -467,8 +815,11 @@ export default function () {
         selectedTagsHolder, selectedTagsText,
         selectedTagsArray = [];
 
-    let categoryError, tagError, actionBtn;
+    let categoryError, tagError, locationError, actionBtn;
 
+    let selectedLocationText;
+
+    locationError = $('.location-error');
     categoryError = $('.category-error');
     tagError      = $('.tag-error');
 
@@ -477,6 +828,8 @@ export default function () {
     selectedCategoryText    = $('input[name="Categories"]');
     selectedSubCategoryText = $('input[name="SubCategories"]');
     selectedTagsText        = $('input[name="Tags"]');
+
+    selectedLocationText = $('#ListingForm_ListingForm_Location');
 
     form.find('select').each(function () {
       let $this           = $(this),
@@ -660,6 +1013,16 @@ export default function () {
           tagError.empty().append('<span>&nbsp;</span>');
         }
       }
+
+      if (attr === 'listing-details') {
+        if (!selectedLocationText.val()) {
+          e.preventDefault();
+          locationError.empty().append('<span>Please select a location.</span>');
+        } else {
+          locationError.empty().append('<span>&nbsp;</span>');
+        }
+      }
+
     });
     loadSelectedCategoriesAndTags(selectedCategoryText, selectedSubCategoryText, selectedTagsText);
   }
@@ -985,7 +1348,7 @@ export default function () {
         if (listingDateTimeItem.length > 0) { //check if user selected date from calendar
           listingDateTimeItem.each(function () {
             let appointmentIsChecked = $(this).find('input[name="appointment_only"]').prop('checked');
-            if (!appointmentIsChecked) {
+            // if (!appointmentIsChecked) {
               // validate if all dropdown start time is selected
               $(this).find('.dropdown').each(function() {
                 if ($(this).hasClass('selectedStartTime')) {
@@ -1009,13 +1372,13 @@ export default function () {
                   }
                 }
               });
-            } else {
-              const appointment = 'Appointment Only';
-
-              $(this).find('.dropdown').removeClass('has-error text-danger');
-              startTimeArray.push(appointment);
-              endTimeArray.push(appointment);
-            }
+            // } else {
+            //   const appointment = 'Appointment Only';
+            //
+            //   $(this).find('.dropdown').removeClass('has-error text-danger');
+            //   startTimeArray.push(appointment);
+            //   endTimeArray.push(appointment);
+            // }
           })
         } else {
           errorFlag = true;
@@ -1063,25 +1426,25 @@ export default function () {
 
     elem.append('' +
     '<div class="date-time-item row d-flex align-items-end">' +
-      '<div class="col-lg-3 pb-4"><div class="selectedDate"><span class="text">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
-      '<div class="col-lg-3 pb-4">' +
+      '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text text-tundora">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
+      '<div class="col-lg-4 pb-4">' +
         '<div class="selectedStartTime dropdown">' +
           '<button class="dropdown-toggle" '+ startTimeDisabled +' type="button" id="startDate'+ id +'" data-start-time="'+startTime+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+ startTimeText +'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
           '<div class="dropdown-menu" aria-labelledby="startDate'+id+'">' + timeOptions(0) + '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="col-lg-3 pb-4">' +
+      '<div class="col-lg-4 pb-4">' +
         '<div class="selectedEndTime dropdown">' +
           '<button class="dropdown-toggle" '+ endTimeDisabled +' type="button" id="endDate'+ id +'" data-end-time="'+endTime+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+ endTimeText +'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
           '<div class="dropdown-menu" aria-labelledby="endDate'+id+'"></div>' +
         '</div>' +
       '</div>' +
-      '<div class="col-lg-3 pb-4">' +
-        '<div class="appointment d-flex align-items-center">' +
-          '<input type="checkbox" name="appointment_only" id="appointmentOnly'+id+'" ' + appointment + '> ' +
-          '<label class="ml-2 mb-0" for="appointmentOnly'+id+'"><span class="font-weight-normal">Appointment only</span></label>' +
-        '</div>' +
-      '</div>' +
+      // '<div class="col-lg-3 pb-4">' +
+      //   '<div class="appointment d-flex align-items-center">' +
+      //     '<input type="checkbox" name="appointment_only" id="appointmentOnly'+id+'" ' + appointment + '> ' +
+      //     '<label class="ml-2 mb-0" for="appointmentOnly'+id+'"><span class="font-weight-normal">Appointment only</span></label>' +
+      //   '</div>' +
+      // '</div>' +
     '</div>');
 
     //Disable time selector when toggled
@@ -1111,7 +1474,6 @@ export default function () {
         _this.parent().siblings().find('.dropdown-menu').empty().append(timeOptions(index));
       });
     });
-
   }
 
   function timeOptions(index)
@@ -1126,7 +1488,7 @@ export default function () {
       ];
 
     for (let i = index; i < arrayTimes.length; i++) {
-      options += '<a class="dropdown-item" href="#" data-index="' + i + '">' + arrayTimes[i] + '</a>';
+      options += '<a class="dropdown-item" href="#" data-index="' + i + '"><span class="text-tundora">' + arrayTimes[i] + '</span></a>';
     }
     return options;
   }
