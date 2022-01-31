@@ -36,6 +36,8 @@ export default function () {
     showShareSocials();
     sliderTags();
 
+    accountSettings();
+
     closeModal();
     //testAjax();
   }
@@ -244,12 +246,12 @@ export default function () {
             margin: 10,
           },
           669: {
-            stagePadding: 20,
-            margin: 20,
+            stagePadding: 10,
+            margin: 10,
           },
           992: {
-            stagePadding: 40,
-            margin: 40,
+            stagePadding: 20,
+            margin: 20,
           },
           1590: {
             stagePadding: 330,
@@ -648,7 +650,6 @@ export default function () {
 
   function ListingDetailsStep()
   {
-
     let locationSelector, typeSelector, sizeSelector, locationField, typeField, sizeField;
     let locationDropdownToggle, typeDropdownToggle, sizeDropdownToggle;
     let selectedLocation, selectedType, selectedSize;
@@ -805,6 +806,31 @@ export default function () {
       });
     } else {
       sizeDropdownToggle.text('Type of Space');
+    }
+
+    //Step navigation naming
+    if ($('.group-wo li.ListingPricingStep').find('a')){
+      $('.group-wo li.ListingPricingStep a').text("Ticketing");
+    } else {
+      $('.group-wo li.ListingPricingStep').text("Ticketing");
+    }
+
+    if ($('.group-cd li.ListingPricingStep').find('a')){
+      $('.group-cd li.ListingPricingStep a').text("Pricing");
+    } else {
+      $('.group-cd li.ListingPricingStep').text("Pricing");
+    }
+
+    if ($('.group-cs li.ListingPricingStep').find('a')){
+      $('.group-cs li.ListingPricingStep a').text("Pricing");
+    } else {
+      $('.group-cs li.ListingPricingStep').text("Pricing");
+    }
+
+    if ($('.group-cs li.ListingInfoStep').find('a')){
+      $('.group-cs li.ListingInfoStep a').text("Space Details");
+    } else {
+      $('.group-cs li.ListingInfoStep').text("Space Details");
     }
   }
 
@@ -1425,15 +1451,15 @@ export default function () {
     }
 
     elem.append('' +
-    '<div class="date-time-item row d-flex align-items-end">' +
+    '<div class="date-time-item row pb-lg-0 pb-4 d-flex align-items-end">' +
       '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text text-tundora">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
-      '<div class="col-lg-4 pb-4">' +
+      '<div class="col-lg-4 col-6 pb-4">' +
         '<div class="selectedStartTime dropdown">' +
           '<button class="dropdown-toggle" '+ startTimeDisabled +' type="button" id="startDate'+ id +'" data-start-time="'+startTime+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+ startTimeText +'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
           '<div class="dropdown-menu" aria-labelledby="startDate'+id+'">' + timeOptions(0) + '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="col-lg-4 pb-4">' +
+      '<div class="col-lg-4 col-6 pb-4">' +
         '<div class="selectedEndTime dropdown">' +
           '<button class="dropdown-toggle" '+ endTimeDisabled +' type="button" id="endDate'+ id +'" data-end-time="'+endTime+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+ endTimeText +'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
           '<div class="dropdown-menu" aria-labelledby="endDate'+id+'"></div>' +
@@ -1520,7 +1546,27 @@ export default function () {
 
   function ListingUploadImages()
   {
+    let featuredImageDropZone, galleryImagesDropzone, listingLogoDropzone;
+    let featuredImageLi, galleryImagesLi, listingLogoImageLi;
+    let featuredImageLiFileLink, listingLogoLiFileLink;
 
+    featuredImageDropZone = $('#FeaturedImageDropzone');
+    galleryImagesDropzone = $('#GalleryImagesDropzone');
+    listingLogoDropzone   = $('#ListingLogoDropzone');
+
+    featuredImageLi = featuredImageDropZone.find('ul.file-attachment-field-previews li');
+    featuredImageLiFileLink = featuredImageLi.attr('data-file-link');
+    featuredImageLi.find('span.file-icon img').attr('src', featuredImageLiFileLink);
+
+    galleryImagesLi = galleryImagesDropzone.find('ul.file-attachment-field-previews li');
+    galleryImagesLi.each(function () {
+      let galleryImagesLiFileLink = $(this).attr('data-file-link');
+      $(this).find('span.file-icon img').attr('src', galleryImagesLiFileLink);
+    });
+
+    listingLogoImageLi = listingLogoDropzone.find('ul.file-attachment-field-previews li');
+    listingLogoLiFileLink = listingLogoImageLi.attr('data-file-link');
+    listingLogoImageLi.find('span.file-icon img').attr('src', listingLogoLiFileLink);
   }
 
   function addToFavourites()
@@ -1639,6 +1685,36 @@ export default function () {
       //   }
       // });
     });
+  }
+
+  function accountSettings()
+  {
+    let AccountForm_AccountForm = $('#AccountForm_AccountForm');
+    if (AccountForm_AccountForm.length > 0) {
+      // let requiredPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=-\?;,./{}|\":<>\[\]\\\' ~_]).{10,20}/;///^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
+      // AccountForm_AccountForm.on('submit', function (event) {
+      //   let error = false;
+      //   event.preventDefault();
+      //   let cpFields = $('.change-password-fields');
+      //   if (cpFields.hasClass('active')) {
+      //     let AccountForm_AccountForm_NewPassword = $('#AccountForm_AccountForm_NewPassword');
+      //     let AccountForm_AccountForm_ConfirmPassword = $('#AccountForm_AccountForm_ConfirmPassword');
+      //     if (AccountForm_AccountForm_NewPassword.val() !== AccountForm_AccountForm_ConfirmPassword.val()) {
+      //       error = true;
+      //       AccountForm_AccountForm_NewPassword.parent().append('<div class="error-field"><span class="text-danger fontsize12 font-weight-book">The password confirmation does not match your password.</span></div>')
+      //     }
+      //
+      //     if (!requiredPassword.test(AccountForm_AccountForm_NewPassword.val())) {
+      //
+      //     }
+      //   }
+      //   // setTimeout(function () {
+      //   //     if (error === false) {
+      //   //         event.currentTarget.submit();
+      //   //     }
+      //   // },1000);
+      // });
+    }
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback)

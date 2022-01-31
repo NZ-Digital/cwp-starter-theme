@@ -12,8 +12,8 @@
             <div class="row m-0">
                 <div class="col-lg-12"><p class="form-header"><span>Join the community!</span></p></div>
                 <div class="col-lg-12 pt-lg-5 pb-lg-4"><p class="form-subheader"><span>Sign up to become a contributor and create What’s On, Creative Directory and Find a space listings.</span></p></div>
-                <div class="col-lg-6 pt-5"><p>&nbsp;</p></div>
-                <div class="col-lg-6 pt-5"><a href="become-a-contributor-form" id="RegistrationForm_RegistrationForm_action_next" class="action theme-button-long-yellow-arrow text-left"><span class="fontsize-16 font-weight-medium">Join Te Wāhi Toi</span></a></div>
+                <div class="col-lg-6 pt-5 d-lg-block d-none"><p>&nbsp;</p></div>
+                <div class="col-lg-6 pt-lg-5 pt-4 pb-lg-0 pb-5"><a href="become-a-contributor-form" id="RegistrationForm_RegistrationForm_action_next" class="action theme-button-long-yellow-arrow text-left"><span class="fontsize-16 font-weight-medium">Join Te Wāhi Toi</span></a></div>
             </div>
         </div>
     </div>

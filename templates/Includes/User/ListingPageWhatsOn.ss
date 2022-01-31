@@ -133,7 +133,13 @@
                         <p><span class="fontsize20 font-weight-medium text-uppercase">Price & Bookings</span></p>
                     </div>
                     <div class="col-lg-12 offset-2 pb-lg-1">
-                        <p><span class="fontsize19 font-weight-book moderna-sans">$Listing.Prices.RAW</span></p>
+                        <p><span class="fontsize19 font-weight-book moderna-sans">
+                            <% if $Listing.PriceRange %>From $Listing.PriceRange<% end_if %><br>
+                            <% if $Listing.GAPrice %>Adult - ${$Listing.GAPrice}<% end_if %><br>
+                            <% if $Listing.StuPrice %>Student - ${$Listing.StuPrice}<% end_if %><br>
+                            <% if $Listing.SenPrice %>Senior - ${$Listing.SenPrice}<% end_if %><br>
+                            <% if $Listing.ChiPrice %>Child - ${$Listing.ChiPrice}<% end_if %>
+                        </span></p>
                         <p class="pt-lg-5"><a target="_blank" href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"> <span class="fontsize16 font-weight-medium text-underline">Buy tickets</span></a></p>
                     </div>
 

@@ -21,15 +21,15 @@
                         </div>
                     </div>
                     <div class="listing-content--details">
-                        <p class="mb-3 mt-4"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Name}</span></a></p>
-                        <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.RAW.LimitWordCount(15)</span></a></p>
+                        <p class="mb-3 mt-4 listing-title"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Name}</span></a></p>
+                        <p class="listing-text"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.RAW.LimitWordCount(15)</span></a></p>
                     </div>
                     <div class="listing-content--tags">
                         <button class="btn-utils addtofavourites fontsize35<% if $Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.addedToFavourites($ID)"><i class="<% if $Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
                         <% if $Categories %>
                             <% include ListingTags Categories=$Categories %>
                         <% end_if %>
-                        <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
+                        <p class="ml-sm-auto ml-0 pt-sm-0 pt-3"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                     </div>
                 </div>
             </div>

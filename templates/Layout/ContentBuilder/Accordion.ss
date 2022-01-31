@@ -2,7 +2,7 @@
     <div class="row no-gutters">
         <% if $Content %>
             <div class="col-lg-4">
-                <div class="pt-lg-6 padding-left-100px">
+                <div class="pt-lg-6 padding-left-100px mobile-right-padding tablet-right-padding">
                     $Content
                 </div>
             </div>

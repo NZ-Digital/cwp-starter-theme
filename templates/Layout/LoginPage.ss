@@ -12,6 +12,7 @@
         </div>
     </div>
 </section>
+<% if $ConfirmedRegistration == 1 || $ConfirmedRegistration == 2 %>
 <section class="page-section accountVerificationSection col-lg-8 pt-lg-9 pb-lg-9 inner-padding--right">
     <div class="sectionAccountVerification-container">
         <div class="form-container pl-lg-8 position-relative">
@@ -50,4 +51,5 @@
         </div>
     </div>
 </section>
+<% end_if %>
 <% include VisibleSection %>

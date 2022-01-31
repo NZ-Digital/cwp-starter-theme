@@ -6,13 +6,13 @@
                     <a href="/all-listings?category={$Title}" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
                 <% end_loop %>
             </div>
-            <button class="see-more"><span class="halyard-display font-weight-medium fontsize16 d-block"><i class="fas fa-angle-down"></i></span></button>
+<%--            <button class="see-more"><span class="halyard-display font-weight-medium fontsize16 d-block"><i class="fas fa-angle-down"></i></span></button>--%>
         </div>
-        <div class="more-tags">
-            <% loop $Categories %>
-                <a href="/all-listings?category={$Title}" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>
-            <% end_loop %>
-        </div>
+<%--        <div class="more-tags">--%>
+<%--            <% loop $Categories %>--%>
+<%--                <a href="/all-listings?category={$Title}" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>--%>
+<%--            <% end_loop %>--%>
+<%--        </div>--%>
     </div>
 <% else %>
     <div class="tags">

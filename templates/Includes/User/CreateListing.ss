@@ -1,5 +1,5 @@
 <% if $ListingForm %>
-    <section class="page-section sectionUserSideNav col-lg-4 pl-lg-7 pt-lg-9 pb-lg-9" <% if $GroupIDFromParam == "1" %>style="background-color: #F8CC46;"<% end_if %><% if $GroupIDFromParam == "2" %>style="background-color: #696163;"<% end_if %><% if $GroupIDFromParam == "3" %>style="background-color: #141414;"<% end_if %>>
+    <section class="page-section sectionUserSideNav col-lg-4 pl-lg-7 pt-lg-9 pb-lg-9<% if $GroupIDFromParam == "1" %> group-wo<% end_if %><% if $GroupIDFromParam == "2" %> group-cd<% end_if %><% if $GroupIDFromParam == "3" %> group-cs<% end_if %>" <% if $GroupIDFromParam == "1" %>style="background-color: #F8CC46;"<% end_if %><% if $GroupIDFromParam == "2" %>style="background-color: #696163;"<% end_if %><% if $GroupIDFromParam == "3" %>style="background-color: #141414;"<% end_if %>>
         <div class="userSideNav-container<% if $Success %> success-form<% end_if %> pl-lg-1">
             <% with $ListingForm %>
                 <% include MultiFormProgressList %>

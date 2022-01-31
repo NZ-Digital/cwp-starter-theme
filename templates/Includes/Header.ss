@@ -8,19 +8,40 @@
                         .logo-img {
                             width: {$SiteConfig.LogoWidth}px;
                         }
+                        .logo-img.logo-mobile {
+                            display: none;
+                        }
                     }
-                    @media only screen and (max-width: 1589px) and (min-width: 669px) {
+                    @media only screen and (max-width: 1589px) and (min-width: 768px) {
                         .logo-img {
                             width: {$SiteConfig.LogoWidthIpad}px;
                         }
+                        .logo-img.logo-mobile {
+                            display: none;
+                        }
                     }
-                    @media only screen and (max-width: 668px) {
-                        .logo-img {
+                    @media only screen and (max-width: 767px) and (min-width: 669px) {
+                        .logo-img.logo-desktop {
+                            display: none;
                             width: 100px;
+                        }
+                        .logo-img.logo-mobile {
+                            display: block;
+                        }
+                    }
+                    @media only screen and (max-width: 669px){
+                        .logo-img.logo-desktop {
+                            display: none;
+                            width: 100px;
+                        }
+                        .logo-img.logo-mobile {
+                            max-width: 158px;
+                            display: block;
                         }
                     }
                 </style>
-                <img src="$SiteConfig.Logo.URL" class="logo-img" alt="$SiteConfig.Title - Logo">
+                <img src="$SiteConfig.Logo.URL" class="logo-img logo-desktop" alt="$SiteConfig.Title - Logo">
+                <img src="$SiteConfig.LogoScrolled.URL" class="logo-img logo-mobile" alt="$SiteConfig.Title - Logo">
             <% else %>
                 <span>$SiteConfig.Title</span>
             <% end_if %>

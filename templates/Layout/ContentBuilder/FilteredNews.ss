@@ -31,7 +31,7 @@
             <% end_if %>
             <div class="row">
                 <% loop $NewsLists %>
-                    <div class="col-lg-12<% if not $Last %> pb-lg-6 <% else %> pb-lg-5<% end_if %> news-item">
+                    <div class="col-lg-12<% if not $Last %> pb-6 <% else %> pb-5<% end_if %> news-item">
                         <div class="newslist-content">
                             <div class="newslist-content--details">
                                 <div class="row">
@@ -56,7 +56,7 @@
                                 <div class="featured-news--img"><img src="$FeaturedImage.URL" alt="$SiteConfig.Title - News - {$Title}"></div>
                             <% end_if %>
                         </div>
-                        <hr class="mt-lg-5" style="border-color: #696163;">
+                        <hr class="mt-5" style="border-color: #696163;">
                     </div>
                 <% end_loop %>
                 <% if $NewsLists.Count > 4 %>

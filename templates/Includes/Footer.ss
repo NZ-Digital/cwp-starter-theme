@@ -11,14 +11,14 @@
     </div>
     <% end_if %>
     <div class="row row-cols-5 pt-lg-7 pb-lg-4">
-        <div class="col mr-auto">
+        <div class="col-lg col-12 mr-auto pt-4 pt-lg-0">
             <p>
                 <span class="halyard-display font-weight-medium text-footer-gray fontsize14">&copy; $Now.Year {$SiteConfig.Title}. All rights reserved.</span>
             </p>
         </div>
         <% loop $VisibleFooterItems %>
             <% if $IsPostFooter %>
-                <div class="col-auto text-right">
+                <div class="col-auto text-right $Type">
                     $Content
                 </div>
             <% end_if %>

@@ -3,20 +3,45 @@
   font-size: 60px;
   font-weight: $font-weight-light;
   line-height: 100%;
+  max-width: 660px;
   &:before {
     position: absolute;
     content: "";
-    bottom: 20px;
+    top: 25px;
     left: -143px;
     height: 15px;
     width: 90px;
     background-color: $carra;
+    @media only screen and (min-width: 1590px) {
+      left: -143px;
+      width: 90px;
+    }
+    @media only screen and (max-width: 1589px) and (min-width: 669px) {
+      left: -55px;
+      width: 40px;
+    }
+    @media only screen and (max-width: 668px) {
+      top: -35px;
+      left: -39px;
+      width: 138px;
+    }
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 768px) {
+    font-size: 60px;
+  }
+  @media only screen and (max-width: 767px) {
+    font-size: 40px;
   }
 }
 .form-subheader {
   font-size: 35px;
   font-weight: $font-weight-light;
   max-width: 620px;
+  @media only screen and (max-width: 991px){
+    font-size: 25px;
+    line-height: 130%;
+    padding: 40px 0;
+  }
 }
 .fields {
   display: flex;
@@ -105,8 +130,17 @@
       position: relative;
       text-align: center;
       padding: 0;
+      margin-bottom: 10px;
+      @media only screen and (max-width: 991px) {
+        width: 100%;
+      }
       &:first-child {
-        padding-right: 30px;
+        @media only screen and (min-width: 992px) {
+          padding-right: 30px;
+        }
+        @media only screen and (max-width: 991px) {
+          margin-top: 10px;
+        }
       }
       input[type='radio'],
       input[type='checkbox']{
@@ -208,12 +242,23 @@
     }
   }
 }
+.form-container {
+  @media only screen and (max-width: 991px) {
+    padding-top: 120px;
+  }
+}
 .skip-btn {
   border: 0;
   background-color: transparent;
-  padding-top: 18px;
-  padding-left: 26px;
   outline: none;
+  @media only screen and (min-width: 992px) {
+    padding-top: 18px;
+    padding-left: 26px;
+  }
+  @media only screen and (max-width: 991px) {
+    padding-top: 10px;
+    padding-left: 17px;
+  }
 }
 .searchfield {
   &:focus {
@@ -422,6 +467,7 @@ mark {
       padding-bottom: 10px;
       background-color: transparent;
       border: 0;
+      padding-left: 0;
       border-bottom: 1px solid;
       line-height: 100%;
       color: $tundora;
@@ -535,8 +581,10 @@ input[type='submit'] {
 .dropzone-holder.uploadable {
   padding-bottom: 0;
   background-color: $carra;
-  height: 236px;
-  width: 439px;
+  @media only screen and (min-width: 992px) {
+    min-height: 236px;
+    min-width: 439px;
+  }
   border: 0 !important;
   border-radius: 0;
   margin-top: 33px;
@@ -544,6 +592,7 @@ input[type='submit'] {
     font-size: 14px;
   }
 }
+
 .featured-image,
 .featured-logo {
   .fileattachment {

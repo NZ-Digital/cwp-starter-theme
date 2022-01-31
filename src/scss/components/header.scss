@@ -15,7 +15,7 @@ body > header .open > a:focus {
         padding: 20px 40px;
       }
       @media only screen and (max-width: 668px) {
-        padding: 15px 20px;
+        padding: 15px 25px;
       }
     }
   }
@@ -39,7 +39,7 @@ body > header .open > a:focus {
     }
   }
   @media only screen and (max-width: 668px) {
-    padding: 15px 20px;
+    padding: 15px 25px;
     .preheader-text {
       &--desktop {
         display: none;
@@ -76,11 +76,14 @@ body > header .open > a:focus {
   @media only screen and (min-width: 1590px) {
     padding: 49px 100px 31px;
   }
-  @media only screen and (max-width: 1589px) and (min-width: 669px){
+  @media only screen and (max-width: 1589px) and (min-width: 768px){
     padding: 29px 40px 25px;
   }
+  @media only screen and (max-width: 767px) and (min-width: 669px){
+    padding: 30px 40px 25px;
+  }
   @media only screen and (max-width: 668px) {
-    padding: 15px 20px;
+    padding: 30px 25px 25px;
   }
 }
 

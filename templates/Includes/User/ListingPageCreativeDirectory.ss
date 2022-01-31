@@ -93,12 +93,12 @@
                 <div class="row">
                     <% if $Listing.AssignedGroupID == "2" %>
                     <div class="col-lg-12 pb-lg-2">
-                        <% if $Listing.CreatedMember.ProfilePhoto %>
-                            <img class="listing-creator-image" src="$Listing.CreatedMember.ProfilePhoto.URL" alt="$SiteConfig.Title - User photo">
+                        <% if $Listing.ListedBy.ProfilePhoto %>
+                            <img class="listing-creator-image" src="$Listing.ListedBy.ProfilePhoto.URL" alt="$SiteConfig.Title - User photo">
                         <% else %>
-                            <img  class="listing-creator-image" src="https://ui-avatars.com/api/?name={$Listing.CreatedMember.Name}&background=f8cc46&color=414141&size=56" alt="$SiteConfig.Title - User photo">
+                            <img  class="listing-creator-image" src="https://ui-avatars.com/api/?name={$Listing.ListedBy.Name}&background=f8cc46&color=414141&size=56" alt="$SiteConfig.Title - User photo">
                         <% end_if %>
-                        <p><span class="fontsize20 font-weight-medium text-uppercase">$Listing.CreatedMember.Name</span></p>
+                        <p><span class="fontsize20 font-weight-medium text-uppercase">$Listing.ListedBy.Name</span></p>
                     </div>
                     <div class="col-lg-12 pb-lg-4">
                         <hr style="border-color: #A2A2A2;">
@@ -163,7 +163,8 @@
                         <p><span class="fontsize20 font-weight-medium text-uppercase"><% if $Listing.AssignedGroupID == "2" %>Price & Bookings<% else %>Price<% end_if %></span></p>
                     </div>
                     <div class="col-lg-12 offset-2 pb-lg-1">
-                        <p><span class="fontsize19 font-weight-book moderna-sans">$Listing.Prices.RAW</span></p>
+                        <p>
+                            <span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.PriceRange %>From $Listing.PriceRange<% end_if %></span></p>
                         <p class="pt-lg-5"><a target="_blank" href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"> <span class="fontsize16 font-weight-medium text-underline">Book online</span></a></p>
                     </div>
                     <div class="col-lg-12 pt-lg-5 pb-lg-5">

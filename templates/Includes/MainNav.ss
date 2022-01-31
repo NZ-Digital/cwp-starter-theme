@@ -2,11 +2,11 @@
     <nav class="navbar navbar-expand-md navbar-light" aria-label="<%t CWP_Theme.MAIN 'Main' %>" role="navigation">
         <div class="container-fluid p-0">
             <div class="collapse navbar-collapse" id="navbar-collapse">
-                <div class="d-block d-md-none border-bottom border-top">
-                    <form class="form-inline" action="/search/SearchForm">
-                        <% include HeaderSearch ExtraClass="col-12 pt-2 pb-2" %>
-                    </form>
-                </div>
+<%--                <div class="d-block d-md-none border-bottom border-top">--%>
+<%--                    <form class="form-inline" action="/search/SearchForm">--%>
+<%--                        <% include HeaderSearch ExtraClass="col-12 pt-2 pb-2" %>--%>
+<%--                    </form>--%>
+<%--                </div>--%>
                 <ul class="nav navbar-nav" role="menubar">
                     <% loop Menu(1) %>
                         <li role="menuitem" class="nav-item $FirstLast $LinkingMode<% if $LinkingMode = current %> active<% end_if %><% if $Children %> dropdown <% end_if %>">
@@ -37,7 +37,8 @@
                 </ul>
                 <ul class="util-nav align-items-center">
                     <li><a href="my-favourites" class="nav-link nav-favourites"><i class="far fa-heart "></i><% if $CurrentUser %><span class="fav-counter<% if $CountFavourites %> filled<% end_if %>" data-count="$CountFavourites">$CountFavourites</span><% end_if %></a></li>
-                    <li><button class="nav-link nav-search"><img src="$resourceURL('themes/starter/images/header-search.svg')"  class="link-icon align-text-bottom" alt="$SiteConfig.Title - Search Icon"></button></li>
+                    <li><button class="nav-link nav-search"><i class="fas fa-search"></i></button></li>
+<%--                    <img src="$resourceURL('themes/starter/images/header-search.svg')"  class="link-icon align-text-bottom" alt="$SiteConfig.Title - Search Icon">--%>
                 </ul>
                 <% if $VisibleSocials %>
                     <ul class="socials">

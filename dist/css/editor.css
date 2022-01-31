@@ -1,4 +1,5 @@
 @import url(https://use.typekit.net/nbl1kem.css);
+@import url(https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
 @charset "UTF-8";
 .alert {
   position: relative;
@@ -10759,6 +10760,12 @@ pre {
     padding-left: 40px;
   }
 }
+@media only screen and (max-width: 991px) {
+  .yellow-line,
+.white-line {
+    display: block;
+  }
+}
 @media only screen and (max-width: 668px) {
   .yellow-line,
 .white-line {
@@ -10776,16 +10783,16 @@ pre {
   left: 0;
   z-index: -1;
 }
-@media only screen and (min-width: 669px) {
+@media only screen and (min-width: 992px) {
   .yellow-line:after,
 .white-line:after {
     width: 624px;
   }
 }
-@media only screen and (max-width: 668px) {
+@media only screen and (max-width: 991px) {
   .yellow-line:after,
 .white-line:after {
-    width: 370px;
+    width: 100%;
   }
 }
 
@@ -10823,10 +10830,8 @@ pre {
   font-size: 16px;
 }
 
-@media only screen and (min-width: 669px) {
-  .fontsize18 {
-    font-size: 18px;
-  }
+.fontsize18 {
+  font-size: 18px;
 }
 @media only screen and (max-width: 668px) {
   .fontsize18 {
@@ -10835,17 +10840,20 @@ pre {
 }
 
 .fontsize19 {
-  font-size: 19px;
+  font-size: 20px;
 }
 
 .fontsize20 {
   font-size: 20px;
 }
-
-@media only screen and (min-width: 1590px) {
-  .fontsize25 {
-    font-size: 25px;
+@media only screen and (max-width: 1589px) {
+  .fontsize20 {
+    font-size: 20px;
   }
+}
+
+.fontsize25 {
+  font-size: 25px;
 }
 @media only screen and (max-width: 1589px) {
   .fontsize25 {
@@ -10853,10 +10861,8 @@ pre {
   }
 }
 
-@media only screen and (min-width: 1590px) {
-  .fontsize27 {
-    font-size: 27px;
-  }
+.fontsize27 {
+  font-size: 27px;
 }
 @media only screen and (max-width: 1589px) {
   .fontsize27 {
@@ -10864,10 +10870,8 @@ pre {
   }
 }
 
-@media only screen and (min-width: 1590px) {
-  .fontsize30 {
-    font-size: 30px;
-  }
+.fontsize30 {
+  font-size: 30px;
 }
 @media only screen and (max-width: 1589px) {
   .fontsize30 {
@@ -10875,10 +10879,8 @@ pre {
   }
 }
 
-@media only screen and (min-width: 1590px) {
-  .fontsize35 {
-    font-size: 35px;
-  }
+.fontsize35 {
+  font-size: 35px;
 }
 @media only screen and (max-width: 1589px) {
   .fontsize35 {
@@ -10886,58 +10888,62 @@ pre {
   }
 }
 
-@media only screen and (min-width: 1590px) {
+.fontsize40 {
+  font-size: 40px;
+}
+@media only screen and (max-width: 1589px) {
   .fontsize40 {
+    font-size: 25px;
+  }
+}
+
+.fontsize45 {
+  font-size: 45px;
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize45 {
+    font-size: 30px;
+  }
+}
+
+.fontsize50 {
+  font-size: 50px;
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize50 {
+    font-size: 30px;
+  }
+}
+
+.fontsize60 {
+  font-size: 60px;
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize60 {
+    font-size: 35px;
+  }
+}
+
+.fontsize80 {
+  font-size: 80px;
+}
+@media only screen and (max-width: 1589px) {
+  .fontsize80 {
     font-size: 40px;
   }
 }
-@media only screen and (max-width: 1589px) {
-  .fontsize40 {
-    font-size: 25px;
-  }
-}
 
-@media only screen and (min-width: 1590px) {
-  .fontsize45 {
-    font-size: 45px;
-  }
+.fontsize125 {
+  font-size: 125px;
 }
 @media only screen and (max-width: 1589px) {
-  .fontsize45 {
-    font-size: 30px;
-  }
-}
-
-@media only screen and (min-width: 1590px) {
-  .fontsize50 {
-    font-size: 50px;
-  }
-}
-@media only screen and (max-width: 1589px) {
-  .fontsize50 {
-    font-size: 30px;
-  }
-}
-
-@media only screen and (min-width: 1590px) {
-  .fontsize60 {
-    font-size: 60px;
-  }
-}
-@media only screen and (max-width: 1589px) {
-  .fontsize60 {
-    font-size: 35px;
-  }
-}
-
-@media only screen and (min-width: 1590px) {
-  .fontsize80 {
+  .fontsize125 {
     font-size: 80px;
   }
 }
-@media only screen and (max-width: 1589px) {
-  .fontsize80 {
-    font-size: 40px;
+@media only screen and (min-width: 669px) and (max-width: 668px) {
+  .fontsize125 {
+    font-size: 50px;
   }
 }
 
@@ -11109,6 +11115,10 @@ pre {
   font-family: "Moderna Sans";
 }
 
+.playfair-display {
+  font-family: "Playfair Display", serif;
+}
+
 .text-underline {
   text-decoration: underline;
 }
@@ -11155,9 +11165,17 @@ pre {
   background-color: #f0efed;
 }
 
-.theme-button-alt {
-  min-width: 226px;
-  padding: 15px;
+@media only screen and (min-width: 669px) {
+  .theme-button-alt {
+    min-width: 226px;
+    padding: 15px;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .theme-button-alt {
+    min-width: 170px;
+    padding: 6px;
+  }
 }
 .theme-button-alt:hover {
   color: #fff;
@@ -11197,10 +11215,23 @@ pre {
 .theme-button-long-yellow,
 .theme-button-long-yellow-arrow,
 .theme-button-long-yellow-arrow-left {
-  min-width: 319px;
   border: 0;
   background-color: #f8cc46;
   transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+@media only screen and (min-width: 992px) {
+  .theme-button-long-yellow,
+.theme-button-long-yellow-arrow,
+.theme-button-long-yellow-arrow-left {
+    min-width: 319px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .theme-button-long-yellow,
+.theme-button-long-yellow-arrow,
+.theme-button-long-yellow-arrow-left {
+    width: 100%;
+  }
 }
 .theme-button-long-yellow:hover,
 .theme-button-long-yellow-arrow:hover,
@@ -11210,17 +11241,35 @@ pre {
 
 .theme-button-long-yellow-arrow-left {
   position: relative;
-  padding: 13px 27px;
+}
+@media only screen and (min-width: 992px) {
+  .theme-button-long-yellow-arrow-left {
+    padding: 13px 27px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .theme-button-long-yellow-arrow-left {
+    padding: 13px 17px;
+  }
 }
 .theme-button-long-yellow-arrow-left:after {
   position: absolute;
   content: url("../images/btn-arrow.svg");
   height: 17px;
-  left: 33px;
   top: 0;
   -webkit-transform: rotate(180deg) translate3d(0, -100%, 0);
           transform: rotate(180deg) translate3d(0, -100%, 0);
   transition: left 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+@media only screen and (min-width: 992px) {
+  .theme-button-long-yellow-arrow-left:after {
+    left: 33px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .theme-button-long-yellow-arrow-left:after {
+    left: 17px;
+  }
 }
 .theme-button-long-yellow-arrow-left:hover:after {
   left: 26px;
@@ -11230,15 +11279,34 @@ pre {
   position: relative;
   padding: 13px 27px;
 }
+@media only screen and (min-width: 992px) {
+  .theme-button-long-yellow-arrow {
+    padding: 13px 27px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .theme-button-long-yellow-arrow {
+    padding: 13px 17px;
+  }
+}
 .theme-button-long-yellow-arrow:after {
   position: absolute;
   content: url("../images/btn-arrow.svg");
   height: 17px;
-  right: 33px;
   top: 50%;
   -webkit-transform: translate3d(0, -50%, 0);
           transform: translate3d(0, -50%, 0);
   transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+@media only screen and (min-width: 992px) {
+  .theme-button-long-yellow-arrow:after {
+    right: 33px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .theme-button-long-yellow-arrow:after {
+    right: 17px;
+  }
 }
 .theme-button-long-yellow-arrow:hover:after {
   right: 26px;

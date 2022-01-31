@@ -2,7 +2,7 @@
     <div class="recommendedListings-content inner-padding">
         <div class="container-fluid p-0">
             <% loop $RecommendedListings %>
-                <div class="row pb-lg-7 justify-content-between align-items-center">
+                <div class="row pb-lg-7 justify-content-between align-items-center mobile-top-padding mobile-bottom-padding tablet-bottom-padding tablet-top-padding">
                     <div class="col-auto">
                         <p><span class="fontsize25 halyard-display font-weight-medium letterspacing-7px text-uppercase">Recommended $GroupName</span></p>
                     </div>

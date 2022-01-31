@@ -1,6 +1,9 @@
 .footer-site {
   border-top: 1px solid #707070;
   padding: 180px 80px 30px;
+  @media only screen and (max-width: 668px) {
+    padding: 60px 10px 30px;
+  }
   .footer-menu,
   .footer-secondarymenu {
     li {

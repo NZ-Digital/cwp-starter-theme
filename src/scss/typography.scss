@@ -324,10 +324,12 @@ pre {
   @media only screen and (max-width: 1589px) and (min-width: 669px) {
     padding-left: 40px;
   }
+  @media only screen and (max-width: 991px) {
+    display: block;
+  }
   @media only screen and (max-width: 668px) {
     padding-left: 25px;
   }
-
   &:after {
     position: absolute;
     content: "";
@@ -336,17 +338,16 @@ pre {
     top: 55%;
     left: 0;
     z-index: -1;
-    @media only screen and (min-width: 669px) {
+    @media only screen and (min-width: 992px) {
       width: 624px;
     }
-    @media only screen and (max-width: 668px) {
-      width: 370px;
+    @media only screen and (max-width: 991px) {
+      width: 100%;
     }
   }
 }
 .yellow-line {
   &:after {
-
     @media only screen and (min-width: 669px) {
       border-top: 15px solid $marigold-yellow;
     }
@@ -376,89 +377,81 @@ pre {
   font-size: 16px;
 }
 .fontsize18 {
-  @media only screen and (min-width: 669px) {
-    font-size: 18px;
-  }
+  font-size: 18px;
   @media only screen and (max-width: 668px) {
     font-size: 13px;
   }
 }
 .fontsize19 {
-  font-size: 19px;
+  font-size: 20px;
 }
 .fontsize20 {
   font-size: 20px;
+  @media only screen and (max-width: 1589px) {
+    font-size: 20px;
+  }
 }
 .fontsize25 {
-  @media only screen and (min-width: 1590px) {
-    font-size: 25px;
-  }
+  font-size: 25px;
   @media only screen and (max-width: 1589px) {
     font-size: 18px;
   }
 }
 .fontsize27 {
-  @media only screen and (min-width: 1590px) {
-    font-size: 27px;
-  }
+  font-size: 27px;
   @media only screen and (max-width: 1589px) {
     font-size: 19px;
   }
 }
 .fontsize30 {
-  @media only screen and (min-width: 1590px) {
-    font-size: 30px;
-  }
+  font-size: 30px;
   @media only screen and (max-width: 1589px) {
     font-size: 20px;
   }
 }
 .fontsize35 {
-  @media only screen and (min-width: 1590px) {
-    font-size: 35px;
-  }
+  font-size: 35px;
   @media only screen and (max-width: 1589px) {
     font-size: 25px;
   }
 }
 .fontsize40 {
-  @media only screen and (min-width: 1590px) {
-    font-size: 40px;
-  }
+  font-size: 40px;
   @media only screen and (max-width: 1589px) {
     font-size: 25px;
   }
 }
 .fontsize45 {
-  @media only screen and (min-width: 1590px) {
-    font-size: 45px;
-  }
+  font-size: 45px;
   @media only screen and (max-width: 1589px) {
     font-size: 30px;
   }
 }
 .fontsize50 {
-  @media only screen and (min-width: 1590px) {
-    font-size: 50px;
-  }
+  font-size: 50px;
   @media only screen and (max-width: 1589px) {
     font-size: 30px;
   }
 }
 .fontsize60 {
-  @media only screen and (min-width: 1590px) {
-    font-size: 60px;
-  }
+  font-size: 60px;
   @media only screen and (max-width: 1589px) {
     font-size: 35px;
   }
 }
 .fontsize80 {
-  @media only screen and (min-width: 1590px) {
-    font-size: 80px;
-  }
+  font-size: 80px;
   @media only screen and (max-width: 1589px) {
     font-size: 40px;
+  }
+}
+.fontsize125 {
+  font-size: 125px;
+  @media only screen and (max-width: 1589px) {
+    font-size: 80px;
+  }
+  @media only screen and (min-width: 669px) and (max-width: 668px) {
+    font-size: 50px;
   }
 }
 //Font weight
@@ -589,7 +582,9 @@ pre {
 .moderna-sans {
   font-family: $font-family-moderna-sans;
 }
-
+.playfair-display {
+  font-family: $font-family-playfair-display;
+}
 .text-underline {
   text-decoration: underline;
 }
@@ -625,8 +620,14 @@ pre {
   }
 }
 .theme-button-alt {
-  min-width: 226px;
-  padding: 15px;
+  @media only screen and (min-width: 669px) {
+    min-width: 226px;
+    padding: 15px;
+  }
+  @media only screen and (max-width: 668px) {
+    min-width: 170px;
+    padding: 6px;
+  }
   &:hover {
     color: $white;
     background-color: $cod-gray;
@@ -662,25 +663,40 @@ pre {
 .theme-button-long-yellow,
 .theme-button-long-yellow-arrow,
 .theme-button-long-yellow-arrow-left {
-  min-width: 319px;
   border: 0;
   background-color: $saffron-mango;
   transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  @media only screen and (min-width: 992px) {
+    min-width: 319px;
+  }
+  @media only screen and (max-width: 991px) {
+    width: 100%;
+  }
   &:hover {
     background-color: $marigold-yellow;
   }
 }
 .theme-button-long-yellow-arrow-left {
   position: relative;
-  padding: 13px 27px;
+  @media only screen and (min-width: 992px) {
+    padding: 13px 27px;
+  }
+  @media only screen and (max-width: 991px) {
+    padding: 13px 17px;
+  }
   &:after {
     position: absolute;
     content: url("../images/btn-arrow.svg");
     height: 17px;
-    left: 33px;
     top: 0;
     transform: rotate(180deg) translate3d(0, -100%, 0);
     transition: left 200ms cubic-bezier(0.76, 0, 0.24, 1);
+    @media only screen and (min-width: 992px) {
+      left: 33px;
+    }
+    @media only screen and (max-width: 991px) {
+      left: 17px;
+    }
   }
   &:hover {
     &:after {
@@ -691,14 +707,25 @@ pre {
 .theme-button-long-yellow-arrow {
   position: relative;
   padding: 13px 27px;
+  @media only screen and (min-width: 992px) {
+    padding: 13px 27px;
+  }
+  @media only screen and (max-width: 991px) {
+    padding: 13px 17px;
+  }
   &:after {
     position: absolute;
     content: url("../images/btn-arrow.svg");
     height: 17px;
-    right: 33px;
     top: 50%;
     transform: translate3d(0, -50%, 0);
     transition: right 200ms cubic-bezier(0.76, 0, 0.24, 1);
+    @media only screen and (min-width: 992px) {
+      right: 33px;
+    }
+    @media only screen and (max-width: 991px) {
+      right: 17px;
+    }
   }
   &:hover {
     &:after {
@@ -841,3 +868,4 @@ pre {
 //Font typekit
 @import './moderna-sans';
 @import url("https://use.typekit.net/nbl1kem.css");
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');

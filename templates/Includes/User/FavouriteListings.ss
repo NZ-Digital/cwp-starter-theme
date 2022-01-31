@@ -1,5 +1,5 @@
 <% loop $Groups %>
-    <div class="row pb-lg-7 justify-content-between align-items-center">
+    <div class="row pb-lg-7 justify-content-between align-items-center mobile-top-padding mobile-bottom-padding tablet-bottom-padding tablet-top-padding">
         <div class="col-auto">
             <p><span class="fontsize25 halyard-display font-weight-medium letterspacing-7px text-uppercase">My $GroupName Favourites</span></p>
         </div>
@@ -40,13 +40,13 @@
                             <% if $Listing.Categories %>
                                 <% include ListingTags Categories=$Listing.Categories %>
                             <% end_if %>
-                            <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
+                            <p class="ml-sm-auto ml-0 pt-sm-0 pt-3"><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                         </div>
                     </div>
                 </div>
             <% end_loop %>
         <% else %>
-            <div class="col-xl-12 pt-lg-8 pb-lg-8">
+            <div class="col-xl-12 pt-lg-8 pb-lg-8 pt-6 pb-6">
                 <p class="text-center"><span class="fontsize50 font-weight-book lineheight-60px letterspacing-1px">Click here to start adding your favourite<br> {$GroupName} Listings</span></p>
                 <p class="text-center pt-5"><span class="fontsize19 font-weight-book">Click the heart icon to save any listing to your favourites</span></p>
                 <p class="text-center pt-5"><a href="$GroupPageLink"><span class="fontsize18 font-weight-medium theme-button-alt">$GroupName</span></a></p>

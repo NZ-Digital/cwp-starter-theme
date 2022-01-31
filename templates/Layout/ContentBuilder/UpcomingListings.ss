@@ -9,3 +9,7 @@
         </div>
     <% end_if %>
 </div>
+
+<% if $HeaderButton %>
+    <div class="col-lg-auto col-12 text-center pb-lg-0">$HeaderButton</div>
+<% end_if %>

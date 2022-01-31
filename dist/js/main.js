@@ -35394,6 +35394,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     showMoreNews();
     showShareSocials();
     sliderTags();
+    accountSettings();
     closeModal(); //testAjax();
   }
 
@@ -35613,12 +35614,12 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
             margin: 10
           },
           669: {
-            stagePadding: 20,
-            margin: 20
+            stagePadding: 10,
+            margin: 10
           },
           992: {
-            stagePadding: 40,
-            margin: 40
+            stagePadding: 20,
+            margin: 20
           },
           1590: {
             stagePadding: 330,
@@ -36194,6 +36195,31 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       });
     } else {
       sizeDropdownToggle.text('Type of Space');
+    } //Step navigation naming
+
+
+    if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-wo li.ListingPricingStep').find('a')) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-wo li.ListingPricingStep a').text("Ticketing");
+    } else {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-wo li.ListingPricingStep').text("Ticketing");
+    }
+
+    if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cd li.ListingPricingStep').find('a')) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cd li.ListingPricingStep a').text("Pricing");
+    } else {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cd li.ListingPricingStep').text("Pricing");
+    }
+
+    if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingPricingStep').find('a')) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingPricingStep a').text("Pricing");
+    } else {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingPricingStep').text("Pricing");
+    }
+
+    if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingInfoStep').find('a')) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingInfoStep a').text("Space Details");
+    } else {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingInfoStep').text("Space Details");
     }
   }
 
@@ -36820,8 +36846,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       }
     }
 
-    elem.append('' + '<div class="date-time-item row d-flex align-items-end">' + '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text text-tundora">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
-    '<div class="col-lg-4 pb-4">' + '<div class="selectedStartTime dropdown">' + '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="' + startTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + startTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' + '</div>' + '</div>' + '<div class="col-lg-4 pb-4">' + '<div class="selectedEndTime dropdown">' + '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' + '</div>' + '</div>' + // '<div class="col-lg-3 pb-4">' +
+    elem.append('' + '<div class="date-time-item row pb-lg-0 pb-4 d-flex align-items-end">' + '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text text-tundora">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
+    '<div class="col-lg-4 col-6 pb-4">' + '<div class="selectedStartTime dropdown">' + '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="' + startTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + startTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' + '</div>' + '</div>' + '<div class="col-lg-4 col-6 pb-4">' + '<div class="selectedEndTime dropdown">' + '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' + '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' + '</div>' + '</div>' + // '<div class="col-lg-3 pb-4">' +
     //   '<div class="appointment d-flex align-items-center">' +
     //     '<input type="checkbox" name="appointment_only" id="appointmentOnly'+id+'" ' + appointment + '> ' +
     //     '<label class="ml-2 mb-0" for="appointmentOnly'+id+'"><span class="font-weight-normal">Appointment only</span></label>' +
@@ -36897,7 +36923,25 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     });
   }
 
-  function ListingUploadImages() {}
+  function ListingUploadImages() {
+    var featuredImageDropZone, galleryImagesDropzone, listingLogoDropzone;
+    var featuredImageLi, galleryImagesLi, listingLogoImageLi;
+    var featuredImageLiFileLink, listingLogoLiFileLink;
+    featuredImageDropZone = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#FeaturedImageDropzone');
+    galleryImagesDropzone = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#GalleryImagesDropzone');
+    listingLogoDropzone = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingLogoDropzone');
+    featuredImageLi = featuredImageDropZone.find('ul.file-attachment-field-previews li');
+    featuredImageLiFileLink = featuredImageLi.attr('data-file-link');
+    featuredImageLi.find('span.file-icon img').attr('src', featuredImageLiFileLink);
+    galleryImagesLi = galleryImagesDropzone.find('ul.file-attachment-field-previews li');
+    galleryImagesLi.each(function () {
+      var galleryImagesLiFileLink = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-file-link');
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('span.file-icon img').attr('src', galleryImagesLiFileLink);
+    });
+    listingLogoImageLi = listingLogoDropzone.find('ul.file-attachment-field-previews li');
+    listingLogoLiFileLink = listingLogoImageLi.attr('data-file-link');
+    listingLogoImageLi.find('span.file-icon img').attr('src', listingLogoLiFileLink);
+  }
 
   function addToFavourites() {
     var btn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.addtofavourites');
@@ -37011,6 +37055,35 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       //   }
       // });
     });
+  }
+
+  function accountSettings() {
+    var AccountForm_AccountForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#AccountForm_AccountForm');
+
+    if (AccountForm_AccountForm.length > 0) {// let requiredPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=-\?;,./{}|\":<>\[\]\\\' ~_]).{10,20}/;///^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
+      // AccountForm_AccountForm.on('submit', function (event) {
+      //   let error = false;
+      //   event.preventDefault();
+      //   let cpFields = $('.change-password-fields');
+      //   if (cpFields.hasClass('active')) {
+      //     let AccountForm_AccountForm_NewPassword = $('#AccountForm_AccountForm_NewPassword');
+      //     let AccountForm_AccountForm_ConfirmPassword = $('#AccountForm_AccountForm_ConfirmPassword');
+      //     if (AccountForm_AccountForm_NewPassword.val() !== AccountForm_AccountForm_ConfirmPassword.val()) {
+      //       error = true;
+      //       AccountForm_AccountForm_NewPassword.parent().append('<div class="error-field"><span class="text-danger fontsize12 font-weight-book">The password confirmation does not match your password.</span></div>')
+      //     }
+      //
+      //     if (!requiredPassword.test(AccountForm_AccountForm_NewPassword.val())) {
+      //
+      //     }
+      //   }
+      //   // setTimeout(function () {
+      //   //     if (error === false) {
+      //   //         event.currentTarget.submit();
+      //   //     }
+      //   // },1000);
+      // });
+    }
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback) {

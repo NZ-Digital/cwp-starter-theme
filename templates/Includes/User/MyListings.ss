@@ -3,16 +3,16 @@
         <div class="container-fluid p-0">
             <% if $MyListings %>
                 <% loop $MyListings %>
-                    <div class="row pb-lg-7 justify-content-between align-items-center">
-                        <div class="col-auto">
-                            <p><span class="fontsize25 halyard-display font-weight-medium letterspacing-7px text-uppercase">My $GroupName Listings</span></p>
+                    <div class="row pb-lg-7 pb-4 justify-content-between align-items-center">
+                        <div class="col-lg-auto col-12 pb-lg-0 pb-5">
+                            <p class="text-lg-left text-center"><span class="fontsize25 halyard-display font-weight-medium letterspacing-7px text-uppercase">My $GroupName Listings</span></p>
                         </div>
-                        <div class="col-auto">
-                            <p class="text-center"><a href="$GroupPageLink" class="d-flex align-items-center text-decoration-none"><span class="fontsize18 halyard-display font-weight-medium theme-button-alt">See all</span></a></p>
+                        <div class="col-lg-auto col-12">
+                            <p class="text-center"><a href="$GroupPageLink" class="text-decoration-none"><span class="fontsize18 halyard-display font-weight-medium theme-button-alt">See all</span></a></p>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-4 pb-lg-7">
+                    <div class="row pb-4">
+                        <div class="col-xl-4 pb-lg-7 pb-5">
                             <a href="create-listing?id={$GroupID}" class="add-listing"><img src="$resourceURL('themes/starter/images/AddListing.jpg')"></a>
                         </div>
                         <% loop $Listings %>

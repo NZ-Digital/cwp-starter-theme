@@ -18,8 +18,10 @@
             <% include Header %>
         </header>
         <% include MobileNav %>
-        <main id="main" class="main row no-gutters" role="main">
-            $Layout
+        <main id="main" class="main" role="main">
+            <div class="row no-gutters">
+                $Layout
+            </div>
         </main>
         <% include PageShowcase %>
         <footer class="footer-site" role="contentinfo">
