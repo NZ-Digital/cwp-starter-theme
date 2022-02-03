@@ -1,23 +1,23 @@
 <section class="sectionLatestNewsBanner page-section col-lg-12">
     <div class="latestNewsBanner-container">
         <div class="row no-gutters">
-            <div class="col-lg-5<% if $ContentPosition == 'cp-left' %> order-last<% end_if %>" >
+            <div class="col-lg-5<% if $ContentPosition == 'cp-left' %> order-last<% end_if %> order-lg-0 order-1">
                 <% if $News.FeaturedImage %>
                     <div class="image-content--img bh-large bg-cover" style="background-image: url('{$News.FeaturedImage.URL}')"></div>
                 <% end_if %>
             </div>
-            <div class="col-lg-7<% if $ContentPosition == 'cp-left' %> order-first<% end_if %>">
+            <div class="col-lg-7<% if $ContentPosition == 'cp-left' %> order-first<% end_if %> order-lg-1 order-0">
                 <div class="image-content--content bh-large" style="background-color:#F0EFED;">
-                    <div class="content-tags">
+                    <div class="content-tags pb-lg-4 pb-3">
                         <% loop $News.NewsCategories %>
                             <% if $Title != 'All' %>
                                 <a href="news/?tag={$Title}"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a>
                             <% end_if %>
                         <% end_loop %>
                     </div>
-                    <div class="content-title"><p><span class="fontsize80 font-weight-light line-height-100">$News.Name</span></p></div>
+                    <div class="content-title pb-lg-6 pb-4"><p><span class="fontsize80 font-weight-light line-height-100">$News.Name</span></p></div>
                     <div class="content-author"><span class="text-footer-gray mr-1">by</span> <% loop $News.NewsAuthors %><a href="news/?author={$Title}"><span class="text-cod-gray">$Title</span></a><% if not $Last %>,&nbsp;<% end_if %><% end_loop %> <span class="text-light-gray ml-2">|</span> <span class="text-footer-gray ml-2">$News.Created.Ago</span></div>
-                    <div class="content-body"><p class="fontsize19 font-weight-book">$News.ContentSummary.LimitWordCount(80)</p></div>
+                    <div class="content-body"><p class="fontsize19 font-weight-book"><% if $News.ContentSummary %>{$News.ContentSummary.LimitWordCount(60)}<% else %><% if $News.ContentSummaryRaw %>{$News.ContentSummaryRaw.RAW.LimitWordCount(60)}<% end_if %><% end_if %></p></div>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="col-lg-8 pl-lg-10 pb-8">
-                    <div class="news-content pb-7 font-weight-book fontsize19">$News.Content.RAW</div>
+                    <div class="news-content pb-7 font-weight-book fontsize19"><% if $News.Content %>$News.Content<% else %>$News.ContentRaw.RAW<% end_if %></div>
                     <% if $News.GalleryImages %>
                         <div class="article-gallery pb-5">
                             <% if $News.GalleryImages.Count > 2 %>
@@ -74,7 +74,6 @@
                             <% end_if %>
                         </div>
                     <% end_if %>
-
                     <hr>
                     <div class="news-footer pt-5 row align-items-end">
                         <div class="col-lg-auto">

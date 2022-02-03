@@ -1,4 +1,4 @@
-<section class="page-section sectionUserSideNav col-lg-4 pl-lg-7 pt-lg-9 pb-lg-9">
+<section class="page-section sectionUserSideNav col-lg-4 pl-lg-7 pt-lg-9 pb-lg-9 account-settings">
     <div class="userSideNav-container">
         <ul class="user-sidenav--links list-unstyled">
             <% loop $VisibleUserNavigation %>

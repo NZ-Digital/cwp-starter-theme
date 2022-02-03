@@ -253,7 +253,11 @@
             bottom: 13px;
             right: -10px;
           }
-          @media only screen and (max-width: 767px) {
+          @media only screen and (max-width: 767px) and (min-width: 669px) {
+            bottom: 6px;
+            right: 0;
+          }
+          @media only screen and (max-width: 668px) {
             bottom: 1px;
             right: 0;
           }

@@ -10840,7 +10840,7 @@ pre {
 }
 
 .fontsize19 {
-  font-size: 20px;
+  font-size: 19px;
 }
 
 .fontsize20 {
@@ -11127,6 +11127,7 @@ pre {
 .theme-button-hover-dark,
 .theme-button-dark,
 .theme-button-gray,
+.theme-button-white,
 .theme-button-alt,
 .theme-button-long,
 .theme-button-long-yellow,
@@ -11145,6 +11146,7 @@ pre {
 .theme-button-hover-dark,
 .theme-button-dark,
 .theme-button-gray,
+.theme-button-white,
 .theme-button-alt,
 .theme-button-long,
 .theme-button-long-yellow,
@@ -11323,6 +11325,12 @@ pre {
 .theme-button-gray-small-arrow:hover {
   border-color: #141414;
   background-color: transparent;
+  border: 1px solid;
+}
+
+.theme-button-white {
+  background-color: #f0efed;
+  border-color: #f0efed;
 }
 
 .theme-button-gray-small {
@@ -11423,9 +11431,21 @@ pre {
 .button-signup,
 .button-myportal {
   position: relative;
-  min-width: 226px;
-  padding: 12px 90px 12px 57px;
   transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+@media only screen and (min-width: 992px) {
+  .button-signup,
+.button-myportal {
+    padding: 12px 90px 12px 57px;
+    min-width: 226px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .button-signup,
+.button-myportal {
+    min-width: 100%;
+    padding: 12px 50px 12px 20px;
+  }
 }
 .button-signup:hover,
 .button-myportal:hover {

@@ -1,7 +1,7 @@
 <div class="row">
     <% if $Listings %>
         <% loop $Listings %>
-            <div class="<% if $Up.GroupID == "3" %>col-xl-3<% else %>col-xl-4<% end_if %>">
+            <div class="<% if $Up.GroupID == "3" %>col-xl-3<% else %>col-xl-4<% end_if %><% if $Up.GroupID == "3" || $Up.GroupID == "2" %> col-6 grid-item<% end_if %>">
                 <div class="listing-content">
                     <div class="listing-content--img">
                         <% if $FeaturedImage %>
@@ -16,7 +16,7 @@
                             <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px"><% if $ListingClosestToCurrentDate %>$ListingClosestToCurrentDate<% end_if %></span>
                         </div>
                         <% end_if %>
-                        <div class="listing-location <% if $Up.GroupID == "1" %>ml-auto<% end_if %>">
+                        <div class="listing-location<% if $Up.GroupID == "1" %> ml-auto<% else %> mt-2<% end_if %>">
                             <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline">$City</span></a>
                         </div>
                     </div>
@@ -26,10 +26,10 @@
                     </div>
                     <div class="listing-content--tags">
                         <button class="btn-utils addtofavourites fontsize35<% if $Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.addedToFavourites($ID)"><i class="<% if $Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
-                        <% if $Categories %>
-                            <% include ListingTags Categories=$Categories %>
+                        <% if $Category %>
+                            <% include ListingCategory Category=$Category %>
                         <% end_if %>
-                        <p class="ml-sm-auto ml-0 pt-sm-0 pt-3"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
+                        <p class="ml-sm-auto ml-0 pt-sm-0 pt-3<% if $Up.GroupID == "3" || $Up.GroupID == "2" %> d-sm-block d-none<% end_if %> view-listing"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                     </div>
                 </div>
             </div>

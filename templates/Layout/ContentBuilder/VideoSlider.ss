@@ -8,10 +8,11 @@
                     </div>
                     <% if $Video %>
                         <div class="video-content--video col-lg-7 order-first order-lg-1">
-                            <video <% if $VideoThumbnail %>poster="$VideoThumbnail.URL"<% end_if %>>
+                            <video autoplay autoplay="autoplay" loop="true" muted defaultmuted playsinline>
+<%--                                <% if $VideoThumbnail %>poster="$VideoThumbnail.URL"<% end_if %>--%>
                                 <source src="$Video.URL" type="video/mp4">
                             </video>
-                            <button class="btn--video-play"><i class="fal fa-play-circle"></i></button>
+<%--                            <button class="btn--video-play"><i class="fal fa-play-circle"></i></button>--%>
                         </div>
                     <% end_if %>
                 </div>

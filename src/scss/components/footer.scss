@@ -1,6 +1,11 @@
 .footer-site {
   border-top: 1px solid #707070;
-  padding: 180px 80px 30px;
+  @media only screen and (min-width: 1590px) {
+    padding: 180px 80px 30px;
+  }
+  @media only screen and (max-width: 1589px) and (min-width: 669px) {
+    padding: 50px 40px 30px;
+  }
   @media only screen and (max-width: 668px) {
     padding: 60px 10px 30px;
   }

@@ -9,11 +9,11 @@
         <% end_if %>
         <% if $VisibleAccordionItems %>
             <div class="<% if not $Content %>col-lg-12<% else %>col-lg-8<% end_if %>">
-            <div class="pt-lg-6 pl-lg-5 padding-right-100px">
+            <div class="pt-lg-6 pl-lg-5 pb-lg-0 pb-5 padding-right-100px">
                 <div class="accordion" id="accordion">
                     <% loop $VisibleAccordionItems %>
                         <% if $HeaderText %>
-                            <p class="<% if not $First %>mt-8<% end_if %>"><span class="text-uppercase fontsize25 font-weight-medium letterspacing-7px" <% if $HeaderColor %>style="color: #{$HeaderColor};"<% end_if %>>$HeaderText</span></p>
+                            <p class="<% if not $First %>mt-lg-8 mt-6<% end_if %>"><span class="text-uppercase fontsize25 font-weight-medium letterspacing-7px" <% if $HeaderColor %>style="color: #{$HeaderColor};"<% end_if %>>$HeaderText</span></p>
                         <% end_if %>
                         <div class="card">
                             <div class="card-header" id="accordion-{$ID}">

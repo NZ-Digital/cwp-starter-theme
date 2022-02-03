@@ -195,9 +195,14 @@
         }
         .card {
           background-color: transparent;
-          padding-bottom: 54px;
           border: 0;
           border-bottom: 1px solid $cod-gray;
+          @media only screen and (min-width: 992px) {
+            padding-bottom: 54px;
+          }
+          @media only screen and (max-width: 991px) {
+            padding-bottom: 30px;
+          }
           &:first-child {
             .card-header {
               button {
@@ -213,9 +218,14 @@
             button {
               position: relative;
               border: 0;
-              padding: 52px 0 0;
               background-color: transparent;
               outline: none;
+              @media only screen and (min-width: 992px) {
+                padding: 52px 0 0;
+              }
+              @media only screen and (max-width: 991px) {
+                padding: 30px 0 0;
+              }
               &:after {
                 position: absolute;
                 font-family: $font-family-font-awesomePro;
@@ -223,6 +233,9 @@
                 content: "\f105";
                 right: 0;
                 bottom: 0;
+                @media only screen and (max-width: 668px) {
+                  display: none;
+                }
               }
             }
             button[aria-expanded="true"] {
@@ -236,6 +249,13 @@
             width: 100%;
             max-width: 800px;
             padding: 5px 0 0;
+            p, ol, ul {
+              span {
+                @media only screen and (max-width: 668px) {
+                  font-size: 16px;
+                }
+              }
+            }
           }
         }
         ol,ul {
@@ -342,15 +362,16 @@
         .owl-nav,
         .owl-dots {
           position: absolute;
-          width: 100%;
           @media only screen and (min-width: 992px) {
             top: -135px;
             text-align: center;
             transform: translate3d(-50%, 0, 0);
             left: 50%;
+            width: 50%;
           }
           @media only screen and (max-width: 991px) {
             top: -10px;
+            width: 100%;
           }
         }
         .owl-nav {
@@ -543,6 +564,11 @@
                 padding-right: 0;
                 padding-left: 0;
                 padding-bottom: 0;
+                @media only screen and (max-width: 991px) {
+                  position: relative !important;
+                  margin-top: 4px;
+                  transform: none !important;
+                }
               }
               .calendar {
                 .ui-datepicker {
@@ -650,11 +676,14 @@
         background-color: $marigold-yellow;
       }
       .news-item {
+        display: none;
         position: static;
       }
       .newslist-content--details:hover + .featured-news--img {
-        opacity: 1;
-        z-index: 1;
+        @media only screen and (min-width: 992px) {
+          opacity: 1;
+          z-index: 1;
+        }
       }
       .featured-news--img {
         position: absolute;
@@ -825,36 +854,20 @@
         &.bg-contain {
           background-size: contain;
         }
-        //&.bh-small {
-        //  height: 50vh;
-        //}
-        //&.bh-medium {
-        //  height: 60vh;
-        //}
-        //&.bh-large {
-        //  height: 80vh;
-        //}
-        //&.bh-xlarge {
-        //  height: 100vh;
-        //}
       }
       &--content {
-        padding: 9vw 20vw 9vw 5vw;
+        @media only screen and (min-width: 1590px) {
+          padding: 9vw 20vw 9vw 5vw;
+        }
+        @media only screen and (max-width: 1589px) and (min-width: 669px) {
+          padding: 70px 40px !important;
+        }
+        @media only screen and (max-width: 668px){
+          padding: 60px 25px !important;
+        }
         background-repeat: no-repeat;
         background-size: cover;
         height: 100%;
-        //&.bh-small {
-        //  height: 40vh;
-        //}
-        //&.bh-medium {
-        //  height: 50vh;
-        //}
-        //&.bh-large {
-        //  height: 70vh;
-        //}
-        //&.bh-xlarge {
-        //  height: 80vh;
-        //}
       }
     }
   }
@@ -877,8 +890,10 @@
         position: static;
       }
       .newslist-content--details:hover + .featured-news--img {
-        opacity: 1;
-        z-index: 1;
+        @media only screen and (min-width: 992px) {
+          opacity: 1;
+          z-index: 1;
+        }
       }
       .featured-news--img {
         opacity: 0;
@@ -927,20 +942,37 @@
   // -- Latest News Page Banner -- //
   &.sectionLatestNewsBanner  {
     position: relative;
-    margin-bottom: 115px;
+    @media only screen and (min-width: 992px) {
+      margin-bottom: 115px;
+    }
+    @media only screen and (max-width: 991px) and (min-width: 669px) {
+      margin-bottom: 70px;
+    }
+    @media only screen and (max-width: 668px) {
+      margin-bottom: 60px;
+    }
     .latestNewsBanner-container {
       position: relative;
     }
     .image-content {
       &--img {
         background-repeat: no-repeat;
+        @media only screen and (min-width: 992px) {
+          height: calc(100% + 115px);
+        }
+        @media only screen and (max-width: 991px) and (min-width: 669px) {
+          height: 500px
+        }
+        @media only screen and (max-width: 668px) {
+          height: 365px
+        }
         &.bg-cover {
           background-size: cover;
+          background-position: center;
         }
         &.bg-contain {
           background-size: contain;
         }
-        height: calc(100% + 115px);
         //&.bh-small {
         //  height: 50vh;
         //}
@@ -1042,7 +1074,14 @@
   // -- My Favourite Listings -- //
   &.sectionMyFavouriteListings {
     .favouriteListings-content {
-
+      .find-a-space {
+        .listing-content--img {
+          img {
+            height: 347px;
+            max-height: 100%;
+          }
+        }
+      }
     }
   }
 
@@ -1087,7 +1126,22 @@
         padding-left: 10px;
         padding-right: 10px;
       }
+      .grid-item {
+        &:nth-child(odd) {
+          @media only screen and (max-width: 668px) {
+            padding-right: 5px;
+          }
+        }
+        &:nth-child(even) {
+          @media only screen and (max-width: 668px) {
+            padding-left: 5px;
+          }
+        }
+      }
       .listing-content {
+        @media only screen and (max-width: 668px) {
+          margin-bottom: 60px;
+        }
         &--img {
           img {
             width: 100%;
@@ -1100,13 +1154,48 @@
               height: 350px;
             }
             @media only screen and (max-width: 668px) {
-              height: 300px;
+              height: 150px;
+              min-height: 150px;
             }
           }
         }
+        &--location {
+          @media only screen and (max-width: 668px) {
+            font-size: 12px;
+          }
+        }
         &--details {
+          .listing-title {
+            span {
+              @media only screen and (max-width: 668px) {
+                font-size: 18px;
+              }
+            }
+          }
+          .listing-text {
+            span {
+              font-size: 14px;
+            }
+          }
           @media only screen and (min-width: 992px) {
             min-height: 135px;
+          }
+        }
+        &--tags {
+          .tags {
+            span {
+              font-size: 12px;
+            }
+          }
+          .addtofavourites  {
+            @media only screen and (max-width: 668px) {
+              margin-right: 14px;
+            }
+            i {
+              @media only screen and (max-width: 668px) {
+                font-size: 22px;
+              }
+            }
           }
         }
       }
@@ -1227,6 +1316,79 @@
         }
         &--item {
           margin-top: 72px;
+          .grid-item {
+            &:nth-child(odd) {
+              @media only screen and (max-width: 668px) {
+                padding-right: 5px;
+              }
+            }
+            &:nth-child(even) {
+              @media only screen and (max-width: 668px) {
+                padding-left: 5px;
+              }
+            }
+            .listing-content {
+              @media only screen and (max-width: 668px) {
+                margin-bottom: 60px;
+              }
+              &--img {
+                img {
+                  width: 100%;
+                  max-height: 100%;
+                  object-fit: cover;
+                  @media only screen and (min-width: 1200px) {
+                    height: 464px;
+                  }
+                  @media only screen and (max-width: 1199px) and (min-width: 669px){
+                    height: 350px;
+                  }
+                  @media only screen and (max-width: 668px) {
+                    height: 150px;
+                    min-height: 150px;
+                  }
+                }
+              }
+              &--location {
+                @media only screen and (max-width: 668px) {
+                  font-size: 12px;
+                }
+              }
+              &--details {
+                .listing-title {
+                  span {
+                    @media only screen and (max-width: 668px) {
+                      font-size: 18px;
+                    }
+                  }
+                }
+                .listing-text {
+                  span {
+                    font-size: 14px;
+                  }
+                }
+                @media only screen and (min-width: 992px) {
+                  min-height: 135px;
+                }
+              }
+              &--tags {
+                .tags {
+                  span {
+                    font-size: 12px;
+                  }
+                }
+                .addtofavourites  {
+                  @media only screen and (max-width: 668px) {
+                    margin-right: 14px;
+                  }
+                  i {
+                    @media only screen and (max-width: 668px) {
+                      font-size: 22px;
+                    }
+                  }
+                }
+              }
+            }
+          }
           .listing-content {
 
           }
@@ -1510,6 +1672,25 @@
         //background-color: $carra;
       }
     }
+    &.account-settings {
+      ul {
+        li {
+          a {
+            position: relative;
+            display: block;
+            width: 50%;
+            &:after {
+              position: absolute;
+              content: '>';
+              font-size: 20px;
+              font-weight: 500;
+              right: 0;
+              top: 0;
+            }
+          }
+        }
+      }
+    }
   }
 
   // -- User Side Navigation -- //
@@ -1520,9 +1701,18 @@
           position: relative;
           line-height: 0;
           video {
-            height: 100%;
             width: 100%;
+            object-fit: cover;
             line-height: 0;
+            @media only screen and (min-width: 992px) {
+              height: 700px;
+            }
+            @media only screen and (max-width: 991px) and (min-width: 669px){
+              height: 400px;
+            }
+            @media only screen and (max-width: 668px){
+              height: 203px;
+            }
           }
           .btn--video-play {
             position: absolute;
@@ -1539,7 +1729,12 @@
               opacity: 0;
             }
             i {
-              font-size: 8vw;
+              @media only screen and (min-width: 992px) {
+                font-size: 8vw;
+              }
+              @media only screen and (max-width: 991px) {
+                font-size: 20vw;
+              }
             }
           }
           &:hover {
@@ -1551,6 +1746,11 @@
           }
         }
         &--text {
+          @media only screen and (min-width: 992px) and (max-width: 1589px) {
+            .theme-button-dark, .theme-button-hover-dark {
+              padding: 10px 25px;
+            }
+          }
           @media only screen and (max-width: 991px) {
             padding-top: 40px;
             padding-bottom: 40px;
@@ -1632,7 +1832,12 @@
   }
   .share-socials {
     a {
-      padding-left: 28px;
+      @media only screen and (min-width: 992px) {
+        padding-left: 28px;
+      }
+      @media only screen and (max-width: 991px) {
+        padding-right: 15px;
+      }
       i {
         background-color: $footer-gray;
         color: #fff;
@@ -1659,11 +1864,31 @@
       padding: 20px 40px;
       background-color: $carra;
     }
+    .tags {
+      @media only screen and (max-width: 668px) {
+        width: 100%;
+      }
+    }
     &--featured-img {
       img {
-        height: 750px;
         width: 100%;
         object-fit: cover;
+        @media only screen and (min-width: 992px) {
+          height: 750px;
+        }
+        @media only screen and (max-width: 991px) and (min-width: 669px){
+          height: 550px;
+        }
+        @media only screen and (max-width: 668px) {
+          height: 350px;
+        }
+      }
+    }
+    &--details {
+      p {
+        font-size: 19px;
+        font-weight: 300;
+        margin-bottom: 1rem;
       }
     }
     .creative-directory {
@@ -2011,6 +2236,12 @@ textarea:-ms-input-placeholder {
 textarea::placeholder {
   color: $footer-gray;
 }
+// News Content
+.news-content {
+  p {
+    font-size: 19px;
+  }
+}
 
 // Listing Content
 .listing-content {
@@ -2106,11 +2337,19 @@ textarea::placeholder {
     }
   }
 }
+.btn-utils {
+  &.sharelisting,
+  &.getdirection {
+    @media only screen and (max-width: 1589px) {
+      font-size: 22px !important;
+    }
+  }
+}
 .tags {
   position: relative;
   @media only screen and (max-width: 668px) {
     span {
-      font-size: 16px !important;
+      font-size: 16px;
     }
   }
   @media only screen and (max-width: 400px) {
@@ -2158,6 +2397,11 @@ textarea::placeholder {
     display: block;
   }
 }
+.view-listing {
+  @media only screen and (max-width: 575px) {
+    width: 100%;
+  }
+}
 .share-socials--dropdown {
   position: absolute;
   right: 100px;
@@ -2189,6 +2433,20 @@ textarea::placeholder {
   }
   &.active {
     display: block;
+  }
+}
+.create-event-btn {
+  p {
+    span {
+      @media only screen and (max-width: 991px) {
+        font-size: 25px;
+      }
+    }
+    i {
+      @media only screen and (max-width: 991px) {
+        font-size: 35px;
+      }
+    }
   }
 }
 .copy-link--modal {
@@ -2331,6 +2589,16 @@ textarea::placeholder {
   @media only screen and (min-width: 669px) {
     display: none;
   }
+}
+//mce
+.field .mce-panel {
+  border: 0 solid $carra;
+  background-color: $carra;
+}
+.field .mce-btn {
+  border: 1px solid $carra;
+  border-color: $carra;
+  background-color: $carra;
 }
 
 //Loaders

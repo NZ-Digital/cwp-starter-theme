@@ -35,6 +35,7 @@ export default function () {
     showMoreNews();
     showShareSocials();
     sliderTags();
+    newsletter();
 
     accountSettings();
 
@@ -87,10 +88,9 @@ export default function () {
     });
   }
 
-  function closeSearchForm()
-  {
+  function closeSearchForm() {
     let searchForm = $('.site-header-search');
-    let closeBtn  = searchForm.find('.btn-close');
+    let closeBtn = searchForm.find('.btn-close');
 
     closeBtn.click(function () {
       if (searchForm.hasClass('active')) {
@@ -149,7 +149,7 @@ export default function () {
             });
             $(this).addClass('active');
             btnToggle.find('span').text(selectedDropdownItem.text());
-            btnToggle.find('span').attr('data-keyword',selectedDropdownItem.attr('data-keyword'));
+            btnToggle.find('span').attr('data-keyword', selectedDropdownItem.attr('data-keyword'));
           });
           if (dataType === 'Date') {
             let filterDate = $(this).find('.calendar-datepicker--dropdown');
@@ -163,7 +163,7 @@ export default function () {
                 if (dates[1] !== null) {
                   selectedDateRange = moment.range(moment(dates[0]), moment(dates[1]));
                   datesArray = Array.from(selectedDateRange.by("days"));
-                  $.map(datesArray, function (date, i)  {
+                  $.map(datesArray, function (date, i) {
                     formattedDate = date.format("YYYY-MM-DD");
                     rangeOfDatesArray.push(formattedDate);
                   });
@@ -197,32 +197,40 @@ export default function () {
       let action = $('.filter-action .action');
       action.click(function () {
         let url = $(this).attr('data-url');
-        let params = "";
+        let params = "?";
         let filters = $(this).parent().parent('.filters').find('.filter-item');
         filters.each(function () {
           let date = $(this).find('.filterDate .dropdown-toggle span').attr('data-keyword');
           let dateRange = $(this).find('.filterDate .dropdown-toggle span').text();
           let location = $(this).find('.filterLocation .dropdown-toggle span').attr('data-keyword');
+          let type = $(this).find('.filterType .dropdown-toggle span').attr('data-keyword');
+          let size = $(this).find('.filterCapacity .dropdown-toggle span').attr('data-keyword');
           let category = $(this).find('.filterCategory .dropdown-toggle span').attr('data-keyword');
           let keywords = $(this).find('.filterKeywords input').val();
-            if (date) {
-              params += "?date=" + date + "&daterange=" +dateRange;
-            }
-            if (location) {
-              params += "&location=" + location;
-            }
-            if (category) {
-              params += "&category="+category;
-            }
-            if (keywords) {
-              params +="&keywords="+keywords;
-            }
-            if (keywords === "") {
-              params +="&keywords=";
-            }
+          if (date) {
+            params += "date=" + date + "&daterange=" + dateRange + "&";
+          }
+          if (location) {
+            params += "location=" + location + "&";
+          }
+          if (type) {
+            params += "type=" + type + "&";
+          }
+          if (size) {
+            params += "type=" + size + "&";
+          }
+          if (category) {
+            params += "category=" + category + "&";
+          }
+          if (keywords) {
+            params += "keywords=" + keywords + "&";
+          }
+          if (keywords === "") {
+            params += "keywords=";
+          }
         });
         if (params) {
-          window.location = url+params+'#sortable-listings';
+          window.location = url + params + '#sortable-listings';
         }
       });
     }
@@ -239,9 +247,9 @@ export default function () {
         nav: true,
         dots: true,
         navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/arrow-left.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/arrow-right.svg"></span>'],
-        responsive:{
-          0:{
-            nav:true,
+        responsive: {
+          0: {
+            nav: true,
             stagePadding: 0,
             margin: 10,
           },
@@ -262,11 +270,10 @@ export default function () {
     }
   }
 
-  function sectionVideoSlider()
-  {
+  function sectionVideoSlider() {
     let sectionVideoSlider = $('.sectionVideoSlider');
     if (sectionVideoSlider.length > 0) {
-      let video   = sectionVideoSlider.find('video');
+      let video = sectionVideoSlider.find('video');
       let playBtn = $('.btn--video-play');
       playBtn.click(function () {
         if ($(this).hasClass('play')) {
@@ -288,14 +295,14 @@ export default function () {
 
       let copyLinkModal = $('.copy-link--modal');
       let copyLinkClose = $('.copy-link--close');
-      let copyLink      = $('.copy-link');
+      let copyLink = $('.copy-link');
 
       copyLink.click(function () {
         copyLinkModal.addClass('active');
         copyToClipboard(copyLinkModal.find('input').val());
       });
 
-      copyLinkClose.click(function (){
+      copyLinkClose.click(function () {
         copyLinkModal.removeClass('active');
       });
 
@@ -335,8 +342,7 @@ export default function () {
     document.body.removeChild(textArea);
   }
 
-  function articlePage()
-  {
+  function articlePage() {
     let articleGallery = $('.article-gallery');
     if (articleGallery.length > 0) {
       let gallery = articleGallery.find('.owl-carousel');
@@ -369,7 +375,8 @@ export default function () {
   function signUpPage() {
     let signUpForm = $('#RegistrationForm_RegistrationForm');
     if (signUpForm.length > 0) {
-      let input, categorySelectorWhatsOn, categorySelectorCreativeDirectory, selectedCategoriesWhatsOn = [], selectedCategoriesCreativeDirectory = [], passwordField, passwordConfirmField,
+      let input, categorySelectorWhatsOn, categorySelectorCreativeDirectory, selectedCategoriesWhatsOn = [],
+        selectedCategoriesCreativeDirectory = [], passwordField, passwordConfirmField,
         emailField, emailConfirmField, selectedCategoryWhatsOnField, selectedCategoryCreativeDirectoryField;
 
       let requiredPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=-\?;,./{}|\":<>\[\]\\\' ~_]).{10,20}/;///^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
@@ -380,10 +387,10 @@ export default function () {
       passwordField = $('#RegistrationForm_RegistrationForm_Password_Holder');
       passwordConfirmField = $('#RegistrationForm_RegistrationForm_ConfirmPassword_Holder');
 
-      selectedCategoryWhatsOnField           = $('#RegistrationForm_RegistrationForm_SelectedCategoriesWhatsOn');
+      selectedCategoryWhatsOnField = $('#RegistrationForm_RegistrationForm_SelectedCategoriesWhatsOn');
       selectedCategoryCreativeDirectoryField = $('#RegistrationForm_RegistrationForm_SelectedCategoriesCreativeDirectory');
-      categorySelectorWhatsOn                = $('.category-selector.whatsOn-category');
-      categorySelectorCreativeDirectory      = $('.category-selector.creativeDirectory-category')
+      categorySelectorWhatsOn = $('.category-selector.whatsOn-category');
+      categorySelectorCreativeDirectory = $('.category-selector.creativeDirectory-category')
 
       passwordField.append('<a href="#" class="btn-reveal-password password-field"><span>Show</span></a>');
       passwordConfirmField.append('<a href="#" class="btn-reveal-password passwordConfirm-field"><span>Show</span></a>');
@@ -437,7 +444,7 @@ export default function () {
             if (result.data.count > 0) {
               $('#message-RegistrationForm_RegistrationForm_Email').remove();
               emailField.addClass('holder-validation is-invalid');
-              emailField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_Email" class="invalid-feedback" role="alert" aria-atomic="true">An account with email '+ $.trim(emailField.val()) +' already exists.</div>');
+              emailField.parent().addClass('holder-validation has-error').append('<div id="message-RegistrationForm_RegistrationForm_Email" class="invalid-feedback" role="alert" aria-atomic="true">An account with email ' + $.trim(emailField.val()) + ' already exists.</div>');
               error = true;
             }
           });
@@ -452,14 +459,14 @@ export default function () {
             if (error === false) {
               event.currentTarget.submit();
             }
-          },1000);
+          }, 1000);
         }
       });
 
       let dropdownToggle = $('.location-selector .dropdown-toggle');
-      let selectedLocation     = $('.selected-location');
-      let locationField        = $('#RegistrationForm_RegistrationForm_Location');
-      $('.location-selector .dropdown-item').click(function(e) {
+      let selectedLocation = $('.selected-location');
+      let locationField = $('#RegistrationForm_RegistrationForm_Location');
+      $('.location-selector .dropdown-item').click(function (e) {
         let _this = $(this);
         let selectedDropdownItem = _this.text();
         if (_this.hasClass('active')) {
@@ -472,7 +479,7 @@ export default function () {
           _this.addClass('active').siblings().removeClass('active');
           dropdownToggle.text(selectedDropdownItem);
           selectedLocation.addClass('has-item');
-          selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="'+ _this.attr('data-id') +'">X</span></div>');
+          selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
           locationField.val(_this.attr('data-id'));
 
           selectedLocation.find('.remove-item').click(function () {
@@ -491,7 +498,7 @@ export default function () {
         dropdownToggle.text(selectedDropdownItem.text());
         selectedDropdownItem.addClass('active');
         selectedLocation.addClass('has-item');
-        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="'+ locationField.val() +'">X</span></div>');
+        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationField.val() + '">X</span></div>');
 
         selectedLocation.find('.remove-item').click(function () {
           let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
@@ -512,7 +519,7 @@ export default function () {
             if (selectedCategoryWhatsOnField.val()) {
               let currentSelectedCategories = selectedCategoryWhatsOnField.val().split(",");
               console.log(currentSelectedCategories);
-              if($.inArray($(this).attr('name'), currentSelectedCategories) !== -1) {
+              if ($.inArray($(this).attr('name'), currentSelectedCategories) !== -1) {
                 $(this).prop('checked', true);
                 $(this).parent().addClass('selected');
               }
@@ -540,7 +547,7 @@ export default function () {
           } else {
             if (selectedCategoryCreativeDirectoryField.val()) {
               let currentSelectedCategories = selectedCategoryCreativeDirectoryField.val().split(",");
-              if($.inArray($(this).attr('name'), currentSelectedCategories) !== -1) {
+              if ($.inArray($(this).attr('name'), currentSelectedCategories) !== -1) {
                 $(this).prop('checked', true);
                 $(this).parent().addClass('selected');
               }
@@ -584,13 +591,13 @@ export default function () {
             if (error === false) {
               event.currentTarget.submit();
             }
-          },1000);
+          }, 1000);
         }
       });
 
       let dropdownToggle = $('.location-selector .dropdown-toggle');
-      let locationField  = $('#ContributorForm_ContributorForm_Location');
-      $('.location-selector .dropdown-item').click(function(e) {
+      let locationField = $('#ContributorForm_ContributorForm_Location');
+      $('.location-selector .dropdown-item').click(function (e) {
         let _this = $(this);
         let selectedDropdownItem = _this.text();
         if (_this.hasClass('active')) {
@@ -606,8 +613,7 @@ export default function () {
     }
   }
 
-  function inputType(input, _this)
-  {
+  function inputType(input, _this) {
     if (input.attr('type') === 'password') {
       input.attr('type', 'text');
       _this.find('span').text('Hide');
@@ -617,8 +623,7 @@ export default function () {
     }
   }
 
-  function closeModal()
-  {
+  function closeModal() {
     let modal = $('.modal');
     modal.find('button.close').click(function () {
       modal.removeClass('show');
@@ -626,11 +631,9 @@ export default function () {
     });
   }
 
-  function createListingPage()
-  {
+  function createListingPage() {
     let createListingForm = $('#ListingForm_ListingForm');
-    if (createListingForm.length > 0)
-    {
+    if (createListingForm.length > 0) {
       //ListingDetailsStep
       ListingDetailsStep();
 
@@ -648,29 +651,28 @@ export default function () {
     }
   }
 
-  function ListingDetailsStep()
-  {
+  function ListingDetailsStep() {
     let locationSelector, typeSelector, sizeSelector, locationField, typeField, sizeField;
     let locationDropdownToggle, typeDropdownToggle, sizeDropdownToggle;
     let selectedLocation, selectedType, selectedSize;
 
     locationSelector = $('.location-selector .dropdown-item');
-    typeSelector     = $('.type-selector .dropdown-item');
-    sizeSelector     = $('.size-selector .dropdown-item');
+    typeSelector = $('.type-selector .dropdown-item');
+    sizeSelector = $('.size-selector .dropdown-item');
 
     locationDropdownToggle = $('.location-selector .dropdown-toggle');
-    typeDropdownToggle     = $('.type-selector .dropdown-toggle');
-    sizeDropdownToggle     = $('.size-selector .dropdown-toggle');
+    typeDropdownToggle = $('.type-selector .dropdown-toggle');
+    sizeDropdownToggle = $('.size-selector .dropdown-toggle');
 
     locationField = $('#ListingForm_ListingForm_Location');
-    typeField     = $('#ListingForm_ListingForm_Type');
-    sizeField     = $('#ListingForm_ListingForm_Size');
+    typeField = $('#ListingForm_ListingForm_Type');
+    sizeField = $('#ListingForm_ListingForm_Size');
 
     selectedLocation = $('.selected-location');
-    selectedType     = $('.selected-type');
-    selectedSize     = $('.selected-size');
+    selectedType = $('.selected-type');
+    selectedSize = $('.selected-size');
 
-    locationSelector.click(function(e) {
+    locationSelector.click(function (e) {
       let _this = $(this);
       let selectedDropdownItem = _this.text();
       if (_this.hasClass('active')) {
@@ -683,7 +685,7 @@ export default function () {
         _this.addClass('active').siblings().removeClass('active');
         locationDropdownToggle.text(selectedDropdownItem);
         selectedLocation.addClass('has-item');
-        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="'+ _this.attr('data-id') +'">X</span></div>');
+        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
         locationField.val(_this.attr('data-id'));
 
         selectedLocation.find('.remove-item').click(function () {
@@ -702,7 +704,7 @@ export default function () {
       locationDropdownToggle.text(selectedDropdownItem.text());
       selectedDropdownItem.addClass('active');
       selectedLocation.addClass('has-item');
-      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="'+ locationField.val() +'">X</span></div>');
+      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationField.val() + '">X</span></div>');
 
       selectedLocation.find('.remove-item').click(function () {
         let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
@@ -716,7 +718,7 @@ export default function () {
       locationDropdownToggle.text('Location*');
     }
 
-    typeSelector.click(function(e) {
+    typeSelector.click(function (e) {
       let _this = $(this);
       let selectedDropdownItem = _this.text();
       if (_this.hasClass('active')) {
@@ -729,7 +731,7 @@ export default function () {
         _this.addClass('active').siblings().removeClass('active');
         typeDropdownToggle.text(selectedDropdownItem);
         selectedType.addClass('has-item');
-        selectedType.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="'+ _this.attr('data-id') +'">X</span></div>');
+        selectedType.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
         typeField.val(_this.attr('data-id'));
 
         selectedType.find('.remove-item').click(function () {
@@ -748,7 +750,7 @@ export default function () {
       typeDropdownToggle.text(selectedDropdownItem.text());
       selectedDropdownItem.addClass('active');
       selectedType.addClass('has-item');
-      selectedType.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="'+ typeField.val() +'">X</span></div>');
+      selectedType.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + typeField.val() + '">X</span></div>');
 
       selectedType.find('.remove-item').click(function () {
         let selectedDropdownItem = $('.type-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
@@ -762,7 +764,7 @@ export default function () {
       typeDropdownToggle.text('Type of Listing');
     }
 
-    sizeSelector.click(function(e) {
+    sizeSelector.click(function (e) {
       let _this = $(this);
       let selectedDropdownItem = _this.text();
       if (_this.hasClass('active')) {
@@ -775,7 +777,7 @@ export default function () {
         _this.addClass('active').siblings().removeClass('active');
         sizeDropdownToggle.text(selectedDropdownItem);
         selectedSize.addClass('has-item');
-        selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="'+ _this.attr('data-id') +'">X</span></div>');
+        selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
         sizeField.val(_this.attr('data-id'));
 
         selectedType.find('.remove-item').click(function () {
@@ -794,7 +796,7 @@ export default function () {
       sizeDropdownToggle.text(selectedDropdownItem.text());
       selectedDropdownItem.addClass('active');
       selectedSize.addClass('has-item');
-      selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="'+ typeField.val() +'">X</span></div>');
+      selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + typeField.val() + '">X</span></div>');
 
       selectedSize.find('.remove-item').click(function () {
         let selectedDropdownItem = $('.size-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
@@ -809,37 +811,36 @@ export default function () {
     }
 
     //Step navigation naming
-    if ($('.group-wo li.ListingPricingStep').find('a')){
+    if ($('.group-wo li.ListingPricingStep').find('a')) {
       $('.group-wo li.ListingPricingStep a').text("Ticketing");
     } else {
       $('.group-wo li.ListingPricingStep').text("Ticketing");
     }
 
-    if ($('.group-cd li.ListingPricingStep').find('a')){
+    if ($('.group-cd li.ListingPricingStep').find('a')) {
       $('.group-cd li.ListingPricingStep a').text("Pricing");
     } else {
       $('.group-cd li.ListingPricingStep').text("Pricing");
     }
 
-    if ($('.group-cs li.ListingPricingStep').find('a')){
+    if ($('.group-cs li.ListingPricingStep').find('a')) {
       $('.group-cs li.ListingPricingStep a').text("Pricing");
     } else {
       $('.group-cs li.ListingPricingStep').text("Pricing");
     }
 
-    if ($('.group-cs li.ListingInfoStep').find('a')){
+    if ($('.group-cs li.ListingInfoStep').find('a')) {
       $('.group-cs li.ListingInfoStep a').text("Space Details");
     } else {
       $('.group-cs li.ListingInfoStep').text("Space Details");
     }
   }
 
-  function ListingCategoryStep(form)
-  {
+  function ListingCategoryStep(form) {
     let selectedCategoryHolder, selectedCategoryText,
-        selectedSubCategoryHolder, selectedSubCategoryText,
-        selectedTagsHolder, selectedTagsText,
-        selectedTagsArray = [];
+      selectedSubCategoryHolder, selectedSubCategoryText,
+      selectedTagsHolder, selectedTagsText,
+      selectedTagsArray = [];
 
     let categoryError, tagError, locationError, actionBtn;
 
@@ -847,22 +848,22 @@ export default function () {
 
     locationError = $('.location-error');
     categoryError = $('.category-error');
-    tagError      = $('.tag-error');
+    tagError = $('.tag-error');
 
-    actionBtn     = $('#ListingForm_ListingForm_action_next');
+    actionBtn = $('#ListingForm_ListingForm_action_next');
 
-    selectedCategoryText    = $('input[name="Categories"]');
+    selectedCategoryText = $('input[name="Categories"]');
     selectedSubCategoryText = $('input[name="SubCategories"]');
-    selectedTagsText        = $('input[name="Tags"]');
+    selectedTagsText = $('input[name="Tags"]');
 
     selectedLocationText = $('#ListingForm_ListingForm_Location');
 
     form.find('select').each(function () {
-      let $this           = $(this),
-          dataType        = $(this).attr('data-type'),
-          firstData       = $(this).attr('data-first'),
-          numberOfOptions = $(this).children('option').length,
-          $styledSelect;
+      let $this = $(this),
+        dataType = $(this).attr('data-type'),
+        firstData = $(this).attr('data-first'),
+        numberOfOptions = $(this).children('option').length,
+        $styledSelect;
 
       $this.addClass('s-hidden');
       $this.wrap('<div class="select"></div>');
@@ -903,9 +904,9 @@ export default function () {
         $this.val($(this).attr('rel'));
         $list.hide();
 
-        selectedCategoryHolder    = $('.selected-category');
+        selectedCategoryHolder = $('.selected-category');
         selectedSubCategoryHolder = $('.selected-subcategory');
-        selectedTagsHolder        = $('.selected-tags');
+        selectedTagsHolder = $('.selected-tags');
 
         if (selectedItem.hasClass('selected')) {
           selectedItem.removeClass('selected');
@@ -920,7 +921,7 @@ export default function () {
             selectedSubCategoryText.val('');
           }
           if (dataType === 'tag') {
-            let item = selectedTagsHolder.find('.item-holder .text:contains('+selectedItem.text()+')');
+            let item = selectedTagsHolder.find('.item-holder .text:contains(' + selectedItem.text() + ')');
             item.parent().remove();
             selectedTagsArray.splice($.inArray(selectedItem.text(), selectedTagsArray), 1);
             selectedTagsText.val(selectedTagsArray);
@@ -952,7 +953,7 @@ export default function () {
                   selectedTagsText.val('');
 
                   for (let i = 0; i < data.length; i++) {
-                    list.find('li[rel="'+data[i].id+'"]').addClass('show');
+                    list.find('li[rel="' + data[i].id + '"]').addClass('show');
                     // list.each(function () {
                     //   $(this).removeClass('selected');
                     //   // console.log('data-id '+  data[i].id);
@@ -1006,7 +1007,7 @@ export default function () {
      * Will show sub category options when toggled
      */
     btnAddSubCategory = $('.add-subcategory-btn');
-    subCategoryWrapper= $('.sub-category-wrapper');
+    subCategoryWrapper = $('.sub-category-wrapper');
 
     btnAddSubCategory.click(function () {
       let i = $(this).find('i');
@@ -1053,22 +1054,21 @@ export default function () {
     loadSelectedCategoriesAndTags(selectedCategoryText, selectedSubCategoryText, selectedTagsText);
   }
 
-  function removeSelectedItem(category, subcategory, tags)
-  {
+  function removeSelectedItem(category, subcategory, tags) {
     let dataType;
     let _this, parentDiv, btnRemove = $('.remove-item'),
-        categorySelectorHolder, subcategorySelectorHolder, tagSelectorHolder;
+      categorySelectorHolder, subcategorySelectorHolder, tagSelectorHolder;
 
     let tagArrays = [];
 
-    categorySelectorHolder    = $('#ListingForm_ListingForm_CategorySelector_Holder');
+    categorySelectorHolder = $('#ListingForm_ListingForm_CategorySelector_Holder');
     subcategorySelectorHolder = $('#ListingForm_ListingForm_SubCategorySelector_Holder');
-    tagSelectorHolder         = $('#ListingForm_ListingForm_TagsSelector_Holder');
+    tagSelectorHolder = $('#ListingForm_ListingForm_TagsSelector_Holder');
 
     btnRemove.click(function () {
       _this = $(this);
       parentDiv = _this.parent().parent().parent();
-      dataType  = parentDiv.attr('data-type');
+      dataType = parentDiv.attr('data-type');
       if (dataType === 'category' || dataType === 'subcategory') {
         parentDiv.removeClass('has-item');
         parentDiv.find('item-holder').empty();
@@ -1106,31 +1106,30 @@ export default function () {
           tagSelectorHolder.find('.styledSelect').text('Please select tags');
           tagSelectorHolder.find('.options li').removeClass('selected');
         }
-        tagSelectorHolder.find('.options li:contains('+_this.siblings().text()+')').removeClass('selected');
+        tagSelectorHolder.find('.options li:contains(' + _this.siblings().text() + ')').removeClass('selected');
       }
     });
   }
 
-  function loadSelectedCategoriesAndTags(category, subcategory, tags)
-  {
+  function loadSelectedCategoriesAndTags(category, subcategory, tags) {
     let selectedCategoryHolder, selectedSubCategoryHolder, selectedTagsHolder,
-        categorySelectorHolder, subcategorySelectorHolder, tagSelectorHolder;
+      categorySelectorHolder, subcategorySelectorHolder, tagSelectorHolder;
 
     let btnAddSubCategory = $('.add-subcategory-btn');
 
     let tagArrays = [];
 
-    selectedCategoryHolder    = $('.selected-category');
+    selectedCategoryHolder = $('.selected-category');
     selectedSubCategoryHolder = $('.selected-subcategory');
-    selectedTagsHolder        = $('.selected-tags');
+    selectedTagsHolder = $('.selected-tags');
 
-    categorySelectorHolder    = $('#ListingForm_ListingForm_CategorySelector_Holder');
+    categorySelectorHolder = $('#ListingForm_ListingForm_CategorySelector_Holder');
     subcategorySelectorHolder = $('#ListingForm_ListingForm_SubCategorySelector_Holder');
-    tagSelectorHolder         = $('#ListingForm_ListingForm_TagsSelector_Holder');
+    tagSelectorHolder = $('#ListingForm_ListingForm_TagsSelector_Holder');
 
     if (category.val()) {
       categorySelectorHolder.find('.styledSelect').text(category.val());
-      categorySelectorHolder.find('.options li:contains('+category.val()+')').addClass('selected');
+      categorySelectorHolder.find('.options li:contains(' + category.val() + ')').addClass('selected');
       selectedCategoryHolder.addClass('has-item');
       selectedCategoryHolder.find('.item-holder').append('<div class="item"><span class="text">' + category.val() + '</span><span class="remove-item">X</span></div>');
     }
@@ -1139,7 +1138,7 @@ export default function () {
       btnAddSubCategory.addClass('active').find('i').removeClass('fa-plus-circle').addClass('fa-minus-circle');
       subcategorySelectorHolder.parent().addClass('active');
       subcategorySelectorHolder.find('.styledSelect').text(subcategory.val());
-      subcategorySelectorHolder.find('.options li:contains('+subcategory.val()+')').addClass('selected');
+      subcategorySelectorHolder.find('.options li:contains(' + subcategory.val() + ')').addClass('selected');
       selectedSubCategoryHolder.addClass('has-item');
       selectedSubCategoryHolder.find('.item-holder').append('<div class="item"><span class="text">' + subcategory.val() + '</span><span class="remove-item">X</span></div>');
     }
@@ -1154,7 +1153,7 @@ export default function () {
           for (let i = 0; i < data.length; i++) {
             list.each(function () {
               if ($.trim($(this).text()) === data[i].name) {
-                if(jQuery.inArray($.trim($(this).text()), liShown) === -1) {
+                if (jQuery.inArray($.trim($(this).text()), liShown) === -1) {
                   liShown.push($.trim($(this).text()));
                   if (!$(this).hasClass('show')) {
                     $(this).addClass('show');
@@ -1174,7 +1173,7 @@ export default function () {
           tagSelectorHolder.find('.styledSelect').text(tagArrays[i]);
           listTag.each(function () {
             if ($.trim($(this).text()) === tagArrays[i]) {
-              if(jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
+              if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
                 liTagShown.push($.trim($(this).text()));
                 $(this).addClass('selected');
               }
@@ -1186,7 +1185,7 @@ export default function () {
         tagSelectorHolder.find('.styledSelect').text(tags.val());
         listTag.each(function () {
           if ($.trim($(this).text()) === tagArrays[i]) {
-            if(jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
+            if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
               liTagShown.push($.trim($(this).text()));
               $(this).addClass('selected');
             }
@@ -1199,16 +1198,15 @@ export default function () {
     removeSelectedItem(category, subcategory, tags);
   }
 
-  function ListingDateAndTimeStep()
-  {
+  function ListingDateAndTimeStep() {
     let calendar, selectedDateRange, datesArray, formattedDate,
-        listingDateTimeContainer, listingSelectedDatesTextBox,
-        listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
+      listingDateTimeContainer, listingSelectedDatesTextBox,
+      listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
 
-    listingDateTimeContainer    = $('.listingDateTimes');
+    listingDateTimeContainer = $('.listingDateTimes');
     listingSelectedDatesTextBox = $('input[name="SelectedDates"]');
     listingSelectedStartTimeTextBox = $('input[name="SelectedStartTimes"]');
-    listingSelectedEndTimeTextBox   = $('input[name="SelectedEndTimes"]');
+    listingSelectedEndTimeTextBox = $('input[name="SelectedEndTimes"]');
 
     calendar = $('.calendar-datepicker');
     calendar.pignoseCalendar({
@@ -1216,7 +1214,7 @@ export default function () {
       initialize: false,
       week: 1,
       weeks: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-      select: function(dates, context) { //date selection
+      select: function (dates, context) { //date selection
         let selectedDates = [];
         //removing selected date values textbox
         listingSelectedDatesTextBox.val('');
@@ -1224,7 +1222,7 @@ export default function () {
         listingSelectedEndTimeTextBox.val('');
         if (dates.length > 0) {
           listingDateTimeContainer.find('.date-time-item').remove();
-          for(let i = 0; i < dates.length; i ++) {
+          for (let i = 0; i < dates.length; i++) {
             if (dates[i] !== null) {
               selectedDates.push(dates[i].format("DD MMMM YYYY"));
               if (selectedDates.length > 1) {
@@ -1232,15 +1230,15 @@ export default function () {
                 listingDateTimeContainer.empty();
                 selectedDateRange = moment.range(moment(dates[0]), moment(dates[1]));
                 datesArray = Array.from(selectedDateRange.by("days"));
-                $.map(datesArray, function (date, i)  {
+                $.map(datesArray, function (date, i) {
                   formattedDate = date.format("DD MMMM YYYY");
                   rangeOfDatesArray.push(formattedDate);
-                  appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '' , i);
+                  appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '', i);
                 });
                 listingSelectedDatesTextBox.val(rangeOfDatesArray);
               } else {
                 formattedDate = dates[i].format("DD MMMM YYYY");
-                appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '' , i);
+                appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '', i);
                 listingSelectedDatesTextBox.val(selectedDates);
               }
 
@@ -1251,12 +1249,12 @@ export default function () {
           }
         }
       },
-      prev: function(info, context) {
+      prev: function (info, context) {
         setTimeout(function () {
           PopulateDateTimes(listingDateTimeContainer);
         }, 50);
       },
-      next: function(info, context) {
+      next: function (info, context) {
         setTimeout(function () {
           PopulateDateTimes(listingDateTimeContainer);
         }, 50);
@@ -1267,19 +1265,18 @@ export default function () {
     validateDateTimes();
   }
 
-  function DropdownTimeSelector(listingDateTimeContainer)
-  {
+  function DropdownTimeSelector(listingDateTimeContainer) {
     let btnToggle, dropdownItem, selectedDropdownItem;
     let dateTimeItem;
 
     dateTimeItem = listingDateTimeContainer.find('.date-time-item');
-    dateTimeItem.find('.dropdown').each(function() {
+    dateTimeItem.find('.dropdown').each(function () {
       let dropdownStartTime = $(this).hasClass('selectedStartTime');
       $(this).on('show.bs.dropdown', function () {
         btnToggle = $(this).find('.dropdown-toggle');
         dropdownItem = $(this).find('.dropdown-menu .dropdown-item');
         btnToggle.removeClass('text-danger').parent().removeClass('has-error');
-        dropdownItem.click(function(e) {
+        dropdownItem.click(function (e) {
           selectedDropdownItem = $(this).text();
           if (dropdownStartTime) {
             btnToggle.attr('data-start-time', selectedDropdownItem);
@@ -1293,28 +1290,27 @@ export default function () {
     });
   }
 
-  function PopulateDateTimes(listingDateTimeContainer)
-  {
+  function PopulateDateTimes(listingDateTimeContainer) {
     let listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox, listingSelectedDatesTextBox;
 
     let selectedDates, selectedStartTime, selectedEndTime;
 
     listingSelectedDatesTextBox = $('input[name="SelectedDates"]').val();
     listingSelectedStartTimeTextBox = $('input[name="SelectedStartTimes"]').val();
-    listingSelectedEndTimeTextBox   = $('input[name="SelectedEndTimes"]').val();
+    listingSelectedEndTimeTextBox = $('input[name="SelectedEndTimes"]').val();
 
     if (listingSelectedDatesTextBox) {
 
-      selectedDates     = listingSelectedDatesTextBox.split(",");
+      selectedDates = listingSelectedDatesTextBox.split(",");
       selectedStartTime = listingSelectedStartTimeTextBox.split(",");
-      selectedEndTime   = listingSelectedEndTimeTextBox.split(",");
+      selectedEndTime = listingSelectedEndTimeTextBox.split(",");
 
       for (let i = 0; i < selectedDates.length; i++) {
         //populate Calendar
         let CalendarDateFormat = moment(selectedDates[i]).format('YYYY-MM-DD');
-        let EventDateFormat    = moment(selectedDates[i]).format("DD MMMM YYYY");
+        let EventDateFormat = moment(selectedDates[i]).format("DD MMMM YYYY");
 
-        let unit = $('.pignose-calendar-unit[data-date='+ CalendarDateFormat +']');
+        let unit = $('.pignose-calendar-unit[data-date=' + CalendarDateFormat + ']');
         if (i === 0) {
           unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-first-active');
         } else if (i !== 0 && i === selectedDates.length - 2) {
@@ -1336,7 +1332,7 @@ export default function () {
         }
 
         //populate event dates
-        appendDateTimeItem(listingDateTimeContainer,EventDateFormat, selectedStartTime[i], selectedEndTime[i], i);
+        appendDateTimeItem(listingDateTimeContainer, EventDateFormat, selectedStartTime[i], selectedEndTime[i], i);
 
         //dropdown time selector functions
         DropdownTimeSelector(listingDateTimeContainer);
@@ -1344,8 +1340,7 @@ export default function () {
     }
   }
 
-  function validateDateTimes()
-  {
+  function validateDateTimes() {
     const errorTimeMessage = 'Please add specific time.', errorDateMessage = 'Please select specific dates above.';
 
     let endTime, startTime;
@@ -1359,15 +1354,16 @@ export default function () {
     form = $('#ListingForm_ListingForm');
 
     listingSelectedStartTimeTextBox = $('input[name="SelectedStartTimes"]');
-    listingSelectedEndTimeTextBox   = $('input[name="SelectedEndTimes"]');
+    listingSelectedEndTimeTextBox = $('input[name="SelectedEndTimes"]');
 
     actionBtn = $('#ListingForm_ListingForm_action_next');
     errorField = $('.error-field');
 
     form.on('click', actionBtn, function (e) {
       errorFlag = false;
-      startTimeArray = []; endTimeArray = [];
-      listingDateTimeContainer  = $('.listingDateTimes');
+      startTimeArray = [];
+      endTimeArray = [];
+      listingDateTimeContainer = $('.listingDateTimes');
       dropdownBtnAttr = $(e.target).attr('data-step')
       if (dropdownBtnAttr === 'date-time') {
         listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
@@ -1375,29 +1371,29 @@ export default function () {
           listingDateTimeItem.each(function () {
             let appointmentIsChecked = $(this).find('input[name="appointment_only"]').prop('checked');
             // if (!appointmentIsChecked) {
-              // validate if all dropdown start time is selected
-              $(this).find('.dropdown').each(function() {
-                if ($(this).hasClass('selectedStartTime')) {
-                  startTime = $(this).find('button').attr('data-start-time');
-                  if (startTime === null || startTime === "undefined" || !startTime) {
-                    $(this).addClass('has-error text-danger');
-                    errorFlag = true;
-                    errorMessage = errorTimeMessage;
-                  } else {
-                    startTimeArray.push(startTime);
-                  }
+            // validate if all dropdown start time is selected
+            $(this).find('.dropdown').each(function () {
+              if ($(this).hasClass('selectedStartTime')) {
+                startTime = $(this).find('button').attr('data-start-time');
+                if (startTime === null || startTime === "undefined" || !startTime) {
+                  $(this).addClass('has-error text-danger');
+                  errorFlag = true;
+                  errorMessage = errorTimeMessage;
+                } else {
+                  startTimeArray.push(startTime);
                 }
-                if ($(this).hasClass('selectedEndTime')) {
-                  endTime = $(this).find('button').attr('data-end-time');
-                  if (endTime  === null || endTime === "undefined" || !endTime) {
-                    $(this).addClass('has-error text-danger');
-                    errorFlag = true;
-                    errorMessage = errorTimeMessage;
-                  } else {
-                    endTimeArray.push(endTime);
-                  }
+              }
+              if ($(this).hasClass('selectedEndTime')) {
+                endTime = $(this).find('button').attr('data-end-time');
+                if (endTime === null || endTime === "undefined" || !endTime) {
+                  $(this).addClass('has-error text-danger');
+                  errorFlag = true;
+                  errorMessage = errorTimeMessage;
+                } else {
+                  endTimeArray.push(endTime);
                 }
-              });
+              }
+            });
             // } else {
             //   const appointment = 'Appointment Only';
             //
@@ -1410,7 +1406,7 @@ export default function () {
           errorFlag = true;
           errorMessage = errorDateMessage;
         }
-        if (startTimeArray.length > 0){
+        if (startTimeArray.length > 0) {
           listingSelectedStartTimeTextBox.val(startTimeArray.toString());
         }
         if (endTimeArray.length > 0) {
@@ -1424,10 +1420,9 @@ export default function () {
     });
   }
 
-  function appendDateTimeItem(elem, date, startTime, endTime, id)
-  {
+  function appendDateTimeItem(elem, date, startTime, endTime, id) {
     let startTimeText = startTime;
-    let endTimeText   = endTime;
+    let endTimeText = endTime;
 
     let startTimeDisabled = '';
     let endTimeDisabled = '';
@@ -1451,19 +1446,19 @@ export default function () {
     }
 
     elem.append('' +
-    '<div class="date-time-item row pb-lg-0 pb-4 d-flex align-items-end">' +
+      '<div class="date-time-item row pb-lg-0 pb-4 d-flex align-items-end">' +
       '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text text-tundora">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
       '<div class="col-lg-4 col-6 pb-4">' +
-        '<div class="selectedStartTime dropdown">' +
-          '<button class="dropdown-toggle" '+ startTimeDisabled +' type="button" id="startDate'+ id +'" data-start-time="'+startTime+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+ startTimeText +'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
-          '<div class="dropdown-menu" aria-labelledby="startDate'+id+'">' + timeOptions(0) + '</div>' +
-        '</div>' +
+      '<div class="selectedStartTime dropdown">' +
+      '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="' + startTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + startTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+      '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' +
+      '</div>' +
       '</div>' +
       '<div class="col-lg-4 col-6 pb-4">' +
-        '<div class="selectedEndTime dropdown">' +
-          '<button class="dropdown-toggle" '+ endTimeDisabled +' type="button" id="endDate'+ id +'" data-end-time="'+endTime+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+ endTimeText +'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
-          '<div class="dropdown-menu" aria-labelledby="endDate'+id+'"></div>' +
-        '</div>' +
+      '<div class="selectedEndTime dropdown">' +
+      '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+      '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' +
+      '</div>' +
       '</div>' +
       // '<div class="col-lg-3 pb-4">' +
       //   '<div class="appointment d-flex align-items-center">' +
@@ -1471,13 +1466,13 @@ export default function () {
       //     '<label class="ml-2 mb-0" for="appointmentOnly'+id+'"><span class="font-weight-normal">Appointment only</span></label>' +
       //   '</div>' +
       // '</div>' +
-    '</div>');
+      '</div>');
 
     //Disable time selector when toggled
     let inputAppointment = elem.find('input[name="appointment_only"]');
-    inputAppointment.change(function() {
-      let dropdown  = $(this).parent().parent().siblings();
-      if(this.checked) {
+    inputAppointment.change(function () {
+      let dropdown = $(this).parent().parent().siblings();
+      if (this.checked) {
         dropdown.find('.selectedStartTime').removeClass('has-error text-danger');
         dropdown.find('.selectedStartTime button').find('.text').text('Select start time');
         dropdown.find('.selectedStartTime button').prop("disabled", true);
@@ -1502,11 +1497,10 @@ export default function () {
     });
   }
 
-  function timeOptions(index)
-  {
+  function timeOptions(index) {
     let options = '';
     const arrayTimes =
-      [ '6:00 am', '7:00 am', '8:00 am', '9:00 am', '10:00 am',
+      ['6:00 am', '7:00 am', '8:00 am', '9:00 am', '10:00 am',
         '11:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm',
         '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm', '6:00 pm',
         '7:00 pm', '8:00 pm', '9:00 pm', '10:00 pm', '11:00 pm',
@@ -1519,14 +1513,12 @@ export default function () {
     return options;
   }
 
-  function showError(err, elem)
-  {
+  function showError(err, elem) {
     elem.find('.text-danger').remove();
     return elem.addClass('show').append('<span class="text-danger">' + err + '</span>');
   }
 
-  function ListingPriceStep()
-  {
+  function ListingPriceStep() {
     let isEventFreeRadio = $('#ListingForm_ListingForm_isEventFree');
     let pricesInputTextContainer = $('.price-inputs');
     let checkedRadio = isEventFreeRadio.find('input[name="isEventFree"]:checked').val();
@@ -1535,7 +1527,7 @@ export default function () {
     } else {
       pricesInputTextContainer.removeClass('d-none');
     }
-    isEventFreeRadio.find('input[type="radio"]').on('change', function() {
+    isEventFreeRadio.find('input[type="radio"]').on('change', function () {
       if ($(this).val() === '1') {
         pricesInputTextContainer.addClass('d-none');
       } else {
@@ -1544,15 +1536,14 @@ export default function () {
     });
   }
 
-  function ListingUploadImages()
-  {
+  function ListingUploadImages() {
     let featuredImageDropZone, galleryImagesDropzone, listingLogoDropzone;
     let featuredImageLi, galleryImagesLi, listingLogoImageLi;
     let featuredImageLiFileLink, listingLogoLiFileLink;
 
     featuredImageDropZone = $('#FeaturedImageDropzone');
     galleryImagesDropzone = $('#GalleryImagesDropzone');
-    listingLogoDropzone   = $('#ListingLogoDropzone');
+    listingLogoDropzone = $('#ListingLogoDropzone');
 
     featuredImageLi = featuredImageDropZone.find('ul.file-attachment-field-previews li');
     featuredImageLiFileLink = featuredImageLi.attr('data-file-link');
@@ -1569,8 +1560,7 @@ export default function () {
     listingLogoImageLi.find('span.file-icon img').attr('src', listingLogoLiFileLink);
   }
 
-  function addToFavourites()
-  {
+  function addToFavourites() {
     let btn = $('.addtofavourites');
     btn.click(function () {
       let id = $(this).attr('data-id');
@@ -1600,8 +1590,7 @@ export default function () {
     });
   }
 
-  function showTags()
-  {
+  function showTags() {
     $('.see-more').click(function () {
       if ($(this).hasClass('toggled')) {
         $(this).removeClass('toggled');
@@ -1613,10 +1602,10 @@ export default function () {
     });
   }
 
-  function showMoreNews()
-  {
-    let sectionLatestNews  = $('.sectionLatestNews');
-    if (sectionLatestNews.length > 0) {
+  function showMoreNews() {
+    let sectionLatestNews = $('.sectionLatestNews');
+    let sectionFilteredNews = $('.sectionFilteredNews');
+    if (sectionLatestNews.length > 0 || sectionFilteredNews.length > 0) {
       $(".news-item").slice(0, 4).show();
       $(".loadmore-news").on('click', function (e) {
         e.preventDefault();
@@ -1629,7 +1618,7 @@ export default function () {
   }
 
   function showShareSocials() {
-    $('.sharelisting').click(function() {
+    $('.sharelisting').click(function () {
       let _this = $(this);
       if (_this.hasClass('active')) {
         _this.removeClass('active');
@@ -1641,13 +1630,20 @@ export default function () {
     });
   }
 
-  function sliderTags()
-  {
+  function sliderTags() {
     // var flky = new Flickity( '.tag-test ', {
     //   pageDots: false,
     // });
   }
 
+  function newsletter()
+  {
+    $('#modal-newsletter .close').click(function () {
+      let url= document.location.href;
+      window.history.pushState({}, "", url.split("?")[0]);
+      window.history.replaceState({}, '', url.split("?")[0]);
+    });
+  }
   function resetFavCounter(favCounter)
   {
     if (parseInt(favCounter.attr('data-count')) > 0) {

@@ -24,10 +24,10 @@
         </div>
         <div class="listing-content--tags">
             <button class="btn-utils addtofavourites fontsize35<% if $inFavourites %> active<% end_if %>" data-id="<% if $Listing.ID %>{$Listing.ID}<% else %>{$ID}<% end_if %>"><i class="<% if $inFavourites %>fas<% else %>far<% end_if %> fa-heart"></i></button>
-            <% if $Categories %>
-                <% include ListingTags Categories=$Categories %>
+            <% if $Category %>
+                <% include ListingCategory Category=$Category %>
             <% end_if %>
-            <p class="ml-sm-auto ml-0 pt-sm-0 pt-3"><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
+            <p class="ml-sm-auto ml-0 pt-sm-0 pt-3 view-listing"><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
         </div>
     </div>
 </div>

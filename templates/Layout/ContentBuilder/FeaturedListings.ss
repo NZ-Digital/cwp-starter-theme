@@ -20,8 +20,8 @@
                     </div>
                     <div class="listing-content--tags">
                         <button class="btn-utils addtofavourites fontsize35<% if $Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.addedToFavourites($ID)" data-status=""><i class="<% if $Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
-                        <% if $Categories %>
-                            <% include ListingTags Categories=$Categories %>
+                        <% if $Category %>
+                            <% include ListingCategory Category=$Category %>
                         <% end_if %>
                     </div>
                     <div class="listing-content--details">

@@ -9,7 +9,7 @@
         </div>
         <% end_if %>
     </div>
-    <div class="row">
+    <div class="row <% if $GroupID == "3" %> find-a-space<% end_if %>">
         <%--        <div class="col-lg-12">--%>
         <%--            <img src="$resourceURL('themes/starter/images/favouritesIcon.png')" alt="{$SiteConfig.Title} - Favourites Icon">--%>
         <%--                <p>Your favourited listings all in one spot</p>--%>
@@ -24,12 +24,16 @@
                             </div>
                         <% end_if %>
                         <div class="listing-content--location-date">
-                            <div class="listing-date">
-                                <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$Listing.ListingClosestToCurrentDate</span>
-                            </div>
-                            <div class="listing-location ml-auto">
-                                <a href="/all-listings?city={$Listing.City}"><span class="text-footer-gray text-underline">$Listing.City</span></a>
-                            </div>
+                            <% if $Listing.ListingClosestToCurrentDate %>
+                                <div class="listing-date">
+                                    <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$Listing.ListingClosestToCurrentDate</span>
+                                </div>
+                            <% end_if %>
+                            <% if $Listing.City %>
+                                <div class="listing-location<% if $Listing.ListingClosestToCurrentDate %> ml-auto<% end_if %>">
+                                    <a href="/all-listings?city={$Listing.City}"><span class="text-footer-gray text-underline">$Listing.City</span></a>
+                                </div>
+                            <% end_if %>
                         </div>
                         <div class="listing-content--details">
                             <p class="mb-3 mt-4"><a href="<% if $ListingPage %>$ListingPage.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Listing.Name}</span></a></p>
@@ -37,10 +41,10 @@
                         </div>
                         <div class="listing-content--tags">
                             <button class="btn-utils addtofavourites fontsize35 active" data-id="{$Listing.ID}"><i class="fas fa-heart"></i></button>
-                            <% if $Listing.Categories %>
-                                <% include ListingTags Categories=$Listing.Categories %>
+                            <% if $Listing.Category %>
+                                <% include ListingCategory Category=$Listing.Category %>
                             <% end_if %>
-                            <p class="ml-sm-auto ml-0 pt-sm-0 pt-3"><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
+                            <p class="ml-sm-auto ml-0 pt-sm-0 pt-3 view-listing"><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                         </div>
                     </div>
                 </div>

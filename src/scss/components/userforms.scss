@@ -260,6 +260,10 @@
     padding-left: 17px;
   }
 }
+button.save-draft {
+  border: 0;
+  background-color: transparent;
+}
 .searchfield {
   &:focus {
     box-shadow: none;
@@ -296,6 +300,12 @@
         color: $footer-gray;
       }
     }
+  }
+}
+.profile-image {
+  display: none;
+  &.active {
+    display: block;
   }
 }
 .mark,
@@ -778,7 +788,8 @@ input[type='submit'] {
 }
 
 //Modal Success
-#modal-success{
+#modal-success,
+#modal-newsletter {
   opacity: 0;
   .modal-dialog {
     max-width: 850px;
@@ -795,7 +806,13 @@ input[type='submit'] {
     }
   }
   &.show {
+    background-color: rgb(0 0 0 / 35%);
     display: block;
     opacity: 1;
+  }
+}
+#modal-newsletter {
+  .actions {
+    display: none;
   }
 }

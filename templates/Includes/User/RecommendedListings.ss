@@ -1,20 +1,20 @@
-<section class="page-section sectionRecommendedListings col-lg-12 pt-lg-8">
+<section class="page-section sectionRecommendedListings col-lg-12 pt-lg-8 pb-lg-8">
     <div class="recommendedListings-content inner-padding">
         <div class="container-fluid p-0">
             <% loop $RecommendedListings %>
-                <div class="row pb-lg-7 justify-content-between align-items-center mobile-top-padding mobile-bottom-padding tablet-bottom-padding tablet-top-padding">
-                    <div class="col-auto">
+                <div class="row pb-lg-5 justify-content-between align-items-center mobile-top-padding mobile-bottom-padding tablet-bottom-padding tablet-top-padding">
+                    <div class="col-lg-auto col-12 pb-lg-2 pb-4">
                         <p><span class="fontsize25 halyard-display font-weight-medium letterspacing-7px text-uppercase">Recommended $GroupName</span></p>
                     </div>
                     <% if $Up.CurrentUserIsContributor %>
-                    <div class="col-auto">
-                        <p><a href="create-listing?id={$GroupID}" class="d-flex align-items-center text-decoration-none"><span class="fontsize25 halyard-display font-weight-medium mr-5">$GroupButtonText</span> <i class="fal fa-plus-circle fontsize35"></i></a></p>
+                    <div class="col-lg-auto col-12 pb-lg-2 pb-4 create-event-btn">
+                        <p><a href="create-listing?id={$GroupID}" class="d-flex align-items-center text-decoration-none"><span class="fontsize25 halyard-display font-weight-medium mr-5">$GroupButtonText</span> <i class="fal fa-plus-circle fontsize35 ml-lg-0 ml-auto"></i></a></p>
                     </div>
                     <% end_if %>
                     <div class="col-12"></div>
                     <div class="col-lg-6 pt-3">
                         <div class="row align-items-center">
-                            <div class="col-auto"><img src="$resourceURL('themes/starter/images/infoIcon.png')" alt="{$SiteConfig.Title} - Info Icon"></div>
+                            <div class="col-auto pb-lg-0 pb-2"><img src="$resourceURL('themes/starter/images/infoIcon.png')" alt="{$SiteConfig.Title} - Info Icon"></div>
                             <div class="col-lg-9"><p class="fontsize19 font-weight-book">Recommended $GroupName matching your selected interests. Adjust your preferences at any time in your <a href="/account-settings"><span class="text-underline">account settings.</span></a></p></div>
                         </div>
                     </div>
@@ -43,10 +43,10 @@
                                     </div>
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
-                                        <% if $Tags %>
-                                            <% include ListingTags Tags=$Tags %>
+                                        <% if $Category %>
+                                            <% include ListingCategory Category=$Category %>
                                         <% end_if %>
-                                        <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
+                                        <p class="ml-sm-auto ml-0 pt-sm-0 pt-3 view-listing"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                                     </div>
                                 </div>
                             </div>
@@ -74,10 +74,10 @@
                                     </div>
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
-                                        <% if $Tags %>
-                                            <% include ListingTags Categories=$Categories %>
+                                        <% if $Category %>
+                                            <% include ListingCategory Category=$Category %>
                                         <% end_if %>
-                                        <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
+                                        <p class="ml-sm-auto ml-0 pt-sm-0 pt-3 view-listing"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                                     </div>
                                 </div>
                             </div>

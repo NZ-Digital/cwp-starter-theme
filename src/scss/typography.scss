@@ -383,7 +383,7 @@ pre {
   }
 }
 .fontsize19 {
-  font-size: 20px;
+  font-size: 19px;
 }
 .fontsize20 {
   font-size: 20px;
@@ -594,6 +594,7 @@ pre {
 .theme-button-hover-dark,
 .theme-button-dark,
 .theme-button-gray,
+.theme-button-white,
 .theme-button-alt,
 .theme-button-long,
 .theme-button-long-yellow,
@@ -742,8 +743,15 @@ pre {
   &:hover {
     border-color: $cod-gray;
     background-color: transparent;
+    border: 1px solid;
   }
 }
+
+.theme-button-white {
+  background-color: $carra;
+  border-color: $carra;
+}
+
 .theme-button-gray-small {
   position: relative;
   display: inline-block;
@@ -838,9 +846,15 @@ pre {
 .button-signup ,
 .button-myportal{
   position: relative;
-  min-width: 226px;
-  padding: 12px 90px 12px 57px;
   transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
+  @media only screen and (min-width: 992px) {
+    padding: 12px 90px 12px 57px;
+    min-width: 226px;
+  }
+  @media only screen and (max-width: 991px) {
+    min-width: 100%;
+    padding: 12px 50px 12px 20px;
+  }
   &:hover {
     background-color: $carra !important;
   }

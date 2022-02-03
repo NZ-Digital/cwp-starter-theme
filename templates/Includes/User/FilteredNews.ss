@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-lg-10 pr-lg-7">
                         <p class="mb-3"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize30 font-weight-medium line-height-100 text-scorpion">{$Name}</span></a></p>
-                        <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-140 text-scorpion">{$ContentSummary.LimitWordCount(60)}</span></a></p>
+                        <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-140 text-scorpion"> <% if $ContentSummary %>{$ContentSummary.LimitWordCount(60)}<% else %><% if $ContentSummaryRaw %>{$ContentSummaryRaw.Raw.LimitWordCount(60)}<% end_if %><% end_if %></span></a></p>
                         <div class="newslist-content--link"><i class="fal fa-angle-right fontsize35 text-scorpion"></i></div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
     </div>
 <% end_loop %>
 <% if $NewsLists.Count > 4 %>
-<div class="col-lg-6 pt-5">
+<div class="col-lg-6 pt-5 text-center text-sm-left">
     <p><a href="#" class="loadmore-news"><span class="halyard-display fontsize18 theme-button-hover-dark">Load more</span></a></p>
 </div>
 <% end_if %>

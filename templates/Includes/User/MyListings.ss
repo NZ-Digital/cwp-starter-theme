@@ -42,8 +42,8 @@
                                     </div>
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
-                                        <% if $Tags %>
-                                            <% include ListingTags Categories=$Categories %>
+                                        <% if $Category %>
+                                            <% include ListingCategory Category=$Category %>
                                         <% end_if %>
 <%--                                        <div class="tag-container">--%>
 <%--                                            <div class="tag-items">--%>
@@ -54,7 +54,7 @@
 <%--                                                <% end_if %>--%>
 <%--                                            </div>--%>
 <%--                                        </div>--%>
-                                        <p class="ml-auto"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
+                                        <p class="ml-auto view-listing"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                                     </div>
                                 </div>
                             </div>
