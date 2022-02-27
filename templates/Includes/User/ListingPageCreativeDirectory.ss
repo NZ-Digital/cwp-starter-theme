@@ -28,6 +28,8 @@
                             <a target="_blank" class="pl-1 pr-1" href="https://www.facebook.com/sharer/sharer.php?u={$AbsoluteLink}"><i class="fab fa-facebook-f"></i></a>
                             <a target="_blank" class="pl-1 pr-1" href="https://twitter.com/share?url={$AbsoluteLink}"><i class="fab fa-twitter"></i></a>
                             <a target="_blank" class="pl-1 pr-1" href="https://www.linkedin.com/shareArticle?mini=true&url={$AbsoluteLink}"><i class="fab fa-linkedin-in"></i></a>
+                            <a target="_blank" class="pl-1 pr-1" href="https://wa.me/?text={$AbsoluteLink}"><i class="fab fa-whatsapp"></i></a>
+                            <a target="_blank" class="pl-1 pr-1" href="mailto:?subject={$Title}&body={$AbsoluteLink}"><i class="fas fa-envelope"></i></a>
                         </p>
                         <hr style="border-color: #a2a2a2;">
                         <p><a href="#" class="report-listing"><span class="fontsize16 font-weight-medium">Report</span></a></p>
@@ -45,17 +47,27 @@
                 </div>
             </div>
         </div>
-        <div class="row listing-content no-gutters w-">
+        <div class="row listing-content no-gutters">
             <div class="col-lg-8 pb-6">
                 <% if $Listing.Content2 %>
                     <div class="listing-content--bar">$Listing.Content2</div>
                 <% end_if %>
-                <div class="listing-content--featured-img mb-6">
-                    <img src="$Listing.FeaturedImage.URL" alt="$Listing.Name">
-                </div>
-                <div class="listing-content--details mb-3">
-                    <span class="fontsize19 font-weight-book">$Listing.Content</span>
-                </div>
+                <% if $Listing.FeaturedImage %>
+                    <div class="listing-content--featured-img mb-6">
+                        <img src="$Listing.FeaturedImage.URL" alt="$Listing.Name">
+                    </div>
+                <% end_if %>
+                <% if $Listing.Content %>
+                    <div class="listing-content--details mb-3">
+                       $Listing.Content
+                    </div>
+                <% else %>
+                    <% if $Listing.ContentRaw %>
+                        <div class="listing-content--details mb-3">
+                            $Listing.ContentRaw.RAW
+                        </div>
+                    <% end_if %>
+                <% end_if %>
                 <% if $Listing.GalleryImages %>
                     <% if $Listing.GalleryImages.Count > 2 %>
                         <div class="listing-content--gallery mt-lg-8 mt-7">
@@ -79,15 +91,6 @@
                         </div>
                     <% end_if %>
                 <% end_if %>
-                <hr class="mt-lg-6 mb-lg-5 mt-4 mb-4" style="border-color: #A2A2A2;">
-                <% if $Listing.Tags %>
-                <div class="listing-content--tags">
-                    <span class="halyard-display font-weight-medium fontsize25 text-uppercase letterspacing-7px">Tags</span>
-                    <% loop $Listing.Tags %>
-                        <a href="/all-listings?tag={$Title}" class="tag-name mr-lg-3 ml-lg-5"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline text-footer-gray">$Title</span></a>
-                    <% end_loop %>
-                </div>
-                <% end_if %>
             </div>
             <div class="col-lg-3 offset-lg-1">
                 <div class="row">
@@ -109,91 +112,119 @@
                     <% end_if %>
                     <% end_if %>
                     <% if $Listing.AssignedGroupID == "2" %>
-                    <div class="col-lg-2 col-sm-1 col-2 pb-lg-3 pb-4 pr-0">
+                    <div class="col-lg-2 col-sm-1 col-2 pb-lg-3 pb-3 pr-0">
                         <img src="$resourceURL('themes/starter/images/iconcontact.svg')" class="icon" alt="Listing icon">
                     </div>
 
-                    <div class="col-lg-10 col-10 pb-lg-3 pb-4">
-                        <p><span class="fontsize20 font-weight-medium text-uppercase">Contact</span></p>
+                    <div class="col-lg-10 col-10 pb-lg-3 pb-3">
+                        <p><span class="fontsize20 font-weight-medium text-uppercase">Contact</span> <button class="accordion-btn d-lg-none">&nbsp;</button></p>
                     </div>
                     <div class="col-lg-12 pb-1">
-                        <% if $Listing.Phone %><p class="pb-3 offset-lg-2"><a href="tel:{$Listing.Phone}" class="d-flex align-items-center text-break"><i class="fas fa-phone-alt mr-lg-3 mr-1 fontsize20 align-middle"></i><span class="fontsize18 font-weight-light moderna-sans overflow-wrap w-100 line-height-100">$Listing.Phone</span></a></p><% end_if %>
-                        <% if $Listing.Email %><p class="pb-3 offset-lg-2"><a href="mailto:{$Listing.Email}" class="d-flex align-items-center text-break"><i class="fas fa-envelope mr-lg-3 mr-1 fontsize20 align-middle"></i><span class="fontsize18 font-weight-light  moderna-sans overflow-wrap w-100 line-height-100">$Listing.Email</span></a></p><% end_if %>
-                        <% if $Listing.Website %><p class="pb-3 offset-lg-2"><a href="//$Listing.Website" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fas fa-globe mr-lg-3 mr-1 fontsize20 align-middle"></i><span class="fontsize18 font-weight-light moderna-sans overflow-wrap w-100 line-height-100">$Listing.Website</span></a></p><% end_if %>
-                        <% if $Listing.Facebook %><p class="pb-3 offset-lg-2"><a href="//$Listing.Facebook" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fab fa-facebook-f mr-lg-3 mr-1 fontsize20 align-middle"></i><span class="fontsize18 font-weight-light moderna-sans overflow-wrap w-100 line-height-100">$Listing.Facebook</span></a></p><% end_if %>
-                        <% if $Listing.Instagram %><p class="pb-3 offset-lg-2"><a href="//$Listing.Instagram" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fab fa-instagram mr-lg-3 mr-1 fontsize20 align-middle"></i><span class="fontsize18 font-weight-light moderna-sans overflow-wrap w-100 line-height-100">$Listing.Instagram</span></a></p><% end_if %>
-                        <% if $Listing.Twitter %><p class="pb-3 offset-lg-2"><a href="//$Listing.Twitter" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fab fa-twitter mr-lg-3 mr-1 fontsize20 align-middle"></i><span class="fontsize18 font-weight-light moderna-sans overflow-wrap w-100 line-height-100">$Listing.Twitter</span></a></p><% end_if %>
+                        <div class="accordion-panel">
+                            <div class="pb-3">
+                            <% if $Listing.Phone %><p class="pb-3 offset-lg-2"><a href="tel:{$Listing.Phone}" class="d-flex align-items-center text-break"><i class="fas fa-phone-alt mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-light moderna-sans overflow-wrap w-100 line-height-100">$Listing.Phone</span></a></p><% end_if %>
+                            <% if $Listing.Email %><p class="pb-3 offset-lg-2"><a href="mailto:{$Listing.Email}" class="d-flex align-items-center text-break"><i class="fas fa-envelope mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-light  moderna-sans overflow-wrap w-100 line-height-100">$Listing.Email</span></a></p><% end_if %>
+                            <% if $Listing.Website %><p class="pb-3 offset-lg-2"><a href="//{$Listing.Website}" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fas fa-globe mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-light moderna-sans overflow-wrap w-100 line-height-100">$Listing.Website</span></a></p><% end_if %>
+                            <% if $Listing.Facebook %><p class="pb-3 offset-lg-2"><a href="//{$Listing.Facebook}" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fab fa-facebook-f mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-light moderna-sans overflow-wrap w-100 line-height-100">$Listing.Facebook</span></a></p><% end_if %>
+                            <% if $Listing.Instagram %><p class="pb-3 offset-lg-2"><a href="//{$Listing.Instagram}" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fab fa-instagram mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-light moderna-sans overflow-wrap w-100 line-height-100">$Listing.Instagram</span></a></p><% end_if %>
+                            <% if $Listing.Twitter %><p class="pb-3 offset-lg-2"><a href="//{$Listing.Twitter}" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fab fa-twitter mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-light moderna-sans overflow-wrap w-100 line-height-100">$Listing.Twitter</span></a></p><% end_if %>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-12 pt-lg-5 pb-lg-5 pt-3 pb-3">
+                    <div class="col-lg-12 pt-lg-5 pb-lg-5 pb-3">
                         <hr style="border-color: #A2A2A2;">
                     </div>
                     <% end_if %>
-                    <% if $Listing.VisibleDatesAndTimes %>
-                        <div class="col-lg-2 col-sm-1 col-2 pb-lg-3 pb-4 pr-0">
+                    <% if $Listing.VisibleDatesAndTimes || $Listing.ByAppointment == '1' %>
+                        <div class="col-lg-2 col-sm-1 col-2 pb-lg-3 pb-3 pr-0">
                             <img src="$resourceURL('themes/starter/images/icon-date-time.svg')" class="icon" alt="Listing icon">
                         </div>
-                        <div class="col-lg-10 col-10 pb-lg-3 pb-4">
-                            <p><span class="fontsize20 font-weight-medium text-uppercase">Opening hours</span></p>
+                        <div class="col-lg-10 col-sm-11 col-10 pb-lg-3 pb-3">
+                            <p><span class="fontsize20 font-weight-medium text-uppercase">Opening hours</span> <button class="accordion-btn d-lg-none">&nbsp;</button></p>
                         </div>
-                        <% loop $Listing.VisibleDatesAndTimes %>
-                            <div class="col-lg-5 offset-lg-2 pb-lg-1">
-                                <p><span class="fontsize19 font-weight-book">$Date.Format('E, dd LLL')</span></p>
+                        <div class="col-12">
+                            <div class="row no-gutters accordion-panel">
+                                <% loop $Listing.VisibleDatesAndTimes %>
+                                    <div class="col-lg-4 col-6 offset-lg-2 pb-lg-1 pl-1">
+                                        <p><span class="fontsize19 font-weight-book">$Day</span></p>
+                                    </div>
+                                    <div class="col-lg-6 col-6 pb-lg-1<% if $Last %> pb-3<% end_if %>">
+                                        <p><span class="fontsize19 font-weight-book">$Time</span></p>
+                                    </div>
+                                <% end_loop %>
+                                <% if $Listing.ByAppointment == '1' %>
+                                    <div class="col-12">
+                                        <p class="offset-lg-2 pb-lg-1 pb-2 pl-1"><span class="fontsize19 font-weight-book">Appointments Only</span></p>
+                                    </div>
+                                <% end_if %>
                             </div>
-                            <div class="col-lg-5 pb-lg-1">
-                                <p><span class="fontsize19 font-weight-book">$Time</span></p>
-                            </div>
-                        <% end_loop %>
+                        </div>
                     <% end_if %>
-                    <% if $Listing.VisibleDatesAndTimes %>
-                    <div class="col-lg-12 pt-lg-5 pb-lg-5 pt-3 pb-3">
+                    <% if $Listing.VisibleDatesAndTimes || $Listing.ByAppointment == '1' %>
+                    <div class="col-lg-12 pt-lg-5 pb-lg-5 pb-3">
                         <hr style="border-color: #A2A2A2;">
                     </div>
                     <% end_if %>
-                    <div class="col-lg-2 col-sm-1 col-2 pb-lg-3 pb-4 pr-0">
+                    <div class="col-lg-2 col-sm-1 col-2 pb-lg-3 pb-3 pr-0">
                         <img src="$resourceURL('themes/starter/images/icon-map.svg')" class="icon" alt="Listing icon">
                     </div>
-                    <div class="col-lg-10 col-10 pb-lg-3 pb-4">
-                        <p><span class="fontsize20 font-weight-medium text-uppercase">Location</span></p>
+                    <div class="col-lg-10 col-10 pb-lg-3 pb-3">
+                        <p><span class="fontsize20 font-weight-medium text-uppercase">Location</span> <button class="accordion-btn d-lg-none">&nbsp;</button></p>
                     </div>
-                    <div class="col-lg-12 offset-lg-2 pb-lg-1">
-                        <p><span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.BuildingName %>$Listing.BuildingName<br><% end_if %><% if $Listing.Address %>$Listing.Address, <% end_if %><% if $Listing.City %>$Listing.City, <br><% end_if %><% if $Listing.Town %>$Listing.Town<% end_if %><% if $Listing.Postcode %>$Listing.Postcode<% end_if %></span></p>
-                        <p class="pt-4"><a target="_blank"  href="https://www.google.com/maps/place/{$Listing.Address} {$Listing.City}"> <span class="fontsize16 font-weight-medium text-underline">Open in maps</span></a></p>
+                    <div class="col-lg-12 pb-lg-1">
+                        <div class="accordion-panel">
+                            <p class="offset-lg-2"><span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.IsOnline %><% if $Listing.AssignedGroupID == "2" %>This directory is virtual<% else %>This space is virtual<% end_if %><% end_if %><% if $Listing.BuildingName %>$Listing.BuildingName<br><% end_if %><% if $Listing.Address %>$Listing.Address, <% end_if %><% if $Listing.City %>$Listing.City, <br><% end_if %><% if $Listing.Town %>$Listing.Town<% end_if %><% if $Listing.Postcode %>$Listing.Postcode<% end_if %></span></p>
+                            <p class="offset-lg-2 pt-4 pb-3"><a target="_blank"  href="https://www.google.com/maps/place/{$Listing.Address} {$Listing.City}"> <span class="fontsize16 font-weight-medium text-underline">Open in maps</span></a></p>
+                        </div>
                     </div>
-                    <div class="col-lg-12 pt-lg-5 pb-lg-5 pt-3 pb-3">
+                    <div class="col-lg-12 pt-lg-5 pb-lg-5 pb-3">
                         <hr style="border-color: #A2A2A2;">
                     </div>
-                    <div class="col-lg-2 col-sm-1 col-2 pb-lg-3 pb-4 pr-0">
+                    <% if $Listing.PriceRange || $Listing.BookingURL %>
+                    <div class="col-lg-2 col-sm-1 col-2 pb-lg-3 pb-3 pr-0">
                         <img src="$resourceURL('themes/starter/images/icon-price.svg')" class="icon" alt="Listing icon">
                     </div>
-                    <div class="col-lg-10 col-10 pb-lg-3 pb-4">
-                        <p><span class="fontsize20 font-weight-medium text-uppercase"><% if $Listing.AssignedGroupID == "2" %>Price & Bookings<% else %>Price<% end_if %></span></p>
+                    <div class="col-lg-10 col-10 pb-lg-3 pb-3">
+                        <p><span class="fontsize20 font-weight-medium text-uppercase"><% if $Listing.AssignedGroupID == "2" %>Price & Bookings<% else %>Price<% end_if %></span> <button class="accordion-btn d-lg-none">&nbsp;</button></p>
                     </div>
-                    <div class="col-lg-12 offset-lg-2 pb-lg-1">
-                        <p>
-                            <span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.PriceRange %>From $Listing.PriceRange<% end_if %></span></p>
-                        <p class="pt-4"><a target="_blank" href="<% if $Listing.BookingURL %>$Listing.BookingURL<% else %>#<% end_if %>"> <span class="fontsize16 font-weight-medium text-underline">Book online</span></a></p>
+                    <div class="col-lg-12 pb-lg-1">
+                        <div class="accordion-panel">
+                            <% if $Listing.IsEventFree %>
+                                <p class="offset-lg-2 pl-lg-1"><span class="fontsize19 font-weight-book moderna-sans">Free</span></p>
+                            <% else %>
+                                <p class="offset-lg-2 pl-lg-1"><span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.PriceRange %>From $Listing.PriceRange<% end_if %></span></p>
+                            <% end_if %>
+                            <% if $Listing.BookingURL %>
+                            <p class="offset-lg-2 pl-lg-1 pt-4 pb-3"><a target="_blank" href="$Listing.BookingURL"> <span class="fontsize16 font-weight-medium text-underline">Book online</span></a></p>
+                            <% end_if %>
+                        </div>
                     </div>
-                    <div class="col-lg-12 pt-lg-5 pb-lg-5 pt-3 pb-3">
+                    <div class="col-lg-12 pt-lg-5 pb-lg-5 pb-3">
                         <hr style="border-color: #A2A2A2;">
                     </div>
+                    <% end_if %>
 
                     <% if $Listing.AssignedGroupID == "3" %>
-                        <div class="col-lg-2 col-sm-1 col-2 pb-lg-3 pb-4 pr-0">
+                        <div class="col-lg-2 col-sm-1 col-2 pb-lg-3 pb-3 pr-0">
                             <img src="$resourceURL('themes/starter/images/iconcontact.svg')" class="icon" alt="Listing icon">
                         </div>
 
-                        <div class="col-lg-10 col-10 pb-lg-3 pb-4">
-                            <p><span class="fontsize20 font-weight-medium text-uppercase">Contact</span></p>
+                        <div class="col-lg-10 col-10 pb-lg-3 pb-3">
+                            <p><span class="fontsize20 font-weight-medium text-uppercase">Contact</span> <button class="accordion-btn d-lg-none">&nbsp;</button></p>
                         </div>
-                        <div class="col-lg-12 offset-lg-2 pb-lg-1 pb-2">
-                            <% if $Listing.Phone %><p class="pb-3"><a href="tel:{$Listing.Phone}" class="d-flex align-items-center"><i class="fas fa-phone-alt mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Phone</span></a></p><% end_if %>
-                            <% if $Listing.Email %><p class="pb-3"><a href="mailto:{$Listing.Email}" class="d-flex align-items-center"><i class="fas fa-envelope mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book  moderna-sans overflow-wrap w-100 line-height-100">$Listing.Email</span></a></p><% end_if %>
-                            <% if $Listing.Website %><p class="pb-3"><a href="//$Listing.Website" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fas fa-globe mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Website</span></a></p><% end_if %>
-                            <% if $Listing.Facebook %><p class="pb-3"><a href="//$Listing.Facebook" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fab fa-facebook-f mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Facebook</span></a></p><% end_if %>
-                            <% if $Listing.Instagram %><p class="pb-3"><a href="//$Listing.Instagram" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fab fa-instagram mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Instagram</span></a></p><% end_if %>
-                            <% if $Listing.Twitter %><p class="pb-3"><a href="//$Listing.Twitter" target="_blank" rel="nofollow" class="d-flex align-items-center"><i class="fab fa-twitter mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Twitter</span></a></p><% end_if %>
+                        <div class="col-lg-12 pb-lg-1 pb-2">
+                            <div class="accordion-panel">
+                                <div class="pb-3">
+                                <% if $Listing.Phone %><p class="pb-3 offset-lg-2 pl-lg-2"><a href="tel:{$Listing.Phone}" class="d-flex align-items-center text-break"><i class="fas fa-phone-alt mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Phone</span></a></p><% end_if %>
+                                <% if $Listing.Email %><p class="pb-3 offset-lg-2 pl-lg-2"><a href="mailto:{$Listing.Email}" class="d-flex align-items-center text-break"><i class="fas fa-envelope mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book  moderna-sans overflow-wrap w-100 line-height-100">$Listing.Email</span></a></p><% end_if %>
+                                <% if $Listing.Website %><p class="pb-3 offset-lg-2 pl-lg-2"><a href="//$Listing.Website" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fas fa-globe mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Website</span></a></p><% end_if %>
+                                <% if $Listing.Facebook %><p class="pb-3 offset-lg-2 pl-lg-2"><a href="//$Listing.Facebook" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fab fa-facebook-f mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Facebook</span></a></p><% end_if %>
+                                <% if $Listing.Instagram %><p class="pb-3 offset-lg-2 pl-lg-2"><a href="//$Listing.Instagram" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fab fa-instagram mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Instagram</span></a></p><% end_if %>
+                                <% if $Listing.Twitter %><p class="pb-3 offset-lg-2 pl-lg-2"><a href="//$Listing.Twitter" target="_blank" rel="nofollow" class="d-flex align-items-center text-break"><i class="fab fa-twitter mr-lg-3 mr-2 fontsize20 align-middle"></i><span class="fontsize19 font-weight-book moderna-sans overflow-wrap w-100 line-height-100">$Listing.Twitter</span></a></p><% end_if %>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-12 pt-lg-5 pb-lg-5 pt-3 pb-3">
+                        <div class="col-lg-12 pt-lg-5 pb-lg-5 pb-3">
                             <hr style="border-color: #A2A2A2;">
                         </div>
                     <% end_if %>
@@ -205,17 +236,28 @@
                     <% end_if %>
                 </div>
             </div>
+            <% if $Listing.Tags %>
+            <div class="col-lg-8 pb-lg-6 pb-3">
+                <hr class="mt-6 mb-5 d-sm-block d-none" style="border-color: #A2A2A2;">
+                <div class="listing-content--tags">
+                    <span class="halyard-display font-weight-medium fontsize25 text-uppercase letterspacing-7px">Tags</span>
+                    <% loop $Listing.Tags %>
+                        <a href="/all-listings?tag={$Title}" class="tag-name mr-lg-3 ml-lg-5"><span class="halyard-display font-weight-medium fontsize16 text-uppercase text-underline text-footer-gray">$Title</span></a>
+                    <% end_loop %>
+                </div>
+            </div>
+            <% end_if %>
             <div class="col-lg-12">
                 <hr style="border-color: #A2A2A2;">
             </div>
-            <div class="col-lg-12 pt-5 pb-5">
+            <div class="col-lg-12 pt-5">
                 <% if $Listing.AssignedGroupID == "3" %>
                     <p><a href="/find-a-space"><span class="theme-button-long text-center">Back to all spaces</span></a></p>
                 <% else %>
                     <p><a href="/creative-directory"><span class="theme-button-long text-center">Back to the Creative Directory</span></a></p>
                 <% end_if %>
             </div>
-            <div class="col-lg-12 pt-5">
+            <div class="col-lg-12 pt-7 related-listings">
                 <p><span class="halyard-display font-weight-medium fontsize25 text-uppercase letterspacing-7px">Related Listings</span></p>
                 <% if $getRelatedListings($Listing.ID) %>
                     <div class="row pt-6 creative-directory">

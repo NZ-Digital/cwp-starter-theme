@@ -1,34 +1,33 @@
-<div class="contactForm-container">
-    <div class="d-md-block d-none">$Content</div>
+<div class="contactForm-container text-center">
+    <div class="d-md-none d-block">$Content</div>
     <% if $ButtonText %>
-        <button type="button" class="d-md-block m-auto d-none theme-button-white" data-toggle="modal" data-target="#modal-newsletter">
+        <a href="<% if $CurrentMember %>/account-settings<% else %>/sign-up<% end_if %>" class="d-md-inline-block m-auto d-none theme-button-white">
             <span class="halyard-display font-weight-medium fontsize19">$ButtonText</span>
-        </button>
+        </a>
     <% end_if %>
-    <p class="text-center d-md-none d-block">&nbsp;</p>
     <% if $ButtonTextMobile %>
-        <button type="button" class="d-md-none m-auto d-block theme-button-white" data-toggle="modal" data-target="#modal-newsletter">
+        <a href="<% if $CurrentMember %>/account-settings<% else %>/sign-up<% end_if %>" class="d-md-none m-auto d-inline-block theme-button-white">
             <span class="halyard-display font-weight-medium fontsize19">$ButtonTextMobile</span>
-        </button>
+        </a>
     <% end_if %>
-    <div class="modal fade <% if $Up.getNewsletterSuccess %>show<% end_if %>" id="modal-newsletter" tabindex="-1" role="dialog" aria-labelledby="newsletter" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-content">
-                        $FormContent
-                    </div>
-                    <% if $NewsletterSuccess %>
-                        <div class="alert alert-success" role="alert">You are now subscribed to your newsletter!</div>
-                    <% end_if %>
-                    $NewsletterForm
-                </div>
-            </div>
-        </div>
-    </div>
+<%--    <div class="modal fade <% if $Up.getNewsletterSuccess %>show<% end_if %>" id="modal-newsletter" tabindex="-1" role="dialog" aria-labelledby="newsletter" aria-hidden="true">--%>
+<%--        <div class="modal-dialog modal-dialog-centered" role="document">--%>
+<%--            <div class="modal-content">--%>
+<%--                <div class="modal-header">--%>
+<%--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+<%--                        <span aria-hidden="true">&times;</span>--%>
+<%--                    </button>--%>
+<%--                </div>--%>
+<%--                <div class="modal-body">--%>
+<%--                    <div class="form-content">--%>
+<%--                        $FormContent--%>
+<%--                    </div>--%>
+<%--                    <% if $NewsletterSuccess %>--%>
+<%--                        <div class="alert alert-success" role="alert">You are now subscribed to your newsletter!</div>--%>
+<%--                    <% end_if %>--%>
+<%--                    $NewsletterForm--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 </div>

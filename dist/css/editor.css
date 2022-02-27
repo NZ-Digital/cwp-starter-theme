@@ -10776,43 +10776,48 @@ pre {
 .white-line:after {
   position: absolute;
   content: "";
-  width: 624px;
   -webkit-transform: translate3d(0, -50%, 0);
           transform: translate3d(0, -50%, 0);
   top: 55%;
   left: 0;
   z-index: -1;
 }
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1590px) {
   .yellow-line:after,
 .white-line:after {
     width: 624px;
   }
 }
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 1589px) {
   .yellow-line:after,
 .white-line:after {
     width: 100%;
   }
 }
 
-@media only screen and (min-width: 669px) {
+p.yellow-line:after,
+p.white-line:after {
+  width: 100%;
+  max-width: 624px;
+}
+
+@media only screen and (min-width: 1590px) {
   .yellow-line:after {
     border-top: 15px solid #f9d777;
   }
 }
-@media only screen and (max-width: 668px) {
+@media only screen and (max-width: 1589px) {
   .yellow-line:after {
     border-top: 10px solid #f9d777;
   }
 }
 
-@media only screen and (min-width: 669px) {
+@media only screen and (min-width: 1590px) {
   .white-line:after {
     border-top: 15px solid #fff;
   }
 }
-@media only screen and (max-width: 668px) {
+@media only screen and (max-width: 1589px) {
   .white-line:after {
     border-top: 10px solid #fff;
   }

@@ -1,4 +1,4 @@
-<section class="page-section sectionUserSideNav col-lg-4 pl-lg-7 pt-lg-9" style="background-color: #EB6543;">
+<section class="page-section sectionUserSideNav col-lg-4 pl-lg-7 pt-lg-9" style="background-color: #65AF8E;">
     <div class="userSideNav-container pl-lg-1">
         <ul class="user-sidenav--links list-unstyled">
             <li class="user-sidenav--step"><a href="become-a-contributor-form" class="text-white"><div class="user-sidenav--btn-progress active"></div><span class="halyard-display fontsize15 font-weight-medium letterspacing-5px text-uppercase">Contributor Sign Up</span></a></li>
@@ -18,4 +18,3 @@
         </div>
     </div>
 </section>
-

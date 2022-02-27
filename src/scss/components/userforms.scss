@@ -47,6 +47,10 @@
   display: flex;
   flex-wrap: wrap;
 }
+.form-control:disabled,
+.form-control:read-only {
+  background-color: rgb(162 162 162 / 15%);
+}
 .form-group {
   &.has-error {
     margin-bottom: .5rem;
@@ -95,7 +99,6 @@
     border-color: $footer-gray;
   }
   textarea {
-    min-height: 367px;
     border: 1px solid $footer-gray;
     border-radius: 0;
     &.rounded-textarea {
@@ -104,6 +107,9 @@
     }
     &.textarea-small {
       min-height: 162px;
+    }
+    &.large-textarea {
+      min-height: 367px;
     }
   }
   textarea::placeholder {
@@ -124,6 +130,7 @@
       transform: translate3d(0, -50%, 0);
     }
   }
+  &.optionset-day,
   .optionset,
   .single-option {
     .form-check {
@@ -170,6 +177,16 @@
           background-color: $footer-gray;
           color: #fff;
         }
+      }
+    }
+  }
+  &.optionset-day {
+    .form-check {
+      text-align: left;
+      label {
+        color: $footer-gray;
+        max-width: 212px;
+        text-align: center;
       }
     }
   }
@@ -239,6 +256,22 @@
       &:last-child {
         padding-top: 7px;
       }
+    }
+  }
+}
+.calendar-datepicker {
+  &.disabled {
+    position: relative;
+    &:after {
+      position: absolute;
+      width: 100%;
+      content: '';
+      height: 100%;
+      background-color: #a2a2a214;
+      top: 0;
+    }
+    .pignose-calendar {
+      box-shadow: none;
     }
   }
 }
@@ -437,6 +470,32 @@ mark {
     }
   }
 }
+.calendar-datepicker {
+  &.disabled {
+    .pignose-calendar-unit {
+      &-active {
+        a {
+          border: 1px solid transparent;
+          color: #a2a2a2 !important;
+        }
+      }
+    }
+    .pignose-calendar-unit-range {
+      a {
+        color: #a2a2a2;
+        background-color: transparent;
+      }
+    }
+  }
+}
+.optionset-daypicker {
+  &.disabled {
+    position: relative;
+    &:after {
+      
+    }
+  }
+}
 .calendar-datepicker--dropdown {
   .pignose-calendar {
     border: 0;
@@ -446,30 +505,9 @@ mark {
 }
 .listingDateTimes {
   .date-time-item {
-    .selectedDate,
-    .selectedStartTime,
-    .selectedEndTime {
-      position: relative;
-      max-width: 237px;
-
-      &.has-error {
-        border-color: $danger;
-        .text {
-          color: $danger;
-        }
-      }
-    }
     .selectedDate {
       padding-bottom: 8px;
       border-bottom: 1px solid #707070;
-    }
-    .selectedStartTime,
-    .selectedEndTime {
-      &.show {
-        i {
-          transform: rotate(180deg);
-        }
-      }
     }
     .dropdown-toggle {
       text-align: left;
@@ -528,6 +566,99 @@ mark {
     }
   }
 }
+
+.selectedDate,
+.selectedStartTime,
+.selectedEndTime {
+  position: relative;
+  max-width: 237px;
+  &.has-error {
+    border-color: $danger;
+    .text {
+      color: $danger;
+    }
+  }
+  .dropdown-toggle {
+    text-align: left;
+    width: 100%;
+    padding-bottom: 10px;
+    background-color: transparent;
+    border: 0;
+    padding-left: 0;
+    border-bottom: 1px solid;
+    line-height: 100%;
+    color: $tundora;
+    &:after {
+      display: none;
+    }
+  }
+  button[disabled].dropdown-toggle {
+    color: grey;
+  }
+  &.disabled {
+    .dropdown-menu {
+      display: none;
+    }
+    .dropdown-toggle {
+      border-bottom-color: $footer-gray;
+      span {
+        color: $footer-gray;
+      }
+    }
+    .btn-arrowdown {
+      color: $footer-gray;
+    }
+
+  }
+  .dropdown-menu {
+    max-height: 290px;
+    width: 100%;
+    overflow: auto;
+    margin-top: 15px;
+    padding: 25px 26px;
+    border: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    background-color: $carra;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 16%);
+    .dropdown-item {
+      color: $scorpion;
+      padding: 0;
+      transition: color 200ms cubic-bezier(0.76, 0, 0.24, 1) ;
+      cursor: pointer;
+      &.active,
+      &:hover {
+        color: $cod-gray;
+        background-color: transparent;
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid $footer-gray;
+        padding: 7px 0;
+      }
+      &:last-child {
+        padding-top: 7px;
+      }
+    }
+  }
+  .btn-remove,
+  .btn-arrowdown {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+  }
+  .btn-arrowdown {
+    font-size: 26px;
+  }
+}
+.selectedStartTime,
+.selectedEndTime {
+  &.show {
+    i {
+      transform: rotate(180deg);
+    }
+  }
+}
+
 .category-selector {
   .form-check {
     padding-left: 0;
@@ -663,6 +794,16 @@ input[type='submit'] {
   input[type='submit'].action {
     width: auto;
     min-width: 212px;
+  }
+}
+
+#AccountForm_AccountForm_ProfilePhotoIDGroup_Holder {
+  #ProfilePhotoID label {
+    display: none;
+  }
+  .dropzone-holder.uploadable {
+    max-width: 400px;
+    margin-left: auto;
   }
 }
 

@@ -35396,7 +35396,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     sliderTags();
     newsletter();
     accountSettings();
-    closeModal(); //testAjax();
+    closeModal();
+    otherSettings();
   }
 
   function headerSettings() {
@@ -35583,7 +35584,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           }
 
           if (size) {
-            params += "type=" + size + "&";
+            params += "size=" + size + "&";
           }
 
           if (category) {
@@ -35617,6 +35618,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         center: true,
         nav: true,
         dots: true,
+        dotsEach: true,
         navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/arrow-left.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/arrow-right.svg"></span>'],
         responsive: {
           0: {
@@ -35682,6 +35684,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         margin: 26,
         nav: true,
         dots: true,
+        dotsEach: true,
         navText: ['<span class="nav-left"><img src="_resources/themes/starter/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/images/next-arrow.svg"></span>'],
         responsiveClass: true,
         responsive: {
@@ -35698,6 +35701,14 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
             nav: true
           }
         }
+      });
+      var acc = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".accordion-btn");
+      acc.each(function () {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).click(function () {
+          var panel = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).parent().parent().next().find('.accordion-panel');
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).toggleClass('active');
+          panel.toggleClass('active');
+        });
       });
     }
   }
@@ -35724,6 +35735,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         margin: 26,
         nav: true,
         dots: true,
+        dotsEach: true,
         navText: ['<span class="nav-left"><img src="_resources/themes/starter/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/images/next-arrow.svg"></span>'],
         responsiveClass: true,
         responsive: {
@@ -36023,6 +36035,14 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       modal.removeClass('show');
       modal.css('display', 'none');
     });
+
+    if (modal.hasClass('contributor-modal')) {
+      modal.find('.close').click(function () {
+        var url = document.location.href;
+        window.history.pushState({}, "", url.split("?")[0]);
+        window.history.replaceState({}, '', url.split("?")[0]);
+      });
+    }
   }
 
   function createListingPage() {
@@ -36034,16 +36054,32 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
       ListingCategoryStep(createListingForm); //ListingDateAndTimeStep
 
-      ListingDateAndTimeStep(); //ListingPriceStep
+      ListingDateAndTimeStep(); //Listing Location
+
+      ListingLocation(); //ListingPriceStep
 
       ListingPriceStep(); //ListingUploadImages
 
-      ListingUploadImages();
+      ListingUploadImages(); // let actionBtnSubmit, isDraftTextbox;
+      //
+      // isDraftTextbox  = $('#ListingForm_ListingForm_IsDraft');
+      // actionBtnSubmit = $('#ListingForm_ListingForm_action_finish');
+      // actionBtnSubmit.click(function (e) {
+      //   if ($(this).attr('data-draft') === '1') {
+      //     isDraftTextbox.val('1');
+      //   }
+      // });
+
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.create-listing--modal .close').click(function () {
+        var url = document.location.href;
+        window.history.pushState({}, "", url.split("&")[0]);
+        window.history.replaceState({}, '', url.split("&")[0]);
+      });
     }
   }
 
   function ListingDetailsStep() {
-    var locationSelector, typeSelector, sizeSelector, locationField, typeField, sizeField;
+    var locationSelector, typeSelector, sizeSelector, locationField, locationIDField, typeField, sizeField;
     var locationDropdownToggle, typeDropdownToggle, sizeDropdownToggle;
     var selectedLocation, selectedType, selectedSize;
     locationSelector = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item');
@@ -36053,6 +36089,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     typeDropdownToggle = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.type-selector .dropdown-toggle');
     sizeDropdownToggle = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.size-selector .dropdown-toggle');
     locationField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Location');
+    locationIDField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_LocationID');
     typeField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Type');
     sizeField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Size');
     selectedLocation = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.selected-location');
@@ -36069,6 +36106,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         locationDropdownToggle.text('Location*');
         selectedLocation.find('.item-holder').empty();
         selectedLocation.removeClass('has-item');
+        locationIDField.val('');
         locationField.val('');
       } else {
         _this.addClass('active').siblings().removeClass('active');
@@ -36076,34 +36114,36 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         locationDropdownToggle.text(selectedDropdownItem);
         selectedLocation.addClass('has-item');
         selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
-        locationField.val(_this.attr('data-id'));
+        locationIDField.val(_this.attr('data-id'));
+        locationField.val(_this.text());
         selectedLocation.find('.remove-item').click(function () {
           var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
           selectedDropdownItem.removeClass('active');
           locationDropdownToggle.text('Location*');
           selectedLocation.removeClass('has-item');
           selectedLocation.find('.item-holder').empty();
+          locationIDField.val('');
           locationField.val('');
         });
       }
     });
 
     if (locationField.val()) {
-      var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + locationField.val() + ']');
+      var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + locationIDField.val() + ']');
       locationDropdownToggle.text(selectedDropdownItem.text());
       selectedDropdownItem.addClass('active');
       selectedLocation.addClass('has-item');
-      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationField.val() + '">X</span></div>');
+      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationIDField.val() + '">X</span></div>');
       selectedLocation.find('.remove-item').click(function () {
         var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
         selectedDropdownItem.removeClass('active');
         locationDropdownToggle.text('Select location');
         selectedLocation.removeClass('has-item');
         selectedLocation.find('.item-holder').empty();
+        locationIDField.val('');
         locationField.val('');
       });
-    } else {
-      locationDropdownToggle.text('Location*');
+    } else {//locationDropdownToggle.text('Location*');
     }
 
     typeSelector.click(function (e) {
@@ -36242,12 +36282,13 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         selectedTagsHolder,
         selectedTagsText,
         selectedTagsArray = [];
-    var categoryError, tagError, locationError, actionBtn;
+    var categoryError, tagError, locationError, actionBtnNext;
     var selectedLocationText;
+    var isDraftTextbox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_IsDraft');
     locationError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-error');
     categoryError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.category-error');
     tagError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.tag-error');
-    actionBtn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_action_next');
+    actionBtnNext = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_action_next');
     selectedCategoryText = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="Categories"]');
     selectedSubCategoryText = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SubCategories"]');
     selectedTagsText = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="Tags"]');
@@ -36415,7 +36456,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         subCategoryWrapper.addClass('active');
       }
     });
-    actionBtn.click(function (e) {
+    actionBtnNext.click(function (e) {
       var attr = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-step');
 
       if (attr === 'category-tag') {
@@ -36442,6 +36483,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           locationError.empty().append('<span>&nbsp;</span>');
         }
       }
+
+      isDraftTextbox.val('');
     });
     loadSelectedCategoriesAndTags(selectedCategoryText, selectedSubCategoryText, selectedTagsText);
   }
@@ -36612,12 +36655,34 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
   function ListingDateAndTimeStep() {
     var calendar, selectedDateRange, datesArray, formattedDate, listingDateTimeContainer, listingSelectedDatesTextBox, listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
+    var dateToday = new Date();
     listingDateTimeContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.listingDateTimes');
     listingSelectedDatesTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedDates"]');
     listingSelectedStartTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedStartTimes"]');
     listingSelectedEndTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedEndTimes"]');
     calendar = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.calendar-datepicker');
+    var ListingForm_ListingForm_ByAppointment = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_ByAppointment');
+    var isByAppointment = ListingForm_ListingForm_ByAppointment.find('input[name="ByAppointment"]:checked').val();
+
+    if (isByAppointment === '1') {
+      calendar.addClass('disabled');
+      listingSelectedDatesTextBox.val('');
+      listingDateTimeContainer.empty();
+    }
+
+    ListingForm_ListingForm_ByAppointment.find('input[type="radio"]').on('change', function () {
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).val() === '1') {
+        calendar.addClass('disabled');
+        listingSelectedDatesTextBox.val('');
+        listingSelectedStartTimeTextBox.val('');
+        listingSelectedEndTimeTextBox.val('');
+        listingDateTimeContainer.empty();
+      } else {
+        calendar.removeClass('disabled');
+      }
+    });
     calendar.pignoseCalendar({
+      minDate: moment(dateToday).format("YYYY-MM-DD"),
       multiple: true,
       initialize: false,
       week: 1,
@@ -36673,6 +36738,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         }, 50);
       }
     });
+    DayPickerSettings();
     PopulateDateTimes(listingDateTimeContainer);
     validateDateTimes();
   }
@@ -36699,6 +36765,32 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           btnToggle.find('.text').text(selectedDropdownItem);
           e.preventDefault();
         });
+      });
+    });
+  }
+
+  function DayPickerSettings() {
+    var DayPickerContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.optionset-day');
+    DayPickerContainer.each(function () {
+      var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+      var checkbox, startTimePicker, endTimePicker;
+      checkbox = _this.find('input[type="checkbox"]');
+      startTimePicker = _this.find('.selectedStartTime');
+      endTimePicker = _this.find('.selectedEndTime');
+
+      if (checkbox.prop('checked')) {
+        startTimePicker.removeClass('disabled');
+      }
+
+      checkbox.change(function () {
+        if (this.checked) {
+          startTimePicker.removeClass('disabled');
+          endTimePicker.removeClass('disabled');
+        } else {
+          startTimePicker.addClass('disabled');
+          endTimePicker.addClass('disabled');
+        }
       });
     });
   }
@@ -36754,79 +36846,83 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         errorDateMessage = 'Please select specific dates above.';
     var endTime, startTime;
     var form, dropdownBtnAttr;
-    var actionBtn, errorField, errorMessage, errorFlag;
+    var actionBtnNext, errorField, errorMessage, errorFlag;
     var listingDateTimeContainer, listingDateTimeItem;
     var listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
     var startTimeArray, endTimeArray;
+    var ListingForm_ListingForm_ByAppointment = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_ByAppointment');
+    var isByAppointment = ListingForm_ListingForm_ByAppointment.find('input[name="ByAppointment"]:checked').val();
     form = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm');
     listingSelectedStartTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedStartTimes"]');
     listingSelectedEndTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedEndTimes"]');
-    actionBtn = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_action_next');
+    actionBtnNext = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_action_next');
     errorField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.error-field');
-    form.on('click', actionBtn, function (e) {
+    form.on('click', actionBtnNext, function (e) {
       errorFlag = false;
       startTimeArray = [];
       endTimeArray = [];
       listingDateTimeContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.listingDateTimes');
       dropdownBtnAttr = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).attr('data-step');
 
-      if (dropdownBtnAttr === 'date-time') {
-        listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
+      if (isByAppointment.val() !== '1') {
+        if (dropdownBtnAttr === 'date-time') {
+          listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
 
-        if (listingDateTimeItem.length > 0) {
-          //check if user selected date from calendar
-          listingDateTimeItem.each(function () {
-            var appointmentIsChecked = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('input[name="appointment_only"]').prop('checked'); // if (!appointmentIsChecked) {
-            // validate if all dropdown start time is selected
+          if (listingDateTimeItem.length > 0) {
+            //check if user selected date from calendar
+            listingDateTimeItem.each(function () {
+              var appointmentIsChecked = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('input[name="appointment_only"]').prop('checked'); // if (!appointmentIsChecked) {
+              // validate if all dropdown start time is selected
 
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown').each(function () {
-              if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedStartTime')) {
-                startTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-start-time');
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown').each(function () {
+                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedStartTime')) {
+                  startTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-start-time');
 
-                if (startTime === null || startTime === "undefined" || !startTime) {
-                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
-                  errorFlag = true;
-                  errorMessage = errorTimeMessage;
-                } else {
-                  startTimeArray.push(startTime);
+                  if (startTime === null || startTime === "undefined" || !startTime) {
+                    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
+                    errorFlag = true;
+                    errorMessage = errorTimeMessage;
+                  } else {
+                    startTimeArray.push(startTime);
+                  }
                 }
-              }
 
-              if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedEndTime')) {
-                endTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-end-time');
+                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedEndTime')) {
+                  endTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-end-time');
 
-                if (endTime === null || endTime === "undefined" || !endTime) {
-                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
-                  errorFlag = true;
-                  errorMessage = errorTimeMessage;
-                } else {
-                  endTimeArray.push(endTime);
+                  if (endTime === null || endTime === "undefined" || !endTime) {
+                    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
+                    errorFlag = true;
+                    errorMessage = errorTimeMessage;
+                  } else {
+                    endTimeArray.push(endTime);
+                  }
                 }
-              }
-            }); // } else {
-            //   const appointment = 'Appointment Only';
-            //
-            //   $(this).find('.dropdown').removeClass('has-error text-danger');
-            //   startTimeArray.push(appointment);
-            //   endTimeArray.push(appointment);
-            // }
-          });
-        } else {
-          errorFlag = true;
-          errorMessage = errorDateMessage;
-        }
+              }); // } else {
+              //   const appointment = 'Appointment Only';
+              //
+              //   $(this).find('.dropdown').removeClass('has-error text-danger');
+              //   startTimeArray.push(appointment);
+              //   endTimeArray.push(appointment);
+              // }
+            });
+          } else {
+            errorFlag = true;
+            errorMessage = errorDateMessage;
+          }
 
-        if (startTimeArray.length > 0) {
-          listingSelectedStartTimeTextBox.val(startTimeArray.toString());
-        }
+          if (startTimeArray.length > 0) {
+            listingSelectedStartTimeTextBox.val(startTimeArray.toString());
+          }
 
-        if (endTimeArray.length > 0) {
-          listingSelectedEndTimeTextBox.val(endTimeArray.toString());
-        }
+          if (endTimeArray.length > 0) {
+            listingSelectedEndTimeTextBox.val(endTimeArray.toString());
+          }
 
-        if (errorFlag) {
-          showError(errorMessage, errorField);
-          e.preventDefault();
+          if (errorFlag) {
+            showError(errorMessage, errorField);
+            e.preventDefault();
+          }
         }
       }
     });
@@ -36914,22 +37010,86 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     return elem.addClass('show').append('<span class="text-danger">' + err + '</span>');
   }
 
+  function ListingLocation() {
+    var BuildingName, Town, Address, PostCode;
+    BuildingName = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_BuildingName');
+    Town = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Town');
+    Address = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Address');
+    PostCode = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_Postcode');
+    var isEventOnline = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_IsOnline');
+    var checkedRadio = isEventOnline.find('input[name="IsOnline"]:checked').val();
+
+    if (checkedRadio === '1') {
+      BuildingName.prop("disabled", true);
+      Town.prop("disabled", true);
+      Address.prop("disabled", true);
+      PostCode.prop("disabled", true);
+    } else {
+      BuildingName.prop("disabled", false);
+      Town.prop("disabled", false);
+      Address.prop("disabled", false);
+      PostCode.prop("disabled", false);
+    }
+
+    isEventOnline.find('input[type="radio"]').on('change', function () {
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).val() === '1') {
+        BuildingName.prop("disabled", true);
+        Town.prop("disabled", true);
+        Address.prop("disabled", true);
+        PostCode.prop("disabled", true);
+        ;
+      } else {
+        BuildingName.prop("disabled", false);
+        Town.prop("disabled", false);
+        Address.prop("disabled", false);
+        PostCode.prop("disabled", false);
+      }
+    });
+  }
+
   function ListingPriceStep() {
-    var isEventFreeRadio = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_isEventFree');
+    var GeneralAdmission, Student, Child, Senior, Other;
+    GeneralAdmission = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_GeneralAdmissionPrice');
+    Student = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_StudentPrice');
+    Child = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_ChildPrice');
+    Senior = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SeniorPrice');
+    Other = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_OtherPrice');
+    var isEventFreeRadio = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_IsEventFree');
     var pricesInputTextContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.price-inputs');
-    var checkedRadio = isEventFreeRadio.find('input[name="isEventFree"]:checked').val();
+    var checkedRadio = isEventFreeRadio.find('input[name="IsEventFree"]:checked').val();
+    console.log(checkedRadio);
 
     if (checkedRadio === '1') {
       pricesInputTextContainer.addClass('d-none');
+      GeneralAdmission.prop("disabled", true);
+      Student.prop("disabled", true);
+      Child.prop("disabled", true);
+      Senior.prop("disabled", true);
+      Other.prop("disabled", true);
     } else {
       pricesInputTextContainer.removeClass('d-none');
+      GeneralAdmission.prop("disabled", false);
+      Student.prop("disabled", false);
+      Child.prop("disabled", false);
+      Senior.prop("disabled", false);
+      Other.prop("disabled", false);
     }
 
     isEventFreeRadio.find('input[type="radio"]').on('change', function () {
       if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).val() === '1') {
         pricesInputTextContainer.addClass('d-none');
+        GeneralAdmission.prop("disabled", true);
+        Student.prop("disabled", true);
+        Child.prop("disabled", true);
+        Senior.prop("disabled", true);
+        Other.prop("disabled", true);
       } else {
         pricesInputTextContainer.removeClass('d-none');
+        GeneralAdmission.prop("disabled", false);
+        Student.prop("disabled", false);
+        Child.prop("disabled", false);
+        Senior.prop("disabled", false);
+        Other.prop("disabled", false);
       }
     });
   }
@@ -37051,32 +37211,6 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     }
   }
 
-  function testAjax() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.tester').each(function () {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).click(function () {
-        var listingid = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-id');
-        console.log('clicked');
-        jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-          type: "POST",
-          url: "favourites/deleteListingFromFavourites",
-          data: {
-            id: listingid
-          },
-          success: function success(data) {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.listings-content').html(data);
-          }
-        }).done(function (msg) {
-          alert("Data Saved: " + msg);
-        });
-      }); // $.ajax('favourites/FavouriteListings',{
-      //   success: function(data) {
-      //     $('.listings-content').html(data);
-      //     console.log()
-      //   }
-      // });
-    });
-  }
-
   function accountSettings() {
     var AccountForm_AccountForm = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#AccountForm_AccountForm');
 
@@ -37103,6 +37237,19 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       //   //     }
       //   // },1000);
       // });
+    }
+  }
+
+  function otherSettings() {
+    var urlHash = window.location.href.split("#")[1];
+
+    if (urlHash) {
+      var hash = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#" + urlHash);
+      var target_offset_top = hash.offset().top;
+      hash.find('button[data-toggle="collapse"]').trigger('click');
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('html,body').animate({
+        scrollTop: target_offset_top - 200
+      });
     }
   }
 

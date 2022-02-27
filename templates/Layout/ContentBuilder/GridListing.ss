@@ -15,12 +15,26 @@
                                             </a>
                                         </div>
                                     <% end_if %>
-                                    <div class="listing-content--location">
-                                        <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline">$City</span></a>
-                                    </div>
+                                    <% if $City %>
+                                        <div class="listing-content--location">
+                                            <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline">$City</span></a>
+                                        </div>
+                                    <% end_if %>
                                     <div class="listing-content--details">
                                         <p class="mb-sm-3 mt-sm-4 mt-3 mb-2 listing-title"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Name}</span></a></p>
-                                        <p class="listing-text"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">{$Content.RAW.LimitWordCount(15)}</span></a></p>
+                                        <% if $ContentSummary %>
+                                            <p class="listing-text"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$ContentSummary.LimitWordCount(15)</span></a></p>
+                                        <% else %>
+                                            <% if $ContentSummaryRaw %>
+                                                <p class="listing-text"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$ContentSummaryRaw.RAW.LimitWordCount(15)</span></a></p>
+                                            <% else %>
+                                                <% if $ContentRaw %>
+                                                    <p class="listing-text"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$ContentRaw.RAW.LimitWordCount(15)</span></a></p>
+                                                <% else %>
+                                                    <p class="listing-text"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.LimitWordCount(15)</span></a></p>
+                                                <% end_if %>
+                                            <% end_if %>
+                                        <% end_if %>
                                     </div>
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)"><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>

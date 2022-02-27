@@ -30,16 +30,32 @@
                                         </div>
                                     <% end_if %>
                                     <div class="listing-content--location-date">
-                                        <div class="listing-date">
-                                            <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$ListingClosestToCurrentDate</span>
-                                        </div>
-                                        <div class="listing-location ml-auto">
-                                            <span class="text-footer-gray text-underline">$City</span>
-                                        </div>
+                                        <% if $ListingClosestToCurrentDate %>
+                                            <div class="listing-date">
+                                                <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$ListingClosestToCurrentDate</span>
+                                            </div>
+                                        <% end_if %>
+                                        <% if $City %>
+                                            <div class="listing-location<% if $ListingClosestToCurrentDate %> ml-auto<% end_if %>">
+                                                <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline">$City</span></a>
+                                            </div>
+                                        <% end_if %>
                                     </div>
                                     <div class="listing-content--details">
                                         <p class="mb-3 mt-4"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Name}</span></a></p>
-                                        <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.RAW.LimitWordCount(15)</span></a></p>
+                                        <% if $ContentSummary %>
+                                            <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$ContentSummary.LimitWordCount(15)</span></a></p>
+                                        <% else %>
+                                            <% if $ContentSummaryRaw %>
+                                                <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$ContentSummaryRaw.RAW.LimitWordCount(15)</span></a></p>
+                                            <% else %>
+                                                <% if $ContentRaw %>
+                                                    <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$ContentRaw.RAW.LimitWordCount(15)</span></a></p>
+                                                <% else %>
+                                                    <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.LimitWordCount(15)</span></a></p>
+                                                <% end_if %>
+                                            <% end_if %>
+                                        <% end_if %>
                                     </div>
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>
@@ -61,16 +77,32 @@
                                         </div>
                                     <% end_if %>
                                     <div class="listing-content--location-date">
-                                        <div class="listing-date">
-                                            <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$ListingClosestToCurrentDate</span>
-                                        </div>
-                                        <div class="listing-location ml-auto">
+                                        <% if $ListingClosestToCurrentDate %>
+                                            <div class="listing-date">
+                                                <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$ListingClosestToCurrentDate</span>
+                                            </div>
+                                        <% end_if %>
+                                        <% if $City %>
+                                        <div class="listing-location<% if $ListingClosestToCurrentDate %> ml-auto<% end_if %>">
                                             <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline">$City</span></a>
                                         </div>
+                                        <% end_if %>
                                     </div>
                                     <div class="listing-content--details">
                                         <p class="mb-3 mt-4"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Name}</span></a></p>
-                                        <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.RAW.LimitWordCount(15)</span></a></p>
+                                        <% if $ContentSummary %>
+                                            <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$ContentSummary.LimitWordCount(15)</span></a></p>
+                                        <% else %>
+                                            <% if $ContentSummaryRaw %>
+                                                <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$ContentSummaryRaw.RAW.LimitWordCount(15)</span></a></p>
+                                            <% else %>
+                                                <% if $ContentRaw %>
+                                                    <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$ContentRaw.RAW.LimitWordCount(15)</span></a></p>
+                                                <% else %>
+                                                    <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Content.LimitWordCount(15)</span></a></p>
+                                                <% end_if %>
+                                            <% end_if %>
+                                        <% end_if %>
                                     </div>
                                     <div class="listing-content--tags">
                                         <button class="btn-utils addtofavourites fontsize35<% if $Up.Up.addedToFavourites($ID) %> active<% end_if %>" data-id="{$ID}" data-member="$Up.Up.addedToFavourites($ID)" data-status=""><i class="<% if $Up.Up.addedToFavourites($ID) %>fas<% else %>far<% end_if %> fa-heart"></i></button>

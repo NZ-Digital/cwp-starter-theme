@@ -37,7 +37,19 @@
                         </div>
                         <div class="listing-content--details">
                             <p class="mb-3 mt-4"><a href="<% if $ListingPage %>$ListingPage.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize25 font-weight-normal line-height-100">{$Listing.Name}</span></a></p>
-                            <p><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Listing.Content.RAW.LimitWordCount(15)</span></a></p>
+                            <% if $Listing.ContentSummary %>
+                            <p><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Listing.ContentSummary.LimitWordCount(15)</span></a></p>
+                            <% else %>
+                                <% if $Listing.ContentSummaryRaw %>
+                                <p><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Listing.ContentSummaryRaw.RAW.LimitWordCount(15)</span></a></p>
+                                <% else %>
+                                    <% if $Listing.ContentRaw %>
+                                        <p><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Listing.ContentRaw.RAW.LimitWordCount(15)</span></a></p>
+                                    <% else %>
+                                        <p><a href="<% if $Page %>$Page.Link<% else_if $Listing.Page %>$Listing.Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book line-height-100">$Listing.Content.LimitWordCount(15)</span></a></p>
+                                    <% end_if %>
+                                <% end_if %>
+                            <% end_if %>
                         </div>
                         <div class="listing-content--tags">
                             <button class="btn-utils addtofavourites fontsize35 active" data-id="{$Listing.ID}"><i class="fas fa-heart"></i></button>

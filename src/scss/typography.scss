@@ -333,35 +333,43 @@ pre {
   &:after {
     position: absolute;
     content: "";
-    width: 624px;
     transform: translate3d(0, -50%, 0);
     top: 55%;
     left: 0;
     z-index: -1;
-    @media only screen and (min-width: 992px) {
+    @media only screen and (min-width: 1590px) {
       width: 624px;
     }
-    @media only screen and (max-width: 991px) {
+    @media only screen and (max-width: 1589px) {
       width: 100%;
     }
   }
 }
+
+p.yellow-line,
+p.white-line {
+  &:after {
+    width: 100%;
+    max-width: 624px;
+  }
+}
+
 .yellow-line {
   &:after {
-    @media only screen and (min-width: 669px) {
+    @media only screen and (min-width: 1590px) {
       border-top: 15px solid $marigold-yellow;
     }
-    @media only screen and (max-width: 668px) {
+    @media only screen and (max-width: 1589px) {
       border-top: 10px solid $marigold-yellow;
     }
   }
 }
 .white-line {
   &:after {
-    @media only screen and (min-width: 669px) {
+    @media only screen and (min-width: 1590px) {
       border-top: 15px solid #fff;
     }
-    @media only screen and (max-width: 668px) {
+    @media only screen and (max-width: 1589px) {
       border-top: 10px solid #fff;
     }
   }

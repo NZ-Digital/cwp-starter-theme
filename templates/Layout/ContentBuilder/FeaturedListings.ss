@@ -9,9 +9,11 @@
                         </div>
                     <% end_if %>
                     <div class="listing-content--location-date align-items-center">
-                        <div class="listing-date bg-saffron-mango">
-                            <span class="halyard-display font-weight-medium fontsize16 text-uppercase letterspacing-1px text-cod-gray">$ListingClosestToCurrentDate</span>
-                        </div>
+                        <% if $ListingClosestToCurrentDate %>
+                            <div class="listing-date bg-saffron-mango">
+                                <span class="halyard-display font-weight-medium fontsize16 text-uppercase letterspacing-1px text-cod-gray">$ListingClosestToCurrentDate</span>
+                            </div>
+                        <% end_if %>
                         <% if $Availability %>
                             <div class="listing-availability ml-auto">
                                 <span class="halyard-display font-weight-medium fontsize16 letterspacing-1px text-cod-gray">$Availability</span>
@@ -26,7 +28,19 @@
                     </div>
                     <div class="listing-content--details">
                         <p class="mb-3"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="halyard-display fontsize35 font-weight-normal">{$Name}</span></a></p>
-                        <p class="mb-5"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book">{$Content.RAW.LimitWordCount(39)}</span></a></p>
+                        <% if $ContentSummary %>
+                            <p class="mb-5"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book">$ContentSummary.LimitWordCount(39)</span></a></p>
+                        <% else %>
+                            <% if $ContentSummaryRaw %>
+                                <p class="mb-5"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book">$ContentSummaryRaw.RAW.LimitWordCount(39)</span></a></p>
+                            <% else %>
+                                <% if $ContentRaw %>
+                                    <p class="mb-5"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book">$ContentRaw.RAW.LimitWordCount(39)</span></a></p>
+                                <% else %>
+                                    <p class="mb-5"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>" class="text-decoration-none"><span class="halyard-display fontsize19 font-weight-book">$Content.LimitWordCount(39)</span></a></p>
+                                <% end_if %>
+                            <% end_if %>
+                        <% end_if %>
                         <p><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                     </div>
                 </div>

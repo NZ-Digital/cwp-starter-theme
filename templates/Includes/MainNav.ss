@@ -43,7 +43,7 @@
                 <% if $VisibleSocials %>
                     <ul class="socials">
                         <% loop $VisibleSocials %>
-                            <li><a href="{$URL}" class="nav-link">{$Icon.RAW}</a></li>
+                            <li><a href="{$URL}" class="nav-link" target="_blank">{$Icon.RAW}</a></li>
                         <% end_loop %>
                     </ul>
                 <% end_if %>

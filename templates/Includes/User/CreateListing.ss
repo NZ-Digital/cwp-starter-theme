@@ -12,7 +12,6 @@
             </ul>
         </div>
     </section>
-
     <section class="page-section sectionCreateListForm col-lg-8 pt-lg-9 pb-lg-9 inner-padding--right">
         <div class="sectionCreateList-container">
             <div class="form-container pl-lg-8 position-relative">
@@ -34,7 +33,7 @@
                     </div>
                 <% end_if %>
                 <% if $ListActivate %>
-                    <div class="modal fade show" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-success" aria-hidden="true">
+                    <div class="modal fade show create-listing--modal" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-success" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -51,6 +50,30 @@
                                     <% end_if %>
                                     <% if $GroupIDFromParam == "3" %>
                                         $SiteConfig.FindSpaceListingActivateMessage
+                                    <% end_if %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% end_if %>
+                <% if $ListDraft %>
+                    <div class="modal fade show create-listing--modal" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-success" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <% if $GroupIDFromParam == "1" %>
+                                        $SiteConfig.WhatsOnListingDraftMessage
+                                    <% end_if %>
+                                    <% if $GroupIDFromParam == "2" %>
+                                        $SiteConfig.CreativeListingDraftMessage
+                                    <% end_if %>
+                                    <% if $GroupIDFromParam == "3" %>
+                                        $SiteConfig.FindSpaceListingDraftMessage
                                     <% end_if %>
                                 </div>
                             </div>

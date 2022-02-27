@@ -40,7 +40,8 @@ export default function () {
     accountSettings();
 
     closeModal();
-    //testAjax();
+
+    otherSettings();
   }
 
   function headerSettings() {
@@ -217,7 +218,7 @@ export default function () {
             params += "type=" + type + "&";
           }
           if (size) {
-            params += "type=" + size + "&";
+            params += "size=" + size + "&";
           }
           if (category) {
             params += "category=" + category + "&";
@@ -246,6 +247,7 @@ export default function () {
         center: true,
         nav: true,
         dots: true,
+        dotsEach: true,
         navText: ['<span class="nav-left"><img src="_resources/themes/starter/dist/images/arrow-left.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/dist/images/arrow-right.svg"></span>'],
         responsive: {
           0: {
@@ -313,6 +315,7 @@ export default function () {
         margin: 26,
         nav: true,
         dots: true,
+        dotsEach: true,
         navText: ['<span class="nav-left"><img src="_resources/themes/starter/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/images/next-arrow.svg"></span>'],
         responsiveClass: true,
         responsive: {
@@ -330,6 +333,15 @@ export default function () {
           }
         }
       });
+
+      let acc = $(".accordion-btn");
+      acc.each(function() {
+        $(this).click(function () {
+          let panel = $(this).parent().parent().next().find('.accordion-panel');
+          $(this).toggleClass('active');
+          panel.toggleClass('active');
+        });
+      })
     }
   }
 
@@ -352,6 +364,7 @@ export default function () {
         margin: 26,
         nav: true,
         dots: true,
+        dotsEach: true,
         navText: ['<span class="nav-left"><img src="_resources/themes/starter/images/prev-arrow.svg"> </span>', '<span class="nav-right"><img src="_resources/themes/starter/images/next-arrow.svg"></span>'],
         responsiveClass: true,
         responsive: {
@@ -629,6 +642,14 @@ export default function () {
       modal.removeClass('show');
       modal.css('display', 'none');
     });
+
+    if (modal.hasClass('contributor-modal')) {
+      modal.find('.close').click(function () {
+        let url= document.location.href;
+        window.history.pushState({}, "", url.split("?")[0]);
+        window.history.replaceState({}, '', url.split("?")[0]);
+      });
+    }
   }
 
   function createListingPage() {
@@ -643,16 +664,34 @@ export default function () {
       //ListingDateAndTimeStep
       ListingDateAndTimeStep();
 
+      //Listing Location
+      ListingLocation();
+
       //ListingPriceStep
       ListingPriceStep()
 
       //ListingUploadImages
       ListingUploadImages()
+
+      // let actionBtnSubmit, isDraftTextbox;
+      //
+      // isDraftTextbox  = $('#ListingForm_ListingForm_IsDraft');
+      // actionBtnSubmit = $('#ListingForm_ListingForm_action_finish');
+      // actionBtnSubmit.click(function (e) {
+      //   if ($(this).attr('data-draft') === '1') {
+      //     isDraftTextbox.val('1');
+      //   }
+      // });
+      $('.create-listing--modal .close').click(function () {
+        let url= document.location.href;
+        window.history.pushState({}, "", url.split("&")[0]);
+        window.history.replaceState({}, '', url.split("&")[0]);
+      });
     }
   }
 
   function ListingDetailsStep() {
-    let locationSelector, typeSelector, sizeSelector, locationField, typeField, sizeField;
+    let locationSelector, typeSelector, sizeSelector, locationField, locationIDField, typeField, sizeField;
     let locationDropdownToggle, typeDropdownToggle, sizeDropdownToggle;
     let selectedLocation, selectedType, selectedSize;
 
@@ -664,7 +703,8 @@ export default function () {
     typeDropdownToggle = $('.type-selector .dropdown-toggle');
     sizeDropdownToggle = $('.size-selector .dropdown-toggle');
 
-    locationField = $('#ListingForm_ListingForm_Location');
+    locationField   = $('#ListingForm_ListingForm_Location');
+    locationIDField = $('#ListingForm_ListingForm_LocationID');
     typeField = $('#ListingForm_ListingForm_Type');
     sizeField = $('#ListingForm_ListingForm_Size');
 
@@ -680,13 +720,15 @@ export default function () {
         locationDropdownToggle.text('Location*');
         selectedLocation.find('.item-holder').empty()
         selectedLocation.removeClass('has-item');
+        locationIDField.val('');
         locationField.val('');
       } else {
         _this.addClass('active').siblings().removeClass('active');
         locationDropdownToggle.text(selectedDropdownItem);
         selectedLocation.addClass('has-item');
         selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
-        locationField.val(_this.attr('data-id'));
+        locationIDField.val(_this.attr('data-id'));
+        locationField.val(_this.text());
 
         selectedLocation.find('.remove-item').click(function () {
           let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
@@ -694,17 +736,18 @@ export default function () {
           locationDropdownToggle.text('Location*');
           selectedLocation.removeClass('has-item')
           selectedLocation.find('.item-holder').empty();
+          locationIDField.val('');
           locationField.val('');
         });
       }
     });
 
     if (locationField.val()) {
-      let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + locationField.val() + ']');
+      let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + locationIDField.val() + ']');
       locationDropdownToggle.text(selectedDropdownItem.text());
       selectedDropdownItem.addClass('active');
       selectedLocation.addClass('has-item');
-      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationField.val() + '">X</span></div>');
+      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationIDField.val() + '">X</span></div>');
 
       selectedLocation.find('.remove-item').click(function () {
         let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
@@ -712,10 +755,11 @@ export default function () {
         locationDropdownToggle.text('Select location');
         selectedLocation.removeClass('has-item')
         selectedLocation.find('.item-holder').empty();
+        locationIDField.val('');
         locationField.val('');
       });
     } else {
-      locationDropdownToggle.text('Location*');
+      //locationDropdownToggle.text('Location*');
     }
 
     typeSelector.click(function (e) {
@@ -841,16 +885,15 @@ export default function () {
       selectedSubCategoryHolder, selectedSubCategoryText,
       selectedTagsHolder, selectedTagsText,
       selectedTagsArray = [];
-
-    let categoryError, tagError, locationError, actionBtn;
-
+    let categoryError, tagError, locationError, actionBtnNext;
     let selectedLocationText;
+    let isDraftTextbox = $('#ListingForm_ListingForm_IsDraft');
 
     locationError = $('.location-error');
     categoryError = $('.category-error');
     tagError = $('.tag-error');
 
-    actionBtn = $('#ListingForm_ListingForm_action_next');
+    actionBtnNext = $('#ListingForm_ListingForm_action_next');
 
     selectedCategoryText = $('input[name="Categories"]');
     selectedSubCategoryText = $('input[name="SubCategories"]');
@@ -1024,7 +1067,7 @@ export default function () {
       }
     });
 
-    actionBtn.click(function (e) {
+    actionBtnNext.click(function (e) {
       let attr = $(this).attr('data-step');
       if (attr === 'category-tag') {
         if (!selectedCategoryText.val()) {
@@ -1049,7 +1092,7 @@ export default function () {
           locationError.empty().append('<span>&nbsp;</span>');
         }
       }
-
+      isDraftTextbox.val('');
     });
     loadSelectedCategoriesAndTags(selectedCategoryText, selectedSubCategoryText, selectedTagsText);
   }
@@ -1202,14 +1245,37 @@ export default function () {
     let calendar, selectedDateRange, datesArray, formattedDate,
       listingDateTimeContainer, listingSelectedDatesTextBox,
       listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
+    let dateToday = new Date();
 
     listingDateTimeContainer = $('.listingDateTimes');
-    listingSelectedDatesTextBox = $('input[name="SelectedDates"]');
+    listingSelectedDatesTextBox     = $('input[name="SelectedDates"]');
     listingSelectedStartTimeTextBox = $('input[name="SelectedStartTimes"]');
-    listingSelectedEndTimeTextBox = $('input[name="SelectedEndTimes"]');
-
+    listingSelectedEndTimeTextBox   = $('input[name="SelectedEndTimes"]');
     calendar = $('.calendar-datepicker');
+
+    let ListingForm_ListingForm_ByAppointment = $('#ListingForm_ListingForm_ByAppointment');
+    let isByAppointment = ListingForm_ListingForm_ByAppointment.find('input[name="ByAppointment"]:checked').val();
+
+    if (isByAppointment === '1') {
+      calendar.addClass('disabled');
+      listingSelectedDatesTextBox.val('');
+      listingDateTimeContainer.empty();
+    }
+
+    ListingForm_ListingForm_ByAppointment.find('input[type="radio"]').on('change', function () {
+      if ($(this).val() === '1') {
+        calendar.addClass('disabled');
+        listingSelectedDatesTextBox.val('');
+        listingSelectedStartTimeTextBox.val('');
+        listingSelectedEndTimeTextBox.val('');
+        listingDateTimeContainer.empty();
+      } else {
+        calendar.removeClass('disabled');
+      }
+    });
+
     calendar.pignoseCalendar({
+      minDate: moment(dateToday).format("YYYY-MM-DD"),
       multiple: true,
       initialize: false,
       week: 1,
@@ -1242,7 +1308,6 @@ export default function () {
                 listingSelectedDatesTextBox.val(selectedDates);
               }
 
-
               //dropdown time selector functions
               DropdownTimeSelector(listingDateTimeContainer);
             }
@@ -1261,6 +1326,7 @@ export default function () {
       }
     });
 
+    DayPickerSettings();
     PopulateDateTimes(listingDateTimeContainer);
     validateDateTimes();
   }
@@ -1287,6 +1353,30 @@ export default function () {
           e.preventDefault();
         });
       })
+    });
+  }
+
+  function DayPickerSettings() {
+    let DayPickerContainer = $('.optionset-day');
+    DayPickerContainer.each(function () {
+      let _this = $(this);
+      let checkbox, startTimePicker, endTimePicker;
+
+      checkbox = _this.find('input[type="checkbox"]');
+      startTimePicker =  _this.find('.selectedStartTime');
+      endTimePicker   =  _this.find('.selectedEndTime');
+      if (checkbox.prop('checked')) {
+        startTimePicker.removeClass('disabled');
+      }
+      checkbox.change(function() {
+        if(this.checked) {
+          startTimePicker.removeClass('disabled');
+          endTimePicker.removeClass('disabled');
+        } else {
+          startTimePicker.addClass('disabled');
+          endTimePicker.addClass('disabled');
+        }
+      });
     });
   }
 
@@ -1345,76 +1435,80 @@ export default function () {
 
     let endTime, startTime;
     let form, dropdownBtnAttr;
-    let actionBtn, errorField, errorMessage, errorFlag;
+    let actionBtnNext, errorField, errorMessage, errorFlag;
     let listingDateTimeContainer, listingDateTimeItem;
 
     let listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
     let startTimeArray, endTimeArray;
 
-    form = $('#ListingForm_ListingForm');
+    let ListingForm_ListingForm_ByAppointment = $('#ListingForm_ListingForm_ByAppointment');
+    let isByAppointment = ListingForm_ListingForm_ByAppointment.find('input[name="ByAppointment"]:checked').val();
 
+    form = $('#ListingForm_ListingForm');
     listingSelectedStartTimeTextBox = $('input[name="SelectedStartTimes"]');
     listingSelectedEndTimeTextBox = $('input[name="SelectedEndTimes"]');
 
-    actionBtn = $('#ListingForm_ListingForm_action_next');
+    actionBtnNext = $('#ListingForm_ListingForm_action_next');
     errorField = $('.error-field');
 
-    form.on('click', actionBtn, function (e) {
+    form.on('click', actionBtnNext, function (e) {
       errorFlag = false;
       startTimeArray = [];
       endTimeArray = [];
       listingDateTimeContainer = $('.listingDateTimes');
       dropdownBtnAttr = $(e.target).attr('data-step')
-      if (dropdownBtnAttr === 'date-time') {
-        listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
-        if (listingDateTimeItem.length > 0) { //check if user selected date from calendar
-          listingDateTimeItem.each(function () {
-            let appointmentIsChecked = $(this).find('input[name="appointment_only"]').prop('checked');
-            // if (!appointmentIsChecked) {
-            // validate if all dropdown start time is selected
-            $(this).find('.dropdown').each(function () {
-              if ($(this).hasClass('selectedStartTime')) {
-                startTime = $(this).find('button').attr('data-start-time');
-                if (startTime === null || startTime === "undefined" || !startTime) {
-                  $(this).addClass('has-error text-danger');
-                  errorFlag = true;
-                  errorMessage = errorTimeMessage;
-                } else {
-                  startTimeArray.push(startTime);
+      if (isByAppointment.val() !== '1') {
+        if (dropdownBtnAttr === 'date-time') {
+          listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
+          if (listingDateTimeItem.length > 0) { //check if user selected date from calendar
+            listingDateTimeItem.each(function () {
+              let appointmentIsChecked = $(this).find('input[name="appointment_only"]').prop('checked');
+              // if (!appointmentIsChecked) {
+              // validate if all dropdown start time is selected
+              $(this).find('.dropdown').each(function () {
+                if ($(this).hasClass('selectedStartTime')) {
+                  startTime = $(this).find('button').attr('data-start-time');
+                  if (startTime === null || startTime === "undefined" || !startTime) {
+                    $(this).addClass('has-error text-danger');
+                    errorFlag = true;
+                    errorMessage = errorTimeMessage;
+                  } else {
+                    startTimeArray.push(startTime);
+                  }
                 }
-              }
-              if ($(this).hasClass('selectedEndTime')) {
-                endTime = $(this).find('button').attr('data-end-time');
-                if (endTime === null || endTime === "undefined" || !endTime) {
-                  $(this).addClass('has-error text-danger');
-                  errorFlag = true;
-                  errorMessage = errorTimeMessage;
-                } else {
-                  endTimeArray.push(endTime);
+                if ($(this).hasClass('selectedEndTime')) {
+                  endTime = $(this).find('button').attr('data-end-time');
+                  if (endTime === null || endTime === "undefined" || !endTime) {
+                    $(this).addClass('has-error text-danger');
+                    errorFlag = true;
+                    errorMessage = errorTimeMessage;
+                  } else {
+                    endTimeArray.push(endTime);
+                  }
                 }
-              }
-            });
-            // } else {
-            //   const appointment = 'Appointment Only';
-            //
-            //   $(this).find('.dropdown').removeClass('has-error text-danger');
-            //   startTimeArray.push(appointment);
-            //   endTimeArray.push(appointment);
-            // }
-          })
-        } else {
-          errorFlag = true;
-          errorMessage = errorDateMessage;
-        }
-        if (startTimeArray.length > 0) {
-          listingSelectedStartTimeTextBox.val(startTimeArray.toString());
-        }
-        if (endTimeArray.length > 0) {
-          listingSelectedEndTimeTextBox.val(endTimeArray.toString());
-        }
-        if (errorFlag) {
-          showError(errorMessage, errorField);
-          e.preventDefault();
+              });
+              // } else {
+              //   const appointment = 'Appointment Only';
+              //
+              //   $(this).find('.dropdown').removeClass('has-error text-danger');
+              //   startTimeArray.push(appointment);
+              //   endTimeArray.push(appointment);
+              // }
+            })
+          } else {
+            errorFlag = true;
+            errorMessage = errorDateMessage;
+          }
+          if (startTimeArray.length > 0) {
+            listingSelectedStartTimeTextBox.val(startTimeArray.toString());
+          }
+          if (endTimeArray.length > 0) {
+            listingSelectedEndTimeTextBox.val(endTimeArray.toString());
+          }
+          if (errorFlag) {
+            showError(errorMessage, errorField);
+            e.preventDefault();
+          }
         }
       }
     });
@@ -1518,20 +1612,84 @@ export default function () {
     return elem.addClass('show').append('<span class="text-danger">' + err + '</span>');
   }
 
+  function ListingLocation() {
+    let BuildingName, Town, Address, PostCode;
+
+    BuildingName = $('#ListingForm_ListingForm_BuildingName');
+    Town         = $('#ListingForm_ListingForm_Town');
+    Address      = $('#ListingForm_ListingForm_Address');
+    PostCode     = $('#ListingForm_ListingForm_Postcode');
+
+    let isEventOnline = $('#ListingForm_ListingForm_IsOnline');
+    let checkedRadio = isEventOnline.find('input[name="IsOnline"]:checked').val();
+    if (checkedRadio === '1') {
+      BuildingName.prop("disabled", true);
+      Town.prop("disabled", true);
+      Address.prop("disabled", true);
+      PostCode.prop("disabled", true);
+    } else {
+      BuildingName.prop("disabled", false);
+      Town.prop("disabled", false);
+      Address.prop("disabled", false);
+      PostCode.prop("disabled", false);
+    }
+    isEventOnline.find('input[type="radio"]').on('change', function () {
+      if ($(this).val() === '1') {
+        BuildingName.prop("disabled", true);
+        Town.prop("disabled", true);
+        Address.prop("disabled", true);
+        PostCode.prop("disabled", true);;
+      } else {
+        BuildingName.prop("disabled", false);
+        Town.prop("disabled", false);
+        Address.prop("disabled", false);
+        PostCode.prop("disabled", false);
+      }
+    });
+  }
+
   function ListingPriceStep() {
-    let isEventFreeRadio = $('#ListingForm_ListingForm_isEventFree');
+    let GeneralAdmission, Student, Child, Senior, Other;
+    GeneralAdmission = $('#ListingForm_ListingForm_GeneralAdmissionPrice');
+    Student          = $('#ListingForm_ListingForm_StudentPrice');
+    Child            = $('#ListingForm_ListingForm_ChildPrice');
+    Senior           = $('#ListingForm_ListingForm_SeniorPrice');
+    Other            = $('#ListingForm_ListingForm_OtherPrice');
+
+    let isEventFreeRadio = $('#ListingForm_ListingForm_IsEventFree');
     let pricesInputTextContainer = $('.price-inputs');
-    let checkedRadio = isEventFreeRadio.find('input[name="isEventFree"]:checked').val();
+    let checkedRadio = isEventFreeRadio.find('input[name="IsEventFree"]:checked').val();
+    console.log(checkedRadio);
     if (checkedRadio === '1') {
       pricesInputTextContainer.addClass('d-none');
+      GeneralAdmission.prop("disabled", true);
+      Student.prop("disabled", true);
+      Child.prop("disabled", true);
+      Senior.prop("disabled", true);
+      Other.prop("disabled", true);
     } else {
       pricesInputTextContainer.removeClass('d-none');
+      GeneralAdmission.prop("disabled", false);
+      Student.prop("disabled", false);
+      Child.prop("disabled", false);
+      Senior.prop("disabled", false);
+      Other.prop("disabled", false);
     }
     isEventFreeRadio.find('input[type="radio"]').on('change', function () {
       if ($(this).val() === '1') {
         pricesInputTextContainer.addClass('d-none');
+        GeneralAdmission.prop("disabled", true);
+        Student.prop("disabled", true);
+        Child.prop("disabled", true);
+        Senior.prop("disabled", true);
+        Other.prop("disabled", true);
       } else {
         pricesInputTextContainer.removeClass('d-none');
+        GeneralAdmission.prop("disabled", false);
+        Student.prop("disabled", false);
+        Child.prop("disabled", false);
+        Senior.prop("disabled", false);
+        Other.prop("disabled", false);
       }
     });
   }
@@ -1653,36 +1811,6 @@ export default function () {
     }
   }
 
-  function testAjax()
-  {
-    $('.tester').each(function() {
-      $(this).click(function () {
-        let listingid = $(this).attr('data-id');
-        console.log('clicked');
-        $.ajax({
-          type: "POST",
-          url: "favourites/deleteListingFromFavourites",
-          data: { id : listingid },
-          success: function (data) {
-            $('.listings-content').html(data);
-          }
-        })
-          .done(function( msg ) {
-            alert( "Data Saved: " + msg );
-          });
-      });
-
-
-
-      // $.ajax('favourites/FavouriteListings',{
-      //   success: function(data) {
-      //     $('.listings-content').html(data);
-      //     console.log()
-      //   }
-      // });
-    });
-  }
-
   function accountSettings()
   {
     let AccountForm_AccountForm = $('#AccountForm_AccountForm');
@@ -1710,6 +1838,17 @@ export default function () {
       //   //     }
       //   // },1000);
       // });
+    }
+  }
+
+  function otherSettings()
+  {
+    let urlHash = window.location.href.split("#")[1];
+    if (urlHash) {
+      let hash = $("#"+ urlHash);
+      let target_offset_top = hash.offset().top;
+      hash.find('button[data-toggle="collapse"]').trigger('click');
+      $('html,body').animate({scrollTop: target_offset_top - 200});
     }
   }
 

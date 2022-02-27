@@ -13,8 +13,10 @@
             </div>
         </div>
         <div class="search-form tablet-padding mobile-padding">
-            <label><span class="fontsize30 font-weight-book text-white">Search What’s On</span></label>
-            $SearchForm
+            <label><span class="fontsize30 font-weight-book text-white">Search site</span></label>
+<%--            $SearchForm--%>
+
+            $CustomSearchForm
         </div>
     </div>
 <% end_if %>
