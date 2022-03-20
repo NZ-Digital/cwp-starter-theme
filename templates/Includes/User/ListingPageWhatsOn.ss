@@ -135,7 +135,7 @@
                     </div>
                     <div class="col-lg-12 pb-lg-1">
                         <div class="accordion-panel">
-                        <p class="offset-lg-2 pl-lg-1"><span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.IsOnline %>This event is online<% end_if %><% if $Listing.BuildingName %>$Listing.BuildingName<br><% end_if %><% if $Listing.Address %>$Listing.Address, <% end_if %><% if $Listing.City %>$Listing.City, <br><% end_if %><% if $Listing.Town %>$Listing.Town<% end_if %><% if $Listing.Postcode %>$Listing.Postcode<% end_if %></span></p>
+                        <p class="offset-lg-2 pl-lg-1"><span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.IsOnline %>This event is online<% end_if %><% if $Listing.BuildingName %>$Listing.BuildingName<br><% end_if %><% if $Listing.Address %>$Listing.Address, <% end_if %><% if $Listing.City %>$Listing.City<% end_if %><% if $Listing.Postcode %>$Listing.Postcode<% end_if %></span></p>
                         <% if not $Listing.IsOnline %>
                             <p class="offset-lg-2 pl-lg-1 pt-lg-5 pt-4 pb-3"><a target="_blank" href="https://www.google.com/maps/place/{$Listing.Address} {$Listing.City}"> <span class="fontsize16 font-weight-medium text-underline">Open in maps</span></a></p>
                         <% end_if %>

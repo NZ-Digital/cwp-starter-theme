@@ -2,8 +2,8 @@
     <% if $VisibleListings %>
         <div class="container-fluid">
             <div class="row no-gutters pl-lg-7 pr-lg-10">
-                <div class="col-xl-4 pr-lg-4 pb-6">$SideContent</div>
-                <div class="col-xl-8 pl-lg-5">
+                <div class="col-xl-4 pr-xl-4 pb-6">$SideContent</div>
+                <div class="col-xl-8 pl-xl-5">
                     <div class="row">
                         <% loop $VisibleListings.Limit($Limit) %>
                             <div class="col-6 grid-item">

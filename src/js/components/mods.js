@@ -726,9 +726,9 @@ export default function () {
         _this.addClass('active').siblings().removeClass('active');
         locationDropdownToggle.text(selectedDropdownItem);
         selectedLocation.addClass('has-item');
-        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
+        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '" data-keyword="' + _this.attr('data-keyword') + '">X</span></div>');
         locationIDField.val(_this.attr('data-id'));
-        locationField.val(_this.text());
+        locationField.val(_this.attr('data-keyword'));
 
         selectedLocation.find('.remove-item').click(function () {
           let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
@@ -747,7 +747,7 @@ export default function () {
       locationDropdownToggle.text(selectedDropdownItem.text());
       selectedDropdownItem.addClass('active');
       selectedLocation.addClass('has-item');
-      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationIDField.val() + '">X</span></div>');
+      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationIDField.val() + '" data-keyword="' + selectedDropdownItem.attr('data-keyword') + '">X</span></div>');
 
       selectedLocation.find('.remove-item').click(function () {
         let selectedDropdownItem = $('.location-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
@@ -1212,6 +1212,7 @@ export default function () {
       if (tags.val().includes(',')) {
         tagArrays = tags.val().split(",");
         selectedTagsHolder.addClass('has-item');
+
         for (let i = 0; i < tagArrays.length; i++) {
           tagSelectorHolder.find('.styledSelect').text(tagArrays[i]);
           listTag.each(function () {
@@ -1226,14 +1227,14 @@ export default function () {
         }
       } else {
         tagSelectorHolder.find('.styledSelect').text(tags.val());
-        listTag.each(function () {
-          if ($.trim($(this).text()) === tagArrays[i]) {
-            if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
-              liTagShown.push($.trim($(this).text()));
-              $(this).addClass('selected');
-            }
-          }
-        });
+        // listTag.each(function () {
+        //   if ($.trim($(this).text()) === tagArrays[i]) {
+        //     if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
+        //       liTagShown.push($.trim($(this).text()));
+        //       $(this).addClass('selected');
+        //     }
+        //   }
+        // });
         selectedTagsHolder.addClass('has-item');
         selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tags.val() + '</span><span class="remove-item">X</span></div>');
       }
@@ -1358,26 +1359,54 @@ export default function () {
 
   function DayPickerSettings() {
     let DayPickerContainer = $('.optionset-day');
-    DayPickerContainer.each(function () {
-      let _this = $(this);
-      let checkbox, startTimePicker, endTimePicker;
-
-      checkbox = _this.find('input[type="checkbox"]');
-      startTimePicker =  _this.find('.selectedStartTime');
-      endTimePicker   =  _this.find('.selectedEndTime');
-      if (checkbox.prop('checked')) {
-        startTimePicker.removeClass('disabled');
-      }
-      checkbox.change(function() {
-        if(this.checked) {
+    if (DayPickerContainer.length > 0) {
+      let dayArray = [];
+      DayPickerContainer.each(function () {
+        let _this = $(this);
+        let checkbox, selectedDates, startTimePicker, endTimePicker;
+        checkbox = _this.find('input[type="checkbox"]');
+        selectedDates   =  $('#ListingForm_ListingForm_SelectedDates');
+        startTimePicker =  _this.find('.selectedStartTime');
+        endTimePicker   =  _this.find('.selectedEndTime');
+        if (checkbox.prop('checked')) {
           startTimePicker.removeClass('disabled');
-          endTimePicker.removeClass('disabled');
-        } else {
-          startTimePicker.addClass('disabled');
-          endTimePicker.addClass('disabled');
         }
+        checkbox.change(function() {
+          if(this.checked) {
+            startTimePicker.removeClass('disabled');
+            endTimePicker.removeClass('disabled');
+            if (!dayArray.includes($(this).attr('name'))) {
+              dayArray.push($(this).attr('name'));
+            }
+          } else {
+            startTimePicker.addClass('disabled');
+            endTimePicker.addClass('disabled');
+            const index = dayArray.indexOf($(this).attr('name'));
+            if (index > -1) {
+              dayArray.splice(index, 1);
+            }
+          }
+          selectedDates.val(dayArray);
+        });
+        startTimePicker.find('.dropdown-menu .dropdown-item').click(function () {
+          let _startPicker = $(this);
+          startTimePicker.find('.dropdown-toggle .text').text($(this).text());
+          startTimePicker.find('.dropdown-toggle').attr('data-start-time', $(this).text());
+
+          endTimePicker.find('.dropdown-menu .dropdown-item').each(function () {
+            let _endPicker = $(this);
+            _endPicker.show();
+            if (_endPicker.attr('data-index') < _startPicker.attr('data-index')) {
+              _endPicker.hide();
+            }
+          });
+        });
+        endTimePicker.find('.dropdown-menu .dropdown-item').click(function () {
+          endTimePicker.find('.dropdown-toggle .text').text($(this).text());
+          endTimePicker.find('.dropdown-toggle').attr('data-end-time', $(this).text());
+        });
       });
-    });
+    }
   }
 
   function PopulateDateTimes(listingDateTimeContainer) {
@@ -1444,6 +1473,8 @@ export default function () {
     let ListingForm_ListingForm_ByAppointment = $('#ListingForm_ListingForm_ByAppointment');
     let isByAppointment = ListingForm_ListingForm_ByAppointment.find('input[name="ByAppointment"]:checked').val();
 
+    let DayPickerContainer = $('.optionset-day');
+
     form = $('#ListingForm_ListingForm');
     listingSelectedStartTimeTextBox = $('input[name="SelectedStartTimes"]');
     listingSelectedEndTimeTextBox = $('input[name="SelectedEndTimes"]');
@@ -1457,57 +1488,81 @@ export default function () {
       endTimeArray = [];
       listingDateTimeContainer = $('.listingDateTimes');
       dropdownBtnAttr = $(e.target).attr('data-step')
-      if (isByAppointment.val() !== '1') {
-        if (dropdownBtnAttr === 'date-time') {
-          listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
-          if (listingDateTimeItem.length > 0) { //check if user selected date from calendar
-            listingDateTimeItem.each(function () {
-              let appointmentIsChecked = $(this).find('input[name="appointment_only"]').prop('checked');
-              // if (!appointmentIsChecked) {
-              // validate if all dropdown start time is selected
-              $(this).find('.dropdown').each(function () {
-                if ($(this).hasClass('selectedStartTime')) {
-                  startTime = $(this).find('button').attr('data-start-time');
-                  if (startTime === null || startTime === "undefined" || !startTime) {
-                    $(this).addClass('has-error text-danger');
-                    errorFlag = true;
-                    errorMessage = errorTimeMessage;
-                  } else {
-                    startTimeArray.push(startTime);
+
+      if (isByAppointment !== '1') {
+        if (DayPickerContainer.length > 0) {
+          DayPickerContainer.each(function () {
+            let _this = $(this);
+            let startTimePicker, endTimePicker;
+            startTimePicker =  _this.find('.selectedStartTime');
+            endTimePicker   =  _this.find('.selectedEndTime');
+            let startTime = startTimePicker.find('.dropdown-toggle').attr('data-start-time');
+            let endTime   = endTimePicker.find('.dropdown-toggle').attr('data-end-time');
+            if (startTime !== null || startTime !== "undefined") {
+              startTimeArray.push(startTime);
+            }
+            if (endTime !== null || endTime !== "undefined") {
+              endTimeArray.push(endTime);
+            }
+            if (startTimeArray.length > 0) {
+              listingSelectedStartTimeTextBox.val(startTimeArray.toString());
+            }
+            if (endTimeArray.length > 0) {
+              listingSelectedEndTimeTextBox.val(endTimeArray.toString());
+            }
+          });
+        } else {
+          if (dropdownBtnAttr === 'date-time') {
+            listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
+            if (listingDateTimeItem.length > 0) { //check if user selected date from calendar
+              listingDateTimeItem.each(function () {
+                let appointmentIsChecked = $(this).find('input[name="appointment_only"]').prop('checked');
+                // if (!appointmentIsChecked) {
+                // validate if all dropdown start time is selected
+                $(this).find('.dropdown').each(function () {
+                  if ($(this).hasClass('selectedStartTime')) {
+                    startTime = $(this).find('button').attr('data-start-time');
+                    if (startTime === null || startTime === "undefined" || !startTime) {
+                      $(this).addClass('has-error text-danger');
+                      errorFlag = true;
+                      errorMessage = errorTimeMessage;
+                    } else {
+                      startTimeArray.push(startTime);
+                    }
                   }
-                }
-                if ($(this).hasClass('selectedEndTime')) {
-                  endTime = $(this).find('button').attr('data-end-time');
-                  if (endTime === null || endTime === "undefined" || !endTime) {
-                    $(this).addClass('has-error text-danger');
-                    errorFlag = true;
-                    errorMessage = errorTimeMessage;
-                  } else {
-                    endTimeArray.push(endTime);
+                  if ($(this).hasClass('selectedEndTime')) {
+                    endTime = $(this).find('button').attr('data-end-time');
+                    if (endTime === null || endTime === "undefined" || !endTime) {
+                      $(this).addClass('has-error text-danger');
+                      errorFlag = true;
+                      errorMessage = errorTimeMessage;
+                    } else {
+                      endTimeArray.push(endTime);
+                    }
                   }
-                }
-              });
-              // } else {
-              //   const appointment = 'Appointment Only';
-              //
-              //   $(this).find('.dropdown').removeClass('has-error text-danger');
-              //   startTimeArray.push(appointment);
-              //   endTimeArray.push(appointment);
-              // }
-            })
-          } else {
-            errorFlag = true;
-            errorMessage = errorDateMessage;
-          }
-          if (startTimeArray.length > 0) {
-            listingSelectedStartTimeTextBox.val(startTimeArray.toString());
-          }
-          if (endTimeArray.length > 0) {
-            listingSelectedEndTimeTextBox.val(endTimeArray.toString());
-          }
-          if (errorFlag) {
-            showError(errorMessage, errorField);
-            e.preventDefault();
+                });
+                // } else {
+                //   const appointment = 'Appointment Only';
+                //
+                //   $(this).find('.dropdown').removeClass('has-error text-danger');
+                //   startTimeArray.push(appointment);
+                //   endTimeArray.push(appointment);
+                // }
+              })
+            } else {
+              errorFlag = true;
+              errorMessage = errorDateMessage;
+            }
+            if (startTimeArray.length > 0) {
+              listingSelectedStartTimeTextBox.val(startTimeArray.toString());
+            }
+            if (endTimeArray.length > 0) {
+              listingSelectedEndTimeTextBox.val(endTimeArray.toString());
+            }
+            if (errorFlag) {
+              showError(errorMessage, errorField);
+              e.preventDefault();
+            }
           }
         }
       }

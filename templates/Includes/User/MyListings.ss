@@ -22,12 +22,16 @@
                                         <div class="dropdown show">
                                             <button class="action-btn" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></button>
                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="$Listing.Page.URL"><span class="fontsize14 font-weight-medium text-footer-gray">View live listing</span></a>
-                                                <a class="dropdown-item" href="{$SessionURL}&listingID={$ID}"><span class="fontsize14 font-weight-medium text-footer-gray">Edit listing</span></a>
+                                                <% if $Page %>
+                                                    <a class="dropdown-item" href="$Page.Link"><span class="fontsize14 font-weight-medium text-footer-gray">View live listing</span></a>
+                                                <% end_if %>
+                                                <a class="dropdown-item" href="create-listing?id={$AssignedGroup.ID}&MultiFormSessionID={$SessionURL}&listingID={$ID}"><span class="fontsize14 font-weight-medium text-footer-gray">Edit listing</span></a>
+                                                <% if $Flag == 'Active' %>
                                                 <a class="dropdown-item" href="#"><span class="fontsize14 font-weight-medium text-footer-gray">Edit announcement bar</span></a>
                                                 <a class="dropdown-item" href="#"><span class="fontsize14 font-weight-medium text-footer-gray">Duplicate listing</span></a>
                                                 <a class="dropdown-item" href="#"><span class="fontsize14 font-weight-medium text-footer-gray">Deactivate listing</span></a>
-                                                <a class="dropdown-item" href="#"><span class="fontsize14 font-weight-medium text-footer-gray">Delete listing</span></a>
+                                                <% end_if %>
+                                                <a class="dropdown-item" href="#" data-id="$ID"><span class="fontsize14 font-weight-medium text-footer-gray">Delete listing</span></a>
                                             </div>
                                         </div>
                                     </div>

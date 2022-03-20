@@ -20,7 +20,7 @@
                                                         <img src="$resourceURL('themes/starter/images/Icon-date.png')" class="img-icon" alt="$Name icon">
                                                     <% end_if %>
                                                     <% if $FieldType == "Location" %>
-                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $LocationFromParam %>$LocationFromParam<% else %>$Placeholder<% end_if %>"><% if $LocationFromParam %>$LocationFromParam<% else %>$Placeholder<% end_if %></span>
+                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $LocationFromParam %>$LocationFromParam.Keyword<% else %>$Placeholder<% end_if %>"><% if $LocationFromParam %>$LocationFromParam.Name<% else %>$Placeholder<% end_if %></span>
                                                         <i class="fal fa-angle-down fontsize25"></i>
                                                     <% end_if %>
                                                     <% if $FieldType == "Category" %>
@@ -93,7 +93,7 @@
                                                     <img src="$resourceURL('themes/starter/images/Icon-date.png')" class="img-icon" alt="$Name icon">
                                                 <% end_if %>
                                                 <% if $FieldType == "Location" %>
-                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $LocationFromParam %>$LocationFromParam<% else %>$Placeholder<% end_if %>"><% if $LocationFromParam %>$LocationFromParam<% else %>$Placeholder<% end_if %></span>
+                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $LocationFromParam %>$LocationFromParam.Keyword<% else %>$Placeholder<% end_if %>"><% if $LocationFromParam %>$LocationFromParam.Name<% else %>$Placeholder<% end_if %></span>
                                                     <i class="fal fa-angle-down fontsize25"></i>
                                                 <% end_if %>
                                                 <% if $FieldType == "Category" %>

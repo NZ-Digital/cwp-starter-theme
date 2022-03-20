@@ -36113,9 +36113,9 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
         locationDropdownToggle.text(selectedDropdownItem);
         selectedLocation.addClass('has-item');
-        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
+        selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '" data-keyword="' + _this.attr('data-keyword') + '">X</span></div>');
         locationIDField.val(_this.attr('data-id'));
-        locationField.val(_this.text());
+        locationField.val(_this.attr('data-keyword'));
         selectedLocation.find('.remove-item').click(function () {
           var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
           selectedDropdownItem.removeClass('active');
@@ -36133,7 +36133,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       locationDropdownToggle.text(selectedDropdownItem.text());
       selectedDropdownItem.addClass('active');
       selectedLocation.addClass('has-item');
-      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationIDField.val() + '">X</span></div>');
+      selectedLocation.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + locationIDField.val() + '" data-keyword="' + selectedDropdownItem.attr('data-keyword') + '">X</span></div>');
       selectedLocation.find('.remove-item').click(function () {
         var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.location-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
         selectedDropdownItem.removeClass('active');
@@ -36311,10 +36311,10 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       //   rel: 0
       // }).appendTo($list);
 
-      for (var _i = 0; _i < numberOfOptions; _i++) {
+      for (var i = 0; i < numberOfOptions; i++) {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()('<li />', {
-          text: $this.children('option').eq(_i).text(),
-          rel: $this.children('option').eq(_i).val()
+          text: $this.children('option').eq(i).text(),
+          rel: $this.children('option').eq(i).val()
         }).appendTo($list);
       }
 
@@ -36384,8 +36384,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
                   selectedTagsHolder.find('.item-holder').empty();
                   selectedTagsText.val('');
 
-                  for (var _i2 = 0; _i2 < data.length; _i2++) {
-                    list.find('li[rel="' + data[_i2].id + '"]').addClass('show'); // list.each(function () {
+                  for (var _i = 0; _i < data.length; _i++) {
+                    list.find('li[rel="' + data[_i].id + '"]').addClass('show'); // list.each(function () {
                     //   $(this).removeClass('selected');
                     //   // console.log('data-id '+  data[i].id);
                     //   // console.log('rel-id ' + $(this).attr('rel'));
@@ -36591,9 +36591,9 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
               var list = dropdownTags.find('ul.options li');
               var data = result.data;
 
-              var _loop = function _loop(_i3) {
+              var _loop = function _loop(i) {
                 list.each(function () {
-                  if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === data[_i3].name) {
+                  if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === data[i].name) {
                     if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liShown) === -1) {
                       liShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
 
@@ -36605,8 +36605,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
                 });
               };
 
-              for (var _i3 = 0; _i3 < data.length; _i3++) {
-                _loop(_i3);
+              for (var i = 0; i < data.length; i++) {
+                _loop(i);
               }
             })();
           }
@@ -36618,32 +36618,32 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           tagArrays = tags.val().split(",");
           selectedTagsHolder.addClass('has-item');
 
-          var _loop2 = function _loop2(_i4) {
-            tagSelectorHolder.find('.styledSelect').text(tagArrays[_i4]);
+          var _loop2 = function _loop2(i) {
+            tagSelectorHolder.find('.styledSelect').text(tagArrays[i]);
             listTag.each(function () {
-              if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === tagArrays[_i4]) {
+              if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === tagArrays[i]) {
                 if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liTagShown) === -1) {
                   liTagShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
                   jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('selected');
                 }
               }
             });
-            selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tagArrays[_i4] + '</span><span class="remove-item">X</span></div>');
+            selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tagArrays[i] + '</span><span class="remove-item">X</span></div>');
           };
 
-          for (var _i4 = 0; _i4 < tagArrays.length; _i4++) {
-            _loop2(_i4);
+          for (var i = 0; i < tagArrays.length; i++) {
+            _loop2(i);
           }
         } else {
-          tagSelectorHolder.find('.styledSelect').text(tags.val());
-          listTag.each(function () {
-            if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === tagArrays[i]) {
-              if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liTagShown) === -1) {
-                liTagShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
-                jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('selected');
-              }
-            }
-          });
+          tagSelectorHolder.find('.styledSelect').text(tags.val()); // listTag.each(function () {
+          //   if ($.trim($(this).text()) === tagArrays[i]) {
+          //     if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
+          //       liTagShown.push($.trim($(this).text()));
+          //       $(this).addClass('selected');
+          //     }
+          //   }
+          // });
+
           selectedTagsHolder.addClass('has-item');
           selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tags.val() + '</span><span class="remove-item">X</span></div>');
         }
@@ -36698,9 +36698,9 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         if (dates.length > 0) {
           listingDateTimeContainer.find('.date-time-item').remove();
 
-          for (var _i5 = 0; _i5 < dates.length; _i5++) {
-            if (dates[_i5] !== null) {
-              selectedDates.push(dates[_i5].format("DD MMMM YYYY"));
+          for (var i = 0; i < dates.length; i++) {
+            if (dates[i] !== null) {
+              selectedDates.push(dates[i].format("DD MMMM YYYY"));
 
               if (selectedDates.length > 1) {
                 (function () {
@@ -36716,8 +36716,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
                   listingSelectedDatesTextBox.val(rangeOfDatesArray);
                 })();
               } else {
-                formattedDate = dates[_i5].format("DD MMMM YYYY");
-                appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '', _i5);
+                formattedDate = dates[i].format("DD MMMM YYYY");
+                appendDateTimeItem(listingDateTimeContainer, formattedDate, '', '', i);
                 listingSelectedDatesTextBox.val(selectedDates);
               } //dropdown time selector functions
 
@@ -36771,28 +36771,63 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
   function DayPickerSettings() {
     var DayPickerContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.optionset-day');
-    DayPickerContainer.each(function () {
-      var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
 
-      var checkbox, startTimePicker, endTimePicker;
-      checkbox = _this.find('input[type="checkbox"]');
-      startTimePicker = _this.find('.selectedStartTime');
-      endTimePicker = _this.find('.selectedEndTime');
+    if (DayPickerContainer.length > 0) {
+      var dayArray = [];
+      DayPickerContainer.each(function () {
+        var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
 
-      if (checkbox.prop('checked')) {
-        startTimePicker.removeClass('disabled');
-      }
+        var checkbox, selectedDates, startTimePicker, endTimePicker;
+        checkbox = _this.find('input[type="checkbox"]');
+        selectedDates = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SelectedDates');
+        startTimePicker = _this.find('.selectedStartTime');
+        endTimePicker = _this.find('.selectedEndTime');
 
-      checkbox.change(function () {
-        if (this.checked) {
+        if (checkbox.prop('checked')) {
           startTimePicker.removeClass('disabled');
-          endTimePicker.removeClass('disabled');
-        } else {
-          startTimePicker.addClass('disabled');
-          endTimePicker.addClass('disabled');
         }
+
+        checkbox.change(function () {
+          if (this.checked) {
+            startTimePicker.removeClass('disabled');
+            endTimePicker.removeClass('disabled');
+
+            if (!dayArray.includes(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'))) {
+              dayArray.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
+            }
+          } else {
+            startTimePicker.addClass('disabled');
+            endTimePicker.addClass('disabled');
+            var index = dayArray.indexOf(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('name'));
+
+            if (index > -1) {
+              dayArray.splice(index, 1);
+            }
+          }
+
+          selectedDates.val(dayArray);
+        });
+        startTimePicker.find('.dropdown-menu .dropdown-item').click(function () {
+          var _startPicker = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+          startTimePicker.find('.dropdown-toggle .text').text(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text());
+          startTimePicker.find('.dropdown-toggle').attr('data-start-time', jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text());
+          endTimePicker.find('.dropdown-menu .dropdown-item').each(function () {
+            var _endPicker = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
+
+            _endPicker.show();
+
+            if (_endPicker.attr('data-index') < _startPicker.attr('data-index')) {
+              _endPicker.hide();
+            }
+          });
+        });
+        endTimePicker.find('.dropdown-menu .dropdown-item').click(function () {
+          endTimePicker.find('.dropdown-toggle .text').text(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text());
+          endTimePicker.find('.dropdown-toggle').attr('data-end-time', jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text());
+        });
       });
-    });
+    }
   }
 
   function PopulateDateTimes(listingDateTimeContainer) {
@@ -36807,25 +36842,25 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       selectedStartTime = listingSelectedStartTimeTextBox.split(",");
       selectedEndTime = listingSelectedEndTimeTextBox.split(",");
 
-      for (var _i6 = 0; _i6 < selectedDates.length; _i6++) {
+      for (var i = 0; i < selectedDates.length; i++) {
         //populate Calendar
-        var CalendarDateFormat = moment(selectedDates[_i6]).format('YYYY-MM-DD');
-        var EventDateFormat = moment(selectedDates[_i6]).format("DD MMMM YYYY");
+        var CalendarDateFormat = moment(selectedDates[i]).format('YYYY-MM-DD');
+        var EventDateFormat = moment(selectedDates[i]).format("DD MMMM YYYY");
         var unit = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.pignose-calendar-unit[data-date=' + CalendarDateFormat + ']');
 
-        if (_i6 === 0) {
+        if (i === 0) {
           unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-first-active');
-        } else if (_i6 !== 0 && _i6 === selectedDates.length - 2) {
+        } else if (i !== 0 && i === selectedDates.length - 2) {
           if (selectedDates.length < 4) {
             unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first pignose-calendar-unit-range-last');
           } else {
             unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-last');
           }
-        } else if (_i6 === selectedDates.length - 1) {
+        } else if (i === selectedDates.length - 1) {
           unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-second-active');
         } else {
           if (selectedDates.length > 3) {
-            if (_i6 === 1) {
+            if (i === 1) {
               unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first');
             } else {
               unit.addClass('pignose-calendar-unit-range');
@@ -36834,7 +36869,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         } //populate event dates
 
 
-        appendDateTimeItem(listingDateTimeContainer, EventDateFormat, selectedStartTime[_i6], selectedEndTime[_i6], _i6); //dropdown time selector functions
+        appendDateTimeItem(listingDateTimeContainer, EventDateFormat, selectedStartTime[i], selectedEndTime[i], i); //dropdown time selector functions
 
         DropdownTimeSelector(listingDateTimeContainer);
       }
@@ -36852,6 +36887,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     var startTimeArray, endTimeArray;
     var ListingForm_ListingForm_ByAppointment = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_ByAppointment');
     var isByAppointment = ListingForm_ListingForm_ByAppointment.find('input[name="ByAppointment"]:checked').val();
+    var DayPickerContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.optionset-day');
     form = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm');
     listingSelectedStartTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedStartTimes"]');
     listingSelectedEndTimeTextBox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input[name="SelectedEndTimes"]');
@@ -36864,64 +36900,92 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       listingDateTimeContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.listingDateTimes');
       dropdownBtnAttr = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).attr('data-step');
 
-      if (isByAppointment.val() !== '1') {
-        if (dropdownBtnAttr === 'date-time') {
-          listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
+      if (isByAppointment !== '1') {
+        if (DayPickerContainer.length > 0) {
+          DayPickerContainer.each(function () {
+            var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
 
-          if (listingDateTimeItem.length > 0) {
-            //check if user selected date from calendar
-            listingDateTimeItem.each(function () {
-              var appointmentIsChecked = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('input[name="appointment_only"]').prop('checked'); // if (!appointmentIsChecked) {
-              // validate if all dropdown start time is selected
+            var startTimePicker, endTimePicker;
+            startTimePicker = _this.find('.selectedStartTime');
+            endTimePicker = _this.find('.selectedEndTime');
+            var startTime = startTimePicker.find('.dropdown-toggle').attr('data-start-time');
+            var endTime = endTimePicker.find('.dropdown-toggle').attr('data-end-time');
 
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown').each(function () {
-                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedStartTime')) {
-                  startTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-start-time');
+            if (startTime !== null || startTime !== "undefined") {
+              startTimeArray.push(startTime);
+            }
 
-                  if (startTime === null || startTime === "undefined" || !startTime) {
-                    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
-                    errorFlag = true;
-                    errorMessage = errorTimeMessage;
-                  } else {
-                    startTimeArray.push(startTime);
+            if (endTime !== null || endTime !== "undefined") {
+              endTimeArray.push(endTime);
+            }
+
+            if (startTimeArray.length > 0) {
+              listingSelectedStartTimeTextBox.val(startTimeArray.toString());
+            }
+
+            if (endTimeArray.length > 0) {
+              listingSelectedEndTimeTextBox.val(endTimeArray.toString());
+            }
+          });
+        } else {
+          if (dropdownBtnAttr === 'date-time') {
+            listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
+
+            if (listingDateTimeItem.length > 0) {
+              //check if user selected date from calendar
+              listingDateTimeItem.each(function () {
+                var appointmentIsChecked = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('input[name="appointment_only"]').prop('checked'); // if (!appointmentIsChecked) {
+                // validate if all dropdown start time is selected
+
+                jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('.dropdown').each(function () {
+                  if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedStartTime')) {
+                    startTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-start-time');
+
+                    if (startTime === null || startTime === "undefined" || !startTime) {
+                      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
+                      errorFlag = true;
+                      errorMessage = errorTimeMessage;
+                    } else {
+                      startTimeArray.push(startTime);
+                    }
                   }
-                }
 
-                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedEndTime')) {
-                  endTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-end-time');
+                  if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('selectedEndTime')) {
+                    endTime = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).find('button').attr('data-end-time');
 
-                  if (endTime === null || endTime === "undefined" || !endTime) {
-                    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
-                    errorFlag = true;
-                    errorMessage = errorTimeMessage;
-                  } else {
-                    endTimeArray.push(endTime);
+                    if (endTime === null || endTime === "undefined" || !endTime) {
+                      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('has-error text-danger');
+                      errorFlag = true;
+                      errorMessage = errorTimeMessage;
+                    } else {
+                      endTimeArray.push(endTime);
+                    }
                   }
-                }
-              }); // } else {
-              //   const appointment = 'Appointment Only';
-              //
-              //   $(this).find('.dropdown').removeClass('has-error text-danger');
-              //   startTimeArray.push(appointment);
-              //   endTimeArray.push(appointment);
-              // }
-            });
-          } else {
-            errorFlag = true;
-            errorMessage = errorDateMessage;
-          }
+                }); // } else {
+                //   const appointment = 'Appointment Only';
+                //
+                //   $(this).find('.dropdown').removeClass('has-error text-danger');
+                //   startTimeArray.push(appointment);
+                //   endTimeArray.push(appointment);
+                // }
+              });
+            } else {
+              errorFlag = true;
+              errorMessage = errorDateMessage;
+            }
 
-          if (startTimeArray.length > 0) {
-            listingSelectedStartTimeTextBox.val(startTimeArray.toString());
-          }
+            if (startTimeArray.length > 0) {
+              listingSelectedStartTimeTextBox.val(startTimeArray.toString());
+            }
 
-          if (endTimeArray.length > 0) {
-            listingSelectedEndTimeTextBox.val(endTimeArray.toString());
-          }
+            if (endTimeArray.length > 0) {
+              listingSelectedEndTimeTextBox.val(endTimeArray.toString());
+            }
 
-          if (errorFlag) {
-            showError(errorMessage, errorField);
-            e.preventDefault();
+            if (errorFlag) {
+              showError(errorMessage, errorField);
+              e.preventDefault();
+            }
           }
         }
       }
@@ -36998,8 +37062,8 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     var options = '';
     var arrayTimes = ['6:00 am', '7:00 am', '8:00 am', '9:00 am', '10:00 am', '11:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm', '6:00 pm', '7:00 pm', '8:00 pm', '9:00 pm', '10:00 pm', '11:00 pm', '12:00 am', '1:00 am', '2:00 am'];
 
-    for (var _i7 = index; _i7 < arrayTimes.length; _i7++) {
-      options += '<a class="dropdown-item" href="#" data-index="' + _i7 + '"><span class="text-tundora">' + arrayTimes[_i7] + '</span></a>';
+    for (var i = index; i < arrayTimes.length; i++) {
+      options += '<a class="dropdown-item" href="#" data-index="' + i + '"><span class="text-tundora">' + arrayTimes[i] + '</span></a>';
     }
 
     return options;

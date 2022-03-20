@@ -609,7 +609,8 @@ p.white-line {
 .theme-button-long-yellow-arrow,
 .theme-button-long-yellow-arrow-left,
 .button-signup,
-.button-myportal{
+.button-myportal,
+.button-normal {
   display: inline-block;
   border: 2px solid;
   border-radius: 50px !important;
@@ -747,11 +748,10 @@ p.white-line {
 .theme-button-gray-small,
 .theme-button-gray-small-arrow {
   background-color: $carra;
-  border-color: $carra;
+  border: 1px solid $carra;
   &:hover {
-    border-color: $cod-gray;
+    border: 1px solid $cod-gray;
     background-color: transparent;
-    border: 1px solid;
   }
 }
 
@@ -852,7 +852,8 @@ p.white-line {
   }
 }
 .button-signup ,
-.button-myportal{
+.button-myportal,
+.button-normal {
   position: relative;
   transition: background-color 200ms cubic-bezier(0.76, 0, 0.24, 1);
   @media only screen and (min-width: 992px) {
@@ -865,6 +866,12 @@ p.white-line {
   }
   &:hover {
     background-color: $carra !important;
+  }
+}
+.button-normal {
+  padding: 12px 20px 12px 20px;
+  @media only screen and (max-width: 991px) {
+    padding: 10px 20px;
   }
 }
 .button-signup {
