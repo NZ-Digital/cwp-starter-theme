@@ -673,15 +673,22 @@ export default function () {
       //ListingUploadImages
       ListingUploadImages()
 
-      // let actionBtnSubmit, isDraftTextbox;
-      //
-      // isDraftTextbox  = $('#ListingForm_ListingForm_IsDraft');
-      // actionBtnSubmit = $('#ListingForm_ListingForm_action_finish');
-      // actionBtnSubmit.click(function (e) {
-      //   if ($(this).attr('data-draft') === '1') {
-      //     isDraftTextbox.val('1');
-      //   }
-      // });
+      let actionBtnSubmit, actionBtnPublish, isDraftTextbox;
+      isDraftTextbox   = $('#ListingForm_ListingForm_IsDraft');
+      actionBtnSubmit  = $('.action-finish');
+      actionBtnPublish = $('.action-publish');
+      actionBtnSubmit.click(function (e) {
+        e.preventDefault();
+        if ($(this).attr('data-draft') === '1') {
+          isDraftTextbox.val('1');
+          $('.actions #ListingForm_ListingForm_action_finish').trigger( "click" );
+        }
+      });
+
+      actionBtnPublish.click(function (e) {
+        isDraftTextbox.val('');
+      });
+
       $('.create-listing--modal .close').click(function () {
         let url= document.location.href;
         window.history.pushState({}, "", url.split("&")[0]);
@@ -1392,12 +1399,13 @@ export default function () {
           let _startPicker = $(this);
           startTimePicker.find('.dropdown-toggle .text').text($(this).text());
           startTimePicker.find('.dropdown-toggle').attr('data-start-time', $(this).text());
-
           endTimePicker.find('.dropdown-menu .dropdown-item').each(function () {
             let _endPicker = $(this);
-            _endPicker.show();
-            if (_endPicker.attr('data-index') < _startPicker.attr('data-index')) {
+            console.log(parseInt(_endPicker.attr('data-index')) + ' - ' +  parseInt(_startPicker.attr('data-index')));
+            if (parseInt(_endPicker.attr('data-index')) < parseInt(_startPicker.attr('data-index'))) {
               _endPicker.hide();
+            } else {
+              _endPicker.show();
             }
           });
         });
@@ -1704,17 +1712,34 @@ export default function () {
   }
 
   function ListingPriceStep() {
-    let GeneralAdmission, Student, Child, Senior, Other;
+    let GeneralAdmission, Student, Child, Senior, Other, PriceRange;
     GeneralAdmission = $('#ListingForm_ListingForm_GeneralAdmissionPrice');
     Student          = $('#ListingForm_ListingForm_StudentPrice');
     Child            = $('#ListingForm_ListingForm_ChildPrice');
     Senior           = $('#ListingForm_ListingForm_SeniorPrice');
     Other            = $('#ListingForm_ListingForm_OtherPrice');
+    PriceRange       = $('#ListingForm_ListingForm_PriceRange');
 
-    let isEventFreeRadio = $('#ListingForm_ListingForm_IsEventFree');
+    let isEventFree = $('#ListingForm_ListingForm_IsEventFree');
     let pricesInputTextContainer = $('.price-inputs');
-    let checkedRadio = isEventFreeRadio.find('input[name="IsEventFree"]:checked').val();
-    console.log(checkedRadio);
+    let checkedRadio = isEventFree.find('input[name="IsEventFree"]:checked').val();
+
+    if (isEventFree.checked) {
+      PriceRange.prop("disabled", true);
+      PriceRange.val('');
+    } else {
+      PriceRange.prop("disabled", false);
+    }
+
+    isEventFree.on('change', function () {
+      if (this.checked) {
+        PriceRange.prop("disabled", true);
+        PriceRange.val('');
+      } else {
+        PriceRange.prop("disabled", false);
+      }
+    });
+
     if (checkedRadio === '1') {
       pricesInputTextContainer.addClass('d-none');
       GeneralAdmission.prop("disabled", true);
@@ -1730,7 +1755,7 @@ export default function () {
       Senior.prop("disabled", false);
       Other.prop("disabled", false);
     }
-    isEventFreeRadio.find('input[type="radio"]').on('change', function () {
+    isEventFree.find('input[type="radio"]').on('change', function () {
       if ($(this).val() === '1') {
         pricesInputTextContainer.addClass('d-none');
         GeneralAdmission.prop("disabled", true);

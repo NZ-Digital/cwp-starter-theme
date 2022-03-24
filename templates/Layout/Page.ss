@@ -23,19 +23,21 @@
             <% include Includes/User/CreateListing %>
             <% end_if %>
         <% end_if %>
-        <% if $URLSegment == 'become-a-contributor' %>
-            <% if not $CurrentUserIsContributor %>
-                <% include Includes/User/ContributorSignup %>
-            <% end_if %>
-        <% end_if %>
-        <% if $URLSegment == 'become-a-contributor-form' %>
-            <% if not $CurrentUserIsContributor %>
-                <% include Includes/User/ContributorSignupForm %>
-            <% end_if %>
-        <% end_if %>
     <% end_if %>
 <% end_if %>
 <% if $URLSegment == 'sign-up' %>
     <% include Includes/User/RegistrationForm %>
+<% end_if %>
+<% if $URLSegment == 'become-a-contributor-form' %>
+<%--    <% if not $CurrentUserIsContributor %>--%>
+    <% include Includes/User/ContributorSignupForm %>
+<%--    <% else %>--%>
+
+<%--    <% end_if %>--%>
+<% end_if %>
+<% if $URLSegment == 'become-a-contributor' %>
+<%--    <% if not $CurrentUserIsContributor %>--%>
+        <% include Includes/User/ContributorSignup %>
+<%--    <% end_if %>--%>
 <% end_if %>
 <% include VisibleSection %>

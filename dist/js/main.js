@@ -36060,16 +36060,22 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
       ListingPriceStep(); //ListingUploadImages
 
-      ListingUploadImages(); // let actionBtnSubmit, isDraftTextbox;
-      //
-      // isDraftTextbox  = $('#ListingForm_ListingForm_IsDraft');
-      // actionBtnSubmit = $('#ListingForm_ListingForm_action_finish');
-      // actionBtnSubmit.click(function (e) {
-      //   if ($(this).attr('data-draft') === '1') {
-      //     isDraftTextbox.val('1');
-      //   }
-      // });
+      ListingUploadImages();
+      var actionBtnSubmit, actionBtnPublish, isDraftTextbox;
+      isDraftTextbox = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_IsDraft');
+      actionBtnSubmit = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.action-finish');
+      actionBtnPublish = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.action-publish');
+      actionBtnSubmit.click(function (e) {
+        e.preventDefault();
 
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-draft') === '1') {
+          isDraftTextbox.val('1');
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()('.actions #ListingForm_ListingForm_action_finish').trigger("click");
+        }
+      });
+      actionBtnPublish.click(function (e) {
+        isDraftTextbox.val('');
+      });
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('.create-listing--modal .close').click(function () {
         var url = document.location.href;
         window.history.pushState({}, "", url.split("&")[0]);
@@ -36815,10 +36821,12 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           endTimePicker.find('.dropdown-menu .dropdown-item').each(function () {
             var _endPicker = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
 
-            _endPicker.show();
+            console.log(parseInt(_endPicker.attr('data-index')) + ' - ' + parseInt(_startPicker.attr('data-index')));
 
-            if (_endPicker.attr('data-index') < _startPicker.attr('data-index')) {
+            if (parseInt(_endPicker.attr('data-index')) < parseInt(_startPicker.attr('data-index'))) {
               _endPicker.hide();
+            } else {
+              _endPicker.show();
             }
           });
         });
@@ -37112,16 +37120,32 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
   }
 
   function ListingPriceStep() {
-    var GeneralAdmission, Student, Child, Senior, Other;
+    var GeneralAdmission, Student, Child, Senior, Other, PriceRange;
     GeneralAdmission = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_GeneralAdmissionPrice');
     Student = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_StudentPrice');
     Child = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_ChildPrice');
     Senior = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SeniorPrice');
     Other = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_OtherPrice');
-    var isEventFreeRadio = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_IsEventFree');
+    PriceRange = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_PriceRange');
+    var isEventFree = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_IsEventFree');
     var pricesInputTextContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.price-inputs');
-    var checkedRadio = isEventFreeRadio.find('input[name="IsEventFree"]:checked').val();
-    console.log(checkedRadio);
+    var checkedRadio = isEventFree.find('input[name="IsEventFree"]:checked').val();
+
+    if (isEventFree.checked) {
+      PriceRange.prop("disabled", true);
+      PriceRange.val('');
+    } else {
+      PriceRange.prop("disabled", false);
+    }
+
+    isEventFree.on('change', function () {
+      if (this.checked) {
+        PriceRange.prop("disabled", true);
+        PriceRange.val('');
+      } else {
+        PriceRange.prop("disabled", false);
+      }
+    });
 
     if (checkedRadio === '1') {
       pricesInputTextContainer.addClass('d-none');
@@ -37139,7 +37163,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       Other.prop("disabled", false);
     }
 
-    isEventFreeRadio.find('input[type="radio"]').on('change', function () {
+    isEventFree.find('input[type="radio"]').on('change', function () {
       if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).val() === '1') {
         pricesInputTextContainer.addClass('d-none');
         GeneralAdmission.prop("disabled", true);

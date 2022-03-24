@@ -8,14 +8,14 @@
                             <% if $ShowInBar %>
                                 <% if $PageLink.URLSegment == 'my-listings' %>
                                     <% if $Up.CurrentUserIsContributor %>
-                                        <li class="<% if $Up.URLSegment == $PageLink.URLSegment %>active<% end_if %>"><a href="$PageLink.Link" <% if $Icon %>class="with-icon"<% end_if %>><span class="halyard-display fontsize20 font-weight-normal">$PageLink.Title</span> <% if $Icon %><img src="{$Icon.URL}" class="nav-icon" alt="$PageLink.Title - Navigation button icon"> <% end_if %></a></li>
+                                        <li class="<% if $Up.URLSegment == $PageLink.URLSegment %>active<% end_if %>"><a href="$PageLink.Link" <% if $Icon %>class="with-icon"<% end_if %>><span class="halyard-display fontsize20 font-weight-normal">$Name</span> <% if $Icon %><img src="{$Icon.URL}" class="nav-icon" alt="$PageLink.Title - Navigation button icon"> <% end_if %></a></li>
                                     <% end_if %>
-                                <% else_if $PageLink.URLSegment == 'become-a-contributor' %>
+                                <% else_if $PageLink.URLSegment == 'become-a-contributor-form' %>
                                     <% if not $Up.CurrentUserIsContributor %>
-                                        <li class="<% if $Up.URLSegment == $PageLink.URLSegment %>active<% end_if %>"><a href="$PageLink.Link" <% if $Icon %>class="with-icon"<% end_if %>><span class="halyard-display fontsize20 font-weight-normal">$PageLink.Title</span> <% if $Icon %><img src="{$Icon.URL}" class="nav-icon" alt="$PageLink.Title - Navigation button icon"> <% end_if %></a></li>
+                                        <li class="<% if $Up.URLSegment == $PageLink.URLSegment %>active<% end_if %>"><a href="$PageLink.Link" <% if $Icon %>class="with-icon"<% end_if %>><span class="halyard-display fontsize20 font-weight-normal">$Name</span> <% if $Icon %><img src="{$Icon.URL}" class="nav-icon" alt="$PageLink.Title - Navigation button icon"> <% end_if %></a></li>
                                     <% end_if %>
                                 <% else %>
-                                    <li class="<% if $Up.URLSegment == $PageLink.URLSegment %>active<% end_if %>"><a href="$PageLink.Link" <% if $Icon %>class="with-icon"<% end_if %>><span class="halyard-display fontsize20 font-weight-normal">$PageLink.Title</span> <% if $Icon %><img src="{$Icon.URL}" class="nav-icon" alt="$PageLink.Title - Navigation button icon"> <% end_if %></a></li>
+                                    <li class="<% if $Up.URLSegment == $PageLink.URLSegment %>active<% end_if %>"><a href="$PageLink.Link" <% if $Icon %>class="with-icon"<% end_if %>><span class="halyard-display fontsize20 font-weight-normal">$Name</span> <% if $Icon %><img src="{$Icon.URL}" class="nav-icon" alt="$PageLink.Title - Navigation button icon"> <% end_if %></a></li>
                                 <% end_if %>
                             <% end_if %>
                         <% end_if %>

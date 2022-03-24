@@ -2109,6 +2109,14 @@
   }
 }
 
+.sectionContributorSignup {
+  .form-container {
+    @media only screen and (max-width: 1589px) and (min-width: 990px){
+      padding-left: 40px !important;
+    }
+  }
+}
+
 /** LoginPage **/
 .LoginPage {
   #LoginForm_LoginForm {

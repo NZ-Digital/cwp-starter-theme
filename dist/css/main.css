@@ -19844,6 +19844,12 @@ input[type=submit].action {
   }
 }
 
+@media only screen and (max-width: 1589px) and (min-width: 990px) {
+  .sectionContributorSignup .form-container {
+    padding-left: 40px !important;
+  }
+}
+
 /** LoginPage **/
 .LoginPage #LoginForm_LoginForm {
   max-width: 900px;
