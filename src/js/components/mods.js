@@ -7,6 +7,7 @@ const moment = extendMoment(Moment);
 import 'pg-calendar/dist/js/pignose.calendar';
 import 'jquery-ui-bundle';
 import 'stickyfilljs';
+import 'simple-load-more';
 
 export default function () {
   $(document).ready(function () {
@@ -42,6 +43,9 @@ export default function () {
     closeModal();
 
     otherSettings();
+
+    //Search results load more
+    searchResult();
   }
 
   function headerSettings() {
@@ -1193,7 +1197,7 @@ export default function () {
       selectedSubCategoryHolder.find('.item-holder').append('<div class="item"><span class="text">' + subcategory.val() + '</span><span class="remove-item">X</span></div>');
     }
 
-    if (tags.val()) {
+    if (category.val()) {
       callAPIEndpoint('ajax/getTagByCategoryName', 'POST', 'name=' + category.val(), function (result) {
         if (result.data) {
           let liShown = [];
@@ -1214,36 +1218,39 @@ export default function () {
           }
         }
       })
-      let listTag = tagSelectorHolder.find('ul.options li');
-      let liTagShown = [];
-      if (tags.val().includes(',')) {
-        tagArrays = tags.val().split(",");
-        selectedTagsHolder.addClass('has-item');
 
-        for (let i = 0; i < tagArrays.length; i++) {
-          tagSelectorHolder.find('.styledSelect').text(tagArrays[i]);
-          listTag.each(function () {
-            if ($.trim($(this).text()) === tagArrays[i]) {
-              if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
-                liTagShown.push($.trim($(this).text()));
-                $(this).addClass('selected');
+      if (tags.val()) {
+        let listTag = tagSelectorHolder.find('ul.options li');
+        let liTagShown = [];
+        if (tags.val().includes(',')) {
+          tagArrays = tags.val().split(",");
+          selectedTagsHolder.addClass('has-item');
+
+          for (let i = 0; i < tagArrays.length; i++) {
+            tagSelectorHolder.find('.styledSelect').text(tagArrays[i]);
+            listTag.each(function () {
+              if ($.trim($(this).text()) === tagArrays[i]) {
+                if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
+                  liTagShown.push($.trim($(this).text()));
+                  $(this).addClass('selected');
+                }
               }
-            }
-          });
-          selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tagArrays[i] + '</span><span class="remove-item">X</span></div>');
+            });
+            selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tagArrays[i] + '</span><span class="remove-item">X</span></div>');
+          }
+        } else {
+          tagSelectorHolder.find('.styledSelect').text(tags.val());
+          // listTag.each(function () {
+          //   if ($.trim($(this).text()) === tagArrays[i]) {
+          //     if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
+          //       liTagShown.push($.trim($(this).text()));
+          //       $(this).addClass('selected');
+          //     }
+          //   }
+          // });
+          selectedTagsHolder.addClass('has-item');
+          selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tags.val() + '</span><span class="remove-item">X</span></div>');
         }
-      } else {
-        tagSelectorHolder.find('.styledSelect').text(tags.val());
-        // listTag.each(function () {
-        //   if ($.trim($(this).text()) === tagArrays[i]) {
-        //     if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
-        //       liTagShown.push($.trim($(this).text()));
-        //       $(this).addClass('selected');
-        //     }
-        //   }
-        // });
-        selectedTagsHolder.addClass('has-item');
-        selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tags.val() + '</span><span class="remove-item">X</span></div>');
       }
     }
     removeSelectedItem(category, subcategory, tags);
@@ -1930,6 +1937,21 @@ export default function () {
       hash.find('button[data-toggle="collapse"]').trigger('click');
       $('html,body').animate({scrollTop: target_offset_top - 200});
     }
+  }
+
+  function searchResult()
+  {
+    $('.load-listing-item').simpleLoadMore({
+      item: '.result-item',
+      count: 3,
+      showCounter:true,
+      counterText: 'Showing {showing} of {total} results',
+      btnHTML: '<a href="#" class="load-more__btn theme-button-hover-dark"><span>See more</span></a>'
+    });
+
+    setTimeout(function () {
+      $('.show-result-counter').append( $('.load-more__counter').clone())
+    }, 10);
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback)

@@ -2225,11 +2225,20 @@ hr {
 
 .page-searchform,
 #Form_CustomSearchForm {
-  input {
-    box-shadow: 1px 1px 1px rgb(0 0 0 / 0%);
-    border-color: $saffron-mango !important;
+  input[type='text'] {
+    box-shadow: 1px 1px 1px rgb(0 0 0 / 0%) !important;
+    //border-color: $saffron-mango !important;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid #fff;
+    border-radius: 0;
+    color: #fff;
+    padding-left: 0;
+    font-weight: 300;
+    letter-spacing: 1px;
   }
   .btn {
+    display: none;
     background-color: $saffron-mango !important;
     color: $cod-gray;
     border-color: $saffron-mango !important;
@@ -2240,6 +2249,20 @@ hr {
     }
     @media only screen and (max-width: 991px) {
       width: 70px;
+    }
+  }
+  .custom-btn {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    .action {
+      display: inline-block;
+      background-color: transparent;
+      width: 30px;
+      padding: 0 !important;
+      color: #fff;
+      border: 0;
     }
   }
 }
@@ -2693,7 +2716,21 @@ textarea::placeholder {
 .overflow-wrap {
   overflow-wrap: break-word;
 }
-
+.load-more__counter {
+  display: none;
+}
+.show-result-counter {
+  .load-more__counter {
+    display: block;
+  }
+}
+.load-more__btn-wrap {
+  padding-top: 30px;
+  .load-more__btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
 //User profile
 .profile-img {
   img {

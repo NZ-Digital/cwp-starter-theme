@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="search-form tablet-padding mobile-padding">
-            <label><span class="fontsize30 font-weight-book text-white">Search site</span></label>
+            <label><span class="fontsize20 font-weight-book text-white letterspacing-7px text-uppercase">Search site</span></label>
 <%--            $SearchForm--%>
 
             $CustomSearchForm

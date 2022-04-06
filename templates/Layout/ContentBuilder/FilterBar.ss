@@ -16,23 +16,23 @@
                                             <div class="dropdown filter-dropdown  filter{$FieldType}">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown{$ID}" data-type="{$FieldType}" data-id="{$ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <% if $FieldType == "Date" %>
-                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $DateFromParam %>$DateFromParam<% else %>$Placeholder<% end_if %>"><% if $DateRangeFromParam %>$DateRangeFromParam<% else %>$Placeholder<% end_if %></span>
+                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $DateFromParam %>$DateFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %>"><% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $DateRangeFromParam %>$DateRangeFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %></span>
                                                         <img src="$resourceURL('themes/starter/images/Icon-date.png')" class="img-icon" alt="$Name icon">
                                                     <% end_if %>
                                                     <% if $FieldType == "Location" %>
-                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $LocationFromParam %>$LocationFromParam.Keyword<% else %>$Placeholder<% end_if %>"><% if $LocationFromParam %>$LocationFromParam.Name<% else %>$Placeholder<% end_if %></span>
+                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $LocationFromParam %>$LocationFromParam.Keyword<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %>"><% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $LocationFromParam %>$LocationFromParam.Name<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %></span>
                                                         <i class="fal fa-angle-down fontsize25"></i>
                                                     <% end_if %>
                                                     <% if $FieldType == "Category" %>
-                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $CategoryFromParam %>$CategoryFromParam<% else %>$Placeholder<% end_if %>"><% if $CategoryFromParam %>$CategoryFromParam<% else %>$Placeholder<% end_if %></span>
+                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $CategoryFromParam %>$CategoryFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %>"><% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $CategoryFromParam %>$CategoryFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %></span>
                                                         <i class="fal fa-angle-down fontsize25"></i>
                                                     <% end_if %>
                                                     <% if $FieldType == "Capacity" %>
-                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $CapacityFromParam %>$CapacityFromParam<% else %>$Placeholder<% end_if %>"><% if $CapacityFromParam %>$CapacityFromParam<% else %>$Placeholder<% end_if %></span>
+                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $CapacityFromParam %>$CapacityFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %>"><% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $CapacityFromParam %>$CapacityFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %></span>
                                                         <i class="fal fa-angle-down fontsize25"></i>
                                                     <% end_if %>
                                                     <% if $FieldType == "Type" %>
-                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $TypeFromParam %>$TypeFromParam<% else %>$Placeholder<% end_if %>"><% if $TypeFromParam %>$TypeFromParam<% else %>$Placeholder<% end_if %></span>
+                                                        <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $TypeFromParam %>$TypeFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %>"><% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $TypeFromParam %>$TypeFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %></span>
                                                         <i class="fal fa-angle-down fontsize25"></i>
                                                     <% end_if %>
                                                 </button>
@@ -89,23 +89,23 @@
                                         <div class="dropdown filter-dropdown filter{$FieldType}">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown{$ID}" data-type="{$FieldType}" data-id="{$ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <% if $FieldType == "Date" %>
-                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $DateFromParam %>$DateFromParam<% else %>$Placeholder<% end_if %>"><% if $DateRangeFromParam %>$DateRangeFromParam<% else %>$Placeholder<% end_if %></span>
+                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $DateFromParam %>$DateFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %>"><% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $DateRangeFromParam %>$DateRangeFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %></span>
                                                     <img src="$resourceURL('themes/starter/images/Icon-date.png')" class="img-icon" alt="$Name icon">
                                                 <% end_if %>
                                                 <% if $FieldType == "Location" %>
-                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $LocationFromParam %>$LocationFromParam.Keyword<% else %>$Placeholder<% end_if %>"><% if $LocationFromParam %>$LocationFromParam.Name<% else %>$Placeholder<% end_if %></span>
+                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $LocationFromParam %>$LocationFromParam.Keyword<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %>"><% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $LocationFromParam %>$LocationFromParam.Name<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %></span>
                                                     <i class="fal fa-angle-down fontsize25"></i>
                                                 <% end_if %>
                                                 <% if $FieldType == "Category" %>
-                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $CategoryFromParam %>$CategoryFromParam<% else %>$Placeholder<% end_if %>"><% if $CategoryFromParam %>$CategoryFromParam<% else %>$Placeholder<% end_if %></span>
+                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $CategoryFromParam %>$CategoryFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %>"><% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $CategoryFromParam %>$CategoryFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %></span>
                                                     <i class="fal fa-angle-down fontsize25"></i>
                                                 <% end_if %>
                                                 <% if $FieldType == "Capacity" %>
-                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $CapacityFromParam %>$CapacityFromParam<% else %>$Placeholder<% end_if %>"><% if $CapacityFromParam %>$CapacityFromParam<% else %>$Placeholder<% end_if %></span>
+                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $CapacityFromParam %>$CapacityFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %>"><% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $CapacityFromParam %>$CapacityFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %></span>
                                                     <i class="fal fa-angle-down fontsize25"></i>
                                                 <% end_if %>
                                                 <% if $FieldType == "Type" %>
-                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $TypeFromParam %>$TypeFromParam<% else %>$Placeholder<% end_if %>"><% if $TypeFromParam %>$TypeFromParam<% else %>$Placeholder<% end_if %></span>
+                                                    <span class="text-footer-gray font-weight-normal halyard-display" data-keyword="<% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $TypeFromParam %>$TypeFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %>"><% if $Up.Up.URLSegment == $Up.Page.URLSegment %><% if $TypeFromParam %>$TypeFromParam<% else %>$Placeholder<% end_if %><% else %>$Placeholder<% end_if %></span>
                                                     <i class="fal fa-angle-down fontsize25"></i>
                                                 <% end_if %>
                                             </button>

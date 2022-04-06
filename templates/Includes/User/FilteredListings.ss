@@ -50,7 +50,13 @@
         <% end_loop %>
     <% else %>
         <div class="col-lg-12">
-            <p><span class="fontsize30 font-weight-semibold">No results found.</span></p>
+            <p class="pt-lg-2"><span class="fontsize25 font-weight-medium letterspacing-7px">RESULTS</span></p>
+            <p class="pb-lg-2"><span class="fontsize16 font-weight-medium">Showing 0 of 0 results.</span></p>
+            <div class="pt-lg-7 pt-5">
+                <p class="mb-2"><span class="halyard-display fontsize25 font-weight-normal line-height-100 text-chambray">Sorry, there are no results for your query</span></p>
+                <p class="mb-5"><span class="halyard-display fontsize16 font-weight-book">Try a full search using the magnifying glass in the upper right corner.</span></p>
+                <hr>
+            </div>
         </div>
     <% end_if %>
 </div>

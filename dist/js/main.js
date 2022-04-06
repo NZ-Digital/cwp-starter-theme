@@ -34671,6 +34671,141 @@ Popper.Defaults = Defaults;
 
 /***/ }),
 
+/***/ "./node_modules/simple-load-more/jquery.simpleLoadMore.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/simple-load-more/jquery.simpleLoadMore.js ***!
+  \****************************************************************/
+/***/ (function() {
+
+/**
+ * Simple Load More
+ *
+ * Version: 1.5.2
+ * Author: Zeshan Ahmed
+ * Website: https://zeshanahmed.com/
+ * Github: https://github.com/zeshanshani/simple-load-more/
+ * @license MIT
+ */
+(function ($) {
+  $.fn.simpleLoadMore = function (options) {
+    // Settings.
+    var settings = $.extend({
+      item: '',
+      count: 5,
+      itemsToLoad: 5,
+      cssClass: 'load-more',
+      showCounter: false,
+      counterText: 'Showing {showing} out of {total}',
+      btnHTML: '',
+      btnText: 'View More',
+      btnWrapper: '',
+      btnWrapperClass: '',
+      easing: 'fade',
+      easingDuration: 400
+    }, options); // Variables
+
+    var $loadMore = $(this); // Run through all the elements.
+
+    $loadMore.each(function (i, el) {
+      // Define all settings as variables
+      var item = settings.item,
+          count = settings.count,
+          itemsToLoad = settings.itemsToLoad,
+          cssClass = settings.cssClass,
+          showCounter = settings.showCounter,
+          counterText = settings.counterText;
+      btnHTML = settings.btnHTML, btnText = settings.btnText, btnWrapper = settings.btnWrapper, btnWrapperClass = settings.btnWrapperClass; // easing          = settings.easing,
+      // easingDuration  = settings.easingDuration;
+      // Default settings if empty
+
+      if (!btnWrapper && btnWrapper !== false) {
+        btnWrapper = '<div class="' + cssClass + '__btn-wrap' + (btnWrapperClass ? ' ' + btnWrapperClass : '') + '"></div>';
+      } // Variables.
+
+
+      var $thisLoadMore = $(this),
+          $items = $thisLoadMore.find(item),
+          $btnHTML,
+          $counterHTML = $('<p class="' + cssClass + '__counter">' + counterText + '</p>'); // If showCounter is true, then append the counter text in the component.
+
+      if (showCounter) {
+        $thisLoadMore.append($counterHTML);
+      } // Default if not available
+
+
+      if (!btnHTML) btnHTML = '<a href="#" class="' + cssClass + '__btn">' + btnText + '</a>'; // Set $btnHTML as $btnHTML
+
+      $btnHTML = $(btnHTML); // If options.itemsToLoad is not defined, then assign settings.count to it
+
+      if (!options.itemsToLoad || isNaN(options.itemsToLoad)) {
+        settings.itemsToLoad = settings.count;
+      } // Add classes
+
+
+      $thisLoadMore.addClass(cssClass);
+      $items.addClass(cssClass + '__item'); // Add button.
+
+      if (!$thisLoadMore.find('.' + cssClass + '__btn').length && $items.length > settings.count) {
+        $thisLoadMore.append($btnHTML);
+      } // Replace counter with fields
+
+
+      $btnHTML.add($counterHTML).html(function (i, oldHtml) {
+        var newHtml = oldHtml.replace('{showing}', '<span class="' + cssClass + '__count ' + cssClass + '__count--showing">' + count + '</span>');
+        newHtml = newHtml.replace('{total}', '<span class="' + cssClass + '__count ' + cssClass + '__count--total">' + $items.length + '</span>');
+        return newHtml;
+      });
+      var $btn = $thisLoadMore.find('.' + cssClass + '__btn'); // Check if button is not present. If not, then attach $btnHTML to the $btn variable.
+
+      if (!$btn.length) {
+        $btn = $btnHTML;
+      }
+
+      if ($items.length > settings.count) {
+        $items.slice(settings.count).hide();
+      } // Wrap button in its wrapper.
+
+
+      $btn.wrapAll(btnWrapper); // Add click event on button.
+
+      $btn.on('click', function (e) {
+        e.preventDefault();
+        var $thisBtn = $(this);
+        var $hiddenItems = $items.filter(':hidden');
+        var $updatedItems = $hiddenItems;
+
+        if (settings.itemsToLoad !== -1 && settings.itemsToLoad > 0) {
+          $updatedItems = $hiddenItems.slice(0, settings.itemsToLoad);
+        } // Show the selected elements.
+
+
+        if ($updatedItems.length > 0) {
+          if (settings.easing === 'fade') {
+            $updatedItems.fadeIn(settings.easingDuration);
+          } else {
+            $updatedItems.slideDown(settings.easingDuration);
+          }
+        } // Update the showing items count.
+
+
+        $thisLoadMore.find('.' + cssClass + '__count--showing').text($items.filter(':visible').length); // Hide the 'View More' button
+        // if the elements lenght is less than 5.
+        // OR if the settings.itemsToLoad is set to -1.
+
+        if ($hiddenItems.length <= settings.itemsToLoad || settings.itemsToLoad === -1) {
+          if ($thisBtn.parent('.' + cssClass + '__btn-wrap')) {
+            $thisBtn.parent().remove();
+          } else {
+            $thisBtn.remove();
+          }
+        }
+      });
+    });
+  };
+})(jQuery);
+
+/***/ }),
+
 /***/ "./node_modules/stickyfilljs/dist/stickyfill.js":
 /*!******************************************************!*\
   !*** ./node_modules/stickyfilljs/dist/stickyfill.js ***!
@@ -35361,12 +35496,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery_ui_bundle__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(jquery_ui_bundle__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var stickyfilljs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! stickyfilljs */ "./node_modules/stickyfilljs/dist/stickyfill.js");
 /* harmony import */ var stickyfilljs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(stickyfilljs__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var simple_load_more__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! simple-load-more */ "./node_modules/simple-load-more/jquery.simpleLoadMore.js");
+/* harmony import */ var simple_load_more__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(simple_load_more__WEBPACK_IMPORTED_MODULE_7__);
 /* eslint-disable */
 
 
 
 
 var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment__WEBPACK_IMPORTED_MODULE_2___default()));
+
 
 
 
@@ -35397,7 +35535,9 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     newsletter();
     accountSettings();
     closeModal();
-    otherSettings();
+    otherSettings(); //Search results load more
+
+    searchResult();
   }
 
   function headerSettings() {
@@ -36587,73 +36727,76 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       selectedSubCategoryHolder.find('.item-holder').append('<div class="item"><span class="text">' + subcategory.val() + '</span><span class="remove-item">X</span></div>');
     }
 
-    if (tags.val()) {
-      (function () {
-        callAPIEndpoint('ajax/getTagByCategoryName', 'POST', 'name=' + category.val(), function (result) {
-          if (result.data) {
-            (function () {
-              var liShown = [];
-              var dropdownTags = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.dropdown-tags');
-              var list = dropdownTags.find('ul.options li');
-              var data = result.data;
+    if (category.val()) {
+      callAPIEndpoint('ajax/getTagByCategoryName', 'POST', 'name=' + category.val(), function (result) {
+        if (result.data) {
+          (function () {
+            var liShown = [];
+            var dropdownTags = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.dropdown-tags');
+            var list = dropdownTags.find('ul.options li');
+            var data = result.data;
 
-              var _loop = function _loop(i) {
-                list.each(function () {
-                  if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === data[i].name) {
-                    if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liShown) === -1) {
-                      liShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
+            var _loop = function _loop(i) {
+              list.each(function () {
+                if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === data[i].name) {
+                  if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liShown) === -1) {
+                    liShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
 
-                      if (!jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('show')) {
-                        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('show');
-                      }
+                    if (!jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).hasClass('show')) {
+                      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('show');
                     }
                   }
-                });
-              };
-
-              for (var i = 0; i < data.length; i++) {
-                _loop(i);
-              }
-            })();
-          }
-        });
-        var listTag = tagSelectorHolder.find('ul.options li');
-        var liTagShown = [];
-
-        if (tags.val().includes(',')) {
-          tagArrays = tags.val().split(",");
-          selectedTagsHolder.addClass('has-item');
-
-          var _loop2 = function _loop2(i) {
-            tagSelectorHolder.find('.styledSelect').text(tagArrays[i]);
-            listTag.each(function () {
-              if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === tagArrays[i]) {
-                if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liTagShown) === -1) {
-                  liTagShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
-                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('selected');
                 }
-              }
-            });
-            selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tagArrays[i] + '</span><span class="remove-item">X</span></div>');
-          };
+              });
+            };
 
-          for (var i = 0; i < tagArrays.length; i++) {
-            _loop2(i);
-          }
-        } else {
-          tagSelectorHolder.find('.styledSelect').text(tags.val()); // listTag.each(function () {
-          //   if ($.trim($(this).text()) === tagArrays[i]) {
-          //     if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
-          //       liTagShown.push($.trim($(this).text()));
-          //       $(this).addClass('selected');
-          //     }
-          //   }
-          // });
-
-          selectedTagsHolder.addClass('has-item');
-          selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tags.val() + '</span><span class="remove-item">X</span></div>');
+            for (var i = 0; i < data.length; i++) {
+              _loop(i);
+            }
+          })();
         }
-      })();
+      });
+
+      if (tags.val()) {
+        (function () {
+          var listTag = tagSelectorHolder.find('ul.options li');
+          var liTagShown = [];
+
+          if (tags.val().includes(',')) {
+            tagArrays = tags.val().split(",");
+            selectedTagsHolder.addClass('has-item');
+
+            var _loop2 = function _loop2(i) {
+              tagSelectorHolder.find('.styledSelect').text(tagArrays[i]);
+              listTag.each(function () {
+                if (jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()) === tagArrays[i]) {
+                  if (jQuery.inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()), liTagShown) === -1) {
+                    liTagShown.push(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text()));
+                    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).addClass('selected');
+                  }
+                }
+              });
+              selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tagArrays[i] + '</span><span class="remove-item">X</span></div>');
+            };
+
+            for (var i = 0; i < tagArrays.length; i++) {
+              _loop2(i);
+            }
+          } else {
+            tagSelectorHolder.find('.styledSelect').text(tags.val()); // listTag.each(function () {
+            //   if ($.trim($(this).text()) === tagArrays[i]) {
+            //     if (jQuery.inArray($.trim($(this).text()), liTagShown) === -1) {
+            //       liTagShown.push($.trim($(this).text()));
+            //       $(this).addClass('selected');
+            //     }
+            //   }
+            // });
+
+            selectedTagsHolder.addClass('has-item');
+            selectedTagsHolder.find('.item-holder').append('<div class="item"><span class="text">' + tags.val() + '</span><span class="remove-item">X</span></div>');
+          }
+        })();
+      }
     }
 
     removeSelectedItem(category, subcategory, tags);
@@ -37339,6 +37482,19 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         scrollTop: target_offset_top - 200
       });
     }
+  }
+
+  function searchResult() {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.load-listing-item').simpleLoadMore({
+      item: '.result-item',
+      count: 3,
+      showCounter: true,
+      counterText: 'Showing {showing} of {total} results',
+      btnHTML: '<a href="#" class="load-more__btn theme-button-hover-dark"><span>See more</span></a>'
+    });
+    setTimeout(function () {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.show-result-counter').append(jquery__WEBPACK_IMPORTED_MODULE_0___default()('.load-more__counter').clone());
+    }, 10);
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback) {
