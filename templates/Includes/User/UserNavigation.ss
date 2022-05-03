@@ -24,7 +24,7 @@
             <% end_if %>
             <div class="user-navigation--profile">
                 <div class="user-profile d-flex align-items-center">
-                    <span class="text-white fontsize20 halyard-display">Hi {$CurrentUser.FirstName}</span>
+                    <span class="text-white fontsize20 halyard-display">Kia ora {$CurrentUser.FirstName}</span>
                     <% if $CurrentUser.ProfilePhoto %>
                         <img src="$CurrentUser.ProfilePhoto.URL" alt="$SiteConfig.Title - User photo">
                     <% else %>

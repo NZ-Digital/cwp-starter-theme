@@ -660,7 +660,8 @@
           }
           .action {
             @media only screen and (max-width: 1589px) {
-              max-width: 164px;
+              //max-width: 164px;
+              width: auto;
             }
           }
         }

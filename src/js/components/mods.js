@@ -1941,17 +1941,30 @@ export default function () {
 
   function searchResult()
   {
-    $('.load-listing-item').simpleLoadMore({
+    let loadListing = $('.load-listing-item');
+    loadListing.simpleLoadMore({
       item: '.result-item',
-      count: 3,
+      count: 10,
+      itemsToLoad: 10,
       showCounter:true,
       counterText: 'Showing {showing} of {total} results',
       btnHTML: '<a href="#" class="load-more__btn theme-button-hover-dark"><span>See more</span></a>'
     });
 
+    //When document loads
     setTimeout(function () {
       $('.show-result-counter').append( $('.load-more__counter').clone())
+
+      let resultItems = $('.listing__item .result-item').length;
+      if (resultItems < 10) {
+        $('.show-result-counter .load-more__count--showing').text(resultItems)
+      }
     }, 10);
+
+    //Load more button
+    $('.load-more__btn').click(function () {
+      $('.show-result-counter').empty().append( $('.load-more__counter').clone());
+    });
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback)

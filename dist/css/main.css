@@ -18532,7 +18532,7 @@ input[type=submit].action {
 }
 @media only screen and (max-width: 1589px) {
   .page-section.sectionFilterBar .filterBar-container .filters .filter-action .action {
-    max-width: 164px;
+    width: auto;
   }
 }
 .page-section.sectionFilteredNews .filteredNews-container {

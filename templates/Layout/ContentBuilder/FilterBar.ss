@@ -71,7 +71,7 @@
                                 </div>
                             <% end_loop %>
                             <div class="filter-action pl-lg-2">
-                                <button class="action theme-button-yellow-small-arrow" data-url="$Page.Link"><span class="font-weight-medium letterspacing-1px">Search</span></button>
+                                <button class="action theme-button-yellow-small-arrow" data-url="$Page.Link"><span class="font-weight-medium letterspacing-1px">Search | Rapu</span></button>
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                             </div>
                         <% end_loop %>
                         <div class="filter-action pl-lg-2">
-                            <button class="action theme-button-yellow-small-arrow" data-url="$Page.Link"><span class="font-weight-medium letterspacing-1px">Search</span></button>
+                            <button class="action theme-button-yellow-small-arrow" data-url="$Page.Link"><span class="font-weight-medium letterspacing-1px">Search | Rapu</span></button>
                         </div>
                     </div>
                 </div>

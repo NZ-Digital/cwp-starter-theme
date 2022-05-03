@@ -37485,16 +37485,28 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
   }
 
   function searchResult() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.load-listing-item').simpleLoadMore({
+    var loadListing = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.load-listing-item');
+    loadListing.simpleLoadMore({
       item: '.result-item',
-      count: 3,
+      count: 10,
+      itemsToLoad: 10,
       showCounter: true,
       counterText: 'Showing {showing} of {total} results',
       btnHTML: '<a href="#" class="load-more__btn theme-button-hover-dark"><span>See more</span></a>'
-    });
+    }); //When document loads
+
     setTimeout(function () {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('.show-result-counter').append(jquery__WEBPACK_IMPORTED_MODULE_0___default()('.load-more__counter').clone());
-    }, 10);
+      var resultItems = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.listing__item .result-item').length;
+
+      if (resultItems < 10) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.show-result-counter .load-more__count--showing').text(resultItems);
+      }
+    }, 10); //Load more button
+
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.load-more__btn').click(function () {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.show-result-counter').empty().append(jquery__WEBPACK_IMPORTED_MODULE_0___default()('.load-more__counter').clone());
+    });
   }
 
   function callAPIEndpoint(endpoint, method, postData, callback) {
