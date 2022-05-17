@@ -1622,6 +1622,7 @@ export default function () {
       '<div class="selectedEndTime dropdown">' +
       '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
       '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' +
+      '<div class="addTime-btn"><button type="button"><span class="fontsize25"><i class="fal fa-plus-circle"></i></span></button></div>' +
       '</div>' +
       '</div>' +
       // '<div class="col-lg-3 pb-4">' +
@@ -1658,6 +1659,44 @@ export default function () {
         _this.parent().siblings().find('.dropdown-toggle .text').text('Select end time');
         _this.parent().siblings().find('.dropdown-menu').empty().append(timeOptions(index));
       });
+    });
+
+    elem.find('.selectedEndTime.dropdown').on('show.bs.dropdown', function () {
+      let _this = $(this);
+      let dropdownItem = _this.find('.dropdown-menu .dropdown-item');
+      dropdownItem.click(function (e) {
+        _this.find('.addTime-btn').addClass('active');
+        extraTimeOptions(_this.find('.addTime-btn'));
+      });
+    });
+  }
+
+  function extraTimeOptions(addTimeBtn)
+  {
+    addTimeBtn.find('button').click(function () {
+      $(this).parent().parent().append('' +
+        '<div class="date-time-item row pb-lg-0 pb-4 d-flex align-items-end">' +
+        '<div class="col-lg-4 pb-4"></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
+        '<div class="col-lg-4 col-6 pb-4">' +
+        '<div class="selectedStartTime dropdown">' +
+        '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="' + startTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + startTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+        '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="col-lg-4 col-6 pb-4">' +
+        '<div class="selectedEndTime dropdown">' +
+        '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+        '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' +
+        '<div class="addTime-btn"><button type="button"><span class="fontsize25"><i class="fal fa-plus-circle"></i></span></button></div>' +
+        '</div>' +
+        '</div>' +
+        // '<div class="col-lg-3 pb-4">' +
+        //   '<div class="appointment d-flex align-items-center">' +
+        //     '<input type="checkbox" name="appointment_only" id="appointmentOnly'+id+'" ' + appointment + '> ' +
+        //     '<label class="ml-2 mb-0" for="appointmentOnly'+id+'"><span class="font-weight-normal">Appointment only</span></label>' +
+        //   '</div>' +
+        // '</div>' +
+        '</div>');
     });
   }
 
