@@ -31,17 +31,17 @@ export default function () {
     articlePage();
 
     //Actions
+    accountSettings();
     addToFavourites();
+    extraTimeOptions();
     showTags();
     showMoreNews();
     showShareSocials();
     sliderTags();
     newsletter();
 
-    accountSettings();
 
     closeModal();
-
     otherSettings();
 
     //Search results load more
@@ -672,10 +672,10 @@ export default function () {
       ListingLocation();
 
       //ListingPriceStep
-      ListingPriceStep()
+      ListingPriceStep();
 
       //ListingUploadImages
-      ListingUploadImages()
+      ListingUploadImages();
 
       let actionBtnSubmit, actionBtnPublish, isDraftTextbox;
       isDraftTextbox   = $('#ListingForm_ListingForm_IsDraft');
@@ -1350,25 +1350,69 @@ export default function () {
     let btnToggle, dropdownItem, selectedDropdownItem;
     let dateTimeItem;
 
+    let addTimeBtn = $('.addTime-btn');
+
     dateTimeItem = listingDateTimeContainer.find('.date-time-item');
-    dateTimeItem.find('.dropdown').each(function () {
-      let dropdownStartTime = $(this).hasClass('selectedStartTime');
-      $(this).on('show.bs.dropdown', function () {
-        btnToggle = $(this).find('.dropdown-toggle');
-        dropdownItem = $(this).find('.dropdown-menu .dropdown-item');
-        btnToggle.removeClass('text-danger').parent().removeClass('has-error');
-        dropdownItem.click(function (e) {
-          selectedDropdownItem = $(this).text();
-          if (dropdownStartTime) {
-            btnToggle.attr('data-start-time', selectedDropdownItem);
-          } else {
-            btnToggle.attr('data-end-time', selectedDropdownItem);
-          }
-          btnToggle.find('.text').text(selectedDropdownItem);
-          e.preventDefault();
-        });
-      })
+    dateTimeItem.on('click','.selectedStartTime', function () {
+      let _this = $(this);
+      btnToggle = _this.find('.dropdown-toggle');
+      dropdownItem = _this.find('.dropdown-menu .dropdown-item');
+      btnToggle.removeClass('text-danger').parent().removeClass('has-error');
+      dropdownItem.click(function (e) {
+        selectedDropdownItem = $(this).text();
+        btnToggle.attr('data-start-time', selectedDropdownItem);
+        btnToggle.find('.text').text(selectedDropdownItem);
+        let index = parseInt($(this).attr('data-index')) + 1;
+        _this.parent().next().find('.dropdown-toggle .text').text('Select end time');
+        _this.parent().next().find('.dropdown-menu').empty().append(timeOptions(index));
+      });
     });
+
+    dateTimeItem.on('click','.selectedEndTime', function () {
+      let _this = $(this);
+      btnToggle = $(this).find('.dropdown-toggle');
+      dropdownItem = $(this).find('.dropdown-menu .dropdown-item');
+      btnToggle.removeClass('text-danger').parent().removeClass('has-error');
+      dropdownItem.click(function (e) {
+        selectedDropdownItem = $(this).text();
+        btnToggle.attr('data-end-time', selectedDropdownItem);
+        btnToggle.find('.text').text(selectedDropdownItem);
+
+        let endTimeIndex = $(this).attr('data-index')
+        let extraTimeStart = $('.extra-time--start');
+        _this.find('.addTime-btn').addClass('active').attr('data-end-time', endTimeIndex);
+
+        addTimeBtn.attr('data-end-time', endTimeIndex);
+        if (extraTimeStart.length > 0) {
+          extraTimeStart.find('.dropdown-menu').empty().append(timeOptions(endTimeIndex));
+        }
+      });
+    });
+
+    dateTimeItem.on('click', '.removeTime-btn', function () {
+      $(this).parent().parent().prev().prev().remove();
+      $(this).parent().parent().prev().remove();
+      $(this).parent().parent().remove();
+    });
+
+    // dateTimeItem.find('.dropdown').each(function () {
+    //   let dropdownStartTime = $(this).hasClass('selectedStartTime');
+    //   $(this).on('show.bs.dropdown', function () {
+    //     btnToggle = $(this).find('.dropdown-toggle');
+    //     dropdownItem = $(this).find('.dropdown-menu .dropdown-item');
+    //     btnToggle.removeClass('text-danger').parent().removeClass('has-error');
+    //     dropdownItem.click(function (e) {
+    //       selectedDropdownItem = $(this).text();
+    //       if (dropdownStartTime) {
+    //         btnToggle.attr('data-start-time', selectedDropdownItem);
+    //       } else {
+    //         btnToggle.attr('data-end-time', selectedDropdownItem);
+    //       }
+    //       btnToggle.find('.text').text(selectedDropdownItem);
+    //       e.preventDefault();
+    //     });
+    //   })
+    // });
   }
 
   function DayPickerSettings() {
@@ -1429,16 +1473,19 @@ export default function () {
 
     let selectedDates, selectedStartTime, selectedEndTime;
 
-    listingSelectedDatesTextBox = $('input[name="SelectedDates"]').val();
+    listingSelectedDatesTextBox     = $('input[name="SelectedDates"]').val();
     listingSelectedStartTimeTextBox = $('input[name="SelectedStartTimes"]').val();
-    listingSelectedEndTimeTextBox = $('input[name="SelectedEndTimes"]').val();
+    listingSelectedEndTimeTextBox   = $('input[name="SelectedEndTimes"]').val();
 
     if (listingSelectedDatesTextBox) {
 
-      selectedDates = listingSelectedDatesTextBox.split(",");
-      selectedStartTime = listingSelectedStartTimeTextBox.split(",");
-      selectedEndTime = listingSelectedEndTimeTextBox.split(",");
-
+      selectedDates       = listingSelectedDatesTextBox.split(",");
+      if (listingSelectedStartTimeTextBox) {
+        selectedStartTime = JSON.parse(listingSelectedStartTimeTextBox);
+      }
+      if (listingSelectedEndTimeTextBox) {
+        selectedEndTime   = JSON.parse(listingSelectedEndTimeTextBox);
+      }
       for (let i = 0; i < selectedDates.length; i++) {
         //populate Calendar
         let CalendarDateFormat = moment(selectedDates[i]).format('YYYY-MM-DD');
@@ -1465,8 +1512,12 @@ export default function () {
           }
         }
 
-        //populate event dates
-        appendDateTimeItem(listingDateTimeContainer, EventDateFormat, selectedStartTime[i], selectedEndTime[i], i);
+        //populate event dates & time
+        if (selectedStartTime && selectedEndTime) {
+          appendDateTimeItem(listingDateTimeContainer, EventDateFormat, selectedStartTime[i], selectedEndTime[i], i);
+        } else {
+          appendDateTimeItem(listingDateTimeContainer, EventDateFormat, 'Select start time', 'Select end time', i);
+        }
 
         //dropdown time selector functions
         DropdownTimeSelector(listingDateTimeContainer);
@@ -1484,6 +1535,7 @@ export default function () {
 
     let listingSelectedStartTimeTextBox, listingSelectedEndTimeTextBox;
     let startTimeArray, endTimeArray;
+    let startTimeArrayContainer, endTimeArrayContainer;
 
     let ListingForm_ListingForm_ByAppointment = $('#ListingForm_ListingForm_ByAppointment');
     let isByAppointment = ListingForm_ListingForm_ByAppointment.find('input[name="ByAppointment"]:checked').val();
@@ -1499,13 +1551,15 @@ export default function () {
 
     form.on('click', actionBtnNext, function (e) {
       errorFlag = false;
-      startTimeArray = [];
-      endTimeArray = [];
+      startTimeArrayContainer = {};
+      endTimeArrayContainer   = {};
       listingDateTimeContainer = $('.listingDateTimes');
       dropdownBtnAttr = $(e.target).attr('data-step')
 
       if (isByAppointment !== '1') {
         if (DayPickerContainer.length > 0) {
+          startTimeArray = [];
+          endTimeArray   = [];
           DayPickerContainer.each(function () {
             let _this = $(this);
             let startTimePicker, endTimePicker;
@@ -1530,7 +1584,9 @@ export default function () {
           if (dropdownBtnAttr === 'date-time') {
             listingDateTimeItem = listingDateTimeContainer.find('.date-time-item');
             if (listingDateTimeItem.length > 0) { //check if user selected date from calendar
-              listingDateTimeItem.each(function () {
+              listingDateTimeItem.each(function (i) {
+                startTimeArray = [];
+                endTimeArray   = [];
                 let appointmentIsChecked = $(this).find('input[name="appointment_only"]').prop('checked');
                 // if (!appointmentIsChecked) {
                 // validate if all dropdown start time is selected
@@ -1556,6 +1612,8 @@ export default function () {
                     }
                   }
                 });
+                startTimeArrayContainer[i] = startTimeArray;
+                endTimeArrayContainer[i]   = endTimeArray;
                 // } else {
                 //   const appointment = 'Appointment Only';
                 //
@@ -1563,16 +1621,16 @@ export default function () {
                 //   startTimeArray.push(appointment);
                 //   endTimeArray.push(appointment);
                 // }
-              })
+              });
             } else {
               errorFlag = true;
               errorMessage = errorDateMessage;
             }
             if (startTimeArray.length > 0) {
-              listingSelectedStartTimeTextBox.val(startTimeArray.toString());
+              listingSelectedStartTimeTextBox.val(JSON.stringify(startTimeArrayContainer));
             }
             if (endTimeArray.length > 0) {
-              listingSelectedEndTimeTextBox.val(endTimeArray.toString());
+              listingSelectedEndTimeTextBox.val(JSON.stringify(endTimeArrayContainer));
             }
             if (errorFlag) {
               showError(errorMessage, errorField);
@@ -1586,7 +1644,9 @@ export default function () {
 
   function appendDateTimeItem(elem, date, startTime, endTime, id) {
     let startTimeText = startTime;
-    let endTimeText = endTime;
+    let endTimeText   = endTime;
+
+    let dateContainer = '';
 
     let startTimeDisabled = '';
     let endTimeDisabled = '';
@@ -1609,85 +1669,57 @@ export default function () {
       }
     }
 
-    elem.append('' +
-      '<div class="date-time-item row pb-lg-0 pb-4 d-flex align-items-end">' +
-      '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text text-tundora">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
-      '<div class="col-lg-4 col-6 pb-4">' +
-      '<div class="selectedStartTime dropdown">' +
-      '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="' + startTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + startTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
-      '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' +
-      '</div>' +
-      '</div>' +
-      '<div class="col-lg-4 col-6 pb-4">' +
-      '<div class="selectedEndTime dropdown">' +
-      '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
-      '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' +
-      '<div class="addTime-btn"><button type="button"><span class="fontsize25"><i class="fal fa-plus-circle"></i></span></button></div>' +
-      '</div>' +
-      '</div>' +
-      // '<div class="col-lg-3 pb-4">' +
-      //   '<div class="appointment d-flex align-items-center">' +
-      //     '<input type="checkbox" name="appointment_only" id="appointmentOnly'+id+'" ' + appointment + '> ' +
-      //     '<label class="ml-2 mb-0" for="appointmentOnly'+id+'"><span class="font-weight-normal">Appointment only</span></label>' +
-      //   '</div>' +
-      // '</div>' +
-      '</div>');
-
-    //Disable time selector when toggled
-    let inputAppointment = elem.find('input[name="appointment_only"]');
-    inputAppointment.change(function () {
-      let dropdown = $(this).parent().parent().siblings();
-      if (this.checked) {
-        dropdown.find('.selectedStartTime').removeClass('has-error text-danger');
-        dropdown.find('.selectedStartTime button').find('.text').text('Select start time');
-        dropdown.find('.selectedStartTime button').prop("disabled", true);
-        dropdown.find('.selectedEndTime').removeClass('has-error text-danger');
-        dropdown.find('.selectedEndTime button').find('.text').text('Select end time');
-        dropdown.find('.selectedEndTime button').prop("disabled", true);
-      } else {
-        dropdown.find('button').prop("disabled", false);
-        dropdown.find('.selectedStartTime button').attr('data-start-time', '');
-        dropdown.find('.selectedEndTime button').attr('data-end-time', '');
+    if ($.isArray(startTimeText) && $.isArray(endTimeText)) {
+      dateContainer = '<div class="date-time-item row pb-lg-0 pb-4 d-flex align-items-end">' +
+        '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text text-tundora">' + date + '</span></div></div>' +
+        '</div>';
+      elem.append(dateContainer);
+      for (let i = 0; i < startTimeText.length; i++) {
+        if (i === 0) {
+          $('.date-time-item').eq(id).append('<div class="col-lg-4 col-6 pb-4">' +
+            '<div class="selectedStartTime main-start dropdown">' +
+            '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="'+startTimeText[i]+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+startTimeText[i]+'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+            '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="col-lg-4 col-6 pb-4">' +
+            '<div class="selectedEndTime main-end dropdown">' +
+            '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="'+endTimeText[i]+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+endTimeText[i]+'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+            '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' +
+            '<div class="addTime-btn" data-id="'+ id +'" data-end-time=""><button type="button"><span class="fontsize25"><i class="fal fa-plus-circle"></i></span></button></div>' +
+            '</div>');
+        } else {
+          $('.date-time-item').eq(id).append('<div class="col-lg-4 pb-4"></div>' +
+            '<div class="col-lg-4 col-6 pb-4">' +
+            '<div class="selectedStartTime main-start dropdown">' +
+            '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="'+startTimeText[i]+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+startTimeText[i]+'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+            '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="col-lg-4 col-6 pb-4">' +
+            '<div class="selectedEndTime main-end dropdown">' +
+            '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="'+endTimeText[i]+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+endTimeText[i]+'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+            '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' +
+            '<div class="removeTime-btn active"><button type="button"><span class="fontsize25"><i class="fal fa-minus-circle"></i></span></button></div>' +
+            '</div>'
+          );
+        }
       }
-    });
-
-    elem.find('.selectedStartTime.dropdown').on('show.bs.dropdown', function () {
-      let _this = $(this);
-      let dropdownItem = _this.find('.dropdown-menu .dropdown-item');
-      dropdownItem.click(function (e) {
-        let index = parseInt($(this).attr('data-index')) + 1;
-        _this.parent().siblings().find('.dropdown-toggle .text').text('Select end time');
-        _this.parent().siblings().find('.dropdown-menu').empty().append(timeOptions(index));
-      });
-    });
-
-    elem.find('.selectedEndTime.dropdown').on('show.bs.dropdown', function () {
-      let _this = $(this);
-      let dropdownItem = _this.find('.dropdown-menu .dropdown-item');
-      dropdownItem.click(function (e) {
-        _this.find('.addTime-btn').addClass('active');
-        extraTimeOptions(_this.find('.addTime-btn'));
-      });
-    });
-  }
-
-  function extraTimeOptions(addTimeBtn)
-  {
-    addTimeBtn.find('button').click(function () {
-      $(this).parent().parent().append('' +
+    } else {
+      elem.append('' +
         '<div class="date-time-item row pb-lg-0 pb-4 d-flex align-items-end">' +
-        '<div class="col-lg-4 pb-4"></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
+        '<div class="col-lg-4 pb-4"><div class="selectedDate"><span class="text text-tundora">' + date + '</span></div></div>' + //<span class="btn-remove"><i class="fal fa-times"></i>
         '<div class="col-lg-4 col-6 pb-4">' +
-        '<div class="selectedStartTime dropdown">' +
-        '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="' + startTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + startTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+        '<div class="selectedStartTime main-start dropdown">' +
+        '<button class="dropdown-toggle" ' + startTimeDisabled + ' type="button" id="startDate' + id + '" data-start-time="'+startTimeText+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+startTimeText+'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
         '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(0) + '</div>' +
         '</div>' +
         '</div>' +
         '<div class="col-lg-4 col-6 pb-4">' +
-        '<div class="selectedEndTime dropdown">' +
-        '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="' + endTime + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">' + endTimeText + '</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+        '<div class="selectedEndTime main-end dropdown">' +
+        '<button class="dropdown-toggle" ' + endTimeDisabled + ' type="button" id="endDate' + id + '" data-end-time="'+endTimeText+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">'+endTimeText+'</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
         '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' +
-        '<div class="addTime-btn"><button type="button"><span class="fontsize25"><i class="fal fa-plus-circle"></i></span></button></div>' +
+        '<div class="addTime-btn" data-id="'+ id +'" data-end-time=""><button type="button"><span class="fontsize25"><i class="fal fa-plus-circle"></i></span></button></div>' +
         '</div>' +
         '</div>' +
         // '<div class="col-lg-3 pb-4">' +
@@ -1697,7 +1729,92 @@ export default function () {
         //   '</div>' +
         // '</div>' +
         '</div>');
+    }
+
+
+
+    //Disable time selector when toggled
+    // let inputAppointment = elem.find('input[name="appointment_only"]');
+    // inputAppointment.change(function () {
+    //   let dropdown = $(this).parent().parent().siblings();
+    //   if (this.checked) {
+    //     dropdown.find('.selectedStartTime').removeClass('has-error text-danger');
+    //     dropdown.find('.selectedStartTime button').find('.text').text('Select start time');
+    //     dropdown.find('.selectedStartTime button').prop("disabled", true);
+    //     dropdown.find('.selectedEndTime').removeClass('has-error text-danger');
+    //     dropdown.find('.selectedEndTime button').find('.text').text('Select end time');
+    //     dropdown.find('.selectedEndTime button').prop("disabled", true);
+    //   } else {
+    //     dropdown.find('button').prop("disabled", false);
+    //     dropdown.find('.selectedStartTime button').attr('data-start-time', '');
+    //     dropdown.find('.selectedEndTime button').attr('data-end-time', '');
+    //   }
+    // });
+
+    // elem.find('.selectedStartTime.dropdown').on('show.bs.dropdown', function () {
+    //   let _this = $(this);
+    //   let dropdownItem = _this.find('.dropdown-menu .dropdown-item');
+    //   dropdownItem.click(function (e) {
+    //     let index = parseInt($(this).attr('data-index')) + 1;
+    //     _this.parent().siblings().find('.dropdown-toggle .text').text('Select end time');
+    //     _this.parent().siblings().find('.dropdown-menu').empty().append(timeOptions(index));
+    //   });
+    // });
+    //
+    // elem.find('.selectedEndTime.dropdown').on('show.bs.dropdown', function () {
+    //   let _this = $(this);
+    //   let dropdownItem = _this.find('.dropdown-menu .dropdown-item');
+    //   dropdownItem.click(function (e) {
+    //     let endTimeIndex = $(this).attr('data-index')
+    //     let extraTimeStart = $('.extra-time--start');
+    //     _this.find('.addTime-btn').addClass('active').attr('data-end-time', endTimeIndex);
+    //     if (extraTimeStart.length > 0) {
+    //       extraTimeStart.find('.dropdown-menu').empty().append(timeOptions(endTimeIndex));
+    //     }
+    //   });
+    // });
+  }
+
+  function extraTimeOptions()
+  {
+    let listingDateTimes = $('.listingDateTimes');
+    listingDateTimes.on('click', '.addTime-btn', function (e) {
+      if ($(this).hasClass('active')) {
+        let id = $(this).attr('data-id');
+        let startTimeIndex = $(this).attr('data-end-time');
+        $(this).parent('.selectedEndTime').parent('div').parent('.date-time-item').append('' +
+          '<div class="col-lg-4 pb-4"></div>' +
+          '<div class="col-lg-4 col-6 pb-4">' +
+          '<div class="selectedStartTime extra-time--start dropdown">' +
+          '<button class="dropdown-toggle" type="button" id="startDate' + id + '" data-start-time="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">Select time</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+          '<div class="dropdown-menu" aria-labelledby="startDate' + id + '">' + timeOptions(startTimeIndex) + '</div>' +
+          '</div>' +
+          '</div>' +
+          '<div class="col-lg-4 col-6 pb-4">' +
+          '<div class="selectedEndTime extra-time--end dropdown">' +
+          '<button class="dropdown-toggle" type="button" id="endDate' + id + '" data-end-time="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">Select time</span><span class="btn-arrowdown"><i class="fal fa-angle-down"></i></button>' +
+          '<div class="dropdown-menu" aria-labelledby="endDate' + id + '"></div>' +
+          '<div class="removeTime-btn active"><button type="button"><span class="fontsize25"><i class="fal fa-minus-circle"></i></span></button></div>' +
+          '</div>' +
+          '</div>'
+          // '<div class="col-lg-3 pb-4">' +
+          //   '<div class="appointment d-flex align-items-center">' +
+          //     '<input type="checkbox" name="appointment_only" id="appointmentOnly'+id+'" ' + appointment + '> ' +
+          //     '<label class="ml-2 mb-0" for="appointmentOnly'+id+'"><span class="font-weight-normal">Appointment only</span></label>' +
+          //   '</div>' +
+          // '</div>' +
+        );
+      }
     });
+    // listingDateTimes.on('click','.extra-time--start.show', function () {
+    //   let _this = $(this);
+    //   let dropdownItem = _this.find('.dropdown-menu .dropdown-item');
+    //   dropdownItem.click(function (e) {
+    //     _this.find('.dropdown-toggle .text').text('Select end time');
+    //     // _this.parent().siblings().find('.dropdown-toggle .text').text('Select end time');
+    //     // _this.parent().siblings().find('.dropdown-menu').empty().append(timeOptions(index));
+    //   });
+    // });
   }
 
   function timeOptions(index) {
@@ -1711,7 +1828,7 @@ export default function () {
       ];
 
     for (let i = index; i < arrayTimes.length; i++) {
-      options += '<a class="dropdown-item" href="#" data-index="' + i + '"><span class="text-tundora">' + arrayTimes[i] + '</span></a>';
+      options += '<a class="dropdown-item" data-index="' + i + '"><span class="text-tundora">' + arrayTimes[i] + '</span></a>';
     }
     return options;
   }

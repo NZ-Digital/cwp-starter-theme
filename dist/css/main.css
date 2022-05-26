@@ -17476,15 +17476,18 @@ mark {
 .listingDateTimes .date-time-item .btn-arrowdown {
   font-size: 26px;
 }
-.listingDateTimes .addTime-btn {
+.listingDateTimes .addTime-btn,
+.listingDateTimes .removeTime-btn {
   margin-left: 20px;
 }
-.listingDateTimes .addTime-btn button {
+.listingDateTimes .addTime-btn button,
+.listingDateTimes .removeTime-btn button {
   border: 0;
   background-color: transparent;
   color: #848484;
 }
-.listingDateTimes .addTime-btn.active button {
+.listingDateTimes .addTime-btn.active button,
+.listingDateTimes .removeTime-btn.active button {
   color: #141414;
 }
 
