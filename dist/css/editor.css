@@ -10952,6 +10952,10 @@ p.white-line:after {
   }
 }
 
+strong span {
+  font-weight: bolder;
+}
+
 .font-weight-book {
   font-weight: 300;
 }
