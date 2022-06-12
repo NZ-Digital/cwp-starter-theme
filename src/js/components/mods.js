@@ -835,7 +835,7 @@ export default function () {
         selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
         sizeField.val(_this.attr('data-id'));
 
-        selectedType.find('.remove-item').click(function () {
+        selectedSize.find('.remove-item').click(function () {
           let selectedDropdownItem = $('.size-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');
           selectedDropdownItem.removeClass('active');
           sizeDropdownToggle.text('Type of Space');
@@ -847,11 +847,11 @@ export default function () {
     });
 
     if (sizeField.val()) {
-      let selectedDropdownItem = $('.size-selector .dropdown-item[data-id=' + typeField.val() + ']');
+      let selectedDropdownItem = $('.size-selector .dropdown-item[data-id=' + sizeField.val() + ']');
       sizeDropdownToggle.text(selectedDropdownItem.text());
       selectedDropdownItem.addClass('active');
       selectedSize.addClass('has-item');
-      selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + typeField.val() + '">X</span></div>');
+      selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem.text() + '</span><span class="remove-item"  id="' + sizeField.val() + '">X</span></div>');
 
       selectedSize.find('.remove-item').click(function () {
         let selectedDropdownItem = $('.size-selector .dropdown-item[data-id=' + $(this).attr('id') + ']');

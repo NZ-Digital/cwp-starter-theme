@@ -36363,7 +36363,7 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         selectedSize.addClass('has-item');
         selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + selectedDropdownItem + '</span><span class="remove-item" id="' + _this.attr('data-id') + '">X</span></div>');
         sizeField.val(_this.attr('data-id'));
-        selectedType.find('.remove-item').click(function () {
+        selectedSize.find('.remove-item').click(function () {
           var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.size-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
           selectedDropdownItem.removeClass('active');
           sizeDropdownToggle.text('Type of Space');
@@ -36375,14 +36375,14 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
     });
 
     if (sizeField.val()) {
-      var _selectedDropdownItem2 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.size-selector .dropdown-item[data-id=' + typeField.val() + ']');
+      var _selectedDropdownItem2 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.size-selector .dropdown-item[data-id=' + sizeField.val() + ']');
 
       sizeDropdownToggle.text(_selectedDropdownItem2.text());
 
       _selectedDropdownItem2.addClass('active');
 
       selectedSize.addClass('has-item');
-      selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + _selectedDropdownItem2.text() + '</span><span class="remove-item"  id="' + typeField.val() + '">X</span></div>');
+      selectedSize.find('.item-holder').empty().append('<div class="item"><span class="text">' + _selectedDropdownItem2.text() + '</span><span class="remove-item"  id="' + sizeField.val() + '">X</span></div>');
       selectedSize.find('.remove-item').click(function () {
         var selectedDropdownItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.size-selector .dropdown-item[data-id=' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('id') + ']');
         selectedDropdownItem.removeClass('active');
