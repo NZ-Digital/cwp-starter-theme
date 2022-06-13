@@ -26,7 +26,15 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    $SiteConfig.CreateListingMessageSuccess
+                                    <% if $GroupIDFromParam == "1" %>
+                                        $SiteConfig.CreateListingMessageSuccess
+                                    <% end_if %>
+                                    <% if $GroupIDFromParam == "2" %>
+                                        $SiteConfig.CreateListingCreativeMessageSuccess
+                                    <% end_if %>
+                                    <% if $GroupIDFromParam == "3" %>
+                                        $SiteConfig.CreateListingSpaceMessageSuccess
+                                    <% end_if %>
                                 </div>
                             </div>
                         </div>
