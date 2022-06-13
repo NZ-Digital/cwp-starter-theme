@@ -1419,7 +1419,11 @@ export default function () {
     let DayPickerContainer = $('.optionset-day');
     if (DayPickerContainer.length > 0) {
       let dayArray = [];
-      DayPickerContainer.each(function () {
+      let SelectedStartTimes = cleanArray($('#ListingForm_ListingForm_SelectedStartTimes').val().split(","));
+      let SelectedEndTimes   = cleanArray($('#ListingForm_ListingForm_SelectedEndTimes').val().split(","));
+
+      console.log(SelectedStartTimes)
+      DayPickerContainer.each(function (i) {
         let _this = $(this);
         let checkbox, selectedDates, startTimePicker, endTimePicker;
         checkbox = _this.find('input[type="checkbox"]');
@@ -1428,7 +1432,11 @@ export default function () {
         endTimePicker   =  _this.find('.selectedEndTime');
         if (checkbox.prop('checked')) {
           startTimePicker.removeClass('disabled');
+          startTimePicker.find('button').attr('data-start-time',SelectedStartTimes[i]).find('.text').text(SelectedStartTimes[i]);
+          endTimePicker.removeClass('disabled');
+          endTimePicker.find('button').attr('data-end-time',SelectedEndTimes[i]).find('.text').text(SelectedEndTimes[i]);
         }
+
         checkbox.change(function() {
           if(this.checked) {
             startTimePicker.removeClass('disabled');
@@ -1481,33 +1489,43 @@ export default function () {
 
       selectedDates       = listingSelectedDatesTextBox.split(",");
       if (listingSelectedStartTimeTextBox) {
-        selectedStartTime = JSON.parse(listingSelectedStartTimeTextBox);
+        if (checkJSON(listingSelectedStartTimeTextBox)) {
+          selectedStartTime = JSON.parse(listingSelectedStartTimeTextBox);
+        } else {
+          selectedStartTime = listingSelectedStartTimeTextBox.split(",");
+        }
       }
       if (listingSelectedEndTimeTextBox) {
-        selectedEndTime   = JSON.parse(listingSelectedEndTimeTextBox);
+        if (checkJSON(listingSelectedEndTimeTextBox)) {
+          selectedEndTime = JSON.parse(listingSelectedEndTimeTextBox);
+        } else {
+          selectedEndTime = listingSelectedEndTimeTextBox.split(",");
+        }
       }
+      let calendar = $('.calendar-datepicker');
       for (let i = 0; i < selectedDates.length; i++) {
-        //populate Calendar
         let CalendarDateFormat = moment(selectedDates[i]).format('YYYY-MM-DD');
         let EventDateFormat = moment(selectedDates[i]).format("DD MMMM YYYY");
-
-        let unit = $('.pignose-calendar-unit[data-date=' + CalendarDateFormat + ']');
-        if (i === 0) {
-          unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-first-active');
-        } else if (i !== 0 && i === selectedDates.length - 2) {
-          if (selectedDates.length < 4) {
-            unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first pignose-calendar-unit-range-last');
-          } else {
-            unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-last');
-          }
-        } else if (i === selectedDates.length - 1) {
-          unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-second-active');
-        } else {
-          if (selectedDates.length > 3) {
-            if (i === 1) {
-              unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first');
+        if (calendar.length > 0) {
+          //populate Calendar
+          let unit = $('.pignose-calendar-unit[data-date=' + CalendarDateFormat + ']');
+          if (i === 0) {
+            unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-first-active');
+          } else if (i !== 0 && i === selectedDates.length - 2) {
+            if (selectedDates.length < 4) {
+              unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first pignose-calendar-unit-range-last');
             } else {
-              unit.addClass('pignose-calendar-unit-range');
+              unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-last');
+            }
+          } else if (i === selectedDates.length - 1) {
+            unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-second-active');
+          } else {
+            if (selectedDates.length > 3) {
+              if (i === 1) {
+                unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first');
+              } else {
+                unit.addClass('pignose-calendar-unit-range');
+              }
             }
           }
         }
@@ -1523,6 +1541,29 @@ export default function () {
         DropdownTimeSelector(listingDateTimeContainer);
       }
     }
+  }
+
+  function checkJSON(text){
+    if (typeof text!=="string"){
+      return false;
+    }
+    try{
+      let json = JSON.parse(text);
+      return (typeof json === 'object');
+    }
+    catch (error){
+      return false;
+    }
+  }
+
+  function cleanArray(actual) {
+    let newArray = [];
+    for (let i = 0; i < actual.length; i++) {
+      if (actual[i]) {
+        newArray.push(actual[i]);
+      }
+    }
+    return newArray;
   }
 
   function validateDateTimes() {
@@ -1668,6 +1709,7 @@ export default function () {
         appointment = 'checked';
       }
     }
+
 
     if ($.isArray(startTimeText) && $.isArray(endTimeText)) {
       dateContainer = '<div class="date-time-item row pb-lg-0 pb-4 d-flex align-items-end">' +

@@ -35498,7 +35498,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var stickyfilljs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(stickyfilljs__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var simple_load_more__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! simple-load-more */ "./node_modules/simple-load-more/jquery.simpleLoadMore.js");
 /* harmony import */ var simple_load_more__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(simple_load_more__WEBPACK_IMPORTED_MODULE_7__);
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
 /* eslint-disable */
+
+
 
 
 
@@ -36966,7 +36983,10 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
     if (DayPickerContainer.length > 0) {
       var dayArray = [];
-      DayPickerContainer.each(function () {
+      var SelectedStartTimes = cleanArray(jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SelectedStartTimes').val().split(","));
+      var SelectedEndTimes = cleanArray(jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_SelectedEndTimes').val().split(","));
+      console.log(SelectedStartTimes);
+      DayPickerContainer.each(function (i) {
         var _this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);
 
         var checkbox, selectedDates, startTimePicker, endTimePicker;
@@ -36977,6 +36997,9 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
 
         if (checkbox.prop('checked')) {
           startTimePicker.removeClass('disabled');
+          startTimePicker.find('button').attr('data-start-time', SelectedStartTimes[i]).find('.text').text(SelectedStartTimes[i]);
+          endTimePicker.removeClass('disabled');
+          endTimePicker.find('button').attr('data-end-time', SelectedEndTimes[i]).find('.text').text(SelectedEndTimes[i]);
         }
 
         checkbox.change(function () {
@@ -37035,35 +37058,48 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       selectedDates = listingSelectedDatesTextBox.split(",");
 
       if (listingSelectedStartTimeTextBox) {
-        selectedStartTime = JSON.parse(listingSelectedStartTimeTextBox);
+        if (checkJSON(listingSelectedStartTimeTextBox)) {
+          selectedStartTime = JSON.parse(listingSelectedStartTimeTextBox);
+        } else {
+          selectedStartTime = listingSelectedStartTimeTextBox.split(",");
+        }
       }
 
       if (listingSelectedEndTimeTextBox) {
-        selectedEndTime = JSON.parse(listingSelectedEndTimeTextBox);
+        if (checkJSON(listingSelectedEndTimeTextBox)) {
+          selectedEndTime = JSON.parse(listingSelectedEndTimeTextBox);
+        } else {
+          selectedEndTime = listingSelectedEndTimeTextBox.split(",");
+        }
       }
 
+      var calendar = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.calendar-datepicker');
+
       for (var i = 0; i < selectedDates.length; i++) {
-        //populate Calendar
         var CalendarDateFormat = moment(selectedDates[i]).format('YYYY-MM-DD');
         var EventDateFormat = moment(selectedDates[i]).format("DD MMMM YYYY");
-        var unit = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.pignose-calendar-unit[data-date=' + CalendarDateFormat + ']');
 
-        if (i === 0) {
-          unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-first-active');
-        } else if (i !== 0 && i === selectedDates.length - 2) {
-          if (selectedDates.length < 4) {
-            unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first pignose-calendar-unit-range-last');
-          } else {
-            unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-last');
-          }
-        } else if (i === selectedDates.length - 1) {
-          unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-second-active');
-        } else {
-          if (selectedDates.length > 3) {
-            if (i === 1) {
-              unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first');
+        if (calendar.length > 0) {
+          //populate Calendar
+          var unit = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.pignose-calendar-unit[data-date=' + CalendarDateFormat + ']');
+
+          if (i === 0) {
+            unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-first-active');
+          } else if (i !== 0 && i === selectedDates.length - 2) {
+            if (selectedDates.length < 4) {
+              unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first pignose-calendar-unit-range-last');
             } else {
-              unit.addClass('pignose-calendar-unit-range');
+              unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-last');
+            }
+          } else if (i === selectedDates.length - 1) {
+            unit.addClass('pignose-calendar-unit-active pignose-calendar-unit-second-active');
+          } else {
+            if (selectedDates.length > 3) {
+              if (i === 1) {
+                unit.addClass('pignose-calendar-unit-range pignose-calendar-unit-range-first');
+              } else {
+                unit.addClass('pignose-calendar-unit-range');
+              }
             }
           }
         } //populate event dates & time
@@ -37079,6 +37115,31 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         DropdownTimeSelector(listingDateTimeContainer);
       }
     }
+  }
+
+  function checkJSON(text) {
+    if (typeof text !== "string") {
+      return false;
+    }
+
+    try {
+      var json = JSON.parse(text);
+      return _typeof(json) === 'object';
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function cleanArray(actual) {
+    var newArray = [];
+
+    for (var i = 0; i < actual.length; i++) {
+      if (actual[i]) {
+        newArray.push(actual[i]);
+      }
+    }
+
+    return newArray;
   }
 
   function validateDateTimes() {
