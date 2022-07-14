@@ -17,7 +17,7 @@
                 </div>
             <% end_if %>
             <% if $City || $Listing.City %>
-            <div class="listing-location<% if $ListingClosestToCurrentDate || $Listing.ListingClosestToCurrentDate %> ml-auto<% end_if %>">
+            <div class="listing-location ml-auto">
                 <a href="/all-listings?city=<% if $City %>{$City}<% else %>{$Listing.City}<% end_if %>"><span class="text-footer-gray text-underline"><% if $City %>$City<% else %>$Listing.City<% end_if %></span></a>
             </div>
             <% end_if %>
