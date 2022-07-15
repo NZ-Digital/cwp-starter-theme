@@ -17714,6 +17714,10 @@ input[type=submit].action {
      object-fit: cover;
 }
 
+.fileattachment a {
+  text-decoration: underline !important;
+}
+
 #NewsArticleForm_NewsArticleForm .form-group .col-form-label {
   display: block !important;
   font-size: 20px !important;
@@ -18999,6 +19003,7 @@ input[type=submit].action {
 .page-section.sectionMyListings .myListings-content .listing-content--location-date {
   display: -ms-flexbox;
   display: flex;
+  min-height: 32px;
 }
 .page-section.sectionMyListings .myListings-content .listing-content--location-date .listing-date,
 .page-section.sectionMyListings .myListings-content .listing-content--location-date .listing-flag {
@@ -20317,6 +20322,7 @@ textarea::placeholder {
 .listing-content--location-date {
   display: -ms-flexbox;
   display: flex;
+  min-height: 32px;
 }
 .listing-content--location-date .listing-date {
   display: inline-block;
@@ -20341,6 +20347,11 @@ textarea::placeholder {
 @media only screen and (min-width: 1200px) {
   .listing-content--details {
     min-height: 135px;
+  }
+}
+@media only screen and (max-width: 668px) {
+  .listing-content--details {
+    min-height: 208px;
   }
 }
 @media only screen and (max-width: 991px) {

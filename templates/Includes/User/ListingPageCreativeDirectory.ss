@@ -173,7 +173,7 @@
                     </div>
                     <div class="col-lg-12 pb-lg-1">
                         <div class="accordion-panel">
-                            <p class="offset-lg-2"><span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.IsOnline %><% if $Listing.AssignedGroupID == "2" %>This directory is virtual<% else %>This space is virtual<% end_if %><% end_if %><% if $Listing.BuildingName %>$Listing.BuildingName<br><% end_if %><% if $Listing.Address %>$Listing.Address, <% end_if %><% if $Listing.City %>$Listing.City<% end_if %><% if $Listing.Postcode %>$Listing.Postcode<% end_if %></span></p>
+                            <p class="offset-lg-2"><span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.IsOnline %><% if $Listing.AssignedGroupID == "2" %>This directory is virtual<% else %>This space is virtual<% end_if %><% end_if %><% if $Listing.BuildingName %>$Listing.BuildingName<br><% end_if %><% if $Listing.Address %>$Listing.Address, <% end_if %><% if $Listing.City %>$Listing.City<% end_if %><% if $Listing.Postcode %> $Listing.Postcode<% end_if %></span></p>
                             <p class="offset-lg-2 pt-4 pb-3"><a target="_blank"  href="https://www.google.com/maps/place/{$Listing.Address} {$Listing.City}"> <span class="fontsize16 font-weight-medium text-underline">Open in maps</span></a></p>
                         </div>
                     </div>

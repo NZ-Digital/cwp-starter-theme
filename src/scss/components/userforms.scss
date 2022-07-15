@@ -778,6 +778,10 @@ input[type='submit'] {
   }
 }
 
+.fileattachment a {
+  text-decoration: underline !important;
+}
+
 #NewsArticleForm_NewsArticleForm {
   .form-group {
     .col-form-label {

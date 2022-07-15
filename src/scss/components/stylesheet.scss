@@ -1096,6 +1096,7 @@
       .listing-content {
         &--location-date {
           display: flex;
+          min-height: 32px;
           .listing-date,
           .listing-flag {
             padding: 6px 18px;
@@ -2485,6 +2486,7 @@ textarea::placeholder {
   }
   &--location-date {
     display: flex;
+    min-height: 32px;
     .listing-date {
       display: inline-block;
       padding: 6px 36px;
@@ -2510,6 +2512,9 @@ textarea::placeholder {
   &--details {
     @media only screen and (min-width: 1200px) {
       min-height: 135px;
+    }
+    @media only screen and (max-width: 668px) {
+      min-height: 208px;
     }
     .listing-title {
       @media only screen and (max-width: 991px) {
