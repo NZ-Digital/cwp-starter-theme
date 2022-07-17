@@ -17930,15 +17930,15 @@ input[type=submit].action {
  * Contains the custom style of the page.
  * Acts as the main stylesheet for theme.
  *
- *		Include your notes or table of contents below....
- *		Include color hex's or values of your grid
+ *    Include your notes or table of contents below....
+ *    Include color hex's or values of your grid
  *
- *		1. Header
+ *    1. Header
  *      - Site Header
  *        - Pre Header
  *      - Navigation
  *      - Search Bar
- *		2. Sections
+ *    2. Sections
  *      - Accordion
  *      - Card
  *      - Contact Form
@@ -17965,7 +17965,7 @@ input[type=submit].action {
  *    3. Pages
  *      - Listing Page
  *    4. Global Settings
- *		5. Footer
+ *    5. Footer
  *      - Pre-footer
  *      - Post-footer
  *
@@ -18371,6 +18371,12 @@ input[type=submit].action {
   .page-section.sectionFilterBar .filterBar-container .tab .tablinks {
     padding: 15px 25px 14px;
   }
+}
+.page-section.sectionFilterBar .filterBar-container .tab .tablinks .fontsize35 {
+  line-height: 1.3;
+}
+.page-section.sectionFilterBar .filterBar-container .tab .tablinks .fontsize19 {
+  line-height: 1.7;
 }
 .page-section.sectionFilterBar .filterBar-container .tab .tablinks i {
   position: absolute;

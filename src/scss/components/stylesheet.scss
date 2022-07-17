@@ -3,15 +3,15 @@
  * Contains the custom style of the page.
  * Acts as the main stylesheet for theme.
  *
- *		Include your notes or table of contents below....
- *		Include color hex's or values of your grid
+ *    Include your notes or table of contents below....
+ *    Include color hex's or values of your grid
  *
- *		1. Header
+ *    1. Header
  *      - Site Header
  *        - Pre Header
  *      - Navigation
  *      - Search Bar
- *		2. Sections
+ *    2. Sections
  *      - Accordion
  *      - Card
  *      - Contact Form
@@ -38,7 +38,7 @@
  *    3. Pages
  *      - Listing Page
  *    4. Global Settings
- *		5. Footer
+ *    5. Footer
  *      - Pre-footer
  *      - Post-footer
  *
@@ -46,7 +46,7 @@
  * ------------------------------------------------------- */
 
 
-//	1. Header
+//  1. Header
 .mobile-nav {
   display: none;
   position: fixed;
@@ -181,7 +181,7 @@
   }
 }
 
-//	2. Sections
+//  2. Sections
 .page-section {
   // -- Accordion -- //
   &.sectionAccordion  {
@@ -449,6 +449,12 @@
           }
           @media only screen and (max-width: 668px) {
             padding: 15px 25px 14px;
+          }
+          .fontsize35 {
+            line-height: 1.3;
+          }
+          .fontsize19 { 
+            line-height: 1.7;
           }
           i {
             position: absolute;
@@ -1833,7 +1839,7 @@
   }
 }
 
-//	3. Pages
+//  3. Pages
 /** News Page **/
 .sectionNewsContent {
   .article-gallery {
@@ -2164,7 +2170,7 @@
 }
 
 
-//	4. Global Settings
+//  4. Global Settings
 
 /** Container **/
 .container-small {
@@ -2934,4 +2940,3 @@ textarea::placeholder {
     transform: rotate(360deg);
   }
 }
-
