@@ -396,7 +396,7 @@ export default function () {
         selectedCategoriesCreativeDirectory = [], passwordField, passwordConfirmField,
         emailField, emailConfirmField, selectedCategoryWhatsOnField, selectedCategoryCreativeDirectoryField;
 
-      let requiredPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=-\?;,./{}|\":<>\[\]\\\' ~_]).{10,20}/;///^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
+      let requiredPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=-\?;,./{}|\":<>\[\]\\\' ~_]).{7,20}/;///^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,20}$/;
 
       emailField = $('#RegistrationForm_RegistrationForm_Email');
       emailConfirmField = $('#RegistrationForm_RegistrationForm_ConfirmEmail');
@@ -449,7 +449,7 @@ export default function () {
           if (!requiredPassword.test(passwordField.find('.password').val())) {
             $('#message-RegistrationForm_RegistrationForm_Password').remove();
             passwordField.find('.password').addClass('holder-validation is-invalid')
-            passwordField.addClass('holder-validation has-error').parent().append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback d-block pl-2 pr-2 mb-3 mt-0" role="alert" aria-atomic="true">Must be at least 10 and not longer than 20 characters. Contain 1 uppercase & 1 lowercase, 1 number and 1 special character.</div>');
+            passwordField.addClass('holder-validation has-error').parent().append('<div id="message-RegistrationForm_RegistrationForm_Password" class="invalid-feedback d-block pl-2 pr-2 mb-3 mt-0" role="alert" aria-atomic="true">Must be at least 7 and not longer than 20 characters. Contain 1 uppercase & lowercase, 1 number & special character.</div>');
             event.preventDefault();
             error = true;
           }
