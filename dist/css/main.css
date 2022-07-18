@@ -16390,38 +16390,22 @@ body > header .open > a:focus {
 }
 @media only screen and (min-width: 1590px) {
   .site-header {
-<<<<<<< HEAD
-    padding: 49px 100px 31px;
-=======
     padding: 32px 100px;
->>>>>>> 90805c2 (front end fixes)
   }
 }
 @media only screen and (max-width: 1589px) and (min-width: 768px) {
   .site-header {
-<<<<<<< HEAD
-    padding: 29px 40px 25px;
-=======
     padding: 25px 40px;
->>>>>>> 90805c2 (front end fixes)
   }
 }
 @media only screen and (max-width: 767px) and (min-width: 669px) {
   .site-header {
-<<<<<<< HEAD
-    padding: 30px 40px 25px;
-=======
     padding: 30px 40px;
->>>>>>> 90805c2 (front end fixes)
   }
 }
 @media only screen and (max-width: 668px) {
   .site-header {
-<<<<<<< HEAD
-    padding: 30px 25px 25px;
-=======
     padding: 21px 25px 25px;
->>>>>>> 90805c2 (front end fixes)
   }
 }
 
@@ -18389,11 +18373,7 @@ input[type=submit].action {
   }
 }
 .page-section.sectionFilterBar .filterBar-container .tab .tablinks .fontsize35 {
-<<<<<<< HEAD
-  line-height: 1.3;
-=======
   line-height: 1.1;
->>>>>>> 90805c2 (front end fixes)
 }
 .page-section.sectionFilterBar .filterBar-container .tab .tablinks .fontsize19 {
   line-height: 1.7;
@@ -19433,17 +19413,10 @@ input[type=submit].action {
   }
 }
 .page-section.sectionUserNavigationBar .userNavigation-container .user-navigation--profile img {
-<<<<<<< HEAD
-  border-radius: 50px;
-  margin-right: 22px;
-  max-height: 56px;
-  max-width: 56px;
-=======
   border-radius: 50%;
   margin-right: 22px;
   height: 56px;
   width: 56px;
->>>>>>> 90805c2 (front end fixes)
 }
 @media only screen and (min-width: 1200px) {
   .page-section.sectionUserNavigationBar .userNavigation-container .user-navigation--profile img {
@@ -19912,8 +19885,6 @@ input[type=submit].action {
   }
 }
 
-<<<<<<< HEAD
-=======
 .contact-method {
   display: -ms-flexbox;
   display: flex;
@@ -19921,7 +19892,6 @@ input[type=submit].action {
       align-items: baseline;
 }
 
->>>>>>> 90805c2 (front end fixes)
 @media only screen and (max-width: 1589px) and (min-width: 990px) {
   .sectionContributorSignup .form-container {
     padding-left: 40px !important;
@@ -20418,11 +20388,8 @@ textarea::placeholder {
   margin-bottom: 26px;
 }
 .listing-content--tags .tag-name {
-<<<<<<< HEAD
-=======
   display: block;
   max-width: 170px;
->>>>>>> 90805c2 (front end fixes)
   text-decoration: underline;
   margin-right: 13px;
 }
@@ -20622,15 +20589,9 @@ textarea::placeholder {
 }
 
 .profile-img img {
-<<<<<<< HEAD
-  border-radius: 50px;
-  max-height: 56px;
-  max-width: 56px;
-=======
   border-radius: 50%;
   height: 56px;
   width: 56px;
->>>>>>> 90805c2 (front end fixes)
 }
 
 @media only screen and (max-width: 668px) {
