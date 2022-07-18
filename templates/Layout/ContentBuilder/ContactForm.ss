@@ -11,7 +11,7 @@
             <% end_if %>
             <% if $Success %>
                 <div class="alert alert-success" role="alert">
-                   Your message has been sent successfully, I hope to respond within 24 hours.
+                   Your message has been sent successfully.
                 </div>
             <% end_if %>
            $ContactForm
