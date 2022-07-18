@@ -42,7 +42,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="listing-content">
                         <div class="listing-action">
                             <div class="dropdown show">
@@ -72,10 +71,12 @@
                             <% end_if %>
                         </div>
                         <div class="listing-content--location-date align-items-center">
-                            <% if $ListingClosestToCurrentDate %>
-                                <div class="listing-date">
-                                    <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$ListingClosestToCurrentDate</span>
-                                </div>
+                            <% if $AssignedGroup.ID == 1 %><!-- Show date if listings are under What's On group -->
+                                <% if $ListingClosestToCurrentDate %>
+                                    <div class="listing-date">
+                                        <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$ListingClosestToCurrentDate</span>
+                                    </div>
+                                <% end_if %>
                             <% end_if %>
                             <% if $Flag %>
                                 <div class="listing-flag<% if $Flag == 'Active' %> active-flag<% else_if $Flag == 'Draft' %> draft-flag<% else_if $Flag == 'Archive' %> archived-flag<% else %> pending-flag<% end_if %>">
@@ -83,7 +84,7 @@
                                 </div>
                             <% end_if %>
                             <% if $City %>
-                                <div class="listing-location<% if $ListingClosestToCurrentDate %> ml-auto<% end_if %>">
+                                <div class="listing-location ml-auto">
                                     <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline">$City</span></a>
                                 </div>
                             <% end_if %>
@@ -109,15 +110,6 @@
                             <% if $Category %>
                                 <% include ListingCategory Category=$Category %>
                             <% end_if %>
-                            <%--                                        <div class="tag-container">--%>
-                            <%--                                            <div class="tag-items">--%>
-                            <%--                                                <% if $Tags %>--%>
-                            <%--                                                    <% loop $Tags %>--%>
-                            <%--                                                        <a href="#" class="tag-name"><span class="halyard-display font-weight-medium fontsize16 text-uppercase">$Title</span></a>--%>
-                            <%--                                                    <% end_loop %>--%>
-                            <%--                                                <% end_if %>--%>
-                            <%--                                            </div>--%>
-                            <%--                                        </div>--%>
                             <p class="ml-auto view-listing"><a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><span class="theme-button-gray-small-arrow halyard-display font-weight-medium fontsize16">More info</span></a></p>
                         </div>
                     </div>

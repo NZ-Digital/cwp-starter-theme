@@ -36410,31 +36410,6 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       });
     } else {
       sizeDropdownToggle.text('Type of Space');
-    } //Step navigation naming
-
-
-    if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-wo li.ListingPricingStep').find('a')) {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-wo li.ListingPricingStep a').text("Ticketing");
-    } else {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-wo li.ListingPricingStep').text("Ticketing");
-    }
-
-    if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cd li.ListingPricingStep').find('a')) {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cd li.ListingPricingStep a').text("Pricing");
-    } else {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cd li.ListingPricingStep').text("Pricing");
-    }
-
-    if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingPricingStep').find('a')) {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingPricingStep a').text("Pricing");
-    } else {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingPricingStep').text("Pricing");
-    }
-
-    if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingInfoStep').find('a')) {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingInfoStep a').text("Space Details");
-    } else {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.group-cs li.ListingInfoStep').text("Space Details");
     }
   }
 
@@ -36621,21 +36596,28 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
       }
     });
     actionBtnNext.click(function (e) {
+      var errorField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#ListingForm_ListingForm_IsError');
       var attr = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-step');
 
       if (attr === 'category-tag') {
         if (!selectedCategoryText.val()) {
           e.preventDefault();
           categoryError.empty().append('<span>Please select a category.</span>');
+          errorField.val(1);
         } else {
           categoryError.empty().append('<span>&nbsp;</span>');
+          errorField.val('');
         }
 
-        if (!selectedTagsText.val()) {
-          e.preventDefault();
-          tagError.empty().append('<span>Please select at least one tag.</span>');
-        } else {
-          tagError.empty().append('<span>&nbsp;</span>');
+        if (selectedTagsText.val()) {
+          if (selectedTagsText.val().split(",").length > 5) {
+            e.preventDefault();
+            tagError.empty().append('<span>Only maximum of 5 tags are allowed.</span>');
+            errorField.val(1);
+          } else {
+            tagError.empty().append('<span>&nbsp;</span>');
+            errorField.val('');
+          }
         }
       }
 
@@ -36643,8 +36625,10 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
         if (!selectedLocationText.val()) {
           e.preventDefault();
           locationError.empty().append('<span>Please select a location.</span>');
+          errorField.val(1);
         } else {
           locationError.empty().append('<span>&nbsp;</span>');
+          errorField.val('');
         }
       }
 
@@ -36703,7 +36687,6 @@ var moment = (0,moment_range__WEBPACK_IMPORTED_MODULE_3__.extendMoment)((moment_
           tagArrays = tags.val().split(",");
           tagArrays.splice(jquery__WEBPACK_IMPORTED_MODULE_0___default().inArray(jquery__WEBPACK_IMPORTED_MODULE_0___default().trim(_this.siblings().text()), tagArrays), 1);
           tags.val(tagArrays);
-          console.log('sasa');
         } else {
           parentDiv.removeClass('has-item');
           parentDiv.find('.item-holder').empty();

@@ -108,9 +108,11 @@
                                         <div class="col-lg-7 col-6 col-sm-3 col-6">
                                             <p class="offset-lg-4 pb-lg-1 pb-2"><span class="fontsize19 font-weight-book">$Date.Format('E, dd LLL')</span></p>
                                         </div>
-                                        <div class="col-lg-5 col-6 col-sm-7 col-6<% if $Last %> pb-3<% end_if %>">
-                                            <p class="pb-lg-1 pb-2"><span class="fontsize19 font-weight-book">$Time</span></p>
-                                        </div>
+                                        <% if $Time %>
+                                            <div class="col-lg-5 col-6 col-sm-7 col-6<% if $Last %> pb-3<% end_if %>">
+                                                <p class="pb-lg-1 pb-2"><span class="fontsize19 font-weight-book">$Time</span></p>
+                                            </div>
+                                        <% end_if %>
                                     <% end_loop %>
                                 <% end_if %>
                                 <% if $Listing.ByAppointment == '1' %>

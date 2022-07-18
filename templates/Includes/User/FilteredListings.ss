@@ -11,7 +11,7 @@
                         <% end_if %>
                     </div>
                     <div class="listing-content--location-date align-items-center">
-                        <% if $Up.GroupID == "1" %>
+                        <% if $AssignedGroup.ID == 1 || $Listing.AssignedGroup.ID == 1 %><!-- Show date if listings are under What's On group -->
                             <% if $ListingClosestToCurrentDate %>
                             <div class="listing-date">
                                 <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$ListingClosestToCurrentDate</span>

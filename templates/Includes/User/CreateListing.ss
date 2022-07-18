@@ -8,7 +8,7 @@
             <ul class="user-sidenav--links list-unstyled">
                 <%--            <li class="user-sidenav--step"><a href="#" class="text-white"><div class="user-sidenav--btn-progress active"></div><span class="halyard-display fontsize15font-weight-medium letterspacing-5px text-uppercase">Sign Up</span></a></li>--%>
                 <%--            <li class="user-sidenav--step"><a href="#" class="text-white"><div class="user-sidenav--btn-progress"></div><span class="halyard-display fontsize15 font-weight-medium letterspacing-5px text-uppercase">Favourites</span></a></li>--%>
-                <li class="user-sidenav--step"><a class="text-white text-decoration-none"><div class="user-sidenav--btn-progress"></div><span class="halyard-display fontsize15 font-weight-medium letterspacing-5px text-uppercase">Review and Submit</span></a></li>
+<%--                <li class="user-sidenav--step"><a class="text-white text-decoration-none"><div class="user-sidenav--btn-progress"></div><span class="halyard-display fontsize15 font-weight-medium letterspacing-5px text-uppercase">Review and Submit</span></a></li>--%>
             </ul>
         </div>
     </section>

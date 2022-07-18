@@ -11,10 +11,12 @@
             </div>
         <% end_if %>
         <div class="listing-content--location-date">
-            <% if $ListingClosestToCurrentDate || $Listing.ListingClosestToCurrentDate %>
-                <div class="listing-date">
-                    <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px"><% if $ListingClosestToCurrentDate %>$ListingClosestToCurrentDate<% else %>$Listing.ListingClosestToCurrentDate<% end_if %></span>
-                </div>
+            <% if $AssignedGroup.ID == 1 || $Listing.AssignedGroup.ID == 1 %><!-- Show date if listings are under What's On group -->
+                <% if $ListingClosestToCurrentDate || $Listing.ListingClosestToCurrentDate %>
+                    <div class="listing-date">
+                        <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px"><% if $ListingClosestToCurrentDate %>$ListingClosestToCurrentDate<% else %>$Listing.ListingClosestToCurrentDate<% end_if %></span>
+                    </div>
+                <% end_if %>
             <% end_if %>
             <% if $City || $Listing.City %>
             <div class="listing-location ml-auto">

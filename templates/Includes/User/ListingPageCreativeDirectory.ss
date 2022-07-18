@@ -148,9 +148,11 @@
                                     <div class="col-lg-4 col-6 offset-lg-2 pb-lg-1 pl-1">
                                         <p><span class="fontsize19 font-weight-book">$Day</span></p>
                                     </div>
-                                    <div class="col-lg-6 col-6 pb-lg-1<% if $Last %> pb-3<% end_if %>">
-                                        <p><span class="fontsize19 font-weight-book">$Time</span></p>
-                                    </div>
+                                    <% if $Time %>
+                                        <div class="col-lg-6 col-6 pb-lg-1<% if $Last %> pb-3<% end_if %>">
+                                            <p><span class="fontsize19 font-weight-book">$Time</span></p>
+                                        </div>
+                                    <% end_if %>
                                 <% end_loop %>
                                 <% if $Listing.ByAppointment == '1' %>
                                     <div class="col-12">
@@ -192,7 +194,9 @@
                             <% if $Listing.IsEventFree %>
                                 <p class="offset-lg-2 pl-lg-1"><span class="fontsize19 font-weight-book moderna-sans">Free</span></p>
                             <% else %>
-                                <p class="offset-lg-2 pl-lg-1"><span class="fontsize19 font-weight-book moderna-sans"><% if $Listing.PriceRange %>From $Listing.PriceRange<% end_if %></span></p>
+                                <% if $Listing.PriceRange %>
+                                    <p class="offset-lg-2 pl-lg-1"><span class="fontsize19 font-weight-book moderna-sans">$Listing.PriceRange</span></p>
+                                <% end_if %>
                             <% end_if %>
                             <% if $Listing.BookingURL %>
                             <p class="offset-lg-2 pl-lg-1 pt-4 pb-3"><a target="_blank" href="$Listing.BookingURL"> <span class="fontsize16 font-weight-medium text-underline">Book online</span></a></p>

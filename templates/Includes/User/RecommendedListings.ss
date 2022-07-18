@@ -77,13 +77,8 @@
                                         </div>
                                     <% end_if %>
                                     <div class="listing-content--location-date">
-                                        <% if $ListingClosestToCurrentDate %>
-                                            <div class="listing-date">
-                                                <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$ListingClosestToCurrentDate</span>
-                                            </div>
-                                        <% end_if %>
                                         <% if $City %>
-                                        <div class="listing-location<% if $ListingClosestToCurrentDate %> ml-auto<% end_if %>">
+                                        <div class="listing-location">
                                             <a href="/all-listings?city={$City}"><span class="text-footer-gray text-underline">$City</span></a>
                                         </div>
                                         <% end_if %>

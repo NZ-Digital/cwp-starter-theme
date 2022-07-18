@@ -864,31 +864,6 @@ export default function () {
     } else {
       sizeDropdownToggle.text('Type of Space');
     }
-
-    //Step navigation naming
-    if ($('.group-wo li.ListingPricingStep').find('a')) {
-      $('.group-wo li.ListingPricingStep a').text("Ticketing");
-    } else {
-      $('.group-wo li.ListingPricingStep').text("Ticketing");
-    }
-
-    if ($('.group-cd li.ListingPricingStep').find('a')) {
-      $('.group-cd li.ListingPricingStep a').text("Pricing");
-    } else {
-      $('.group-cd li.ListingPricingStep').text("Pricing");
-    }
-
-    if ($('.group-cs li.ListingPricingStep').find('a')) {
-      $('.group-cs li.ListingPricingStep a').text("Pricing");
-    } else {
-      $('.group-cs li.ListingPricingStep').text("Pricing");
-    }
-
-    if ($('.group-cs li.ListingInfoStep').find('a')) {
-      $('.group-cs li.ListingInfoStep a').text("Space Details");
-    } else {
-      $('.group-cs li.ListingInfoStep').text("Space Details");
-    }
   }
 
   function ListingCategoryStep(form) {
@@ -1079,19 +1054,26 @@ export default function () {
     });
 
     actionBtnNext.click(function (e) {
+      let errorField = $('#ListingForm_ListingForm_IsError');
       let attr = $(this).attr('data-step');
       if (attr === 'category-tag') {
         if (!selectedCategoryText.val()) {
           e.preventDefault();
           categoryError.empty().append('<span>Please select a category.</span>');
+          errorField.val(1)
         } else {
           categoryError.empty().append('<span>&nbsp;</span>');
+          errorField.val('')
         }
-        if (!selectedTagsText.val()) {
-          e.preventDefault();
-          tagError.empty().append('<span>Please select at least one tag.</span>');
-        } else {
-          tagError.empty().append('<span>&nbsp;</span>');
+        if (selectedTagsText.val()) {
+          if (selectedTagsText.val().split(",").length > 5) {
+            e.preventDefault();
+            tagError.empty().append('<span>Only maximum of 5 tags are allowed.</span>');
+            errorField.val(1)
+          } else {
+            tagError.empty().append('<span>&nbsp;</span>');
+            errorField.val('')
+          }
         }
       }
 
@@ -1099,8 +1081,10 @@ export default function () {
         if (!selectedLocationText.val()) {
           e.preventDefault();
           locationError.empty().append('<span>Please select a location.</span>');
+          errorField.val(1)
         } else {
           locationError.empty().append('<span>&nbsp;</span>');
+          errorField.val('')
         }
       }
       isDraftTextbox.val('');
@@ -1151,7 +1135,6 @@ export default function () {
           tagArrays = tags.val().split(",");
           tagArrays.splice($.inArray($.trim(_this.siblings().text()), tagArrays), 1);
           tags.val(tagArrays);
-          console.log('sasa');
         } else {
           parentDiv.removeClass('has-item');
           parentDiv.find('.item-holder').empty();

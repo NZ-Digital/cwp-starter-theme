@@ -5,7 +5,7 @@
         </div>
         <% if $Up.CurrentUserIsContributor %>
         <div class="col-auto">
-            <p><a href="create-listing?id={$GroupID}" class="d-flex align-items-center text-decoration-none"><span class="fontsize25 halyard-display font-weight-medium mr-5">$GroupButtonText</span> <i class="fal fa-plus-circle fontsize35"></i></a></p>
+            <p><a href="create-listing?id={$GroupID}" class="d-flex align-items-center text-decoration-none"><span class="fontsize25 halyard-display font-weight-medium mr-4">$GroupButtonText</span> <i class="fal fa-plus-circle fontsize35"></i></a></p>
         </div>
         <% end_if %>
     </div>
@@ -24,13 +24,15 @@
                             </div>
                         <% end_if %>
                         <div class="listing-content--location-date">
-                            <% if $Listing.ListingClosestToCurrentDate %>
-                                <div class="listing-date">
-                                    <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$Listing.ListingClosestToCurrentDate</span>
-                                </div>
+                            <% if $AssignedGroup.ID == 1 || $Listing.AssignedGroup.ID == 1 %><!-- Show date if listings are under What's On group -->
+                                <% if $Listing.ListingClosestToCurrentDate %>
+                                    <div class="listing-date">
+                                        <span class="halyard-display font-weight-medium fontsize16 text-uppercase text-white letterspacing-1px">$Listing.ListingClosestToCurrentDate</span>
+                                    </div>
+                                <% end_if %>
                             <% end_if %>
                             <% if $Listing.City %>
-                                <div class="listing-location<% if $Listing.ListingClosestToCurrentDate %> ml-auto<% end_if %>">
+                                <div class="listing-location">
                                     <a href="/all-listings?city={$Listing.City}"><span class="text-footer-gray text-underline">$Listing.City</span></a>
                                 </div>
                             <% end_if %>
