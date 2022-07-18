@@ -453,7 +453,7 @@
           .fontsize35 {
             line-height: 1.1;
           }
-          .fontsize19 { 
+          .fontsize19 {
             line-height: 1.7;
           }
           i {
@@ -2418,11 +2418,23 @@ textarea::placeholder {
 .news-content {
   p {
     font-size: 19px;
+    margin-bottom: 1rem;
   }
   ul {
     li {
       white-space: normal !important;
     }
+  }
+}
+.authors-bio {
+  p {
+    font-size: 16px;
+    margin-bottom: 1rem;
+  }
+}
+.news-footer {
+  p {
+    margin-bottom: 1rem;
   }
 }
 

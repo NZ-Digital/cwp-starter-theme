@@ -20252,9 +20252,19 @@ textarea::placeholder {
 
 .news-content p {
   font-size: 19px;
+  margin-bottom: 1rem;
 }
 .news-content ul li {
   white-space: normal !important;
+}
+
+.authors-bio p {
+  font-size: 16px;
+  margin-bottom: 1rem;
+}
+
+.news-footer p {
+  margin-bottom: 1rem;
 }
 
 @media only screen and (min-width: 1200px) {

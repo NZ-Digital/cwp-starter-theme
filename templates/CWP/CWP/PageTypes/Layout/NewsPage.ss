@@ -74,6 +74,29 @@
                             <% end_if %>
                         </div>
                     <% end_if %>
+                    <div class="row no-gutters authors-bio">
+                        <div class="col-12 p-0">
+                            <div class="row no-gutters">
+                                <div class="col-6 p-0">
+                                    <% if $News.NewsAuthors %>
+                                        <% loop $News.NewsAuthors %>
+                                            <p><a href="news/?author=$Title#news-lists"><span class="fontsize25 font-weight-medium">$Title</span></a></p>
+                                        <% end_loop %>
+                                    <% end_if %>
+                                    <% if $News.AuthorBio %>
+                                        $News.AuthorBio
+                                    <% else %>
+                                        <% if $News.AuthorBioRaw %>
+                                            $News.AuthorBioRaw.RAW
+                                        <% end_if %>
+                                    <% end_if %>
+                                    <% if $News.AuthorPage %>
+                                        <p class="pt-4 pb-4"><a href="{$News.AuthorPage}"><span class="fontsize16 theme-button-yellow-small-arrow">Author's website</span></a></p>
+                                    <% end_if %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <hr>
                     <div class="news-footer pt-5 row align-items-end">
                         <div class="col-lg-auto">
