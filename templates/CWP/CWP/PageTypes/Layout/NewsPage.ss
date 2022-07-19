@@ -34,7 +34,7 @@
                             <div class="filter-items pt-5">
                                 <p><a href="news/?tag=All"><span class="fontsize30 font-weight-medium text-scorpion">All</span></a></p>
                                 <% loop $NewsCategories %>
-                                    <p><a href="news/?tag={$Title}#news-lists"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a></p>
+                                    <p><a href="news/?tag={$Title}#news-items"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a></p>
                                 <% end_loop %>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                             <p><span class="text-footer-gray">Sort by author</span></p>
                             <div class="filter-items pt-5">
                                 <% loop $NewsAuthorLists %>
-                                    <p><a href="news/?author={$Title}#news-lists"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a></p>
+                                    <p><a href="news/?author={$Title}#news-items"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a></p>
                                 <% end_loop %>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                 <div class="col-6 p-0">
                                     <% if $News.NewsAuthors %>
                                         <% loop $News.NewsAuthors %>
-                                            <p><a href="news/?author=$Title#news-lists"><span class="fontsize25 font-weight-medium">$Title</span></a></p>
+                                            <p><a href="news/?author=$Title#news-items"><span class="fontsize25 font-weight-medium">$Title</span></a></p>
                                         <% end_loop %>
                                     <% end_if %>
                                     <% if $News.AuthorBio %>
@@ -101,7 +101,7 @@
                     <div class="news-footer pt-5 row align-items-end">
                         <div class="col-lg-auto">
                             <div class="d-flex align-items-center">
-                                <span class="text-uppercase fontsize25 font-weight-medium letterspacing-7px mr-4">Tags</span><% loop $News.NewsCategories %><% if $Title != "All" %><a href="news/?tag={$Title}#news-lists"><span class="text-uppercase text-underline font-weight-semibold text-footer-gray">{$Title} +</span></a><% end_if %><% end_loop %>
+                                <span class="text-uppercase fontsize25 font-weight-medium letterspacing-7px mr-4">Tags</span><% loop $News.NewsCategories %><% if $Title != "All" %><a href="news/?tag={$Title}#news-items"><span class="text-uppercase text-underline font-weight-semibold text-footer-gray">{$Title} +</span></a><% end_if %><% end_loop %>
                             </div>
                         </div>
                         <div class="col-lg-auto ml-auto">

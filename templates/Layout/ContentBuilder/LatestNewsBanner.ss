@@ -10,12 +10,12 @@
                 <div class="content-tags">
                     <% loop $News.NewsCategories %>
                         <% if $Title != 'All' %>
-                            <a href="news/?tag={$Title}#news-lists"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a>
+                            <a href="news/?tag={$Title}#news-items"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a>
                         <% end_if %>
                     <% end_loop %>
                 </div>
                 <div class="content-title"><p><span class="fontsize80 font-weight-light line-height-100">$News.Name</span></p></div>
-                <div class="content-author"><span class="text-footer-gray mr-1">by</span> <% loop $News.NewsAuthors %><a href="news/?author={$Title}#news-lists"><span class="text-cod-gray mr-2">$Title</span></a><% if not $Last %>,<% end_if %><% end_loop %> <span class="text-light-gray">|</span> <span class="text-footer-gray ml-2">$News.Created.Ago</span></div>
+                <div class="content-author"><span class="text-footer-gray mr-1">by</span> <% loop $News.NewsAuthors %><a href="news/?author={$Title}#news-items"><span class="text-cod-gray mr-2">$Title</span></a><% if not $Last %>,<% end_if %><% end_loop %> <span class="text-light-gray">|</span> <span class="text-footer-gray ml-2">$News.Created.Ago</span></div>
                 <div class="content-body"><p class="fontsize19 font-weight-book"><% if $News.ContentSummary %>{$News.ContentSummary.LimitWordCount(60)}<% else %><% if $News.ContentSummaryRaw %>{$News.ContentSummaryRaw.RAW.LimitWordCount(60)}<% end_if %><% end_if %></p></div>
                 <% if $News.Page %>
                     <div class="content-body"><p class="fontsize16 font-weight-medium"><a href="$News.Page.Link" class="d-flex"><span class="theme-button-white-arrow-small">Read More</span></a></p></div>

@@ -5,10 +5,10 @@
                 <div class="filter--categories mb-6">
                     <p><span class="text-footer-gray">Sort by categories</span></p>
                     <div class="filter-items pt-4">
-                        <p><a href="news/?tag=All#news-lists"><span class="fontsize30 font-weight-medium text-scorpion">All</span></a></p>
+                        <p><a href="news/?tag=All#news-items"><span class="fontsize30 font-weight-medium text-scorpion">All</span></a></p>
                         <% loop $NewsCategories %>
                             <% if $Title != 'All' %>
-                                <p><a href="news/?tag={$Title}#news-lists"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a></p>
+                                <p><a href="news/?tag={$Title}#news-items"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a></p>
                             <% end_if %>
                         <% end_loop %>
                     </div>
@@ -18,14 +18,14 @@
                     <p><span class="text-footer-gray">Sort by author</span></p>
                     <div class="filter-items pt-4">
                         <% loop $NewsAuthorLists %>
-                            <p><a href="news/?author={$Title}#news-lists"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a></p>
+                            <p><a href="news/?author={$Title}#news-items"><span class="fontsize30 font-weight-medium text-scorpion">$Title</span></a></p>
                         <% end_loop %>
                     </div>
                 </div>
                 <hr style="border-color: #696163;">
             </div>
         </div>
-        <div class="col-lg-9 pl-lg-10 position-static">
+        <div class="col-lg-9 pl-lg-10 position-static" id="news-items">
             <% if $Content %>
                 <div class="intro-content">$Content</div>
             <% end_if %>

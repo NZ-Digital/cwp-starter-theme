@@ -14,12 +14,12 @@
             </div>
             <% loop $Listings %>
                 <div class="col-xl-4">
-                    <!-- Modal -->
-                    <div class="modal fade" id="delete-listing-{$ID}" tabindex="-1" role="dialog" aria-labelledby="DeleteListing" aria-hidden="true">
+                    <!-- Modal Delete Listing-->
+                    <div class="modal modal-listing fade" id="delete-listing-{$ID}" tabindex="-1" role="dialog" aria-labelledby="DeleteListing" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this listing?</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to <b>delete</b> this listing?</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -27,17 +27,45 @@
                                 <div class="modal-body">
                                     <div>
                                         <% if $FeaturedImage %>
-                                            <a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><img class="w-100" src="{$FeaturedImage.URL}" alt="{$SiteConfig.Title} - {$Name}"></a>
+                                            <a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><img class="w-100 featured-image" src="{$FeaturedImage.URL}" alt="{$SiteConfig.Title} - {$Name}"></a>
                                         <% else %>
-                                            <a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><img class="w-100" src="$resourceURL('themes/starter/images/vertical-honing.jpg')" alt="{$SiteConfig.Title} - {$Name}"></a>
+                                            <a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><img class="w-100 featured-image" src="$resourceURL('themes/starter/images/vertical-honing.jpg')" alt="{$SiteConfig.Title} - {$Name}"></a>
                                         <% end_if %>
-                                        <p class="pt-3"><span class="fontsize18 font-weight-medium text-cod-gray">Listing name - {$Name}</span></p>
+                                        <p class="pt-3"><span class="fontsize20 font-weight-medium text-cod-gray">$Name</span></p>
                                     </div>
 
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="theme-button-gray-small" data-dismiss="modal">Close</button>
                                     <button type="button" class="theme-button-yellow-small" id="delete-listing" data-id="$ID" data-dismiss="modal">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal Delete Listing-->
+                    <div class="modal modal-listing fade" id="duplicate-listing-{$ID}" tabindex="-1" role="dialog" aria-labelledby="DuplicateListing" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to <b>duplicate</b> this listing?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <% if $FeaturedImage %>
+                                            <a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><img class="w-100 featured-image" src="{$FeaturedImage.URL}" alt="{$SiteConfig.Title} - {$Name}"></a>
+                                        <% else %>
+                                            <a href="<% if $Page %>$Page.Link<% else %>#<% end_if %>"><img class="w-100 featured-image" src="$resourceURL('themes/starter/images/vertical-honing.jpg')" alt="{$SiteConfig.Title} - {$Name}"></a>
+                                        <% end_if %>
+                                        <p class="pt-3"><span class="fontsize20 font-weight-medium text-cod-gray">$Name</span></p>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="theme-button-gray-small" data-dismiss="modal">Close</button>
+                                    <button type="button" class="theme-button-yellow-small" id="duplicate-listing" data-id="$ID" data-dismiss="modal">Duplicate</button>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +81,9 @@
                                     <a class="dropdown-item" href="create-listing?id={$AssignedGroup.ID}&MultiFormSessionID={$SessionURL}&listingID={$ID}"><span class="fontsize14 font-weight-medium text-footer-gray">Edit listing</span></a>
                                     <% if $Flag == 'Active' %>
                                         <a class="dropdown-item" href="#"><span class="fontsize14 font-weight-medium text-footer-gray">Edit announcement bar</span></a>
-                                        <a class="dropdown-item" href="#"><span class="fontsize14 font-weight-medium text-footer-gray">Duplicate listing</span></a>
+                                        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#duplicate-listing-{$ID}">
+                                            <span class="fontsize14 font-weight-medium text-footer-gray">Duplicate listing</span>
+                                        </button>
                                         <a class="dropdown-item" href="#"><span class="fontsize14 font-weight-medium text-footer-gray">Deactivate listing</span></a>
                                     <% end_if %>
 

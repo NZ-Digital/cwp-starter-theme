@@ -19030,6 +19030,11 @@ input[type=submit].action {
   -webkit-transform: scale(0.99);
           transform: scale(0.99);
 }
+.page-section.sectionMyListings .myListings-content .modal-listing .featured-image {
+  max-height: 350px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
 @media only screen and (max-width: 1589px) and (min-width: 669px) {
   .page-section.sectionGridListing .gridListing-container {
     padding-left: 25px;
